@@ -1,0 +1,21 @@
+---
+#title: "Macroenometrics (44343)"
+output:
+  html_document:
+    css: assets/styles_pjp.css
+    theme: united
+    highlight: monochrome 
+    number_sections: no
+    toc: true
+    toc_float: true
+---
+
+<br>
+
+### Ejemplos
+
+-------------------
+
+- Aquí iré subiendo los ejemplos y prubas que haremos en clase de clase conforme las vaya preparando:
+
+- Aún no tengo claro como gestionar los ejemplos, si en la web o directamente en un repo

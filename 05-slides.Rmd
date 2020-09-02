@@ -1,0 +1,19 @@
+---
+#title: "Macroenometrics (44343)"
+output:
+  html_document:
+    css: assets/styles_pjp.css
+    theme: united
+    highlight: monochrome 
+    number_sections: no
+    toc: true
+    toc_float: true
+---
+
+<br>
+
+### Transparencias/Slides
+
+-------------------
+
+- Aquí iré subiendo las transparencias de clase conforme las vaya preparando:

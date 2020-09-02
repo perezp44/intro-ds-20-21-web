@@ -1,0 +1,85 @@
+---
+#title: "Macroenometrics (44343)"
+output:
+  html_document:
+    css: assets/styles_pjp.css
+    theme: united
+    highlight: monochrome 
+    number_sections: no
+    toc: true
+    toc_float: true
+---
+
+<br>
+
+### Logística
+
+-------------------
+
+Esta sección sirve para poner en un mismo lugar todos los recursos y materiales que usaremos durante el curso. Al final de esta sección pondré bibliografía y/o materiales adicionales.
+
+
+<br>
+
+## Recursos:
+
+- [**`Aula Virtual de la asignatura`**](https://aulavirtual.uv.es/course/view.php?id=9254): como Aula Virtual es el sitio oficial de la asignatura colgaré allí anuncios de tipo "oficial", como fechas de exámenes. También colgaré en Aula Virtual los detalles sobre la evaluación. Además, si hiciera falta, allí podemos organizar reuniones virtuales a través de BBC (Black Board Collaborate).
+
+
+- [**`Jitsi link to make e-meetings`**](https://meet.jit.si/intro-to-DS_UV_2020-21). Una room de Jitsi para hacer reuniones online. Seguramente la utilizaré para las tutorías online.
+
+- [**`Etherpad`**](https://etherpad.wikimedia.org/p/curso_intro_DS_UV): durante el curso escribiremos código R. Esta etherpad nos permitirá compartir el código.
+
+- [**`RStudio Project in the cloud`**](https://rstudio.cloud/project/1543128): El año pasado este recurso nos resulto muy útil, pero ahora la versión gratuita tiene límite de tiempo, así que seguramente la usemos poco. 
+
+- [**`Apuntes colaborativos en HackMD`**](https://hackmd.io/zUgsCA6zR4GzyojiS2YIZQ): para hacer apuntes colaborativos. Es como Google Docs pero en MD. Veremo si lo usamos.
+
+
+----------------------
+
+## Materiales:
+
+- **`Tutoriales`**: digamos que son los apuntes/libro oficiales del curso. Tenéis que ir leyéndolos poco a poco. Algunas de las tareas a hacer en casa consistirán en leer secciones de estos tutoriales. Los puedes encontrar en la sección `Tutoriales` de esta misma web.
+
+- **`Transparencias`**: las transparencias (o slides) que usaré para dar clase. Las puedes encontrar en la sección `Slides` de esta misma web.
+
+
+- **`Ejercicios`** asociados a las transparencias
+
+
+- **`Ejemplos`**: pues eso ejemplos
+
+
+<br>
+
+----------------------
+
+## Más recursos:
+
+En esta sección colgaré cosas como la Guia Docente, la guia de instalacion etc...
+<br>
+
+----------------------
+
+<br>
+
+
+## Bibliografía
+
+La bibliografía que figura en la Guía Docente es:
+
+
+
+<br>
+
+----------------------
+
+<br>
+
+
+## Más bibliografía/Recursos
+
+Aqui puedes poner Rbloggers, Rweekly
+
+
+<br><br><br><br>

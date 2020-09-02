@@ -1,0 +1,60 @@
+---
+#title: "Programación y manejo de datos"
+output:
+  html_document:
+    #css: !expr here::here("assets", "styles_pjp.css") 
+    css: assets/styles_pjp.css
+    theme: united
+    highlight: monochrome 
+    self_contained: yes
+    number_sections: no
+    #toc: true
+    #toc_float: true
+    #code_folding: show
+    #self_contained: TRUE
+---
+
+
+```{r chunk_setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, message = FALSE, warning = FALSE, 
+                      cache = FALSE, cache.path = "/caches/", comment = "#>",
+                      #fig.width = 7, fig.height= 7,   
+                      #out.width = 7, out.height = 7,
+                      collapse = TRUE,  fig.show = "hold",
+                      fig.asp = 7/9, out.width = "75%", fig.align = "center")
+```
+
+```{r options_setup, echo = FALSE}
+options(scipen = 999) #- para quitar la notacion cientifica
+```
+
+<br><br>
+
+### Programación y manejo de datos en la era del Big Data
+
+--------------------------------------------------
+
+
+Bienvenidos a la web de la asignatura **`Programación y manejo de datos en la era del Big Data`**, que se impartirá durante el curso académico 2020-21 en el [Grado de Economía](https://www.uv.es/uvweb/universidad/es/estudios-grado/oferta-grados/oferta-grados/grado-economia-1285846094474/Titulacio.html?id=1285847455792){target="_blank"} de la Universidad de Valencia. Para crear está web se utiliza [este repositorio](https://github.com/perezp44/intro-DS-20-21-web){target="_blank"} alojado en Github.
+
+Como sabéis, la asignatura se imparte en el primer semestre del cuarto curso del Grado en Economía. Es una asignatura optativa, código 36494, con una carga lectiva total de 6 ECTS. La asignatura es una **introducción a la ciencia de datos**: pretende iniciar a los estudiantes en este campo presentando una panorámica de tópicos, y exponiéndoos, quizás por primera vez en la carrera, a la programación.
+
+
+De momento, 1 de septiembre, **está previsto que las clases se desarrollen de manera presencial**^[Las clases está previsto que sean presenciales, **PERO** habrá limitaciones a la movilidad dentro de las clases, incluso parece que será obligatorio el uso de mascarillas, así que será más difícil entenderse, pero lo intentaremos!!], pero es posible (esperemos que no!!) que tengamos que cambiar a clases online. Ya lo veremos!!
+
+Incluso aunque las clases puedan desarrollarse en el aula, va a ser un curso extraño: al ser una asignatura optativa no seremos muchos, unos 35, pero estaremos en un aula de Teoría, llevaremos mascarillas y no podremos interactuar/acercarnos. Esto condicionará, aún no tengo del todo claro cómo, la forma de impartir y recibir las clases, así que **necesitaré vuestra ayuda!!!** Siempre se necesita la ayuda de los estudiantes para que un curso funcione, pero en estas condiciones aún más. Intentaré/intentaremos aprender lo máximo posible sobre R y Ciencia de Datos a pesar de las condiciones. 
+
+
+En la web encontrarás información acerca del desarrollo del curso, así como la mayoría de los materiales que se usarán en él. Para obtener más información acerca del desarrollo del curso, por favor visita la sección [`Guía del curso`](https://perezp44.github.io/intro-DS-20-21-web/01-guia-del-curso.html) de esta misma página web. 
+
+
+
+<div class = "blue">
+<br> **TO DO**: Insisto, lee la [`Guía del curso`](https://perezp44.github.io/intro-DS-20-21-web/01-guia-del-curso.html)!!  <br>
+</div>
+
+
+
+<br>
+
+-- Pedro J. Pérez

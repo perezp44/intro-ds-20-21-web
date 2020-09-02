@@ -1,0 +1,36 @@
+name: "Big Data"
+navbar:
+  title: "Prog y manejo datos (2020-21)"
+  type: inverse
+  left:
+    - icon: fa-home
+      href: index.html
+  right:
+    - text: "Guía del curso"
+      icon: fa-graduation-cap
+      href: 01-guia-del-curso.html  
+    - text: "Logística"
+      icon: fa-laptop
+      href: 02-logistica.html
+    - text: "Calendario"
+      icon: fa-calendar-alt
+      href: 03-calendario.html
+    - text: "Tutoriales"
+      icon: fa-book
+      href: 04-tutoriales.html
+    - text: "Slides"
+      href: 05-slides.html
+    - text: "Ejemplos/ejercicios"
+      icon: fa-code
+      href: 06-ejemplos.html
+    - text: "MáS"
+      icon: fa-download      
+      href: 07-mas-cosas.html
+output_dir: "docs"    
+output:
+  html_document:
+    theme: united
+    highlight: textmate
+    include:
+      after_body: footer.html
+    #css: styles.css
