@@ -19,4 +19,4 @@ output:
 Aquí iré subiendo los tutoriales conforme los vaya actualizando
 
 
-- [`Primeros pasos con R](./tutoriales/tt_02_primeros-pasos-con-R_v2.html)
+- [`Primeros pasos con R](./tutoriales/tt_02_primeros-pasos-con-R_v2.html){target="_blank"}
