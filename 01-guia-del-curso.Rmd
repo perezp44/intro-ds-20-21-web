@@ -112,10 +112,13 @@ Daré los detalles concretos acerca de la evaluación continua la segunda o terc
 
 En esta sección pretendo responder a posibles dudas/preguntas que creo que se os pueden pasar por la cabeza antes de iniciar el curso. Yo también tengo dudas sobre cómo será el curso: esta es la segunda vez que se imparte el curso en la UV, pero la primera (y espero que última) que se imparte bajo una situación de pandemia.
 
+<br>
+
 ##### Nunca he programado ¿podré seguir el curso?
 
 Por supuesto, empezaremos con nivel cero, PERO, lo que si que tengo que deciros es que si tu nivel de conocimientos informáticos y/o de programación no es muy elevado (o nulo) haz el esfuerzo de no perderte las 3 primeras clases y tratar de ir entendiéndolo, para eso están las tutorías, **NO lo dejes para el final**, si no, se te hará bola.
 
+<br>
 
 ##### ¿Cual es el objetivo último del curso? ¿Qué voy a aprender?
 
@@ -123,16 +126,19 @@ Ya he dicho que el curso es una introducción a la Ciencia de Datos con R. Vas a
 
 Espero que al final del curso seáis capaces de entender código R, replicar los análisis que se publican en sitios como [R-bloggers](https://www.r-bloggers.com/) y ser capaces de hacer análisis de datos propios con R.
 
+<br>
 
 ##### ¿Será fácil aprobar?
 
 Creo que te resultará fácil aprobar; de hecho, el año pasado aprobaron todos los que siguieron el curso: todos eran capaces de importar y arreglar datos, mostar resultados en tablas y gráficos y presentar informes en Rmarkdown. 
 
+<br>
 
 ##### ¿Acabaremos el temario?
 
 No lo sé. Depende de vosotros, de mi y de la evolución de la situación sanitaria. El curso tiene **13 sesiones de 4 horas** (en realidad 3 horas cada sesión), de forma que deberían ser suficientes para impartir el contenido de 5 temas, pero resulta que los temas, dependiendo de la profundidad con la que los veamos, pueden hacerse muy extensos. Además, la situación sanitaria actual va a condicionar el formato y prácticas docentes dentro del aula, seguramente ralentizándolas; así que ya veremos hasta donde llegamos. 
 
+<br>
 
 ##### ¿Me servirá lo que aprenda en mi (futuro) trabajo?
 

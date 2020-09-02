@@ -78,12 +78,15 @@ git push -u origin master
 - web de Iván: <https://iarribasf.github.io/SeriesTemporales-MASTER/index.html>   
 - repo de Iván: <https://github.com/iarribasf/SeriesTemporales-MASTER>
 
+<br>
 
 - web VAR-models: <https://perezp44.github.io/VAR-models-web/index.html>   
 - repo VAR-models: <https://github.com/perezp44/VAR-models-web/>
 
+<br>
+
 - web intro-DS: <https://perezp44.github.io/web-intro-DS-20-21/>
-- rep intro-DS: <https://github.com/perezp44/web-intro-DS-20-21>
+- repo intro-DS: <https://github.com/perezp44/web-intro-DS-20-21>
 
 
 
