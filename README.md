@@ -11,5 +11,7 @@ Este repositorio sirve para construir la página web de la asignatura **Programa
 
 La **página web** del curso está aquí: <https://perezp44.github.io/intro-ds-20-21-web/>
 
+Además ...
+
 -- Pedro J. Pérez
 
