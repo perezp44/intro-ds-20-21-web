@@ -16,4 +16,8 @@ output:
 
 -------------------
 
-- Aquí iré subiendo las transparencias de clase conforme las vaya preparando:
+Aquí iré subiendo las transparencias de clase conforme las vaya preparando:
+
+- [`Slides-01: Presentación](./slides/ss_01_presentacion-curso.html)
+
+- [`Slides-07: Presentación](./slides/07/jRom_using_blogdown.html)

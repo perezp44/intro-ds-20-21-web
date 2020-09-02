@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Building a webpage with blogdown</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Julia Romanowska" />
+    <meta name="date" content="2020-09-01" />
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: center, inverse
+
+# Building a webpage with blogdown
+
+## Julia Romanowska
+
+![](R-Ladies-horiz-bergen_cropped_small.png)
+
+### 3 September 2020
+
+---
+
+class: inverse
+
+## What is R-Ladies?
+
+# R-Ladies Global
+
+- A global community of ladies who use R
+- that seeks to _support_ and _inspire_ others
+- through **teaching**, **sharing**, and **mentorship**
+
+# R-Ladies Bergen
+
+- Jonelle Dickow Villar (https://www.uib.no/en/persons/Jonelle.M.Dickow.Villar)
+- Julia Romanowska (https://jrom.bitbucket.io/homepage/)
+- Astrid Lunde (https://www.uib.no/en/persons/Astrid.Lunde)
+
+---
+
+##  Check out R-Ladies on social media 
+
+- Main webpage:  http://rladies.org/
+- **Twitter**
+    - R-Ladies Bergen:  @RLadiesBergen
+    - R-Ladies Global:  @RLadiesGlobal
+    - We are R-Ladies:  @WeAreRLadies
+- **Facebook:**           R-Ladies-Bergen
+- Sign up on **Meetup**:  https://meetup.com/rladies-bergen/
+- **Slack** workspace:
+    - `rladies-norway` *(send us an e-mail to get the invitation!)*
+    - `rladies-community` https://rladies-community-slack.herokuapp.com/
+- **github**: https://github.com/rladies/meetup-presentations_bergen
+
+
+---
+
+class: inverse, left, bottom
+
+# OVERVIEW
+
+### Modern webpage anatomy
+### Blogdown elements
+### Main functions
+### Publication online
+
+???
+
+Here's what this short course is going to cover:
+
+- Modern webpage anatomy
+  - HTML
+  - CSS
+  - javascript
+
+- Blogdown
+  - rmarkdown
+  - TOML
+
+- Main functions
+  - `new_site()`
+  - `build_site()`
+  - `serve_site()`
+
+---
+
+## Modern webpage anatomy
+
+| HTML  |  CSS   |   javascript |
+|:-----:|:------:|:------------:|
+| &lt;img src="html.png" width="200px"/&gt; | &lt;img src="css.png" width="200px"/&gt; | &lt;img src="magic.png" width="200px"/&gt; |
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p style="font-size: small; font-style: italic; text-align: right;"&gt;TIP: to view my notes, press P&lt;/p&gt;
+
+???
+
+I need to precise here: we're talking about a _static_ webpage, where the
+user does not have possibility to create new content live.
+
+The webpage elements are as follows:
+
+- **HTML** = hypertext markup language
+    - this is the content part
+    - includes all the text and images displayed, and some meta-information, but it doesn't have to include _formatting_ or _styling_
+- **CSS** = cascade style sheets
+    - this collects all the information about _formatting_
+    - if one wants to refresh the webpage look, changes need to be made here
+- **javascript**
+    - optional, but often used element that allows for some _special effects_
+    - e.g., displaying a message box in response to a click
+
+Think about the HTML part as a bag of containers that sort the content of the webpage into tabs, parts, or paragraphs. These containers can then be styled by the CSS rules (e.g., stating that one paragraph should be beside another one, text in the headline should be bold and green, while yet another container should be on the margin, and with yellow text). Finally, the optional javascript can be used to make some animations, etc.
+
+However, thanks to blogdown (and Hugo), we do not need to learn all these elements from scratch when we want to build a simple static webpage.
+
+---
+
+## Blogdown elements
+
+&gt; _Blogdown is a package that ports Hugo to R and Rmarkdown_
+
+https://bookdown.org/yihui/blogdown/static-sites.html
+
+Key elements to master:
+
+- **Rmarkdown**
+- **TOML** = Tom's Obvious Minimal Language
+    - https://toml.io/en/
+
+???
+
+Key elements to master:
+
+- **Rmarkdown**
+    - we can generate html webpages with Rmarkdown!
+    - hint: do not use the ``output`` parameter in YAML header
+    - https://bookdown.org/yihui/blogdown/content.html
+- **TOML**
+    - this is the language of the configuration script for Hugo
+    - deals with parameters and some formatting of the webpages
+    - blogdown also allows **YAML** (Yet Another Markup Language)
+    - https://bookdown.org/yihui/blogdown/configuration.html#toml-syntax
+
+We'll see some examples soon, but what is important is to note that Hugo creates
+all the necessary files, so we will need to only change some stuff.
+
+---
+
+## Main functions
+
+- create a new RStudio project (e.g., `blogdown_test`)
+- run `blogdown::new_site()`
+- check the directories and output
+- check the visual part with `blogdown::serve_site()`
+- make some changes in the `content` directory and/or `config.toml`
+- re-create the webpage with `blogdown::build_site()`
+- _when you're ready, stop the server with `servr::daemon_stop(1)`_
+- delete all of the content in our directory (apart from the .Rproj file)
+
+???
+
+Check the anatomy of directories after "new_site" is called.
+
+General hierarchy:
+
+- **config.toml**
+    - here are all the parameters, title, author, images, location of extra files, etc.
+- **content/**
+    - here you can put all the .Rmd or .md files with content
+- **static/**
+    - here is the place for all the images and/or javascript, css
+- **themes/**
+    - you can have copies of the webpage themes here and alter between them by tweaking ``config.toml``
+- **layouts/**
+    - here are configuration files (.toml) for the parts of the webpage that are common for all the sub-pages (i.e., header, menu, footer, etc.)
+
+
+---
+
+## Find a theme
+
+- All the available themes: https://themes.gohugo.io/
+- we will use https://github.com/janraasch/hugo-scroll
+- create a new website with this theme:
+
+
+```r
+blogdown::new_site(theme = "janraasch/hugo-scroll")
+```
+
+- edit `config.toml` to include your information
+- add a new page to the `content/homepage` directory by copying, e.g., `services.md` to `dreams.Rmd` and editing
+- Run the following commands and enjoy
+
+
+```r
+blogdown::build_site()
+blogdown::serve_site()
+```
+
+???
+
+There is always a directory named "example_site", where everything is publication-ready
+and there one can check and learn how to manipulate everything.
+
+---
+
+## Publishing
+
+- GitHub instructions: https://pages.github.com/
+- Bitbucket instructions: https://support.atlassian.com/bitbucket-cloud/docs/publishing-a-website-on-bitbucket-cloud/
+- other possibilities: https://bookdown.org/yihui/blogdown/deployment.html
+
+???
+
+When publishing, push to the server only the contents of the ``public`` directory in your blogdown folder!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "solarized-light",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

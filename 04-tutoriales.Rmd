@@ -16,4 +16,7 @@ output:
 
 -------------------
 
-- Aquí iré subiendo los tutoriales conforme los vaya actualizando
+Aquí iré subiendo los tutoriales conforme los vaya actualizando
+
+
+- [`Primeros pasos con R](./tutoriales/tt_02-primeros-pasos-con-R_v2.html)

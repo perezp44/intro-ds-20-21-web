@@ -83,7 +83,7 @@ Como os he dicho, las clases son los viernes, antes de cada clase publicaré en 
 
 El plan consiste en que vosotros hacéis el trabajo previo antes de venir a clase, de forma que el viernes podéis seguir sin demasiados problemas las clases. De vez en cuando os tendré que hacer pruebas en el aula que también formarán parte de la evaluación continua. 
 
-Las pruebas saldrán bien, espero, lo que querrá decir que estáis aprendiendo, así que todos estaremos contentos y ademas cumpliremos las recomendaciones sanitarias asi que no tendremos problemas con el covid. Ojala!!
+Las pruebas saldrán bien, espero, lo que querrá decir que estáis aprendiendo, así que todos estaremos contentos y además cumpliremos las recomendaciones sanitarias asi que no tendremos problemas con el covid. Ojala!!
 
 
 > Everyone has a plan until they get punched in the mouth --- Mike Tyson
@@ -139,7 +139,7 @@ Espero que al final del curso seáis capaces de entender código R, replicar los
 
 ##### ¿Será fácil aprobar?
 
-Sí. Creo que te resultará fácil aprobar; de hecho, el año pasado aprobaron todos los que siguieron el curso: todos eran capaces de importar y arreglar datos, mostrar resultados en tablas y gráficos y presentar informes en Rmarkdown. También es verdad que hubo 4-5 estudiantes que, por diversas razones, decidieron abandonar el curso en la tercera semana y se matricularon en otra optativa. De verdad que creo que os gustará y aprenderéis pero ... has de trabajar, sobre todo al principio. Si, por lo que sea crees que la asignatura no es para tí^[Insisto, creo por muy bajo que sea tu nivel de partida, con un interés razonable aprovecharas sin problemas el curso], mejor darse de baja: este año creo que en secretará serán mas estrictos con la fechas de cambo de matricula.
+Sí. Creo que te resultará fácil aprobar; de hecho, el año pasado aprobaron todos los que siguieron el curso: todos eran capaces de importar y arreglar datos, mostrar resultados en tablas y gráficos y presentar informes en Rmarkdown. También es verdad que hubo 4-5 estudiantes que, por diversas razones, decidieron abandonar el curso en la tercera semana y se matricularon en otra optativa. De verdad que creo que os gustará y aprenderéis pero ... has de trabajar, sobre todo al principio. Si, por lo que sea crees que la asignatura no es para ti^[Insisto, creo que por muy bajo que sea tu nivel de partida, con un interés razonable aprovecharás sin problemas el curso], mejor darse de baja: este año creo que en secretará serán mas estrictos con la fechas de cambo de matricula.
 
 <br>
 
