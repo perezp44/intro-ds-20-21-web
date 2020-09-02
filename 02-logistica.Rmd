@@ -23,11 +23,11 @@ Esta sección sirve para poner en un mismo lugar todos los recursos y materiales
 
 ## Recursos:
 
-- [**`Aula Virtual de la asignatura`**](https://aulavirtual.uv.es/course/view.php?id=9254)target="_blank"}: como Aula Virtual es el sitio oficial de la asignatura colgaré allí anuncios de tipo "oficial", como fechas de exámenes. También colgaré en Aula Virtual los detalles sobre la evaluación. Además, si hiciera falta, allí podemos organizar reuniones virtuales a través de BBC (Black Board Collaborate).
+- [**`Aula Virtual de la asignatura`**](https://aulavirtual.uv.es/course/view.php?id=9254){target="_blank"}: como Aula Virtual es el sitio oficial de la asignatura colgaré allí anuncios de tipo "oficial", como fechas de exámenes. También colgaré en Aula Virtual los detalles sobre la evaluación. Además, si hiciera falta, allí podemos organizar reuniones virtuales a través de BBC (Black Board Collaborate).
 
-- [**`Etherpad`**](https://etherpad.wikimedia.org/p/curso_intro_DS_UV)target="_blank"}: durante el curso escribiremos código R. Esta etherpad nos permitirá compartir el código.
+- [**`Etherpad`**](https://etherpad.wikimedia.org/p/curso_intro_DS_UV){target="_blank"}: durante el curso escribiremos código R. Esta etherpad nos permitirá compartir el código.
 
-- [**`Jitsi link to make e-meetings`**](https://meet.jit.si/intro-to-DS_UV_2020-21)target="_blank"}: Una room de Jitsi para hacer reuniones online. Seguramente la utilizaré para las tutorías online.
+- [**`Jitsi link to make e-meetings`**](https://meet.jit.si/intro-to-DS_UV_2020-21){target="_blank"}: Una room de Jitsi para hacer reuniones online. Seguramente la utilizaré para las tutorías online.
 
 
 - [**`Uploader`**](https://driveuploader.com/upload/iHPEJDltDn/){target="_blank"}: Un servicio que utilizaré para recoger vuestros trabajos. Ya os diré como funciona. Lo abriré cuando tenga que recoger trabajos.
@@ -50,12 +50,12 @@ Estos 3 últimos es fácil que no los usemos, pero per si de cas, aquí están:
 
 ## Materiales:
 
-- [**`Tutoriales`**](https://perezp44.github.io/intro-ds-20-21-web/04-tutoriales.html){target="_blank"}: digamos que son los apuntes/libro oficiales del curso. Tenéis que ir leyéndolos poco a poco. Algunas de las tareas a hacer en casa consistirán en leer secciones de estos tutoriales. Los puedes encontrar en la sección `Tutoriales` de esta misma web.
+- [**`Tutoriales`**](https://perezp44.github.io/intro-ds-20-21-web/04-tutoriales.html): digamos que son los apuntes/libro oficiales del curso. Tenéis que ir leyéndolos poco a poco. Algunas de las tareas a hacer en casa consistirán en leer secciones de estos tutoriales. Los puedes encontrar en la sección `Tutoriales` de esta misma web.
 
-- [**`Transparencias`**](https://perezp44.github.io/intro-ds-20-21-web/05-slides.html){target="_blank"}: las transparencias (o slides) que usaré para dar clase. Las puedes encontrar en la sección `Slides` de esta misma web.
+- [**`Transparencias`**](https://perezp44.github.io/intro-ds-20-21-web/05-slides.html): las transparencias (o slides) que usaré para dar clase. Las puedes encontrar en la sección `Slides` de esta misma web.
 
 
-- [**`Ejercicios`**](https://perezp44.github.io/intro-ds-20-21-web/06-ejemplos.html){target="_blank"}: asociados a las transparencias
+- [**`Ejercicios`**](https://perezp44.github.io/intro-ds-20-21-web/06-ejemplos.html): asociados a las transparencias
 
 
 - **`Ejemplos`**: pues eso ejemplos
