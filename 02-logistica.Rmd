@@ -25,17 +25,28 @@ Esta sección sirve para poner en un mismo lugar todos los recursos y materiales
 
 - [**`Aula Virtual de la asignatura`**](https://aulavirtual.uv.es/course/view.php?id=9254): como Aula Virtual es el sitio oficial de la asignatura colgaré allí anuncios de tipo "oficial", como fechas de exámenes. También colgaré en Aula Virtual los detalles sobre la evaluación. Además, si hiciera falta, allí podemos organizar reuniones virtuales a través de BBC (Black Board Collaborate).
 
+- [**`Etherpad`**](https://etherpad.wikimedia.org/p/curso_intro_DS_UV): durante el curso escribiremos código R. Esta etherpad nos permitirá compartir el código.
 
 - [**`Jitsi link to make e-meetings`**](https://meet.jit.si/intro-to-DS_UV_2020-21). Una room de Jitsi para hacer reuniones online. Seguramente la utilizaré para las tutorías online.
 
-- [**`Etherpad`**](https://etherpad.wikimedia.org/p/curso_intro_DS_UV): durante el curso escribiremos código R. Esta etherpad nos permitirá compartir el código.
 
-- [**`RStudio Project in the cloud`**](https://rstudio.cloud/project/1543128): El año pasado este recurso nos resulto muy útil, pero ahora la versión gratuita tiene límite de tiempo, así que seguramente la usemos poco. 
+- [**`Uploader`**](https://driveuploader.com/upload/iHPEJDltDn/): Un servicio que utilizaré para recoger vuestros trabajos. Ya os diré como funciona.
 
-- [**`Apuntes colaborativos en HackMD`**](https://hackmd.io/zUgsCA6zR4GzyojiS2YIZQ): para hacer apuntes colaborativos. Es como Google Docs pero en MD. Veremo si lo usamos.
+<br>
+
+Estos 3 últimos es fácil que no los usemos, pero per si de cas, aquí están:
+
+- [**`RStudio Cloud Project`**](https://rstudio.cloud/project/1543128): El año pasado este recurso nos resulto muy útil, pero ahora la versión gratuita tiene límite de tiempo, así que seguramente no lo usemos.
+
+- [**`Apuntes colaborativos en HackMD`**](https://hackmd.io/zUgsCA6zR4GzyojiS2YIZQ): para hacer apuntes colaborativos. Es como Google Docs pero en MD. Veremos si al final lo usamos.
+
+
+- [**`Cuestionario de Google`**](https://forms.gle/kvrZbuw6XtRDhki98): Generalmente recogeré los trabajos con el `uploader` o por mail, pero esa función también podría hacerla este cuestionario.
 
 
 ----------------------
+
+<br>
 
 ## Materiales:
 
@@ -49,17 +60,18 @@ Esta sección sirve para poner en un mismo lugar todos los recursos y materiales
 
 - **`Ejemplos`**: pues eso ejemplos
 
+----------------------
 
 <br>
 
-----------------------
 
 ## Más recursos:
 
-En esta sección colgaré cosas como la Guía Docente, la guia de instalacion etc...
-<br>
+En esta sección colgaré cosas como la Guía Docente, la guía de instalación etc...
+
 
 ----------------------
+
 
 <br>
 
@@ -68,9 +80,6 @@ En esta sección colgaré cosas como la Guía Docente, la guia de instalacion et
 
 La bibliografía que figura en la Guía Docente es:
 
-
-
-<br>
 
 ----------------------
 
