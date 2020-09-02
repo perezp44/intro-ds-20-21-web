@@ -39,12 +39,12 @@ Esta sección sirve para poner en un mismo lugar todos los recursos y materiales
 
 ## Materiales:
 
-- **`Tutoriales`**: digamos que son los apuntes/libro oficiales del curso. Tenéis que ir leyéndolos poco a poco. Algunas de las tareas a hacer en casa consistirán en leer secciones de estos tutoriales. Los puedes encontrar en la sección `Tutoriales` de esta misma web.
+- [**`Tutoriales`**](https://perezp44.github.io/intro-ds-20-21-web/04-tutoriales.html): digamos que son los apuntes/libro oficiales del curso. Tenéis que ir leyéndolos poco a poco. Algunas de las tareas a hacer en casa consistirán en leer secciones de estos tutoriales. Los puedes encontrar en la sección `Tutoriales` de esta misma web.
 
-- **`Transparencias`**: las transparencias (o slides) que usaré para dar clase. Las puedes encontrar en la sección `Slides` de esta misma web.
+- [**`Transparencias`**](https://perezp44.github.io/intro-ds-20-21-web/05-slides.html): las transparencias (o slides) que usaré para dar clase. Las puedes encontrar en la sección `Slides` de esta misma web.
 
 
-- **`Ejercicios`** asociados a las transparencias
+- [**`Ejercicios`**](https://perezp44.github.io/intro-ds-20-21-web/06-ejemplos.html) asociados a las transparencias
 
 
 - **`Ejemplos`**: pues eso ejemplos
@@ -56,7 +56,7 @@ Esta sección sirve para poner en un mismo lugar todos los recursos y materiales
 
 ## Más recursos:
 
-En esta sección colgaré cosas como la Guia Docente, la guia de instalacion etc...
+En esta sección colgaré cosas como la Guía Docente, la guia de instalacion etc...
 <br>
 
 ----------------------
