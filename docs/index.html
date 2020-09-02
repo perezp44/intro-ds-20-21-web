@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>index.utf8</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="assets/styles_pjp.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Prog y manejo datos (2020-21)</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="01-guia-del-curso.html">
+    <span class="fa fa-graduation-cap"></span>
+     
+    Guía del curso
+  </a>
+</li>
+<li>
+  <a href="02-logistica.html">
+    <span class="fa fa-laptop"></span>
+     
+    Logística
+  </a>
+</li>
+<li>
+  <a href="03-calendario.html">
+    <span class="fa fa-calendar-alt"></span>
+     
+    Calendario
+  </a>
+</li>
+<li>
+  <a href="04-tutoriales.html">
+    <span class="fa fa-book"></span>
+     
+    Tutoriales
+  </a>
+</li>
+<li>
+  <a href="05-slides.html">Slides</a>
+</li>
+<li>
+  <a href="06-ejemplos.html">
+    <span class="fa fa-code"></span>
+     
+    Ejemplos/ejercicios
+  </a>
+</li>
+<li>
+  <a href="07-mas-cosas.html">
+    <span class="fa fa-download"></span>
+     
+    MáS
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<p><br><br></p>
+<div id="programación-y-manejo-de-datos-en-la-era-del-big-data" class="section level3">
+<h3>Programación y manejo de datos en la era del Big Data</h3>
+<hr />
+<p>Bienvenidos a la web de la asignatura <strong><code>Programación y manejo de datos en la era del Big Data</code></strong>, que se impartirá durante el curso académico 2020-21 en el <a href="https://www.uv.es/uvweb/universidad/es/estudios-grado/oferta-grados/oferta-grados/grado-economia-1285846094474/Titulacio.html?id=1285847455792" target="_blank">Grado de Economía</a> de la Universidad de Valencia. Para crear está web se utiliza <a href="https://github.com/perezp44/intro-DS-20-21-web" target="_blank">este repositorio</a> alojado en Github.</p>
+<p>Como sabéis, la asignatura se imparte en el primer semestre del cuarto curso del Grado en Economía. Es una asignatura optativa, código 36494, con una carga lectiva total de 6 ECTS. La asignatura es una <strong>introducción a la ciencia de datos</strong>: pretende iniciar a los estudiantes en este campo presentando una panorámica de tópicos, y exponiéndoos, quizás por primera vez en la carrera, a la programación.</p>
+<p>De momento, 1 de septiembre, <strong>está previsto que las clases se desarrollen de manera presencial</strong><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, pero es posible (esperemos que no!!) que tengamos que cambiar a clases online. Ya lo veremos!!</p>
+<p>Incluso aunque las clases puedan desarrollarse en el aula, va a ser un curso extraño: al ser una asignatura optativa no seremos muchos, unos 35, pero estaremos en un aula de Teoría, llevaremos mascarillas y no podremos interactuar/acercarnos. Esto condicionará, aún no tengo del todo claro cómo, la forma de impartir y recibir las clases, así que <strong>necesitaré vuestra ayuda!!!</strong> Siempre se necesita la ayuda de los estudiantes para que un curso funcione, pero en estas condiciones aún más. Intentaré/intentaremos aprender lo máximo posible sobre R y Ciencia de Datos a pesar de las condiciones.</p>
+<p>En la web encontrarás información acerca del desarrollo del curso, así como la mayoría de los materiales que se usarán en él. Para obtener más información acerca del desarrollo del curso, por favor visita la sección <a href="https://perezp44.github.io/intro-DS-20-21-web/01-guia-del-curso.html"><code>Guía del curso</code></a> de esta misma página web.</p>
+<div class="blue">
+<p><br> <strong>TO DO</strong>: Insisto, lee la <a href="https://perezp44.github.io/intro-DS-20-21-web/01-guia-del-curso.html"><code>Guía del curso</code></a>!! <br></p>
+</div>
+<p><br></p>
+<p>– Pedro J. Pérez</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Las clases está previsto que sean presenciales, <strong>PERO</strong> habrá limitaciones a la movilidad dentro de las clases, incluso parece que será obligatorio el uso de mascarillas, así que será más difícil entenderse, pero lo intentaremos!!<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+<footer class="footer">
+  
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.  <div class="text-muted"><strong> Web</strong> creada por Pedro J. Pérez. &copy;  2020. If you find any bug please report them to <a href="mailto:pedro.j.perez@uv.es"> pedro.j.perez@uv.es</a>.</div>
+  
+</footer>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

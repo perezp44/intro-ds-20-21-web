@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>01-guia-del-curso.utf8</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="assets/styles_pjp.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Prog y manejo datos (2020-21)</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="01-guia-del-curso.html">
+    <span class="fa fa-graduation-cap"></span>
+     
+    Guía del curso
+  </a>
+</li>
+<li>
+  <a href="02-logistica.html">
+    <span class="fa fa-laptop"></span>
+     
+    Logística
+  </a>
+</li>
+<li>
+  <a href="03-calendario.html">
+    <span class="fa fa-calendar-alt"></span>
+     
+    Calendario
+  </a>
+</li>
+<li>
+  <a href="04-tutoriales.html">
+    <span class="fa fa-book"></span>
+     
+    Tutoriales
+  </a>
+</li>
+<li>
+  <a href="05-slides.html">Slides</a>
+</li>
+<li>
+  <a href="06-ejemplos.html">
+    <span class="fa fa-code"></span>
+     
+    Ejemplos/ejercicios
+  </a>
+</li>
+<li>
+  <a href="07-mas-cosas.html">
+    <span class="fa fa-download"></span>
+     
+    MáS
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<p><br></p>
+<hr />
+<p>En esta sección voy a tratar de contaros un poco la filosofía/enfoque del curso y, principalmente, cómo será la forma de trabajar en clase y en casa<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. También diré algo sobre la evaluación. Por favor, <strong>leed completamente esta sección</strong>. Es importante!!</p>
+<p><br></p>
+<div id="introducción" class="section level2">
+<h2>Introducción</h2>
+<hr />
+<div id="resumen" class="section level4">
+<h4>Resumen</h4>
+<p>Como posiblemente sepáis, y si no ya os lo contaré yo el primer día de clase, el curso es una introducción a la ciencia de datos con R; de hecho el título del curso debería ser: <code>Introducción a la Ciencia de datos</code>; o de forma más precisa y extensa: “Una introducción a la Ciencia de datos con R para economistas”.</p>
+</div>
+<div id="relación-de-temas" class="section level4">
+<h4>Relación de temas</h4>
+<p>El curso tiene <strong>“sólo” 5 temas</strong>. En el primer tema se presentan los objetivos del curso, junto con los términos y procesos que justifican la asignatura (Big data, Ciencia de Datos, Machine Learning, investigación reproducible…). En el tema 2 se presentan los rudimentos del lenguaje de programación R. Estos conocimientos básicos se irán reforzando durante el curso trabajando en diferentes tópicos y aplicaciones. En el tema 3, se desarrollarán diversos casos de análisis de datos tabulares, el formato más típico en Ciencias Sociales, con los que se irán asentando los conocimientos de programación iniciados en el tema 2. El tema 4 es una introducción a los conceptos básicos del Machine Learning (training set, validation set, etc..), para luego presentar las técnicas o algoritmos de ML básicos y más relacionados con lo que los estudiantes ya han visto en Econometría, ahora presentados desde una óptica diferente, más orientada a la predicción. El quinto y último tema presenta, una vez habeis alcanzado cierta soltura en el manejo de R, una panorámica de tópicos como, por ejemplo, datos espaciales y textuales.</p>
+<p>A pesar de que la guía docente presenta 5 temas, en el curso no trabajaremos estrictamente por temas sino más bien por tópicos: iremos presentando tópicos/ideas/funciones conforme nos vayan haciendo falta para resolver alguna tarea/problema. En esta asignatura creo que es mejor avanzar en el contenido del curso de forma no lineal y priorizar el trabajo práctico y aplicado: avanzaremos sin haber visto en detalle algunos tópicos/ideas, pero volveremos más adelante a ellas; de forma que, durante las primeras sesiones te surgirán muchas dudas, es normal!! Algunas de ellas las contestaré, pero en otras diré: ya las contestaremos más adelante!! Poco a poco iremos profundizando y comprendiendo mejor lo que hacemos. Explicaré con más detalle este punto en clase.</p>
+</div>
+<div id="sesiones" class="section level4">
+<h4>Sesiones</h4>
+<p>El curso tiene <strong>13 sesiones de 4 horas</strong> (en realidad 3 horas cada sesión). La verdad es que no me gusta que las sesiones sean de 4 horas pero, dadas las actuales circunstancias, es posible que agrupar las clases en un solo día sea, quizás, la mejor opción.</p>
+<p>Las razones por las que, en circunstancias normales, prefiero dos clases a la semana son varias. Una de ellas consiste en que durante la clase hay que pensar bastante (estaremos aprendiendo un lenguaje) y hacer ejercicios y pruebas y acabaréis cansados, espero que contentos por haber aprendido, pero cansados. Otra razón consiste en que faltar un solo día puede ser importante para el seguimiento del curso. Por favor, intentad no faltar a las clases y menos aún a las tres primeras. En las primeras clases se explican cosas/ideas/conceptos que, no es que sean complicadas, de hecho, una vez se entienden son muy sencillas, pero que no son fáciles de entender por uno mismo sin ayuda. Insisto: <strong>no faltéis a clase, pero menos aún a las primeras!!</strong></p>
+<hr />
+<p><br></p>
+</div>
+</div>
+<div id="desarrollo-de-las-clases" class="section level2">
+<h2>Desarrollo de las clases</h2>
+<p>Como sabéis las clases esta previsto que sean presenciales, así que la dinámica de las clases será parecida a lo que estáis acostumbrados, digo parecida porque hay un protocolo covid que deberemos seguir. Supongo que en unas semanas ya estaremos acostumbrados.</p>
+<p>Es necesario acudir con un <strong>ordenador portátil</strong>, mejor si es tu propio ordenador, ya que las clases serán eminentemente prácticas: estaremos buena parte de las sesiones trabajando con el ordenador.</p>
+<p>Nos veremos un día a la semana. En esta misma web, en la sección <a href="https://perezp44.github.io/intro-ds-20-21-web/03-calendario.html"><code>Calendario</code></a> detallaré qué haremos en cada sesión, tanto en clase, como antes de venir a clase. Antes de venir a clase tendréis que realizar las tareas que tengáis asignadas para ese día, generalmente la tarea leer algún material, pero otrsa veces tendreis que realizar alguna tarea que formará parte de la evaluación continua. Repito, <strong>tendréis que hacer unas tareas antes de venir a clase</strong><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
+<p>Ya dentro de clase la dinámica será la siguiente: el profesor, yo, explicaré una idea/tópico, mostraré una aplicación de ella en el ordenador, para después plantearos un reto o cuestión para que trabajéis la idea/concepto y acabéis de entenderlo. Intentaré<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> repetir este esquema de explicación/aplicación de forma rápida; es decir que veamos cuantos más tópicos mejor.</p>
+<p>Buena parte de las sesiones estaréis resolviendo problemas/cuestiones con el ordenador. Lo ideal es trabajar en parejas, se aprende mucho más y más rápido, pero este año esto va a ser complicado<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>. Lo normal es atascarse de vez en cuando mientras estás resolviendo una tarea, y muchas veces es tu compañero te saca del apuro. Yo tampoco voy a poder pasearme por las mesas para ver como lo estáis haciendo, así que esto limitará, en parte, el que yo pueda ayudaros. Esta situación provocada por el covid hará que las clases tengan que ser más pautadas y pausadas: no cerraremos un tópico/tarea hasta que todos hayáis acabado, esto implica que iremos un poco más lentos y también implica que <strong>no podéis despistaros</strong> ya que si no seguís el ritmo se resentirá el aprendizaje de vuestros compañeros. Buff, que estrés!!! No, yo creo que al final las cosas saldrán bien y nos divertiremos y aprenderemos, <strong>PERO</strong> tenéis que tener muy claro que no podéis venir a clase de espectadores a ver que ocurre, tenéis que trabajar en clase y haber trabajado en casa, no os podéis quedar atrás. Si te vas quedando atrás, en una o dos clases no entenderás nada, y no porque las cosas que veamos sean difíciles, no, sino que hay que ir paso a paso y, a veces, entenderlas por tu cuenta sí que es complicado.</p>
+<p><br></p>
+<hr />
+<p><br></p>
+</div>
+<div id="the-plan" class="section level2">
+<h2>The “plan”</h2>
+<p>Mi idea/plan es confiar en que os va a gustar la asignatura y que vais a trabajar lo necesario tanto en casa como en clase, con lo que las clases serán fáciles a pesar de las limitaciones impuestas por el covid.</p>
+<p>Como os he dicho, las clases son los viernes, antes de cada clase publicaré en esta web, en la sección <a href="https://perezp44.github.io/intro-ds-20-21-web/03-calendario.html"><code>Calendario</code></a> el esquema de la clase, las transparencias que utilizaré y el trabajo previo que tendréis que hacer. Si puedo publicaré esos guiones no mas tarde de los lunes. Las transparencias puede que tarden un poco más, pero estarán disponibles en la web antes de cada clase.</p>
+<p>El plan consiste en que vosotros hacéis el trabajo previo antes de venir a clase, de forma que el viernes podéis seguir sin demasiados problemas las clases. De vez en cuando os tendré que hacer una prueba en el aula que formará parte de la evaluación continua.</p>
+<p>Las pruebas saldrán bien, espero, lo que querrá decir que estáis aprendiendo, así que todos estaremos contentos y ademas cumpliremos las recomendaciones sanitarias asi que no tendremos problemas con el covid. Ojala!!</p>
+<blockquote>
+<p>Everyone has a plan until they get punched in the mouth — Mike Tyson</p>
+</blockquote>
+<p>A pesar de que confío en que tengamos suerte y podamos cumplir con “the plan”, la verdad es que hay, creo, altas probabilidades de que igual (espero que no) la docencia pase a ser on-line. Ya veríamos que hacemos en ese caso, cruzad los dedos por si acaso.</p>
+<p><br></p>
+<hr />
+<p><br></p>
+</div>
+<div id="logística" class="section level2">
+<h2>Logística</h2>
+<p>El curso es eminentemente práctico, por lo que es necesario que los estudiantes tengan acceso a un ordenador durante las clases. Dada la situación sanitaria actual, las clases se impartirán en el aula 513 (aula de teoría) por lo que se hace <strong>necesario que cada estudiante venga a clase con su propio portátil</strong>.</p>
+<p>Durante el curso utilizaremos diversos recursos: transparencias, ejemplos, ejercicios, bibliografia, etc… Puedes encontrar todos los detalles en la sección <a href="https://perezp44.github.io/intro-ds-20-21-web/02-logistica.html"><code>Logística</code></a> de la página web.</p>
+<p><br></p>
+<hr />
+<p><br></p>
+</div>
+<div id="evaluación" class="section level2">
+<h2>Evaluación</h2>
+<p>Tal como figura en la adenda covid-19 a la <a href="./pdfs/Guia-Docente.pdf">Guía Docente</a>, el 60% de la nota provendrá de la evaluación continua y el restante 40% lo aportará el examen final.</p>
+<p>Daré los detalles concretos acerca de la evaluación continua la segunda o tercera semana del curso. Estos detalles se publicarán en el <a href="https://aulavirtual.uv.es/course/view.php?id=9254"><code>Aula Virtual</code></a></p>
+<p><br><br><br><br></p>
+<hr />
+</div>
+<div id="faqs" class="section level2">
+<h2>FAQ’s</h2>
+<p>En esta sección pretendo responder a posibles dudas/preguntas que creo que se os pueden pasar por la cabeza antes de iniciar el curso. Yo también tengo dudas sobre cómo será el curso: esta es la segunda vez que se imparte el curso en la UV, pero la primera (y espero que última) que se imparte bajo una situación de pandemia.</p>
+<div id="nunca-he-programado-podré-seguir-el-curso" class="section level5">
+<h5>Nunca he programado ¿podré seguir el curso?</h5>
+<p>Por supuesto, empezaremos con nivel cero, PERO, lo que si que tengo que deciros es que si tu nivel de conocimientos informáticos y/o de programación no es muy elevado (o nulo) haz el esfuerzo de no perderte las 3 primeras clases y tratar de ir entendiéndolo, para eso están las tutorías, <strong>NO lo dejes para el final</strong>, si no, se te hará bola.</p>
+</div>
+<div id="cual-es-el-objetivo-último-del-curso-qué-voy-a-aprender" class="section level5">
+<h5>¿Cual es el objetivo último del curso? ¿Qué voy a aprender?</h5>
+<p>Ya he dicho que el curso es una introducción a la Ciencia de Datos con R. Vas a aprender muchas cosas (espero), pero principalmente a utilizar R para hacer análisis de datos.</p>
+<p>Espero que al final del curso seáis capaces de entender código R, replicar los análisis que se publican en sitios como <a href="https://www.r-bloggers.com/">R-bloggers</a> y ser capaces de hacer análisis de datos propios con R.</p>
+</div>
+<div id="será-fácil-aprobar" class="section level5">
+<h5>¿Será fácil aprobar?</h5>
+<p>Creo que te resultará fácil aprobar; de hecho, el año pasado aprobaron todos los que siguieron el curso: todos eran capaces de importar y arreglar datos, mostar resultados en tablas y gráficos y presentar informes en Rmarkdown.</p>
+</div>
+<div id="acabaremos-el-temario" class="section level5">
+<h5>¿Acabaremos el temario?</h5>
+<p>No lo sé. Depende de vosotros, de mi y de la evolución de la situación sanitaria. El curso tiene <strong>13 sesiones de 4 horas</strong> (en realidad 3 horas cada sesión), de forma que deberían ser suficientes para impartir el contenido de 5 temas, pero resulta que los temas, dependiendo de la profundidad con la que los veamos, pueden hacerse muy extensos. Además, la situación sanitaria actual va a condicionar el formato y prácticas docentes dentro del aula, seguramente ralentizándolas; así que ya veremos hasta donde llegamos.</p>
+</div>
+<div id="me-servirá-lo-que-aprenda-en-mi-futuro-trabajo" class="section level5">
+<h5>¿Me servirá lo que aprenda en mi (futuro) trabajo?</h5>
+<p>Pues no lo sé, depende, pero cada vez es más frecuente que las empresas intenten hacer sus análisis y gestión de datos con R. El año pasado al menos dos estudiantes, que yo sepa, utilizaron R en las empresas en las que estaban haciendo sus practicas curriculares y otros dos ahora mismo estarán cursando un máster de Análisis de Datos, así que seguro que ahora están usando R.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Tenéis también que tener claro que lo que voy a escribir aquí puede estar sujeto a cambios, ¿qué porqué pueden haber haber cambios? pues por muchas razones, una de ellas es evolución de la pandemia, otra es que aún no os conozco<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>algunas de ellas las recogeré y contarán como evaluación continua<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Digo intentaré porque también depende de vosotros<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>Igual esto no es imposible del todo: veremos si es posible suplir la proximidad física con alguna aplicación de mensajería<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+<footer class="footer">
+  
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.  <div class="text-muted"><strong> Web</strong> creada por Pedro J. Pérez. &copy;  2020. If you find any bug please report them to <a href="mailto:pedro.j.perez@uv.es"> pedro.j.perez@uv.es</a>.</div>
+  
+</footer>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
