@@ -110,7 +110,24 @@ Durante el curso utilizaremos diversos recursos: transparencias, ejemplos, ejerc
 
 Tal como figura en la adenda covid-19 a la [Guía Docente](./pdfs/Guia-Docente.pdf), el **60% de la nota provendrá de la evaluación continua** y el restante 40% lo aportará el examen final.
 
-Daré los detalles concretos acerca de la evaluación continua la segunda o tercera semana del curso. Estos detalles se publicarán en el [`Aula Virtual`](https://aulavirtual.uv.es/course/view.php?id=9254)
+Daré los detalles concretos acerca de la evaluación continua la segunda o tercera semana del curso. Estos detalles se publicarán en el [`Aula Virtual`](https://aulavirtual.uv.es/course/view.php?id=9254){target="_blank"} 
+
+
+--------------------
+
+<br>
+
+## Protocolo covid-19
+
+Ya he hecho referencia varias veces a que tendremos que seguir, evidentemente, el protocolo de la UV. Cuando yo os de clase, el viernes 18, ya sabréis mejor que yo como actuar; pero por lo que parece deberemos llevar mascarilla, lavado de manos, separación de asientos, entradas y salidas escalonadas, restricciones de uso en las áreas comunes. Intentaremos cumplir al máximo con el protocolo, no queremos salir en la tele ni ir al hospital!!
+
+Además, sed responsables, y si tenéis algún síntoma quedaros en casa por precaución; a pesar de que he insistido varias veces que es importante asistir a clase, más importante es la salud. Si alguien tiene que quedarse en casa por este motivo, que contacte conmigo y veremos como organizamos tutorias para que pueda seguir el curso mientras hace la cuarentena o simplemente está en casa por algún síntoma. 
+
+- Si tienes dudas sobre tus síntomas, puedes realizarte un autotest o acceder a más información a través de la web de la Consellería de Sanitat: <http://www.san.gva.es/web_estatica/index_va.html>{target="_blank"} . 
+
+- Si crees que puedes tener covid llama al teléfono habilitado por la Generalitat: **ante cualquier síntoma llama al 900 300 555**.
+
+- Página web de la UV sobre covid: <https://www.uv.es/uvweb/universidad/es/coronavirus-1286119460428.html)>{target="_blank"} 
 
 --------------------
 

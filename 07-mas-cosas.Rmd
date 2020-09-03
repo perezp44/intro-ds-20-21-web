@@ -18,7 +18,9 @@ output:
 
 - Aquí tenéis cosas varias como:
 
-- [Instalación de R y RStudio]
+- [Guía de Instalación de R y RStudio](./mas-recursos/instrucciones_instalacion-a.html)
+
+- [Listado de paquetes a instalar](./mas-recursos/paquetes-R-a-instalar.R)
 
 
 

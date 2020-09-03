@@ -15,17 +15,41 @@ p {
 
 
 h4, h5 {
-  color: darkblue; 
+  color: darkblue;
   margin-left: 5px;
 }
 
 
 h1, h2 {
-  color: darkblue; 
+  color: darkblue;
   font-weight: bold;
 }
 
-.blue { background-color:#e6f0ff; border-radius: 4px; padding: 13px;}  
+.blue { background-color:#e6f0ff; border-radius: 4px; padding: 13px;}
 
-.darkkhaki { background-color:#bdb76b; border-radius: 4px; padding: 13px;}  
+.darkkhaki { background-color:#bdb76b; border-radius: 4px; padding: 13px;}
 
+.crimson { background-color:#DC143C; border-radius: 4px; padding: 13px;}
+
+.medium-aquamarine { background-color:#66CDAA; border-radius: 4px; padding: 13px;}
+
+.tan { background-color:#D2B48C; border-radius: 4px; padding: 13px;}
+
+.sandy-brown { background-color:#F4A460; border-radius: 4px; padding: 13px;}
+
+.wheat { background-color:#F5DEB3; border-radius: 4px; padding: 13px;}
+
+.turquoise { background-color:#AFEEEE; border-radius: 4px; padding: 13px;}
+
+.lavender { background-color:#E6E6FA; border-radius: 4px; padding: 13px;}
+
+.lavender-2 { background-color:#D8BFD8; border-radius: 4px; padding: 13px;}
+
+.light-steel { background-color:#B0C4DE; border-radius: 4px; padding: 13px;}
+
+
+.antique { background-color:#FAEBD7; border-radius: 4px; padding: 13px;}
+
+.gris-gainboro { background-color:#DCDCDC; border-radius: 4px; padding: 13px;}
+
+#- https://htmlcolorcodes.com/es/nombres-de-los-colores/

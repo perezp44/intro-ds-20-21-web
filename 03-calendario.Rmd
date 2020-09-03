@@ -18,11 +18,17 @@ output:
 
 - Este apartado iré actualizándolo conforme pasen las semanas. Aquí os pondré los objetivos y tareas previas para cada clase. **TENÉIS** que hacer las tareas previas.
 
-- Las clases serán los viernes de 15:30 a 19:30 en el aula 513 del aulario Sur. Haremos descansos.
+<div class = "blue">
+<br> Repito: **TENÉIS** que hacer las tareas previas antes de ir a clase.  <br>
+</div>
 
-- Tenemos 13 sesiones. Intenta faltar lo menos posible y asiste sí o sí a las 3-4 primeras sesiones.
 
-- Intentaré ajustar y acertar lo más posible la programación pero ... , como sabéis, en una clase simpre puede haber sorpresas.
+
+- Las clases serán los viernes de 15:30 a 19:30 en el aula 513 del aulario Sur. Haremos descansos. Veremos cómo.
+
+- Tenemos 13 sesiones. Intenta faltar lo menos posible y asiste, sí o sí, a las 3-4 primeras sesiones.
+
+- Intentaré ajustar y acertar lo más posible la programación pero ... , como sabéis, en una clase siempre puede haber incidentes/sorpresas.
 
 
 -----------------------
@@ -37,25 +43,31 @@ output:
 
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
-  - read the [`Course "plan"`](https://perezp44.github.io/VAR-models-web/01-Course-plan.html) section of the website.  
-    
-  - read the sections 1 & 2.1 of the [Slides](https://perezp44.github.io/VAR-models-web/03-Slides.html)
+- Lee la sección [`Guía del curso``](https://perezp44.github.io/intro-ds-20-21-web/01-guia-del-curso.html) de la página web del curso.
+  
+- Créate una cuenta en [Github](https://github.com/){target="_blank"}. La usaremos para acceder a varios servicios web.
+
+- Prepara tu ordenador; es decir, instálate R, RStudio y los paquetes. [Aquí]() tienes una guía para la instalación. Si tienes algún problema con la instalación contacta conmigo por email.
+
+- Si quieres puedes echarle un vistazo a las 2 primeras transparencias: [aquí]() y [aquí]()
     
 
 <br>
 
 ##### ¿Qué haremos en la primera clase?
 
-  - talk about how the course will works.  
+  - Lo primero presentar el curso 
 
-  - explain how to deliver the VAR assignment.  
+  - Hablar de la evaluación y forma de trabajo en el curso.
+  
+  
 
 <br>
 
 
 ##### Cosas que has de (medio) entender/saber hacer después de la clase
 
-Muchas veces para (medio) entender/saber hacer estas cosas tendrás que asistir a tutorias o estudiar o preguntar a un compañero, o .... 
+Muchas veces para (medio) entender/saber hacer estas cosas tendrás que asistir a tutorías o estudiar o preguntar a un compañero, o .... 
 
 
    - What is exactly a **VAR model**?
@@ -77,9 +89,7 @@ Too much  for the first class? I don't think so, but we will see ...
 
 <br>
 
-**Challenge:** If you fully understand the following sentence you **should** deserve to pass the course already.
-
-> Sims's original idea to obtain IRF&FEVD was to assume recursive contemporaneous interactions among variables, i.e. by imposing a certain structural ordering of the variables. In terms of the moving average (MA) representation, the structural shocks do not affect preceding variables simultaneously (Cholesky)
+**Challenge:** Intenta a ver si puedes correr este ejemplo e tu ordenador. Si no puedes no te preocupes.
 
 <br>
 
@@ -109,7 +119,7 @@ Too much  for the first class? I don't think so, but we will see ...
 
 ##### Cosas que has de (medio) entender/saber hacer después de la clase
 
-Muchas veces para (medio) entender/saber hacer estas cosas tendrás que asistir a tutorias o estudiar o preguntar a un compañero, o .... 
+Muchas veces para (medio) entender/saber hacer estas cosas tendrás que asistir a tutorías o estudiar o preguntar a un compañero, o .... 
 
 
    - What is 
@@ -121,9 +131,7 @@ Too much  for the first class? I don't think so, but we will see ...
 
 <br>
 
-**Challenge:** If you fully understand the following sentence you **should** deserve to pass the course already.
-
-> Sims's original idea to obtain IRF&FEVD was to assume recursive contemporaneous interactions among variables, i.e. by imposing a certain structural ordering of the variables. In terms of the moving average (MA) representation, the structural shocks do not affect preceding variables simultaneously (Cholesky)
+**Challenge:** 
 
 
 
@@ -155,7 +163,7 @@ Too much  for the first class? I don't think so, but we will see ...
 
 ##### Cosas que has de (medio) entender/saber hacer después de la clase
 
-Muchas veces para (medio) entender/saber hacer estas cosas tendrás que asistir a tutorias o estudiar o preguntar a un compañero, o .... 
+Muchas veces para (medio) entender/saber hacer estas cosas tendrás que asistir a tutorías o estudiar o preguntar a un compañero, o .... 
 
 
    - What is 
@@ -167,9 +175,7 @@ Too much  for the first class? I don't think so, but we will see ...
 
 <br>
 
-**Challenge:** If you fully understand the following sentence you **should** deserve to pass the course already.
-
-> Sims's original idea to obtain IRF&FEVD was to assume recursive contemporaneous interactions among variables, i.e. by imposing a certain structural ordering of the variables. In terms of the moving average (MA) representation, the structural shocks do not affect preceding variables simultaneously (Cholesky)
+**Challenge:** If yo
 
 
 <br>

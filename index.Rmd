@@ -49,10 +49,10 @@ En la web encontrarás información acerca del desarrollo del curso, así como l
 
 
 
+
 <div class = "blue">
 <br> **TO DO**: Insisto, lee la [`Guía del curso`](https://perezp44.github.io/intro-ds-20-21-web/01-guia-del-curso.html)!!  <br>
 </div>
-
 
 
 <br>
