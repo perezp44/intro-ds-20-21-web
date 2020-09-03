@@ -22,4 +22,4 @@ En esta sección pondré cosas varias como:
 
 - [Listado de paquetes a instalar](./mas-recursos/paquetes-R-a-instalar.R)
 
-
+<br><br>
