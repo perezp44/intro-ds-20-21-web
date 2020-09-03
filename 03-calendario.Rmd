@@ -38,10 +38,6 @@ output:
 
 ## 1ª clase (18-sept)
 
-- **`Fecha y hora`:** viernes 18 de septiembre. 15:30 - 19:30. Aula 513
-
-<br>
-
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
 - Lee la sección [`Guía del curso`](https://perezp44.github.io/intro-ds-20-21-web/01-guia-del-curso.html) de la página web del curso.
@@ -61,6 +57,8 @@ output:
 
   - Hablar de la evaluación y forma de trabajo en el curso.
   
+  - 
+  
   
 
 <br>
@@ -71,17 +69,7 @@ output:
 Muchas veces para (medio) entender/saber hacer estas cosas tendrás que asistir a tutorías o estudiar o preguntar a un compañero, o .... 
 
 
-   - What is exactly a **VAR model**?
-   
-   - Why VAR are used in Macroeconomics?
-    
-   - When the VAR's were started to be used in Macroeconomics?
-
-   - To write down the equation(s) of a VAR model. 
-   
-   - What is it an Rproject? what are the benefits of using **Rprojects**?
-   
-   - What is and what is the utility of **Rmarkdown**.
+   - What is
   
 
 <br>
@@ -99,10 +87,6 @@ Too much  for the first class? I don't think so, but we will see ...
 <br>
 
 ## 2ª clase (25-sept)
-
-- **`Fecha y hora`:** viernes 25 de septiembre. 15:30 - 19:30. Aula 513
-
-<br>
 
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
@@ -144,9 +128,6 @@ Too much  for the first class? I don't think so, but we will see ...
 
 ## 3ª clase (25-sept)
 
-- **`Fecha y hora`:** viernes 25 de septiembre. 15:30 - 19:30. Aula 513
-
-<br>
 
 ##### **`Homework`** (para hacer antes de ir a clase) 
 

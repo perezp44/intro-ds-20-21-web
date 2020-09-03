@@ -68,9 +68,9 @@ Estos 3 últimos es fácil que no los usemos, pero per si de cas, aquí están:
 
 ## Algunas guías
 
-- [Guía Docente]()
+- [Guía Docente](./pdfs/Guia-Docente.pdf)
 
-- [Guía de instalación R y RStudio]()
+- [Guía de instalación R y RStudio](./mas-recursos/Instrucciones_instalacion-a.html)
 
 ----------------------
 

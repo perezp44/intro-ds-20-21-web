@@ -1,0 +1,286 @@
+---
+title: "Presentación"
+subtitle: "Programación y manejo de datos en la era del Big Data"
+author: "Pedro J. Pérez     [pedro.j.perez@uv.es]"
+date: "2020"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+
+# Bienvenidos al curso!!
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>
+
+
+## ¿Qué haremos hoy? {.build}
+
+1. Hablar un poco de nosotros y del curso.
+
+2. Objetivo y contenidos del curso.
+
+3. Estructura del curso.
+
+4. Primeras ideas del Tema 1.
+
+5. Instalación R, RStudio y paquetes.
+
+5. Primeros ejemplos.
+
+6. Más ejemplos.
+
+# 1. Tenemos que conocernos
+
+#### (al menos un poquet)
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>
+
+
+##  ¿Quién es el profesor?  {.build}
+
+- Pedro J. Pérez (pedro.j.perez@uv.es)
+
+- Este curso doy solo otra asignaturas: Econometría.
+
+- Entusiasta de R.
+
+- Motivaciones para impartir el curso.
+
+- Mis objetivos en el curso.
+
+
+## Vosotros 
+
+En realidad, ya me habéis contestado a estas preguntas en el cuestionario previo, pero ...
+
+> - Me gustaría saber un poco de vuestras motivaciones a la hora de apuntaros al curso. ¿Por qué TE has apuntado?
+
+> - ¿Tienes una idea clara de cuales son los contenidos/objetivos del curso? ¿Has consultado la guía docente?
+
+> - ¿Cuales son tus objetivos en el curso?
+
+> - ¿Conoces algún lenguaje de programación? ¿Conoces algo de R? ¿sabes qué es la Ciencia de Datos? .....
+
+
+
+## Título del curso 
+
+> - El título oficial del curso es "Programación y manejo de datos en la era del Big Data" ...
+
+> - ... aunque debería ser algo como "Introducción a la ciencia de datos".
+
+> - o más extenso:   "Introducción a la ciencia de datos con R para economistas"
+
+> - ¿Os hubieseis apuntado con el segundo título?
+
+
+
+
+# 2. Objetivo y contenidos del curso
+
+
+#### ¿De qué va el curso? 
+
+
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>
+
+
+
+
+## Ideas generales {.smaller}
+
+> - Asignatura **optativa**. Cuarto curso del Grado de Economía.
+
+> - El título del curso es "Programación y Manejo de datos en la era del Big Data", pero ... debería llamarse **"Introducción a la Ciencia de datos con R"**.
+
+> - **Objetivo general:** iniciaros en la **Ciencia de Datos**. 
+
+> - Para ello se presentarán una **panorámica de tópicos** y os introduciréis, quizá por primera vez en la carrera, en el mundo de la **programación** y en una rama de la estadística que está emergiendo con fuerza como es el Machine Learning.
+
+> - Se pretende que al final del curso seáis capaces de "manejar" datos con R. Que seáis capaces de hacer **análisis de datos con R**
+
+> - Para ello tenemos que aprender a importar, limpiar, transformar, realizar visualizaciones, plantear y estimar modelos y presentar un informe con los resultados. Todo ello con un **software profesional como R**.
+
+> - En el curso se dará mucha importancia a las habilidades prácticas necesarias para "manejar" y analizar conjuntos de datos, dándole las instrucciones por escrito al ordenador; es decir, **programando con R**.
+
+
+
+## Relación de temas  {.build}
+
+- Tema 1: Ciencia de datos y la era del Big Data . 
+
+- Tema 2: Una introducción a R para Ciencia de datos.  
+
+- Tema 3: Manejo y análisis exploratorio de datos tabulares.  
+
+- Tema 4: Introducción al Machine Learning.  
+
+- Tema 5: Otros tipos de datos.
+
+
+## Detalles del curso 
+
+- Clases los viernes: 15:30 a 19:30. 
+
+- 4 horas seguidas de clase(!!).
+
+
+- Teoría vs. Práctica.
+
+- Importancia del trabajo con ordenador.
+
+- Mandaré tareas para el viernes siguiente!!
+
+- Tutorías/Ayuda (pedro.j.perez@uv.es)
+
+
+## Bibliografía 
+
+
+- Grolemund, G., Wickham, H. (2019): [R para Ciencia de Datos](https://es.r4ds.hadley.nz/) 
+    
+- Grolemund, G., Wickham, H. (2016) [R for Data Science](https://es.r4ds.hadley.nz/)   
+    
+- Peng, R. D. (2016): [Exploratory Data Analysis with R](https://bookdown.org/rdpeng/exdata/)   
+    
+- Rafael A. Irizarry (2019): [Introduction to Data Science](https://rafalab.github.io/dsbook/) 
+    
+
+
+## Materiales {.smaller}
+
+Teneis toda la información en la [página web del curso](https://perezp44.github.io/intro-ds-20-21-web/)
+
+<br>
+
+- **Materiales:** tutoriales, ejemplos y casos.
+
+<br>
+
+- Hay muchiiiisimos materiales **out there**.
+
+  - Cursos completos.
+
+  - Bookdowns y similares.
+
+
+  - MOOCs: [Data Science: R Basics](https://www.edx.org/es/course/data-science-r-basics-2), [A Crash Course in Data Science](https://www.coursera.org/learn/data-science-course), [The R Programming Environment](https://www.coursera.org/learn/r-programming-environment).
+
+  - Blogs: [R-weekly](https://rweekly.org/), [R-bloggers](https://www.r-bloggers.com/)
+  
+  - Igual nos apuntamos al proyecto [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday)
+
+
+
+## Evaluación 
+
+- 60% evaluación continua, 40% examen.
+
+- **Evaluación continua**: 
+
+  - en el aula
+  
+  - tareas para casa
+  
+  - 1 proyecto individual
+
+  - 1 proyecto en grupo (3 personas)
+
+<br>
+
+
+- **Examen final**: si es posible, en el aula con el ordenador.
+
+
+
+# Resumiendo ...
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>
+
+
+
+## Resumiendo .... {.smaller}
+
+- El curso es una introducción a diversos tópicos sobre **DS**.
+
+- El énfasis se pondrá, en desarrollar competencias/conocimientos prácticos para "manejar" datos.
+
+- Para ello hace falta "programar".
+
+- Utilizaremos R.
+
+- Al final, se trata de que mejoréis vuestras habilidades prácticas para hacer análisis de datos.
+
+- Para "aprender" estas habilidades se han de practicar.
+
+- El trabajo en clase y fuera de clase es muy importante!!
+
+
+- Espero que aprendáis y que os guste ... en realidad, espero que NOS divirtamos!!
+
+
+# Infraestructura y materiales para el curso
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>
+
+
+## Infraestructura para el curso {.smaller}
+
+- Es necesario tener un ordenador con R y RStudio instalados, tanto en casa con en el aula. El aula 513 es un aula de Teoría.
+
+<br>
+
+- Tenéis que crearos una cuenta en [Github](https://github.com/). Os servirá, entre otras cosas, para acceder a otros servicios que usaremos.  
+
+<br>
+
+- Durante el curso usaremos esta etherpad: <https://etherpad.wikimedia.org/p/curso_intro_DS_UV>
+
+<br>
+
+
+- Más detalles en la página web del curso: <https://perezp44.github.io/intro-ds-20-21-web/>
+
+## Materiales para el curso {.smaller}
+
+- Utilizaremos libros y casos disponibles en internet.
+
+<br>
+
+- Aun así, he preparado un conjunto de **tutoriales**, **ejemplos** y **casos** que podrás descargar en varios sitios:
+
+
+  - Los tutoriales y las transparencias de clase se pueden acceder desde la web del curso.
+
+
+  - Los ejemplos y casos los puedes descargar en: WORKING PROGRESS
+
+
+
+## Para comenzar el curso haremos 4 cosas: 
+
+> - Introducir las **principales ideas del Tema 1**: Big Data, Ciencia de datos, Machine Learning, Investigación reproducible, Software Libre, R ...
+
+> - Presentaros a **R y RStudio**. 
+
+> - Practicar con RStudio.
+
+> - Hacer **varios ejemplos** para que os hagáis una idea más clara de lo que haremos durante buena parte del curso.
+
+
+´
+
+# Pues vamos a comenzar el curso!!!
+
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>
+
+### ¿Algún comentario, pregunta ... ?
+
+
+

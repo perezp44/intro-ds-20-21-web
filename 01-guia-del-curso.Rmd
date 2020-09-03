@@ -61,10 +61,12 @@ El curso tiene **13 sesiones de 4 horas** (en realidad 3 horas cada sesión). La
 
 Las razones por las que, en circunstancias normales, prefiero dos clases a la semana son varias. Una de ellas consiste en que durante la clase hay que pensar bastante (estaremos aprendiendo un lenguaje) y hacer ejercicios y pruebas y acabaréis cansados, espero que contentos por haber aprendido, pero cansados. Otra razón consiste en que faltar un solo día puede ser importante para el seguimiento del curso. Por favor, intentad no faltar a las clases y menos aún a las tres primeras. En las primeras clases se explican cosas/ideas/conceptos que, no es que sean complicadas, de hecho, una vez se entienden son muy sencillas, pero que no son fáciles de entender por uno mismo sin ayuda. Insisto: **no faltéis a clase, pero menos aún a las primeras!!** 
 
+<br>
+
 #### Dinámica de las clases
 
 
-Ya dentro de clase, la dinámica será la siguiente: el profesor, yo, explicaré una idea/tópico, mostraré una aplicación de ella en el ordenador, para después plantearos un reto o cuestión para que trabajéis la idea/concepto y acabéis de entenderlo. Intentaré^[Digo intentaré porque también depende de vosotros] repetir este esquema de explicación/aplicación de forma rápida; es decir que veamos cuantos más tópicos mejor. 
+Ya dentro de clase, la dinámica será la siguiente: el profesor, yo, explicaré una idea/tópico, mostraré una aplicación de ella en el ordenador, para después plantearos un reto o cuestión para que trabajéis la idea/concepto y acabéis de entenderlo. Intentaré^[Digo intentaré porque también depende de vosotros.] repetir este esquema de explicación/aplicación de forma rápida; es decir que veamos cuantos más tópicos mejor. 
 
 Buena parte de las sesiones estaréis resolviendo problemas/cuestiones con el ordenador. Lo ideal es trabajar en parejas, se aprende mucho más y más rápido, pero este año, esto va a ser complicado^[Igual esto no es imposible del todo. Veremos si es posible suplir la proximidad física con alguna aplicación de mensajería.]. Lo normal es atascarse de vez en cuando mientras estás resolviendo una tarea, y muchas veces es tu compañero te saca del apuro. Yo tampoco voy a poder pasearme por las mesas para ver como lo estáis haciendo, así que esto limitará, en parte, el que yo pueda ayudaros. 
 
@@ -156,7 +158,7 @@ Espero que al final del curso seáis capaces de entender código R, replicar los
 
 ##### ¿Será fácil aprobar?
 
-Sí. Creo que te resultará fácil aprobar; de hecho, el año pasado aprobaron todos los que siguieron el curso: todos eran capaces de importar y arreglar datos, mostrar resultados en tablas y gráficos y presentar informes en Rmarkdown. También es verdad que hubo 4-5 estudiantes que, por diversas razones, decidieron abandonar el curso en la tercera semana y se matricularon en otra optativa. De verdad que creo que os gustará y aprenderéis pero ... has de trabajar, sobre todo al principio. Si, por lo que sea crees que la asignatura no es para ti^[Insisto, creo que por muy bajo que sea tu nivel de partida, con un interés razonable aprovecharás sin problemas el curso], mejor darse de baja: este año creo que en secretará serán mas estrictos con la fechas de cambo de matricula.
+Sí. Creo que te resultará fácil aprobar; de hecho, el año pasado aprobaron todos los que siguieron el curso: todos eran capaces de importar y arreglar datos, mostrar resultados en tablas y gráficos y presentar informes en Rmarkdown. También es verdad que hubo 4-5 estudiantes que, por diversas razones, decidieron abandonar el curso en la tercera semana y se matricularon en otra optativa. De verdad que creo que os gustará y aprenderéis pero ... has de trabajar, sobre todo al principio. Si, por lo que sea crees que la asignatura no es para ti^[Insisto, creo que por muy bajo que sea tu nivel de partida, con un interés razonable aprovecharás sin problemas el curso]., mejor darse de baja: este año creo que en secretará serán mas estrictos con la fechas de cambo de matricula.
 
 <br>
 

@@ -1,0 +1,334 @@
+---
+title: "Ideas básicas"
+subtitle: "Tema 1: Ciencia de datos y la era del Big Data"
+author: "Pedro J. Pérez     [pedro.j.perez@uv.es]"
+date: "2020"
+output: ioslides_presentation
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## ¿Qué es esto de la "era del Big Data"? {.smaller}
+
+> - Época de **cambio tecnológico acelerado**, con innumerables efectos en todos los ámbitos de nuestra vida, también en el de las empresas e industrias. 
+
+> - Una parte importante de esos avances están relacionados con la **abundancia de datos**.
+
+> - Los datos provienen de la multitud de dispositivos "inteligentes" conectados a redes.
+
+> - Los datos masivos han posibilitado grandes avances en un campo de investigación como es el **Machine Learning/Deep Learning**
+
+
+> - Big Data, datos masivos o **macrodatos**.
+
+> - Las tres **v**’s del Big Data: **v**olumen, **v**elocidad y **v**ariedad.
+
+
+> - Los datos masivos también han hecho surgir una serie de retos: privacidad, sesgos en los algoritmos. 
+
+
+## IA, ML y DL {.smaller}
+
+> - La idea fundamental en que se basa la Inteligencia Artificial es conseguir que una computadora resuelva un problema complejo como lo haría un humano
+
+> - 3 etapas: inicios, sistemas expertos y ML/DL
+
+
+> - En ML/DL no hay que codificar las reglas, sino que se provee a un algoritmo con suficientes datos y este encuentra las reglas por si mismo; es decir, en cierto sentido "aprende".
+
+
+> - Este enfoque ha posibilitado que muchas tareas "humanas" se hayan automatizado.
+
+> - Un sistema/programa de ML es entrenado más que explicitamente programado.
+
+> - Deep Learning es un subconjunto del ML. Utiliza técnicas/algoritmos más complejas en términos computacionales y, por lo tanto, necesitan para aprender un mayor volumen de datos, pero su filosofía es la misma: proveer datos para que el ordenador aprenda a resolver y automatizar una tarea concreta.
+
+
+
+
+## ¿Qué es la Ciencia de Datos? {.smaller}
+
+- Un nuevo campo de conocimiento que está irrumpiendo con fuerza en muchos planes de estudio.
+
+- El objetivo último de DS es **obtener información/conocimiento** de los datos que genere valor.
+
+- Estadística vs. Data Science (DS). ¿Es lo mismo? Sí y no. 
+
+
+```{r, echo = FALSE, eval = TRUE, out.width = "55%", fig.align = "center", caption = "<https://twitter.com/ReginaNuzzo/status/1156936438451064832>"}
+knitr::include_graphics(here::here("imagenes", "ss_02_img_01_stats-vs-DS.jpg") ) 
+```
+
+## ¿Qué es la Ciencia de Datos? 
+
+
+```{r, echo = FALSE, eval = TRUE, out.width = "95%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "ss_02_img_02_DS.png") ) 
+```
+
+
+## Era del Big Data y DS
+
+> - "The world’s **most valuable resource** is no longer oil, but **data**" (The Economist, 2017).  
+
+> - Necesidad de **convertir datos en información** que aporte valor a las corporaciones.
+
+> - "The **data scientist** is the **sexiest job** of the century" (Harvard Business Review). 
+
+> - ¿Qué es un científico de datos?  
+
+
+## ¿Qué es un científico de datos? {.smaller}
+
+- Un estadístico con pajarita... no, evidentemente no.
+
+```{r, echo = FALSE, eval = TRUE, out.width = "56%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "ss_02_img_03_DS-venn.png") ) 
+```
+
+- Para un data scientist son muy importantes las hackings skills (programación).
+
+
+
+## ¿Tengo que aprender a programar? 
+
+> - **SÍ**. Bueno, al menos un  poco, todo lo que podamos.
+
+> - Point & click programs vs lenguajes de prográmación: **flexibilidad** y **reproducibilidad**
+
+> - Una de las **competencias** importantes en DS es saber **programar**, pero ...  requiere tiempo. 
+
+
+--- 
+
+- Una de las **competencias** importantes en DS es saber **programar**, pero ...  requiere tiempo. 
+
+```{r echo = FALSE, out.width = "43%", fig.align = "center" , caption = "<https://xkcd.com>"}
+knitr::include_graphics(here::here( "/imagenes", "ss_02_img_04_automation.png" ))
+```
+
+```{r echo = FALSE, out.width = "35%", fig.align = "center" , caption = "<https://xkcd.com>"}
+knitr::include_graphics(here::here( "/imagenes", "ss_02_img_05_salt.png" ))
+```
+
+
+## Investigación reproducible y software libre {.smaller}
+
+- Para que un análisis con datos sea reproducible, no sólo es necesario que los datos utilizados han de ser accesibles, sino que cómo mínimo debería:
+
+    - proporcionar los datos originales (obviamente documentar las fuentes)
+
+    - efectuar todo el proceso a través de código (scripts)
+
+    - documentar el proceso de trabajo (por ejemplo el orden en que se ejecutaron los scripts)
+
+
+- Además debería utilizar **software libre**
+
+- En el curso usaremos R
+
+
+
+
+  
+# What is R?
+
+## What is R? {.smaller}
+
+- R is a programming language and software **environment for statistical computing and graphics** 
+
+- R is distributed under the **GNU GPL license**; that is, it's **free software**
+
+- R it's also **free** (its price is zero)
+
+- R it's **multiplatform**: it is available for Windows, Macintosh and GNU / Linux.
+
+- The official website of R is called: [The R Project for Statistical Computing](https://www.r-project.org/)
+
+
+- R was created by **R. Ihaka and R.Gentleman** of the University of Auckland in **1993**
+
+- From 1997 the development of R is carried out by a group of programmers known as **"The R-core team"** ... 
+
+- ... but today, the R environment is the result of the collaboration of a whole **community of R users**
+
+
+
+## Capabilities of  R {.smaller}
+
+
+- R is extensible through functions and packages
+
+- The official repository is [CRAN](https://cran.r-project.org/): Comprehensive R Archive Network
+
+- In January 2017 [CRAN reached the 10.000 packages](http://blog.revolutionanalytics.com/2017/01/cran-10000.html)
+
+- R (with its packages) can implement a huge variety of statistical and graphical techniques.
+
+
+# Why R?
+
+---------
+
+
+```{r, echo = FALSE,  eval = TRUE,  fig.asp = 3/2, out.width = "90%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "ss_02_img_06_R-como-cars.jpeg"))
+```
+
+
+Please, **don't look** [this other one](http://crashworks.org/if_programming_languages_were_vehicles/)  `r emo::ji("smile")` !!!
+
+
+## Why R?
+
+- For me, the best part of R is the **R community**
+
+- In many ways, **R is the data language**: in data science it’s THE language to beat (with only 1 serious contender: Phyton)
+
+- If you don't believe me, you could read [this](http://nadaesgratis.es/fernandez-villaverde/r) or [this](https://www.r-bloggers.com/why-r-is-the-best-data-science-language-to-learn-today/), or [this](https://shirinsplayground.netlify.com/2017/09/ode_to_r/)
+
+- Among the companies that use R are: Google, Facebook, Twitter, Microsoft, IBM, Uber, Ford, Airbnb, American Express, Barclays Bank, Bank of America ...  You can find a more complete list [here](https://www.listendata.com/2016/12/companies-using-r.html)
+
+- BUT, not all the people loves R: read [this](http://arrgh.tim-smith.us/) or the classical [R-inferno](http://www.burns-stat.com/documents/books/the-r-inferno/)
+
+
+## The debate R vs. Phyton {.smaller} 
+
+- Phyton is a more general programming language and R is more domain specific. Look some classifications [here](https://www.r-bloggers.com/pypl-language-rankings-python-ranks-1-r-at-7-in-popularity/)
+
+- There are many opinions about **R vs Phyton** but .... check [this one](http://mchow.com/posts/data-science-cbk/)
+
+<br>
+
+- Aunque después de [lo que dijo Elmo](https://twitter.com/minebocek/status/1174382623499661312), yo creo que el debate está zanjado:
+
+
+
+# **R-base  vs. [tidyverse](https://www.tidyverse.org/)**  
+
+#### But before to start your journey into R you should know some things about the recent history of R
+   
+   
+-----   
+   
+  - In recent years has been a kind of revolution in the R-world: [Haldey Wickham & the tidyverse](https://priceonomics.com/hadley-wickham-the-man-who-revolutionized-r/?utm_campaign=Data%2BElixir&utm_medium=email&utm_source=Data_Elixir_46)  
+
+
+
+```{r, echo = FALSE,  eval = TRUE,  fig.asp = 2/2, out.width = "60%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "ss_02_img_07_Hadley.jpg"))
+```
+
+----
+
+- [Hadley Wichahm](http://hadley.nz/), chief scientist at [RStudio](https://www.rstudio.com/) was the father of the Hadleyverse, that has mutated into the **tidyverse** thanks to a group of developers; for instance:
+
+
+
+```{r, echo = FALSE,  eval = TRUE,  fig.asp = 2/2, out.width = "80%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "ss_02_img_08_gente-tidyverse.jpg"))
+```
+
+
+
+
+
+# What it's the tidyverse? {.smaller}
+
+-------
+
+- Well ... we can say that the tidyverse is a **group of R-packages that works well togheter** and that has changed, for the better, the way to program in R. 
+
+- In [Emily Robinson](https://github.com/robinsones) word's in this fantastic [slides](https://es.slideshare.net/EmilyRobinson52/the-lesser-known-stars-of-the-tidyverse), the **tidyverse** is: " `
+An opinionated collection of R packages designed for data science that share an underlying design philosophy, grammar, and data structures` "
+
+
+```{r, echo = FALSE,  eval = TRUE,  fig.asp = 2/2, out.width = "60%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "ss_02_img_09_pkgs-tidy.jpg"))
+```
+
+
+
+## The philosophy of the tidyverse {.smaller}
+
+You could read the [The tidy tools manifesto](https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html), but this 3 sentences capture their essence:
+
+  - Compose simple functions with the pipe (` %>% `)
+  
+<br>
+
+  - "Programs must be written for people to read, and only incidentally for machines to execute"  --- Hal Abelson
+
+<br>
+
+  - "If I had one thing to tell biologists learning bioinformatics, it would be write **code for humans**, write **data for computers**" --- Vince Buffalo
+  
+  <br>
+  
+  - "An important aspect of writing data for computers is to **make your data TIDY**" --- Jenny Bryan
+
+  
+---
+
+####  **Some differences among Base-R & tidyverse**
+
+<br>
+
+
+- You could find [here](http://www.onthelambda.com/2014/02/10/how-dplyr-replaced-my-most-common-r-idioms/) a post about the differences among the functions of R-base  & the tidyverse 
+
+- [Here](http://zevross.com/blog/2015/01/13/a-new-data-processing-workflow-for-r-dplyr-magrittr-tidyr-ggplot2/) another post from a new converted to the tidyverse. He says: "`Up until last year my R workflow was not dramatically different from when I started using R more than 10 years ago. Thanks to several R package authors my workflow has changed for the better ...`"
+    
+- An example of code à la tidyverse: 
+
+```r
+data %>% filter(X1 > 400) %>% group_by(X2) %>% summarise(media = mean(X3))
+```
+  
+
+
+## Tidyverse workflow & Reproducible Research {.smaller}
+
+
+```{r , echo=FALSE, fig.cap="**Data wrangling** from http://r4ds.had.co.nz/wrangle-intro.html", eval = TRUE, fig.asp = 4/2, out.width = "80%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "ss_02_img_10_data-wrangle.png"))
+```
+
+
+- In my opinion R is one step ahead of the others languages in tools to make reproducible documents: Rmarkdown & friends (blog**down**, package**down**, book**down**, flex-dashboards, shiny ...)
+
+- You could understand that looking at [this gallery](https://rmarkdown.rstudio.com/gallery.html). To learn how to make this kind of reproducible documents you could go [here](https://rmarkdown.rstudio.com/lesson-1.html) or [here](https://bookdown.org/yihui/rmarkdown/)
+
+
+
+
+## **5 websites you MUST know** {.smaller}
+
+**Packages**:
+
+- Official R package repository: [CRAN](https://cran.r-project.org/web/packages/ggplot2/index.html)
+
+- Un-official repository: [Github](https://github.com/tidyverse/ggplot2)
+
+
+<br>
+
+To find **inspiration** (examples of recent analysis in R):
+
+- [R-bloggers](https://www.r-bloggers.com/)   
+
+- [R weekly](https://rweekly.org/)
+
+
+<br>
+
+To find help:
+
+- [Stack overflow](https://stackoverflow.com/questions/12675147/how-can-we-make-xkcd-style-graphs)
+
+
+# To finish let's open R & RStudio!!
