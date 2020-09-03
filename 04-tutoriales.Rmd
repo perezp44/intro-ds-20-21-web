@@ -5,9 +5,8 @@ output:
     css: assets/styles_pjp.css
     theme: united
     highlight: monochrome 
+    self_contained: yes
     number_sections: no
-    toc: true
-    toc_float: true
 ---
 
 <br>
