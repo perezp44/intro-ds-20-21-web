@@ -18,7 +18,7 @@ output:
 
 En esta sección pondré cosas varias como: 
 
-- [Guía de Instalación de R y RStudio](./mas-recursos/Instrucciones_instalacion-a.html)
+- [Guía de Instalación de R y RStudio](./mas-recursos/Instrucciones_instalacion-a.html){target="_blank"}
 
 - [Listado de paquetes a instalar](./mas-recursos/paquetes-R-a-instalar.R)
 

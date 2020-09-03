@@ -18,17 +18,18 @@ output:
 
 - Este apartado iré actualizándolo conforme pasen las semanas. Aquí os pondré los objetivos y tareas previas para cada clase. **TENÉIS** que hacer las tareas previas.
 
-<div class = "blue">
-<br> Repito: **TENÉIS** que hacer las tareas previas antes de ir a clase.  <br>
-</div>
-
-
 
 - Las clases serán los viernes de 15:30 a 19:30 en el aula 513 del aulario Sur. Haremos descansos. Veremos cómo.
 
 - Tenemos 13 sesiones. Intenta faltar lo menos posible y asiste, sí o sí, a las 3-4 primeras sesiones.
 
 - Intentaré ajustar y acertar lo más posible la programación pero ... , como sabéis, en una clase siempre puede haber incidentes/sorpresas.
+
+
+
+<div class = "blue">
+<br> Repito: Antes de venir a clase **TENÉIS** que hacer las tareas previas asignadas.  <br>
+</div>
 
 
 -----------------------
@@ -47,7 +48,7 @@ output:
   
 - Créate una cuenta en [Github](https://github.com/){target="_blank"}. La usaremos para acceder a varios servicios web.
 
-- Prepara tu ordenador; es decir, instálate R, RStudio y los paquetes. [Aquí](./mas-recursos/Instrucciones_instalacion-a.html) tienes una guía para la instalación. Si tienes algún problema con la instalación contacta conmigo por email.
+- Prepara tu ordenador; es decir, instálate R, RStudio y los paquetes. [Aquí](./mas-recursos/Instrucciones_instalacion-a.html){target="_blank"} tienes una guía para la instalación. Si tienes algún problema con la instalación contacta conmigo por email.
 
 - Si quieres puedes echarle un vistazo a las 2 primeras transparencias: [aquí](./slides/ss_01_presentacion-curso.html){target="_blank"} y [aquí]()
     
