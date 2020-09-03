@@ -92,7 +92,7 @@ Al igual que para usar las aplicaciones de un móvil primero hay que instalarlas
 
   - Obviamente los paquetes los has de instalar después de haber hecho los 2 pasos anteriores; es decir, después de haber instalado primero R y luego RStudio. Son bastantes paquetes, así que tardará un ratito, entre 10 y 15 minutos, según la potencia de tu ordenador y red. Tardará un rato, pero mientras se instala puedes seguir trabajando en tu ordenador.
 
-  - Para instalar los paquetes que usaremos en el curso tienes que pinchar [aquí](./mas-recursos/paquetes-R-a-instalar.R) o [aquí](https://github.com/perezp44/intro-ds-20-21-web/blob/master/mas-recursos/paquetes-R-a-instalar.R) o [aquí](https://raw.githubusercontent.com/perezp44/repository/intro-ds-20-21-web/master/mas-recursos/paquetes-R-a-instalar.R) y se te abrirá una ventana diciendo que se va a abrir un fichero con `RStudio`. Acepta. Se abrirá RStudio y el fichero, entonces, pincha con el botón derecho del ratón y se abrirá un  menú contextual. Selecciona la opción **"Select All"**.
+  - Para instalar los paquetes que usaremos en el curso tienes que pinchar [aquí](https://perezp44.github.io/intro-ds-20-21-web/mas-recursos/paquetes-R-a-instalar.R) o  y se te abrirá una ventana diciendo que se va a abrir un fichero con `RStudio`. Acepta. Se abrirá RStudio y el fichero, entonces, pincha con el botón derecho del ratón y se abrirá un  menú contextual. Selecciona la opción **"Select All"**.
 
 
 ```{r echo = FALSE, comment = "",  out.width = '75%', fig.align = 'center', fig.cap = "Pincha en Select All"}
