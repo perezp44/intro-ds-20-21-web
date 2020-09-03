@@ -15,8 +15,34 @@ output:
 
 -------------------
 
-Aquí iré subiendo los tutoriales conforme los vaya actualizando:
+En esta sección iré subiendo los tutoriales conforme las vaya actualizando. Se supone que algún día juntare todos los tutoriales en un `bookdown`, una especie de libro electrónico hecho con R, de momento, para la web del curso prefiero este formato.
+
+Todas los tutoriales están hechos con R, de hecho, una de las cosas que has de aprender durante el curso es a hacer ficehros parecidos a estos tutoriales. Concretamente, los 2 proyectos del curso tendrás que presentarlos en este formato. Verás que es sencillo.
+
+<br>
+
+- [`Prefacio`](./tutoriales/tt_00_prefacio_v3.html){target="_blank"}. El fichero que genera el tutorial está [aquí](./tutoriales/tt_00_prefacio_v3.Rmd)
 
 
+- [`Tutorial 01: Introducción`](./tutoriales/tt_01_introduccion_v4.html){target="_blank"}. El fichero que genera el tutorial está [aquí](./tutoriales/tt_01_introduccion_v4.Rmd)
 
-- [`Primeros pasos con R](./tutoriales/tt_02_primeros-pasos-con-R_v2.html){target="_blank"}
+
+- [`Tutorial 02: Primeros pasos con R`](./tutoriales/tt_02_primeros-pasos-con-R_v2.html){target="_blank"}. El fichero que genera el tutorial está [aquí](./tutoriales/tt_02_primeros-pasos-con-R_v2.Rmd)
+
+
+- [`Tutorial 03: R base`](./tutoriales/tt_03_R-base_v5.html){target="_blank"}. El fichero que genera el tutorial está [aquí](./tutoriales/tt_03_R-base_v5.Rmd)
+
+
+- [`Tutorial 04: Cargar datos`](./tutoriales/tt_04_cargar_datos_v8.html){target="_blank"}. El fichero que genera el tutorial está [aquí](./tutoriales/tt_04_cargar_datos_v8.Rmd)
+
+
+- [`Tutorial 05: Data munging `](./tutoriales/tt_05_data_munging_v4.html){target="_blank"}. El fichero que genera el tutorial está [aquí](./tutoriales/tt_05_data_munging_v4.Rmd)
+
+
+- [`Tutorial 06: Ggplot2 `](./tutoriales/tt_06_ggplot2_v7.html){target="_blank"}. El fichero que genera el tutorial está [aquí](./tutoriales/tt_06_ggplot2_v7.Rmd)
+
+
+- [`Tutorial 07: Rmarkdown`](./tutoriales/tt_07_Rmarkdown_v3.html){target="_blank"}. El fichero que genera el tutorial está [aquí](./tutoriales/tt_07_Rmarkdown_v3.Rmd)
+
+
+- [`Tutorial 08: Tablas`](./tutoriales/tt_08_tablas_v2.html){target="_blank"}. El fichero que genera el tutorial está [aquí](./tutoriales/tt_08_tablas_v2.Rmd)

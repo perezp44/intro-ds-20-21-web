@@ -17,14 +17,16 @@ output:
 
 En esta sección iré subiendo las transparencias de clase conforme las vaya preparando. Todas las transparencias están hechas con R, de hecho, una de las cosas que has de aprender durante el curso es a hacer transparencias desde R. 
 
-Concretamente, habrá un trabajo en equipo (2 personas), donde entre otras cosas, tendréis que hacer unas transparencias para presentar vuestro trabajo. Tendréis que hacer las transparencias con R, usando el formato [`ioslides`](https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html){target="_blank"}. Mis 2 primeras transparencias están hechas en ese formato. Para el resto seguramente usaré otro formato: [`xaringan`](https://bookdown.org/yihui/rmarkdown/xaringan.html){target="_blank"}.
+Concretamente, habrá un trabajo en equipo (3 personas), donde entre otras cosas, tendréis que hacer unas transparencias para presentar vuestro trabajo. Tendréis que hacer las transparencias con R, usando el formato [`ioslides`](https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html){target="_blank"}. 
+
+Mis 2 primeras transparencias están hechas en el formato `ioslides`. Para el resto, seguramente, usaré otro formato: [`xaringan`](https://bookdown.org/yihui/rmarkdown/xaringan.html){target="_blank"}.
 
 <br>
 
-- [`Slides-01: Presentación](./slides/ss_01_presentacion-curso.html){target="_blank"}. El fichero que generá las transparencias está [aquí](./slides/ss_01_presentacion-curso.Rmd)
+- [`Slides-01: Presentación](./slides/ss_01_presentacion-curso.html){target="_blank"}. El fichero que genera las transparencias está [aquí](./slides/ss_01_presentacion-curso.Rmd)
 
 
-- [`Slides-02: Tema 1](./slides/ss_02_tema-1.html){target="_blank"}. El fichero que generá las transparencias está [aquí](./slides/ss_02_tema-1.Rmd)
+- [`Slides-02: Tema 1](./slides/ss_02_tema-1.html){target="_blank"}. El fichero que genera las transparencias está [aquí](./slides/ss_02_tema-1.Rmd)
 
 
 

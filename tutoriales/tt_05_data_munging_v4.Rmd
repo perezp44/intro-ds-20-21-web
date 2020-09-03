@@ -1,0 +1,2206 @@
+---
+title: 'Data munging: the tidyverse way (WIP)'
+author: "Pedro J. Pérez"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+#date: "2020/03/05 (updated: `r Sys.Date()`)"
+output:
+  html_document:
+    css: !expr here::here("assets", "styles_pjp.css") #-https://stackoverflow.com/questions/56681879/how-to-use-here-for-paths-to-css-before-body-and-after-bod
+    theme: paper
+    highlight: textmate 
+    toc: true
+    toc_depth: 3 
+    toc_float: 
+      collapsed: true
+      smooth_scroll: true
+    self_contained: true
+    number_sections: false
+    #code_folding: show
+    df_print: kable
+    code_download: true
+editor_options: 
+  chunk_output_type: console
+bibliography: "`r here::here('assets', 'biblio.bib')`"  #- joooder. single quotes https://community.rstudio.com/t/use-here-here-function-in-yaml-option/18667/9
+---
+
+
+
+```{r chunk_setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, message = FALSE, warning = FALSE, #include = FALSE,
+                      cache = FALSE, cache.path = "/caches/", comment = "#>",
+                      #fig.width = 7, fig.height= 7,   
+                      #out.width = 7, out.height = 7,
+                      collapse = TRUE,  fig.show = "hold",
+                      fig.asp = 7/9, out.width = "60%", fig.align = "center")
+```
+
+```{r options_setup, echo = FALSE}
+options(scipen = 999) #- para quitar la notación científica
+```
+
+```{r cargar_pkgs, echo = F}
+#library("personal.pjp")
+library("tidyverse")
+library("haven")
+#library("xlsx")
+library("foreign")
+library("readxl")
+library("gapminder")
+```
+
+---------------------------------------
+
+<div class = "blue">
+<br> **In progress**: Resulta que `dplyr 1.0.0` llegó a CRAN en mayo de 2020 y cambiaron unas cuantas cosas, así que toca actualizar el tutorial. La news file esta [aquí](https://github.com/tidyverse/dplyr/blob/master/NEWS.md) <br>
+</div>
+
+---------------------------------------
+
+
+# 1. Introducción
+
+<br>
+
+En el tutorial anterior aprendimos a cargar datos en R. Sin embargo, es difícil que en una aplicación real tengamos los datos tal y como los necesitamos para hacer nuestro análisis. Habitualmente tendremos que trabajar los datos para arreglarlos. Este proceso, que en castellano podría llamarse "limpieza" o **procesado de datos**, se conoce en inglés como **data munging or data wrangling**.
+
+En el curso vamos a trabajar/manejar los datos usando un conjunto de paquetes asociados asociados con el enfoque conocido como **tidyverse**. Como puedes ver en la imagen, ya hemos importado los datos y, antes de empezar a hacer el verdadero análisis, tenemos que pasar por 2 etapas más: 
+
+  - hacer nuestros datos tidy
+  - arreglarlos para que sean útiles para nuestros propósitos
+
+<br>
+
+
+```{r , echo=FALSE, fig.cap="**Data wrangling** from http://r4ds.had.co.nz/wrangle-intro.html", eval = TRUE, fig.asp = 4/2, out.width = "80%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "tt_05_img_01_data-wrangle.png"))
+```
+
+<br>
+
+
+Se suele decir que el procesado/limpieza de los datos suele ocupar un 80% del tiempo de un análisis de datos. Quizás sea una cifra un poco exagerada, pero, en cualquier caso, es una tarea que ocupa tiempo y que puede llegar a ser tediosa y frustrante si no se dispone de las **herramientas adecuadas**. Incluso datos que parecen que ya están trabajados es bastante fácil que tengamos que trabajarlos para adaptarlos a nuestras necesidades.
+
+
+```r
+Una secuencia "real" de tweets:
+
+0930: How lucky I am to work on clean datasets curated by true professionals.
+1330: Huh. Some inconsistencies here. No bigs. Ill just write up some quick and dirty regex to clean this up.
+
+1720: I WILL BURN THIS HERETICAL DATA CENTER AND SCATTER ITS ASHES (traducción: me cago en todo lo que se menea)
+```
+
+En clase utilizamos datos reales, pero la verdad es que suelen ya estar casi limpios del todo. Estamos aprendiendo.
+
+> Classroom data are like teddy bears; real data are like a grizzly with salmon blood dripping out its mouth. ----  [\@JennyBryan]
+
+
+Como dice Albert Y. Kim en [estas transparencias](http://rpubs.com/rudeboybert/eCOTS_2018) los datos utilizados para aprender a manejar datos tienen que ser realistas pero sin llegar a ser intimidantes.
+
+```{r echo = FALSE, out.width = "120%", eval = TRUE}
+knitr::include_graphics(here::here("./imagenes/tt_05_img_02_grizlly-vs-teddy.jpg"))
+```
+
+
+<br>
+
+
+En este tutorial aprenderemos a limpiar y transformar datos en R. Priorizaremos la nueva forma de hacer las cosas en R (o workflow) conocido como **tidyverse**. En los últimos años se ha convertido, por varias razones, en el enfoque estándar; a pesar de ello, cada cierto tiempo vuelve a reabrirse el debate sobre cómo enseñar/aprender R y si es apropiado priorizar el tidyverse sobre R-base. [Aquí](https://twitter.com/kaija_bean/status/1217293396706054145) tienes un hilo de twitter donde se debate sobre este tema.
+
+<br>
+
+
+[Aquí](http://www.onthelambda.com/2014/02/10/how-dplyr-replaced-my-most-common-r-idioms/) tenéis un post sobre las diferencias entre las funciones de R-base y las del tidyverse para el procesado de datos, y [aquí](http://zevross.com/blog/2015/01/13/a-new-data-processing-workflow-for-r-dplyr-magrittr-tidyr-ggplot2/) otro post de un nuevo convencido de las bondades de esta nueva forma de manipular datos en R. Como ejemplo:
+
+
+> Up until last year my R workflow was not dramatically different from when I started using R more than 10 years ago. Thanks to several R package authors, most notably Hadley Wickham, my workflow has changed for the better using dplyr, magrittr, tidyr and ggplot2. Given how much I've enjoyed the speed and clarity of the new workflow
+
+<br>
+
+--------------------------
+
+##  Tidyverse
+
+#### ¿Qué es esto del tidyverse?
+
+<br>
+
+Con la palabra tidyverse se hace referencia a una "nueva" forma de afrontar el análisis de datos en R en la que se  hace uso de **un grupo de paquetes que trabajan en armonía** porque comparten ciertos principios, como por ejemplo, la forma de estructurar los datos. 
+
+La mayoría de estos paquetes han sido desarrollados por (o al menos con la colaboración de) [Hadley Wickham](http://hadley.nz/). Esta es la [página web del tidyverse](https://www.tidyverse.org/)
+
+
+No es necesario, pero si quieres conocer un poco mejor qué es el tidyverse, puedes hacerlo leyendo [The tidy tools manifesto](https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html). Está cita es un buen referente de la filosofía o enfoque del tidyverse
+
+> Programs must be written for people to read, and only incidentally for machines to execute  -- Hal Abelson
+
+
+<br>
+
+Para continuar entendiendo qué es esto del tidyverse, citaré 2 de sus principios:
+
+  - Los scripts deben ser **"fácilmente" legibles por las personas**  
+  
+  - **Resolver problemas complejos** encadenando funciones simples con el **operador `%>%`**
+
+
+<br>
+
+-------------------------------------
+
+
+## The pipe (` %>% `)
+
+Este operador ocupa un lugar fundamental en el tidyverse. Permite resolver un problema complejo no de una sola vez, sino encadenando llamadas a funciones que se van encadenando con el operador `%>%`. Este operador facilita mucho la lectura e interpretación del código, ya que se van encadenando operaciones sencillas para, poco a poco, conseguir transformaciones de datos complejas. El **operador pipe** se lo debemos a Stefan Bache en su pkg [magrittr](https://github.com/tidyverse/magrittr).
+
+
+
+```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "20%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "tt_05_img_03_operador-pipe.png"))
+```
+
+<br>
+
+En palabras, lo que hace este operador es **pasar el elemento que está a su izquierda como un argumento de la función que tiene a la derecha**. Así al principio parece complicado. 
+
+
+**Con expresiones** el operador pipe hace: 
+```{r, echo = FALSE, eval = TRUE}
+aa <- data.frame(x = c("f(object, argumentos de la función)", ""),  y = c("ES EQUIVALENTE a", "--"), z = c("object  %>%  f(argumentos de la función)", "") )
+knitr::kable(aa,col.names = c(" ", "--", " "), align = "c")
+```
+
+
+
+<br>
+
+**Se entiende mejor con ejemplos sencillos**. Las siguientes dos instrucciones de R **hacen exactamente lo mismo**: permiten ver las 4 primeras filas del `penguins` dataset.
+
+```{r, echo = TRUE, eval = FALSE}
+library(palmerpenguins)
+
+head(penguins, n = 4)         #- forma habitual de llamar/usar la función head()
+
+penguins %>% head(. , n = 4)  #- usando el operador pipe
+```
+
+
+La primera expresión es la manera habitual de usar/llamar a la función `head()`. La segunda expresión es la sintaxis, la forma que hay que usar, si trabajamos con el operador pipe.
+
+
+Así, a primera vista, parece que el operador `%>%` no supone ninguna ventaja, sólo es una forma distinta de ejecutar o llamar a una función, y a primera vista parece complicar las cosas. Sí, eso es cierto, si solo usas una función no tendría mucho sentido usar `%>%`, pero cuando tienes que hacer una sucesión de cálculos, una sucesión de llamadas a funciones, facilita mucho la lectura del código y por tanto el análisis. Lo vemos enseguida.
+
+Para entender un poco más el funcionamiento de `%>%`, has de ver que estas tres instrucciones son equivalentes.
+
+```{r, echo = TRUE, eval = FALSE}
+head(penguins, n = 4)         #- forma habitual de llamar/usar la función head()
+
+penguins %>% head(. , n = 4)  #- usando el operador pipe (con el punto actuando como placeholder)
+
+penguins %>% head(n = 4)      #- usando el operador pipe (SIN el punto)
+```
+
+El punto de la segunda expresión señala, le dice a the pipe donde debe situarse el argumento de la izquierda dentro de la función; en nuestro ejemplo le dice a `%>%` que `penguins` debe situarse en el primer slot de `head()`. El punto `.` le está diciendo a `%>%` donde debe situarse `penguins`; es decir, el punto actúa, lo estamos usando, como un "placeholder".
+
+La tercera expresión también funciona porque si no usamos el punto (`.`), entonces, por defecto, el operador pipe situará `penguins` en el primer slot de la función, en nuestro caso situará a `penguins` en el primer slot de `head()`.
+
+La forma más habitual es no poner el `.`; es decir, la tercera expresión. La razón es simplemente que se ahorra tiempo al escribir, aunque la segunda expresión es mucho más explicita, más descriptiva, de lo que hace el operador pipe.
+
+<br>
+
+Para casi terminar de entender la sintaxis del operador pipe. Intentad ver si entendéis la siguiente instrucción:
+
+```{r, echo = TRUE, eval = FALSE}
+4 %>% head(penguins, .)
+```
+
+Si no sabéis lo que hace, siempre podéis ejecutar la instrucción en la consola de RStudio.
+
+Recuerda: Cuando usamos el operador pipe, tenemos obligatoriamente que usar el punto si queremos que el argumento de la izquierda se sitúe en un slot diferente del primer slot
+
+<br>
+
+Para acabar nuestro repaso a `%>%` mirad porque no funciona la siguiente instrucción:
+
+```{r, echo = TRUE, eval = FALSE}
+4 %>% head(penguins)
+```
+
+El operador pipe quiere llevar el `4` al primer slot de `head()` ya que si no ponemos el punto, ese es su comportamiento por defecto. Sin embargo, al ejecutar la expresión, el interprete de R nos devuelve un mensaje de error. ¿Por qué? Tendrás que mirar la ayuda de la función con `help(head)`.
+
+<br>
+
+Aún no sabemos muy bien cúal es su utilidad, pero ya conocemos la sintaxis de `%>%`. Lo que hace que este operador sea tan útil es que **las pipes se pueden encadenar**. 
+
+<br>
+
+El operador pipe podemos leerlo como **"*entonces*"** y permite encadenar sucesivas llamadas a funciones.Por ejemplo:
+
+```{r, echo = TRUE, eval = FALSE}
+penguins %>% filter(sex == "female") %>% 
+             group_by(species) %>% 
+             summarise(peso_medio = mean(body_mass_g))
+```
+<br>
+
+La anterior linea de código R hace:
+
+  1) coge los datos de pinguinos y selecciona (o filtra) las filas/pinguinos cuyo valor de la variable `sex` es female; es decir, seleccionamos los pinguinos hembras, *entonces* (o después)  
+  2) agrupa los datos/pinguinos por la variable `species`, *entonces*  
+  3) calcula la media de `body_mass_g`
+
+En conjunto, encadenando las 3 funciones hemos seleccionado las filas que pertenecen a pinguinos hembras, hemos agrupado las pinguino hembras en función de su especie (hay 3 especies de pinguinos) y calculado el peso medio de cada uno de las 3 especies de pinguinos; es decir, hemos calculado el peso medio de las pinguinos hembra en cada uno de las tres especies de pinguinos.
+
+<br>
+
+Con esta nueva sintaxis (que permite el operador pipe) ya no necesitamos anidar funciones, sino que las instrucciones van una después de otra. Es **mucho más fácil de leer y de escribir**. Esta idea de que es mucho más fácil escribir à la tidyverse no se llega a apreciar con los ejemplos que hemos hecho en esta sección, pero se hará evidente cuando empecemos a encadenar operaciones con dplyr. Como ejemplo este tweet.
+
+
+
+```{r, echo = FALSE}
+tweetrmd::tweet_embed("https://twitter.com/andrewheiss/status/1173743447171354624", theme = "light", align = "center", maxwidth = 650)
+```
+
+<br>
+
+No te va a resultar sencillo porque no sabes que es `letters`, ni `paste0()`, ni `toupper()`, pero intenta entender por ti mismo que hace la siguiente linea de código. ya sabes que siempre puedes ejecutarla y ver que hace, y mucho mejor si la ejecutas por trozos para ir viendo poco a poco qué hace:
+
+```{r, echo = TRUE, eval = FALSE}
+letters %>% paste0( "-----" ,  .  ,  "!!!" ) %>% toupper
+```
+
+<br>
+
+#### Un poco más acerca de the pipe (` %>% `) [OPCIONAL]
+
+
+De forma más técnica. Aquí podéis ver el funcionamiento del operador pipe:
+
+```r
+library("magrittr")
+
+#-------- Rule 1
+f(xx)     es equivalente a     xx %>% f
+
+#-------- Rule 2
+g(xx, n = 5)
+xx %>% g(n = 5)
+
+#-------- Rule 3
+g(f(xx), n = 5)
+xx %>% f %>% g(n = 5)
+
+Se lee como "Take xx then do f then do g with n = 5".
+
+#-------- Rule 4
+f(y, x)
+x %>% f(y, .)
+
+#-------- Rule 5
+f(y, z = x)
+x %>% f(y, z = .)
+
+#(!!!!)------------- BONUS: The input to the pipeline can itself be a placeholder!!
+num_unique <- . %>% unique %>% length       
+
+num_unique(iris$Species)
+
+iris$Species %>% num_unique
+
+-----
+
+num_unique es equivalente a : f <- function(.) length(unique(.)) 
+
+```
+
+<br>
+
+Un buen recurso para aprender el uso de `%>%` son [estas transparencias](https://teachthat.netlify.app/pipe/#1). Una exposición más detallada de la sintaxis y posibilidades del operador `%>%`, así como la de otros operadores como `%T>%` y `%<>%` puedes encontrarla [aquí](https://www.rdocumentation.org/packages/magrittr/versions/1.5).
+
+<br>
+
+The **"tee pipe"** (`%T>%`) permite hacer cosas como esta:
+
+```{r, eval = FALSE}
+rnorm(200) %>% matrix(ncol = 2) %T>%
+plot %>% # plot usually does not return anything. 
+colSums
+```
+
+
+The **"tee pipe"**, como el pipe original, pasa el argumento de la izquierda a la función de la derecha, PERO devuelve el propio valor original, no devuelve el resultado de la evaluación de la función. Como se señala [aquí](https://magrittr.tidyverse.org/reference/tee.html), este comportamiento es útil cuando se usa la función por sus side-effects; es decir, para imprimir o graficar. Yo la utilidad que le veo es hacer chequeos dentro de una secuencia de pipes, como por ejemplo hacen en [este tweet](https://twitter.com/lepovas/status/1283411774134538251)
+
+<br>
+The **"exposition pipe"** (`%$%`) también del pkg `magrittr`. En [este post](https://thewoodpeckr.wordpress.com/2020/02/10/upping-your-pipe-game/) nos explican su utilidad. Pero solo leedlo cuando ya seáis usuarios intermedios de R. Sirve para hacer accesibles las columnas de un dataframe a funciones que no admiten dataframes como la función `cor()`. De esta forma podemos integrar en nuestro pipeline funciones que no están preparadas para el tidyverse.
+
+```{r, eval = FALSE}
+library(magrittr)
+iris %>% mean(Sepal.Length)   #- no funciona
+iris %$% mean(Sepal.Length)   #- con the exposition pipe sí funciona
+
+iris %>% cor(Sepal.Length, Sepal.Width)  #- no funciona
+iris %$% cor(Sepal.Length, Sepal.Width)
+```
+
+Si no usásemos este nueva pipe, tendríamos que hacer lo siguiente:
+
+```{r, eval = FALSE}
+cor(iris$Sepal.Length, iris$Sepal.Width)
+```
+
+<br>
+
+Muchas funciones de R-base no están preparadas para trabajar con el operador pipe. Son funciones que se escribieron antes de que se creara `%>%`. Se puede tratar de reescribir código en "R-base" usando ` %>% ` pero no tiene mucho sentido y no es muy agradable; sin embargo si se trabaja con el tidyverse, utilizar the pipe hace la sintaxis muy fluida. Como ejemplo de esto el siguiente chunk:
+
+```{r, echo = TRUE, eval = FALSE}
+library(tidyverse)    
+
+x1 <- c(-5:5, NA)  #- es un vector
+
+#- escribiendo à la R-base
+mean(x1[x1>0], na.rm = TRUE)   #-  calcula la media de los valores positivos de x1
+sum(x1[!is.na(x1)])            #-  calcula la suma de los valores de x1 que no son NA
+
+#- ahora haremos lo mismo, seguimos usando R-base, pero con el operador pipe (!!!!)
+x1 %>% .[.>0] %>% mean(., na.rm = TRUE)
+x1 %>% .[!is.na(.)]  %>% sum
+
+#- podríamos trabajar con data.frames usando the exposition pipe
+df <- as.data.frame(x1)   #- tidyverse usa data.frames
+df %$% x1 %>% .[.>0] %>% mean(., na.rm = TRUE)
+df %$% x1 %>% .[!is.na(.)]  %>% sum
+
+#- con tydiverse
+df <- as.data.frame(x1)   #- tidyverse usa data.frames
+df %>% filter(x1 > 0) %>% summarise(mean_x1 = mean(x1, na.rm = TRUE))
+df %>% filter(!is.na(x1)) %>% summarise(suma_x1 = sum(x1))
+```
+
+
+<br>
+
+Bien, ya sabemos como funciona "the pipe". Volvamos al tidyverse y a aprender a manipular datos en R.
+
+
+<br>
+
+## Principales pkgs del tidyverse
+
+
+Como puede verse en su [página web](https://www.tidyverse.org/), los principales packages del tidyverse son: 
+
+```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "80%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "tt_05_img_03b_pkgs-tidyverse.png"))
+```
+
+
+
+  - `readr`: para importar datos  
+  - `tidyr`: para convertir los datos a tidy data  
+  - `dplyr`: para manipular datos  
+  - `ggplot2`: para hacer gráficos  
+  
+  - `tibble`: data frames actualizados
+    
+  - `forcast`: para manipular factores  
+  - `stringr`: para manipular strings  
+  
+  - `purrr`: para functional programming
+
+      
+  - y algunos más  
+
+Nos centraremos en los **cuatro primeros paquetes**, principalmente en `dplyr` y `ggplot2`.
+
+<br>
+
+
+Los principales paquetes del tidyverse se han "agrupado" en un metapaquete llamado `tidyverse`, así que cuando ejecutas `library(tidyverse)` en realidad estás cargando varios paquetes del tidyverse
+
+
+<br>
+
+-------------------
+
+
+# 2. Tidy data (tidyr)
+
+<br>
+
+> If I had one thing to tell biologists learning bioinformatics, it would be write code for humans, **write data for computers**.  ----— Vince Buffalo (\@vsbuffalo)
+
+
+Y si vamos a manejar datos con R y a la manera del tidyverse, como Jenny Bryan señala en su excelente [tutorial sobre tidy data](https://github.com/jennybc/lotr-tidy/blob/master/01-intro.md): 
+
+> An important aspect of "writing data for computers" is to **make your data TIDY**. ---- Jenny Bryan
+
+
+<br>
+
+Antes de comenzar a manipular los datos à la tidyverse, es conviene saber que se entiende por **tidy data**. La razón es que los paquetes del tidyverse trabajan mejor si los datos están en formato tidy. Es fácil!!
+
+
+<br>
+
+#### ¿Qué son los **tidy data**?
+
+
+Ahora lo veremos, pero enfatizar que si los datos son tidy (si siguen ese formato) **será más fácil trabajar con ellos con el tidyverse**, ya sea para manipularlos o para hacer gráficos.
+
+De forma sencilla, tidy data son simplemente datos organizados de una determinada manera. Además es justo de la manera a la estamos familiarizados. De forma más precisa se puede leer [aquí](https://en.wikipedia.org/wiki/Tidy_data), o de forma más elaborada [[aquí](ftp://cran.r-project.org/pub/R/web/packages/tidyr/vignettes/tidy-data.html)]  :
+
+> Tidy datasets provide a standardized way to link the structure of a dataset (its physical layout) with its semantics (its meaning).   ----- Hadley Wickham
+
+<br>
+
+La mayoría de datos en Ciencias Sociales se ajustan a la categoría de datos tabulares; es  decir, **están organizados en filas y columnas**. En R este tipo de datos se almacenan en dataframes (o tibbles). En esencia, un dataframe será tidy si cada columna es una variable y cada fila es una unidad de análisis (persona, país, región etc...); es decir, cada celda contiene el valor de una variable para una unidad de análisis.
+
+> A dataset is a collection of values. Every value belongs to a variable and an observation. A variable contains all values that measure the same underlying attribute (like height, temperature, duration) across units. An observation contains all values measured on the same unit (like a person, or a day, or a race) across attributes
+
+
+```{r , echo=FALSE, fig.cap="Tidy data from http://r4ds.had.co.nz/tidy-data.html", eval = TRUE, fig.asp = 4/2, out.width = "80%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "tt_05_img_04_tidy-data.png"))
+```
+
+<br>
+
+No parece muy alejado de lo que estamos acostumbrados. Pero .... desarrollemos la idea un poco más.
+
+<br>
+
+#### Un ejemplo de datos (no tidy)
+
+Supongamos que la variable (o atributo) a medir es el salario y la unidad de análisis las personas. Hemos recogido datos para 3 personas. Veámoslos:
+
+
+```{r, echo = FALSE, eval = TRUE, results = 'hide'}
+data_1 <- data.frame(
+            year  = c("2014", "2015", "2016"),  
+            Pedro = c(100, 500, 200), 
+            Carla = c(400, 600, 250), 
+            María = c(200, 700, 900)  )
+data_1
+```
+
+
+```{r, echo = FALSE, eval = TRUE, results = 'markup'}
+knitr::kable(data_1, align = 'c', caption = "Tabla 1: Salario de 3 personas:")
+```
+
+
+
+Entendemos perfectamente estos datos, visualmente son cómodos, pero ¿son tidy data? NO* porque los individuos (o unidades de análisis) están en columnas.
+
+<br>
+
+#### Un ejemplo de datos (tidy* pero wide)
+
+Exactamente los mismos datos podrían estructurarse así:
+
+```{r, echo = TRUE, eval = TRUE, results = 'hide'}
+data_2 <- data.frame(names = c("Pedro", "Carla", "María"), 
+                      W_2014 = c(100, 400, 200), 
+                      W_2015 = c(500, 600, 700),
+                      W_2016 = c(200, 250, 900)   )
+
+data_2
+```
+
+
+
+```{r, echo = FALSE, eval = TRUE, results = 'markup'}
+knitr::kable(data_2, align = 'c', caption = "Tabla 2: Salario de 3 personas (wide format)")
+```
+
+
+
+También es un formato fácil de entender por nosotros, pero ¿son tidy? SI*, pero ...
+
+  - Es el formato al que estamos más acostumbrados (individuos o registros en filas y "variables" en columnas). ¿Realmente el W de 2014 es una variable?
+
+  - En jerga del tidyverse este formato de datos es **"wide"** (o ancho)
+
+<br>
+
+
+Podemos trabajar tranquilamente con el anterior formato, PERO, si queremos sacar todo el provecho al tidyverse es mejor tener los datos en **long format**.
+
+<br>
+
+#### Un ejemplo de datos (tidy-tidy y long)
+
+```{r, echo = TRUE, eval = TRUE, results = 'hide'}
+data_3 <- data.frame(
+            names =rep(c("Pedro", "Carla", "María"), times = 3),  
+            year = rep(c("2014", "2015", "2016"), each = 3),
+            salario = c(100, 400, 200, 500, 600, 700, 200, 250,900) )
+data_3
+```
+
+
+```{r, echo = FALSE, eval = TRUE, results = 'markup'}
+knitr::kable(data_3, align = 'c', caption = "Tabla 3: Salario de 3 personas (long format)")
+```
+
+Este formato, formato long, es más difícil de leer para nosotros, pero es más eficiente para los ordenadores. Y los datos los procesan los ordenadores!!
+
+Generalmente, cuando estemos trabajando con los datos con el tidyverse convendrá que los datos estén en formato long, pero habrá veces, por ejemplo para mostrar tablas, tendremos que pasarlos a formato ancho. ¿Cómo podemos pasar un df de formato long a wide y al contrario? Lo más habitual es usar dos funciones del paquete `tidyr`. Veámoslo.
+
+
+
+<br>
+
+
+
+### pivot_longer() y pivot_wider()
+
+#### funciones para pasar de wide a long (& viceversa)
+
+<br>
+
+Ya hemos dicho que los packages del tidyverse trabajan mejor con tidy data en **formato "long"**. ¿Qué hacemos si tenemos un dataframe en formato wide? Pues pasarlo a long. Afortunadamente tenemos un pkg que hace muy sencillo pasar los datos de wide a long (y viceversa): `tidyr`. Concrétamente usaremos las funciones `pivot_longer()` y `pivot_wider()`^[Hasta la aparición de tidyr 1.0.0, las funciones que se usaban eran `gather()` y `spread()`. En [esta conferencia](https://www.youtube.com/watch?v=vYwXMnC03I4&list=LLLm6k7PgDjVcFXJDbWg_OaQ),  Hadley Wickham nos contó que uno de sus grandes errores durante el desarrollo del tidyverse fue la elección de los nombres de las funciones `gather()` y `spread()`. Finalmente podemos decir: bye bye `gather()` y `spread()`, wellcome `tidyr 1.0.0` and `pivot_longer()` and `pivot_wider()`.]
+
+
+
+[Aquí](https://www.tidyverse.org/blog/2020/05/tidyr-1.1.0/) tienes el post oficial donde se anunciaba la llegada a CRAN de `tidyr 1.0.0` y [aquí](https://tidyr.tidyverse.org/articles/pivot.html) y [aquí](https://blog.methodsconsultants.com/posts/data-pivoting-with-tidyr/) un post detallado sobre ellas. La conclusión del autor del último de ellos es:
+
+
+> The new tidyr functions have intuitive syntax, are easy to use, and are more flexibile than the prior functions. Several of the new arguments and features are extremely useful, and will save lots of time on common tasks.
+
+
+
+En este [otro post](https://fromthebottomoftheheap.net/2019/10/25/pivoting-tidily/) tienes también una explicación detallada, de `pivot_*()` pero además incluye una serie de gifs que ejemplifican el paso de wide a long.
+
+<br>
+
+#### De wide a long format con `pivot_longer()`
+
+
+La función `pivot_longer()` convierte dataframes de wide a long format
+
+
+```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "95%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "tt_05_img_05a_wide-long.png"))
+```
+
+Hagámoslo:
+
+```{r, echo = TRUE, eval = TRUE}
+library(tidyr)
+data_wide <- data_2   #- data_2 está en formato ancho (wide)
+
+#- la función pivot_longer() transforma los datos de formato ancho(wide) a formato largo(long)
+data_long <- data_wide %>% pivot_longer(cols = 2:4, names_to = "periodo")
+```
+
+Si quisiéramos arreglar los valores de los periodos:
+
+
+```{r, echo = TRUE, eval = TRUE}
+#(!!) stringr::str_replace encuentra el texto "W_" en la columna "periodo" y lo sustituye por ""
+data_long <- data_long %>% mutate(periodo = str_replace(periodo, "W_", "" ))
+```
+
+<br>
+
+#### De long a wide format con `pivot_wider()`
+
+Pasar pasar de long a wide, tidyr tiene la función `pivot_longer()`
+
+
+```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "95%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "tt_05_img_05b_wide-long.png"))
+```
+
+Hagámoslo:
+
+
+```{r, echo = TRUE, eval = TRUE}
+#- `pivot_longer()` convierte un df de long a wide
+data_wide2 <- data_long %>% pivot_wider(names_from = periodo, values_from = value)
+```
+
+
+
+<br>
+
+### separate() y unite()
+
+#### funciones para separar y unir columnas
+
+<br>
+
+El pkg tidyr contiene otras 2 funciones: `separate()` y `unite()` que facilitan el separar y unir columnas. Veamos un ejemplo:
+
+
+```{r, echo = TRUE, eval = TRUE, results = 'markup'}
+df <- data.frame( names = c("Pedro_Navaja", "Bob_Dylan", "Cid_Campeador"), 
+                  year  = c(1978, 1941, 1048) )
+df
+```
+
+
+Separamos la primera columna:
+
+```{r, echo = TRUE, eval = TRUE, results = 'markup'}
+df_a <- df %>% separate(names, c("Nombre", "Apellido"), sep = "_")
+df_a
+```
+
+
+Si queremos volver a unirlos, tendríamos que:
+
+
+```{r, echo = TRUE, eval = TRUE, results = 'markup'}
+df_b <- df_a %>% unite(Nombre_y_Apellido, Nombre:Apellido, sep = "&")
+df_b
+```
+
+<br>
+
+#### mas funciones de tidyr
+
+
+Además, recuerda que el paquete `tidyr` tiene muchas [más funciones](https://tidyr.tidyverse.org/reference/index.html) que nos facilitan conseguir que nuestros datos sean **tidy**.
+
+
+<br>
+
+<br>
+
+-----------------------------
+
+# 3.  DPLYR
+
+En R hay varios enfoques para manipular datos en R, pero el más habitual, de hecho se ha convertido en el estándar, es utilizar el tidyverse, concretamente el paquete [`dplyr`](https://dplyr.tidyverse.org/).
+
+`dplyr` es un paquete que permite manipular datos de forma intuitiva. Tiene 6-7 funciones o verbos principales. Cada uno de ellos hace "una sola cosa", así que para realizar transformaciones complejas hay que ir concatenando instrucciones sencillas. Esto se hace con el **operador pipe** (` %>% `)
+
+
+<br>
+
+----------------------------
+
+## dplyr basics
+
+Tras mucho pensar como estructurábamos este apartado del tutorial, al final me decanté por utilizar los materiales del curso STAT 545. ¿que quien ha se encarga del curso? Pues Jenny Bryan (always rocks!!). Puedes encontrarlos [aquí](http://stat545.com/block009_dplyr-intro.html).
+
+`dplyr` tiene muchas funciones, pero las principales son 6-7, luego las veremos. Con ellas se pueden resolver la mayoría de problemas asociados a la manipulación de datos.
+
+Cada función (o verbo) hace una sola cosa, pero concatenándolas con `%>% ` permiten resolver cuestiones complejas.
+
+Todas las funciones tienen una estructura o comportamiento similar:
+
+  - el primer argumento siempre es un df. Esto es importante    
+  - los siguientes argumentos describen que hacer con los datos   
+  - el resultado es siempre un nuevo df. Esto es importante   
+  
+Por ejemplo, `filter(df, X1 >= 10)` devuelve un df con las filas del df original que cumplen la condición de que la variable X1 es mayor o igual a 10
+
+Podemos escribir la anterior instrucción de 3 formas. La más utilizada es la última:
+
+```{r, echo = TRUE, eval = FALSE}
+df_new <- filter(df, X1 >= 10)
+
+df_new <- df %>% filter(. , X1 >= 10)
+
+df_new <- df %>% filter(X1 >= 10)
+```
+
+
+<br>
+
+------------------------------------
+
+# 4. Principales funciones de dplyr
+
+Hay 6-7 principales. 
+
+
+  - `filter()` : permite seleccionar filas (que cumplen una o varias condiciones)
+  - `arrange()`: reordena las filas (`arrange()`).
+  - `rename()` : cambia los nombres de las columnas (variables)
+  - `select()` : selecciona columnas (variables)
+  - `mutate()` : crea nuevas variables
+  - `summarise()` : resume (colapsa) unos cuantos valores a uno sólo. Por ejemplo, calcula la media, moda, etc... de un conjunto de valores
+  
+Hay una séptima:
+
+  - `group_by()` : permite agrupar filas en función de una o varias condiciones
+  
+Y después de `dplyr 1.0.0`, en mayo de 2020, añado 2 más:
+
+  - `across()`   y `where()`. Estas funciones son un poco diferentes, solo se usan esn combinación de otroa función/verbo. Son 2 funciones que en la jerga del tidyverse no son verbos sino adverbios. Lo vemos
+
+<br>
+
+Veámoslas una a una. Veremos sólo algunos ejemplos. Ya iremos practicando
+
+<br>
+
+---------------------
+
+## `filter()`
+
+Esta función (o verbo) se utiliza para **seleccionar filas** de un dataframe (df). Se seleccionan las filas que cumplen una determinada condición o criterio lógico. Por ejemplo:
+
+```{r, echo = TRUE, eval = TRUE}
+#- vamos a trabajar con los datos del [pkg gapminder](https://github.com/jennybc/gapminder)
+gapminder <- gapminder::gapminder
+```
+
+<br>
+
+Seleccionamos las filas que cumplen determinados criterios:
+
+
+```{r, echo = TRUE, eval = FALSE}
+#- Observaciones de España (country == "Spain")
+aa <- gapminder %>% filter(country == "Spain") 
+
+#- filas con valores de "lifeExp" < 29
+aa <- gapminder %>% filter(lifeExp < 29)       
+
+#- filas con valores de "lifeExp" entre [29, 32]
+aa <- gapminder %>% filter(lifeExp >=  29 , lifeExp <= 32)   
+aa <- gapminder %>% filter(lifeExp >=  29 &  lifeExp <= 32)  
+aa <- gapminder %>% filter(between(lifeExp, 29, 32))       
+
+#- observaciones de paises de África con lifeExp > 32
+aa <- gapminder %>% filter(lifeExp > 72 &  continent == "Africa") 
+
+#- observaciones de países de África o Asia con lifeExp > 32
+aa <- gapminder %>% filter(lifeExp > 72 &  continent %in% c("Africa", "Asia") )  
+aa <- gapminder %>% filter(lifeExp > 72 & (continent == "Africa" | continent == "Asia") )  
+```
+
+<br>
+
+La función `filter()` tiene muchas más posibilidades. Ya las iremos viendo. PERO si quieres ver un resumen de las posibilidades del paquete dplyr mira su [CHEAT SHEET](https://www.rstudio.com/resources/cheatsheets/). ^[La última vez que miré la cheatsheet aún no estaba actualizada para recoger los cambios que aparecieron en dplyr 1.0.0, pero aún así os resultará de mucha utilidad]. La [versión antigua](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) de la Cheat sheet contiene también las funciones de `tidyr`.
+
+<br>
+
+#### `slice()` también es muy útil para seleccionar filas
+
+  - `slice()`: filtra filas por su posición (física en el df)
+
+<br>
+
+Como dijimos, `slice()` sirve para seleccionar filas por posición:
+
+```{r, echo = TRUE, eval = FALSE}
+#- selecciona las observaciones de la décima a la quinceava
+aa <- gapminder %>% slice(c(10:15)) 
+
+#- selecciona las observaciones de la 12 a 13 Y de la 44 a 46, Y las 4 últimas
+aa <- gapminder %>% slice( c(12:14, 44:46, n()-4:n()) ) #- AQUI hay un error, tenéis que arreglarlo. 
+
+#- Pista: igual os ayuda crear una columna con el índice de rows y repetir el cálculo
+aa <- gapminder %>% mutate(index = 1:n())
+aa <- gapminder %>% slice( c(12:14, 44:46, n()-4:n()) )
+````
+  
+<br>
+
+#### variantes de `slice()`
+
+Hay varias variantes de `slice()`. Concretamente `slice_max()`  `slice_min()`, `slice_smpl()`, `slice_head()` `slice_tail()`. Veremos algún ejemplo con las 3 primeras.
+
+
+Si queremos seleccionar las filas que tienen el valor máximo (o mínimo) de una determinada variable, podemos usar `slice_max()` y `slice_min()`
+
+```{r, echo = TRUE, eval = FALSE}
+#- selecciona las 3 filas con mayor valor de lifeExp
+aa <- gapminder %>% slice_max(lifeExp, n = 3)
+#- selecciona las 4 filas con MENOR valor de pop
+aa <- gapminder %>% slice_min(pop, n = 4)
+````
+
+Para ver la potencialidad de una función tienes que ver su ayuda interna (presionando F1 o con `help()`). Por ejemplo `slice_min()` tiene otro argumento (`prop`) que nos permite calcular, por ejemplo, el 10% de observaciones/países con menor esperanza de vida.
+
+
+```{r, echo = TRUE, eval = FALSE}
+#- observaciones en el primer decil en cuanto a esperanza de vida, 10% con menor esperanza de vida
+aa <- gapminder %>% slice_min(lifeExp, prop = 0.1)
+#- 1% de observaciones con mayor población. Imagino que estarán China e India
+aa <- gapminder %>% slice_max(pop, prop = 0.01)
+````
+
+A veces se necesita obtener una muestra aleatoria de los datos. La función `slice_sample()` está diseñada para ayudarnos en esta tarea:
+
+
+```{r}
+#- selecciona (aleatoriamente) 100 filas de los datos
+aa <- gapminder %>% slice_sample(n = 100)
+#- selecciona (aleatoriamente) un 5% de los datos
+aa <- gapminder %>% slice_sample(prop = 0.05)
+```
+
+<br>
+
+---------------------------------
+
+## `arrange()`
+
+Esta función (o verbo) se utiliza para **reordenar las filas** de un dataframe (df).
+
+```{r, echo = TRUE, eval = FALSE}
+#- ordena las filas de MENOR a mayor según los valores de la v. lifeExp 
+aa <- gapminder %>% arrange(lifeExp)
+
+#- ordena las filas de MAYOR a menor según los valores de la v. lifeExp
+aa <- gapminder %>% arrange(desc(lifeExp))  
+
+#- ordenada las filas de MENOR a mayor según los valores de la v. lifeExp. 
+#- Si hay empates se resuelve con la variable "pop"
+aa <- gapminder %>% arrange(lifeExp, pop) 
+```
+
+<br>
+
+-------------------------
+
+## `rename()`
+
+Esta función permite cambiar los nombres de las columnas 
+
+```{r, echo = TRUE, eval = FALSE}
+#- cambia los nombres de lifeExp y gdpPercap a life_exp y gdp_percap 
+gapminder %>% rename(life_exp = lifeExp,  gdp_percap = gdpPercap)
+
+#-(!!) la función names() de R-base es muy útil. Tb setNames() y set_names()
+aa <- gapminder
+names(aa) <- names(aa) %>% toupper
+names(aa) <- names(aa) %>% tolower
+names(aa) <- c("var_01", "var_02", "var_03", "var_04", "var_05" , "var_06")
+names(aa) <- paste0("Var_", 1:6)
+names(aa) <- paste0("Lag_", formatC(1:6, width = 2, flag = "0")) 
+```
+
+#### rename_with() , una variante de rename()
+
+Si tienes que hacer transformaciones más complejas, que requieran el uso de funciones o pautas, de los nombres de las variables puedes usar `rename_with()`
+
+
+```{r}
+aa <- gapminder
+rename_with(aa, toupper)
+rename_with(aa, toupper, starts_with("Life") | contains("countr"))
+rename_with(aa, ~ str_replace(.x, "e", "Ö"))
+```
+
+<br>
+
+La función `rename()` es útil pero, enseguida veremos que la siguiente función, `select()`, también permite renombrar las columnas, e incluso reordenar la posición de estas.
+
+
+
+<br>
+
+-------------------------
+
+## `select()`
+
+Esta función (o verbo) sirve para **seleccionar columnas** de un df.
+
+#### seleccionar variables por nombre
+
+Seleccionamos las variables "year" y "lifeExp":
+
+```{r, echo = TRUE, eval = FALSE}
+#- Se lee como: “Take el df gapminder, then select the variables year and lifeExp”
+aa <- gapminder %>% select(year, lifeExp) 
+aa <- gapminder %>% select(c(year, lifeExp))
+```
+
+<br>
+
+#### quitar variables
+
+Para eliminar una variable hay varias formas:
+
+```{r}
+aa <- gapminder %>% select(-year)   #- la forma mas habitual
+
+#- estas dos formas son mucho menos habituales
+aa <- gapminder %>% select(!year)   
+aa <- gapminder %>% mutate(year = NULL)   #- aún no hemos visto mutate()
+```
+
+Para eliminar varias variables:
+
+```{r}
+#- quitamos las variables: year y lifeExp
+aa <- gapminder %>% select(-c(year, lifeExp))
+```
+
+<br>
+
+#### seleccionar por posición
+
+Seleccionamos las variables del df gapminder siguientes: de la primera a la tercera y también la quinta (mejor seleccionarlas por nombre!!)
+
+```{r, echo = TRUE, eval = FALSE}
+#- seleccionamos las variables {1, 2, 3 y 5}
+aa <- gapminder %>% select(1:3, 5)
+```
+
+<br>
+
+#### quitar variables por posición
+
+Seleccionamos todas las variables del df gapminder **excepto** las siguientes: de la primera a la tercer y la quinta (mejor seleccionarlas por nombre)
+
+```{r, echo = TRUE, eval = FALSE}
+#- quitamos las variables {1, 2, 3 y 5}
+aa <- gapminder %>% select(- c(1:3, 5))
+```
+
+<br>
+
+#### `select()` con la función auxiliar `where()`
+
+En el data.frame `gapminder` las 2 primeras variables (country y continent) son factores y las 4 siguientes son variable numéricas. 
+
+```{r}
+print(gapminder, n = 3)
+```
+
+
+Imagina que queremos seleccionar sólo las variables que son numéricas. Podemos hacerlo por nombre o por posición pero mejor con `select()` y la función auxiliar `where()`^[Hasta mayo de 2020, esto es, hasta dplyr 1.0.0, esto se hacia con la función `select_if()`]. 
+
+
+
+```{r, echo = TRUE, eval = FALSE}
+aa <- gapminder %>% select(is.numeric)        #- funciona, pero ...
+aa <- gapminder %>% select(where(is.numeric)) #- es "preferible" esta segunda expresión
+```
+
+
+`select()` y `where()` son dos funciones, sí, pero en la jerga del tidyverse, `select()` es un verbo y `where()` es un adverbio, cualifica/cambia lo que hace `select()`.
+
+
+Si quisiéramos seleccionar las variables que no son numéricas haríamos:
+
+
+```{r, echo = TRUE, eval = FALSE}
+aa <- gapminder %>% select(!is.numeric)
+aa <- gapminder %>% select(!where(is.numeric))  #- es preferible esta segunda expresión
+```
+
+<br>
+
+La función `select()` tiene muchas más posibilidades. ya las iremos viendo. PERO si quieres ver un resumen de las posibilidades del pkg dplyr mira su [CHEAT SHEET](https://www.rstudio.com/resources/cheatsheets/).
+
+<br>
+
+#### renombrando y reordenando columnas con `select()`
+
+Lo que sí vamos a ver son 2 posibilidades de `select()` que son muy útiles. Con `select()` podemos: **renombrar** y **reordenar** las columnas:
+
+```{r, echo = TRUE, eval = FALSE}
+#- dejamos en aa solamente a las columnas "year" y "pop"; ADEMÁS, ahora, "pop" irá antes que "year"
+aa <- gapminder %>% select(pop, year)
+```
+
+<br>
+
+```{r, echo = TRUE, eval = FALSE}
+#- dejamos en aa solamente a las columnas "year" y "pop" y les cambiamos el nombre
+aa <- gapminder %>% select(poblacion = pop, año = year)
+```
+
+<br>
+
+Imagina que quieres que la última columna pase a ser la primera (manías!!). Podemos hacerlo con select y `everything()`. everything es una **función auxiliar**:
+
+```{r, echo = TRUE, eval = FALSE}
+#- "gdpPercap" que es la última columna pasa a ser la primera
+aa <- gapminder %>% select(gdpPercap, everything())
+
+#(!!) otras 3 formas de hacer lo mismo: que la última columna pase a ser la primera
+aa <- gapminder %>% select(ncol(df), everything())
+aa <- gapminder %>% select(length(df), everything())
+aa <- gapminder %>% select(last_col(), everything())  #- usamos the selection helper last_col()
+```
+
+En la última instrucción hemos usado dos funciones auxiliares de select(), dos "helper functions". La lista completa de funciones auxiliares para select() puedes verla [aquí](https://tidyselect.r-lib.org/reference/select_helpers.html).
+
+<br>
+
+
+#### `relocate() `
+
+Desde dplyr 1.0.0, tenemos otra función para reordenar las variables de un data.frame: `relocate()`. Veámosla en acción:
+
+```{r, echo = TRUE, eval = FALSE}
+aa <- gapminder %>% dplyr::relocate(country, .after = lifeExp)
+aa <- gapminder %>% dplyr::relocate(country, .before = lifeExp)
+```
+
+Las opciones `.after` y `.before` también están disponibles en `mutate()`, la siguiente función que presentaremos.
+
+<br>
+<br>
+
+----------------------
+
+## `mutate()`
+
+Esta función (o verbo) sirve para **crear nuevas variables** (columnas). Lógicamente, es muy útil en análisis de datos.
+
+
+Creamos la variable: `GDP = pop*gdpperCap`
+
+```{r, echo = TRUE, eval = FALSE}
+#- Creamos la variable: GDP = pop*gdpperCap
+aa <- gapminder %>% mutate(GDP = pop*gdpPercap)
+```
+
+Por defecto, la nueva variable creada se situará al final del data frame, a no ser que usemos los argumentos `.after` y `.before`
+
+
+```{r, echo = TRUE, eval = FALSE}
+aa <- gapminder %>% mutate(GDP = pop*gdpPercap, .after = country)
+aa <- gapminder %>% mutate(GDP = pop*gdpPercap, .before = country)
+```
+
+`mutate()` también tiene un argumento(`.keep`) para controlar que variables permanecen en el data frame. Por ejemplo, en el chunk de abajo dejaremos solo las variables usadas.
+
+```{r}
+aa <- gapminder %>% mutate(GDP = pop*gdpPercap, .keep = "used")
+```
+
+<br>
+
+-------------------
+
+## `summarise()`
+
+Esta función (o verbo) sirve para **RESUMIR** (o "colapsar filas"). Coge una variable o grupo de valores como input y devuelve un solo valor; por ejemplo, haya la media aritmética (o el mínimo, o el máximo ...) de una columna/variable.
+
+
+<br>
+
+Obtengamos determinados estadísticos de **una variable**. Para esto no nos hace falta `dplyr` pero conviene ir habituándose a su sintaxis.
+
+```{r, echo = TRUE, eval = FALSE}
+#- retornará un único valor: la media global de la v. "lifeExp"
+aa <- gapminder %>% summarise(media = mean(lifeExp))  
+
+#- retornará un único valor: el número de filas
+aa <- gapminder %>% summarise(NN = n())  
+aa <- gapminder %>% count()                #- más adelante veremos la utilidad de count()
+
+
+#- retornará un único valor: la desviación típica de la v. "lifeExp"
+aa <- gapminder %>% summarise(desviacion_tipica = sd(lifeExp))  
+
+#- retornará un único valor: el máximo de la variable "pop"
+aa <- gapminder %>% summarise(max(pop))  
+
+#- retornará 2 valores: la media y sd de la v. "lifeExp"
+aa <- gapminder %>% summarise(mean(lifeExp), sd(lifeExp))  
+
+#- retornará 2 valores: las medias de "lifeExp" y "gdpPercap"
+aa <- gapminder %>% summarise(mean(lifeExp), mean(gdpPercap))  
+```
+
+<br>
+
+
+#### `across()` y `where()`
+
+Antes de pasar a ver `group_by()`, vamos a utilizar las 2 nuevas funciones `across()` y `where()`.
+
+Muchas veces en un trabajo tienes que calcular calcular estadísticos de **todas las variables** del df, tendremos que utilizar  `summarise()`, PERO junto con una función de ayuda (helper function): `across()`^[Hasta la aparición de dplyr 1.0.0 en mayo de 2020, se utilizaba la función `sumarise_all()`]. A veces también hay que usar otra helper function: `where()`.
+
+La sintaxis de `across()` es: `across(.cols = everything(), .fns = NULL, ..., .names = NULL)`; es decir, `across("columnas seleccionadas", "funciones o cálculos a realizar", "si quieres controlar los nombres")). Si al seleccionar las columnas utilizas algún criterio lódico, como `is.numeric()`, entonces la sintaxis de `across()` es un poco diferente; será: 
+
+`across( where("columnas seleccionadas"), "funciones o cálculos a realizar", "si quieres controlar los nombres"))`
+
+```{r, echo = TRUE, eval = FALSE}
+#- media de cada una de las 6 variables. Devuelve 2 warnings porque las 2 primeras son textuales. No se puede calcular la media de continent y country
+gapminder %>% summarise(across(everything(), mean) ) 
+
+#- calculamos la media de tercera a la sexta variable
+gapminder %>% summarise(across(3:6, mean) ) 
+```
+
+Lo que os decía de seleccionar columnas con un criterio lógico y usar `where()`
+
+```{r, echo = TRUE, eval = FALSE}
+gapminder %>% summarise(across(where(is.numeric), mean)) 
+
+#- con los nombres de los argumentos (más largo pero conviene verlo de vez en cuando)
+gapminder %>% summarise(across(.cols = where(is.numeric), .fns = mean)) 
+```
+
+Vamos a calcular cosas un poco más complejas. Imagina que no sólo quieres calcular la media sino que también quieres calcular la desviación típica. Seguiremos usando `summarise()` y `across()`. Lo único nuevo es que como vamos a aplicar dos funciones (`mean()` y `sd()`) las tenemos que poner dentro de `list()`. Tiene sentido, es una lista de funciones a aplicar a las columnas que seleccionemos con `across()`
+
+```{r, echo = TRUE, eval = FALSE}
+#- calculamos la media y desviación típica de las columnas 3 a 6.
+gapminder %>% summarise(across(3:6, list(media = mean, desv = sd)))
+
+#- lo mismo, pero explicitando los nombres de los argumentos
+gapminder %>% summarise(across(.cols = 3:6, .fns = list(media = mean, desv = sd) ))
+
+#- lo mismo otra vez, pero eligiendo el nombre de las variables que se van aa crear con .names
+gapminder %>% summarise(across(3:6, list(media = mean, desv = sd), .names = "{fn}_{col}"))
+```
+
+(!!!)Imagina que quisiéramos presentar en una tabla los anteriores resultados; tendríamos que usar `tidyr::pivot_longer()`. Lo voy a hacer por trozos. Nos va a costar un poco:
+
+```{r}
+aa <- gapminder %>% summarise(across(3:6, list(media = mean, desv = sd), .names = "{fn}_{col}")) 
+
+aa1 <- aa %>% pivot_longer(1:8, names_to = "names", values_to = "values")
+aa2 <- aa1 %>% separate(names, into = c("operacion", "variable"), sep =  "_") %>% 
+               select(variable, everything())
+aa3 <- aa2 %>% pivot_wider(1:3, names_from = operacion, values_from = values)
+```
+
+Lo practicaremos, y veremos métodos más sencillos para hacer tablas con estadísticos descriptivos, pero eso será en el tutorial dedicado a tablas; pero no os olvideis de `across()` que luego tenemos que volver a ella.
+<br>
+
+-------------------
+
+## `group_by()`
+
+Con esta función ya empezaremos a ver la potencia de dplyr. En análisis de datos muchas operaciones (media etc..) queremos calcularlas para distintos grupos (hombre, mujer ...). `group_by()` permite hacerlo.
+
+`group_by()`coge un df y lo convierte en un **"df agrupado"**. En ese nuevo "df agrupado", las operaciones que hagamos con `summarise()` se harán por separado para cada uno de los grupos que hayamos definido. Ahora lo vemos.
+
+Si, por ejemplo, agrupamos un df por países, al ejecutar `summarise()`, nos retornará una fila con el resultado para cada país. En realidad, podemos pensar que `group_by()` no hace "nada", que en realidad solo cambia lo que hacen las otras funciones: ahora los calculos se harán para cada uno de los grupos que define `group_by()`
+
+<br>
+
+----------------
+
+Como dice Jenny: Let’s start with simple counting. ¿Cuantas observaciones(rows) tenemos por continente?
+
+
+```{r, echo = TRUE, eval = TRUE}
+#- cogemos df y lo (des)agrupamos por grupos definidos por la variable "continent"; osea, habrá 5 grupos
+#- después con summarise() calcularemos el nº de observaciones en cada continente o grupo; es decir, nos retornará un df con una fila por cada continente
+aa <- gapminder %>% group_by(continent) %>% summarise(NN = n()) 
+aa
+```
+
+Esto tan sencillo también se puede hacer con `count()`
+
+```{r, eval = FALSE}
+aa <- gapminder %>% group_by(continent) %>% count() 
+aa <- gapminder %>% group_by(continent) %>% count(name = "NN") 
+aa
+```
+
+
+<br>
+
+¿Y cuantos países hay en la base de datos? Para este tipo de cosas, se pueden usar funciones de R-base, pero dplyr tiene muchas funciones auxiliares.
+
+
+```{r, echo = TRUE, eval = TRUE}
+#- cogemos df y lo agrupamos por "continent", 
+#- despues calculamos 2 cosas: el numero de observaciones o rows
+#- y el número de países en cada continente (NN_countries)
+aa <- gapminder %>% group_by(continent) %>%  
+          summarize(NN = n(), 
+                    NN_countries = n_distinct(country)) 
+aa
+```
+
+
+<br>
+
+Calculemos la esperanza de vida media por continente
+
+```{r, echo = TRUE, eval = TRUE}
+#- cogemos df y lo agrupamos por "continent", después calculamos la media de "lifeExp"
+aa <- gapminder %>% group_by(continent) %>%  
+                    summarize(mean(lifeExp)) 
+aa
+```
+
+Guau! Hay que irse a vivir a Oceanía!!
+
+
+<br>
+
+Calculemos la esperanza de vida media por continente en el primer periodo (1952)
+
+```{r, echo = TRUE, eval = TRUE}
+#- cogemos df y filtramos para quedarnos con las observaciones de 1952
+#- después lo agrupamos por "continent", 
+#- después calculamos la media de "lifeExp"
+gapminder %>% filter(year == "1952") %>%  
+              group_by(continent) %>%  
+              summarize(mean(lifeExp)) 
+
+```
+
+Habría sido mejor en lugar de poner `filter(year == "1952")` haber puesto `filter(year == min(year))`
+
+Guau! Habría que haber vivido en Oceanía (en 1952)!!
+
+<br>
+
+Se pueden calcular varios estadísticos a la vez
+
+```{r, echo = TRUE, eval = FALSE}
+#- cogemos df y filtramos (cogemos) las observaciones de 1952 y 2007
+#- agrupamos por "continent", 
+#- después calculamos la media de "lifeExp" y de "gdpPercap"
+gapminder %>% filter(year %in% c(1952, 2007)) %>%  
+             group_by(continent, year) %>%  
+             summarize(mean(lifeExp), mean(gdpPercap)) 
+```
+
+Vamos a hacer cálculos cada vez más complejos:
+
+```{r, echo = TRUE, eval = FALSE}
+#- cogemos df y lo agrupamos por "continent" y "year", 
+#- despueé calculamos la media de "lifeExp" y de "gdpPercap"
+gapminder %>% filter(year %in% c(1952, 2007)) %>%
+              group_by(continent, year) %>% 
+              #- después calculamos la media de "lifeExp" 
+              summarise(media = mean(lifeExp))
+```
+
+
+```{r, echo = TRUE, eval = FALSE}
+#- Voy a crear un nuevo df: "gapminder_gr" o "gapminder agrupado"
+gapminder_gr <- gapminder %>% filter(year %in% c(1952, 2007)) %>%
+                 group_by(continent, year) 
+#- y sobre "gapminder_gr" iremos haciendo cálculos
+  
+#- si queremos calcular la media de varias variables tenemos que usar across()
+gapminder_gr %>% summarise(across(c(lifeExp, gdpPercap), mean))
+
+#- si queremos calcular la media de todas las variables numéricas tenemos que usar across() y where()
+gapminder_gr %>% summarise(across(where(is.numeric), mean))
+
+#- si queremos calcular la media y la mediana, hay que usar list()
+gapminder_gr %>% summarise(across(c(lifeExp, gdpPercap), 
+                            list (media = mean, mediana = median) ))
+
+#- si ponemos los nombres de los argumentos quedaría como
+gapminder_gr %>% summarise(across(.cols = c(lifeExp, gdpPercap), 
+                                  .fns = list (media = mean, mediana = median)))
+
+#- además, podemos controlar el nombre de las variable creadasa con el argumento .names
+gapminder_gr %>% summarise(across(c(lifeExp, gdpPercap), 
+                        list (media = mean, mediana = median), 
+                        .names = "{fn}_{col}"))
+```
+
+#### Preguntas de verdad
+
+Bueno, pues ya conocéis lo principal, lo básico y más importante de `dplyr`, solo queda ir cogiendo práctica y confianza, así que para ello toca hacer una serie de **preguntas de verdad!!**. Por ejemplo: 
+
+1.  ¿en que continente ha aumentado más la esperanza de vida en el periodo 1952-2007?
+
+
+```{r, echo = TRUE, eval = TRUE}
+#- cogemos df y lo agrupamos por "continent", despues calculamos la media de "lifeExp"
+gapminder %>% 
+  filter(year %in% c(1952, 2007)) %>%  
+  group_by(continent, year) %>% 
+  summarize(media = mean(lifeExp)) %>% ungroup()
+```
+
+
+Casi, pero no!! Sólo hemos conseguido ver la esperanza de vida por continente en 1952 y 2007.En realidad esto ya lo hicimos antes. Falta restar. 
+
+Quizás podríamos calcular el máximo, el mínimo y restarlos. No, porque supondríamos que "lifeExp" siempre aumenta. Vamos que el tiempo apremia:
+
+```{r, echo = TRUE, eval = TRUE}
+#- primer intento: se puede hacer de una vez, pero vamos a partir el código en 2 trozos
+aa <- gapminder %>% filter(year %in% c(1952, 2007)) %>%  
+  group_by(continent, year) %>% 
+  summarize(media = mean(lifeExp)) %>% ungroup() 
+
+aa1 <- aa %>% group_by(continent) %>% 
+  summarise(min_l = min(media), max_l = max(media)) %>% 
+  mutate(dif = max_l-min_l) %>% 
+  arrange(desc(dif))
+
+aa1
+```
+
+Asia son los ganadores. En promedio, en Asía se mejoró la esperanza de vida en 24.4 años entre 1952 y 2007.
+
+Lo de restar el máximo y el mínimo ha funcionado, PERO podría no haberlo hecho si hubiese habido algún continente en el que en la esperanza de vida, en lugar de haber aumentado, hubiese bajado. Entonces, ¿cómo lo hacemos?
+
+```{r, echo = TRUE, eval = TRUE}
+#- segundo intento: se puede hacer de una vez, pero vamos a partir el código en 2 trozos
+aa <- gapminder %>% filter(year %in% c(1952, 2007)) %>%  
+         group_by(continent, year) %>% 
+         summarize(media = mean(lifeExp)) %>% ungroup() 
+
+#- usamos lag()
+aa1 <- aa %>% group_by(continent) %>% 
+              arrange(year) %>%
+              mutate(variac_l = media - lag(media))
+
+#- mostramos los resultados
+aa1 %>% filter(year == 2007) %>% arrange(desc(variac_l))
+```
+
+
+Sí, Asia es la ganadora. En promedio, en Asía se mejoró la esperanza de vida en 24 años entre 1952 y 2007. 
+
+Otra forma de obtener el mismo resultado:
+
+```{r}
+#- esta parte es común
+aa <- gapminder %>% 
+  filter(year %in% c(1952, 2007)) %>%  
+  group_by(continent, year) %>% 
+  summarize(media = mean(lifeExp)) %>% ungroup()
+
+#- pero ahora usamos pivot_wider()
+aa %>% pivot_wider(names_from = year, values_from = media) %>% 
+     mutate(dif_l = `2007` - `1952`) %>% 
+     arrange(desc(dif_l))
+```
+
+<br>
+
+
+El chunk de abajo, ¿qué hace? ¿qué se está calculando?:
+
+
+```{r, echo = TRUE, eval = TRUE}
+aa <- gapminder %>% 
+  group_by(continent, year) %>% 
+  select(continent, year, lifeExp) %>% 
+  summarise(mean_life = mean(lifeExp)) %>% 
+  arrange(year) %>% 
+  mutate(incre_mean_life_0 = mean_life - first(mean_life)) %>% 
+  mutate(incre_mean_life_t = mean_life - lag(mean_life)) %>% 
+  arrange(continent)
+
+#- por ejemplo veamos el resultado para Europe
+aa %>% filter(continent == "Europe")
+```
+
+
+Sed conscientes de que la soluciones a una pregunta no sale a la primera, a veces hay que calentarse el cap:
+
+> Break the code into pieces, starting at the top, and inspect the intermediate results. That’s certainly how I was able to write such a thing. These commands do not leap fully formed out of anyone’s forehead – they are built up gradually, with lots of errors and refinements along the way. Is the statement above really hard for you to read? If yes, then by all means break it into pieces and make some intermediate objects. Your code should be easy to write and read when you’re done.    ---- Jenny Bryan
+
+<br>
+
+Otras cuestiones que podemos resolver con dplyr sobre la esperanza de vida:
+
+- ¿Cómo ha evolucionado la esperanza de vida en Spain lustro a lustro?
+
+```{r, echo = TRUE, eval = TRUE}
+#- variación de lifeExp en Spain año a año (bueno lustro a lustro)
+aa <- gapminder %>% 
+  group_by(country) %>% 
+  select(country, year, lifeExp) %>% 
+  mutate(lifeExp_gain_cada_lustro = lifeExp - lag(lifeExp)) %>% 
+  filter(country == "Spain" )
+aa
+```
+
+<br>
+
+- ¿Y la variación acumulada? Fácil!! Sólo tendríamos que sumar o acumular la variable "lifeExp_gain_cada_lustro" que hemos generado anteriormente, así que sólo habría que añadir una linea a nuestro código:
+
+```{r, echo = TRUE, eval = TRUE}
+#- ganancia acumulada
+aa <- gapminder %>% 
+  group_by(country) %>% 
+  select(country, year, lifeExp) %>% 
+  mutate(lifeExp_gain_cada_lustro = lifeExp - lag(lifeExp)) %>% 
+  #--- 2 filas nuevas: ifelse()  y cumsum()
+  mutate(lifeExp_gain_cada_lustro2 = ifelse(is.na(lifeExp_gain_cada_lustro), 0, lifeExp_gain_cada_lustro)) %>% 
+  mutate(lifeExp_gain_acumulado = cumsum(lifeExp_gain_cada_lustro2)) %>%   
+  filter(country == "Spain")
+aa
+```
+
+Al final para hacerlo (como había pensado) me han hecho falta 2 lineas, porque la primera observación de "lifeExp_gain_cada_lustro" es un NA y eso hacía que la función `cumsum()` no funcionase.
+
+<br>
+
+- Otra forma de hacer lo mismo sería (se me ha ocurrido después). Además es más fácil
+
+```{r, echo = TRUE, eval = TRUE}
+#- ganancia acumulada (otra forma de hacer lo mismo)
+aa <- gapminder %>% 
+  group_by(country) %>% 
+  select(country, year, lifeExp) %>% 
+  mutate(lifeExp_gain_acumulada = lifeExp - lifeExp[1])  %>% 
+  filter(country == "Spain")
+```
+
+<br>
+
+- Obtener, para cada periodo, los (3) países de Asia con MAYOR lifeExp. Usaremos una variante de `slice()`, concrétamente `slice_max()`
+
+
+```{r, echo = TRUE, eval = TRUE}
+aa <- gapminder %>%
+  filter(continent == "Asia") %>%
+  select(year, country, lifeExp) %>%
+  group_by(year) %>%
+  slice_max(n = 3, lifeExp) %>% 
+  arrange(year) 
+```
+
+
+Para obtener los 4 países con **MENOR** "lifeExp" sólo tendríamos que sustituir la quinta linea por `slice_min(n = 4, lifeExp)`
+
+<br>
+
+- Obtener, para cada periodo, los países de Asia con mayor y menor lifeExp.
+
+```{r, echo = TRUE, eval = TRUE}
+#- Obtener, para cada periodo, los países de Asia con mayor y menor lifeExp.
+aa <- gapminder %>%
+  filter(continent == "Asia") %>%
+  select(year, continent, country, lifeExp) %>%
+  group_by(year) %>%
+  filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>% 
+  arrange(year) 
+```
+
+
+Las 2 últimas funciones que hemos usado: `slice_min()`  y `min_rank()` son funciones de dplyr pero no son son funciones principales, en cierta forma son auxiliares.
+
+<br>
+
+
+Podéis ver las funciones auxiliares que tiene dplyr en la segunda página de [CHEAT SHEET](https://www.rstudio.com/resources/cheatsheets/). también se pueden usar las funciones de R-base o de otros packages. Aquí tenéis algunas posibilidades sacadas de un [tutorial de Hadley](https://www.dropbox.com/sh/i8qnluwmuieicxc/AAAgt9tIKoIm7WZKIyK25lh6a?preview=dplyr-tutorial.pdf)
+
+
+```r
+Types of summary functions:
+• min(x), median(x), max(x), quantile(x, p) 
+• n(), n_distinct(), sum(x), mean(x) 
+• sum(x > 10), mean(x > 10) 
+• sd(x), var(x), iqr(x), mad(x)
+
+Types of window functions:
+• Ranking and ordering 
+• Offsets: lead & lag 
+• Cumulative aggregates
+• Rolling aggregates
+
+Ejemplos:
+• Was there a change?  x != lag(x)
+• Percent change? (x - lag(x)) / x
+• Fold-change? x / lag(x)
+• Previously false, now true? !lag(x) & x
+
+• If one of the specialised verbs doesn’t do what you need, you can use do()
+```
+
+<br>
+
+##### A ver si entendeis este ejemplo
+
+Una **función auxiliar** que es **muy útil** al utilizarla junto a mutate: `case_when()`. 
+
+```{r, echo = TRUE, eval = FALSE}
+aa <- gapminder %>%
+  group_by(continent, year)  %>%
+  mutate(media_lifeExp = mean(lifeExp)) %>% 
+  mutate(media_gdpPercap = mean(gdpPercap)) %>% 
+  mutate(GOOD_or_BAD = case_when( 
+    lifeExp > mean(lifeExp) & gdpPercap > mean(gdpPercap)  ~ "good",
+    lifeExp < mean(lifeExp) & gdpPercap < mean(gdpPercap)  ~ "bad" ,
+    lifeExp < mean(lifeExp) | gdpPercap < mean(gdpPercap)  ~ "medium"
+    )) %>%
+  filter(country == "Spain")
+```
+
+##### Más funciones auxiliares
+
+Hay algunas que no quiero olvidar:
+
+```{r, echo = TRUE, eval = FALSE}
+dplyr::ntile(x, n) : categorizes a vector of values into "ntiles" such as quartiles if n = 4
+
+dplyr::n_distinct(x):  counts unique values in a vector; similar a  length(unique(x))
+
+dplyr::between(x, left, right) : is a shortcut for x >= left & x <= right, 
+
+tibble::add_row()  : añade rows a un df
+
+tibble::rownames_to_column()
+```
+
+
+
+## Más detalles sobre dplyr
+
+Los verbos `mutate()` y `summarise()` ya sabemos que pueden hacer uso de funciones como `mean()`, `sd()` etc ... Por ejemplo podemos transformar las variables numéricas a logaritmos:
+
+```{r, eval = FALSE}
+gapminder %>% mutate(across(where(is.numeric), log)) %>% head(n = 3)
+```
+
+Se pueden usar tidy_helpers para seleccionar las columnas y apliacar más de una función:
+
+```{r, eval = FALSE}
+gapminder %>% mutate(across(c(starts_with("life"), contains("po")), .fns =  mean)) %>% head
+```
+
+o calcular la media de las variable numéricas y controlar el nombre de las variables creadas:
+
+```{r, eval = FALSE}
+gapminder %>% group_by(continent) %>%
+  summarize(across(where(is.numeric), mean, .names = "mean_{col}")) %>% head(n = 3)
+```
+
+Si quieres seleccionar todas las variables usa `everything()`
+
+
+```{r, eval = FALSE}
+gapminder %>% group_by(continent) %>%
+  summarize(across(everything(), as.character, .names = "CHAR_{col}")) %>% head(n = 3)
+```
+
+Pero vamos a ver otras posibilidades:
+
+### más de una condición para seleccionar las columnas:
+
+```{r}
+gapminder %>% mutate(across(where(is.double) & ends_with("cap"), as.integer)) %>% head(n = 3)
+```
+
+
+
+### uso de funciones propias (!!!!)
+
+Tenemos varias posibilidades:
+
+- 1. definiendo primero la función:
+
+
+```{r}
+dividir_100 <- function(x) {x / 100}  #- defino una función
+
+gapminder %>% mutate(across(where(is.numeric), .fns = dividir_100)) %>% head
+```
+
+- 2. usando formulas anónimas
+
+```{r}
+gapminder %>% mutate(across(where(is.numeric), .fns = function(x) {x / 100})) %>% head
+```
+
+- 3. usando fórmulas
+
+```{r}
+#- con formulas
+gapminder %>% mutate(across(where(is.numeric), .fns = ~ .x/100)) %>% head
+gapminder %>% mutate(across(where(is.numeric), .fns = ~ ./100)) %>% head
+gapminder %>% mutate(across(where(is.numeric), .fns = ~ {1/sqrt(.)})) %>% head
+```
+
+usar formulas faciliota el uso de argumentos dentro de la función:
+
+```{r, eval = FALSE}
+gapminder %>% 
+  group_by(continent, year) %>% 
+  summarise(across(c("lifeExp", "gdpPercap"), 
+				   list(mean = ~ mean(.x, na.rm = TRUE, trim = 0.1))))
+```
+
+
+### crear indices de grupo
+
+A veces cuando trabajas con df agrupados es útil saber a que grupo pertenece cada observación. Puedes hacerlo fácilmente con: 
+
+
+```{r, eval = FALSE}
+gapminder %>% group_by(year)  %>% mutate(id_grupo = cur_group_id()) 
+```
+
+
+
+
+<br><br>
+
+------------------------------------
+
+# 5. Combinando (joining) df's
+
+<br>
+
+OK, ya sabemos manejar/filtrar etc... un conjunto de datos, PERO muchas veces lo que hay que hacer es unir o **combinar varias tablas** o conjuntos de datos (Joinings en inglés). 
+
+
+Vamos a aprender como hacerlo usando dplyr. [[Aquí](https://cran.r-project.org/web/packages/dplyr/vignettes/two-table.html)] tenéis la vignette de dplyr para "two table verbs", también podéis ver un vídeo muy ilustrativo [[aquí](https://www.youtube.com/watch?v=QHXpsMSDszg )]. También podéis usar el [tutorial de Jenny](http://stat545.com/bit001_dplyr-cheatsheet.html). La [CHEAT SHEET](https://www.rstudio.com/resources/cheatsheets/) es muy-muy buena.
+
+
+Los ejemplos e imágenes usados en esta sección se basan en los creados por [Mara Averick (\@dataandme)](https://twitter.com/dataandme?lang=es) en [este repo](https://github.com/batpigandme/tidyexplain/tree/pivot), que a su vez se basaron en la idea de [Garrick Aden-Buie  \@grrrck](https://twitter.com/grrrck)
+
+
+<br>
+
+## (dos) casos sencillos
+
+#### Dos casos ideales (sencillos de unir): `bind_cols()` y `bind_rows()`
+
+1. Si los 2 dfs tienen **exactamente las mismas filas** o unidades de análisis ( y ademas en el mismo orden). En este caso, solo habría que juntar en una misma tabla las columnas de df1 y de df2. Esto lo podemos hacer con `bind_cols()` (o con **c**bind() de R-base)
+
+2. Si los 2 dfs tienen **exactamente las mismas columnas** ( y ademas en el mismo orden). En este caso, se trataría simplemente de juntar todas las observaciones o filas de los 2 df's. Esto lo podemos hacer con `bind_rows()` (o con **r**bind() de R-base)
+
+
+<br>
+
+#### Olvidando ya los 2 casos ideales y sencillos
+
+<br>
+
+En dplyr hay 3 tipos de funciones(verbos) que se ocupan de diferentes operaciones para unir datasets:
+
+  - **Mutating joins**, añade nuevas variables (o columnas) a un dataframe (df1). Estas nuevas columnas vienen de un segundo df2 (hay varias mutating joins, dependiendo del criterio para seleccionar las filas)
+
+  - **Filtering joins**, filtra las filas (observaciones) de un dataframe (df1) basándose en sí las filas de df1 coinciden (match) o no con una observación del segundo df2
+
+  - **Set operations**, combina las observaciones de los dos datasets (df1 y df2) as if they were set elements.
+
+<br>
+
+Todas estas funciones tienen una **estructura similar**: sus dos primeros argumentos son 2 df's (en realidad tablas de datos): df1 y df2. El output de la función es siempre una nueva tabla (del mismo tipo que df1).
+
+
+<br>
+
+-------------------------------
+
+## Mutating joins
+
+Hay **4 tipos de mutating joins**. Su sintaxis es idéntica, sólo se diferencian en que las filas que se seleccionan dependen del criterio para hacer el match:
+
+  - `inner_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2, PERO **solo retorna las filas de df1 que tienen una equivalencia en df2**. (la equivalencia se define en función del valor de una variable o variables comunes en df1 y df2)
+  
+  - `left_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2; en cuanto a las filas, **retorna TODAS las filas de df1**. (Si hubiesen varios matches entre df1 e df2 se retornan todas las combinaciones!!!!)
+  
+ - `rigth_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2; en cuanto a las filas, **retorna TODAS las filas de df2**. De **df2**!! (Si hubiesen varios matches entre df1 y df2 se retornan todas las combinaciones!!!!)  
+  
+
+ - `full_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2; en cuanto a las filas, **retorna TODAS las filas de df1 y de df2**. Osea, retorna TODAS las filas y TODAS las columnas de las 2 tablas. (Donde no hay matches retorna NA's)
+  
+    
+<br>
+
+#### Ejemplos de mutating joins 
+
+Sean los siguientes 2 dataframes (tibbles):
+
+```{r}
+x <- tibble(id = 1:3, x = paste0("x", 1:3))
+
+y <- tibble(id = (1:4)[-3], y = paste0("y", (1:4)[-3]))
+```
+
+
+<br>
+
+##### Inner Join
+
+```{r, echo = TRUE, eval = TRUE}
+#- only includes observations that match in both x and y
+df_inner <- inner_join(x, y)
+```
+
+
+```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "75%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "tt_05_img_06_inner-join.png"))
+```
+
+
+<br>
+
+##### Left Join
+
+
+```{r, echo = TRUE, eval = TRUE}
+#- includes all observations in x, regardless of whether they match or not. 
+#- This is the most commonly used join because it ensures that you don’t lose observations from your primary table.
+df_left_join <- left_join(x, y)
+```
+
+
+```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "75%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "tt_05_img_07_left-join.png"))
+```
+
+
+
+<br>
+
+##### Right Joint
+
+```{r, echo = TRUE, eval = TRUE}
+#- includes all observations in y. 
+#- It’s equivalent to left_join(y, x), but the columns will be ordered differently.
+df_right_join <- right_join(x, y)
+```
+
+
+```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "75%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "tt_05_img_08_rigth-join.png"))
+```
+
+<br>
+
+##### Full Joint
+
+
+```{r, echo = TRUE, eval = TRUE}
+#- full_join() includes all observations from x and y
+df_full_join <- full_join(x, y)
+```
+
+<br>
+
+
+```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "75%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "tt_05_img_09_full-join.png"))
+```
+
+
+##### 2 precisiones sobre las mutating joins
+
+Las (left, right and full) joins se llaman colectivamente como "outer joins". Cuando una fila no tiene match en una outer join, las nuevas variables que se crean se llenan con NA's.
+
+Las mutating joins se usan principalmente para añadir columnas, **PERO** en el proceso pueden generarse nuevas filas: si un match no es único, se añadirán todas las combinaciones posibles (el producto cartesiano) de las matching observations. Veamos un ejemplo con una left_join:
+
+```{r}
+x <- tibble(id = 1:3, x = paste0("x", 1:3))
+
+y <- tibble(id = c(1:4,2)[-3], y = paste0("y", c(1:5)[-3]))
+```
+<br>
+
+##### left_join() en la que se crean nuevas filas
+
+```{r, echo = TRUE, eval = TRUE}
+df_left_join <- left_join(x, y)
+```
+
+
+```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "75%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "tt_05_img_10_left-join-extra.png"))
+```
+
+
+<br>
+
+#### Importante ¿Cómo decir a las funciones la columnas (o columnas) que se usarán para hacer los matching?
+
+Podemos(DEBEMOS) elegir las columnas (o variables) que nos servirán para unir los 2 df's. Estas columnas que se usan para para hallar los matchings y que por tanto nos permiten fusionar los 2 df's se llaman "keys". 
+
+La opción de las funciones para seleccionar estas columnas "keys" es `by =`. 
+
+  - si ponemos `left_join(df1, df2, by = "X1")` se hará una left_join siendo la variable "X1" la que hará de key. Si las variables key no se llamasen igual en los 2 df's siempre podemos renombrarlas o hacer lo siguiente: `left_join(df1, df2, by = c("X1" = "D4")`
+  
+  -  También se pueden fusionar tablas usando dos keys; por ejemplo:  `left_join(df1, df2, by = c("X1", "X2"))` . Si no se llamasen igual las variables en df1 y df2 haríamos `left_join(df1, df2, by = c("X1" = "D4", "X2" = "D7"))`
+
+<br>
+<br>
+
+----------------------
+
+## Filtering joins
+
+
+Filtering joins son similares a los anteriores (Mutating joins); o sea, hacen machting con las filas de la misma manera, **PERO afectan a las filas**, NO a las columnas. Hay filtering  joins de 2 tipos:
+
+  - `semi_join(df1,df2)`: retorna las observaciones de df1 que tienen un match en df2. En cuanto a las columnas sólo retorna las columnas de df1
+  - `anti_join(df1,df2)`: retorna las observaciones de df1 que NO tienen un match en df2; osea, quita las observaciones con match. En cuanto a las columnas sólo retorna las columnas de df1
+
+
+La semi_join se diferencia de la inner_join en que la inner_join solo retorna una fila de df1 por cada matching, mientras que **la semi_join NUNCA duplica filas de df1**
+
+
+Las filtering joins son útiles para diagnosticar mismatches.
+Si quieres saber sobre los matches, haz una semi_join() or anti_join(). semi_join() and anti_join() NUNCA duplican filas; solo pueden quitar filas.
+    
+   
+
+<br>
+
+##### semi_join
+
+```{r, echo = TRUE, eval = TRUE}
+df_semi_join <-  semi_join(x, y, by = "id")
+```
+
+
+```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "75%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "tt_05_img_11_semi-join.png"))
+```
+
+
+<br>
+
+##### anti_join
+
+```{r, echo = TRUE, eval = TRUE}
+df_anti_join <-  anti_join(x, y, by = "id")
+```
+
+
+```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "75%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "tt_05_img_12_anti-join.png"))
+```
+
+
+<br>
+
+
+##### comparemos la semi_join con la inner_join
+
+```{r, echo = TRUE, eval = TRUE}
+df_inner <-  inner_join(x, y, by = "id")
+df_semi_join <-  semi_join(x, y, by = "id")
+```
+
+
+```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "75%", fig.align = "center"}
+knitr::include_graphics(  c(here::here("imagenes", "tt_05_img_06_inner-join.png"), here::here("imagenes", "tt_05_img_11_semi-join.png"))  )
+```
+
+
+La inner_join 
+
+  - (i) añade variables del data.frame y al data.frame x (en este caso y$y)
+  - (ii) sólo retiene las rows del data.frame x **que tienen un match en y** (en este caso las 2 primeras filas de x)
+  
+  - (iii) PERO **en este ejemplo ADEMÁS** duplica rows. la razón es que hay matching duplicados, hay 2 unos en x y otros 2 unos en el data.frame y (con distintos valores de y$y) (así que salen 4 rows)
+
+
+
+<br>
+
+#### Importante ¿Cómo decir a las funciones la columna, o columnas, que se usarán para hacer los matching?
+
+
+Al igual que con las mutating joins, en las filtering joins también podemos(DEBEMOS) elegir las columnas (o variables) que nos servirán para unir los 2 df's. Estas columnas que se usan para para hallar los matchings y que por tanto que permiten fusionar los 2 df's se llaman "keys". 
+
+La opción de las funciones para seleccionar estas columnas "keys" es `by =`. 
+
+  - si ponemos `semi_join(df1, df2, by = "X1")` se hará una semi_join siendo la variable "X1" la que hará de key. Si las variables key no se llamasen igual en los 2 df's siempre podemos renombrarlas o hacer `semi_join(df1, df2, by = c("X1" = "D4")`
+  
+  -  si ponemos `semi_join(df1, df2,by = c("X1", "X2")` hará falta que una row de df1 tenga los valores tanto de X1 como de X2 iguales  a los de esas mismas variables en df2. Si no se llamasen igual las variables en df1 y df2 haríamos `by = c("X1" = "D4", "X2" = "D7")`
+
+
+
+
+
+----------------------
+
+## Set operations
+
+
+Este tipo de joins es más estricta: **hace falta que los 2 df's tengan las mismas variables (o columnas)**. Los 2 df's pueden tener observaciones(filas) diferentes, PERO es necesario que tengan las mismas variables (o columnas).
+
+Como los 2 df's tienen las mismas columnas, entonces es como si se tratasen los dfs como conjuntos:
+
+  - `intersect(df1, df2)`: devuelve un df con las observaciones comunes en df1 y df2
+  - `union(df1, df2)`: devuelve la unión; o sea, las observaciones de df1 y de df2 (quitando las posibles filas duplicadas)
+  - `union_all(df1, df2)`: devuelve la unión (sin quitar los duplicados)
+  - `setdiff(df1, df2)`: devuelve las filas en df1 que no están en df2
+  
+  <br>
+  
+  - `setequal(df1,df2`: retorna TRUE si df y df2 tienen exactamente las mismas filas (da igual el orden en el que estén las filas)
+
+<br>
+
+```{r, echo = TRUE, eval = TRUE}
+x <- tibble::tibble(v1 = c(1, 1, 2), v2 = c("a" , "b", "a"))
+y <- tibble::tibble(v1 = c(1, 2),    v2 = c("a" , "b"))
+```
+
+<br>
+
+##### intersección
+
+```{r, echo = TRUE, eval = FALSE}
+intersect(x, y)
+```
+
+
+```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "75%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "tt_05_img_13_intersect.png"))
+```
+
+
+<br>
+
+##### unión
+
+```{r, echo = TRUE, eval = FALSE}
+union(x, y)
+```
+
+
+```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "75%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "tt_05_img_14_union.png"))
+```
+
+
+<br>
+
+##### setdiff
+
+```{r, echo = TRUE, eval = FALSE}
+setdiff(x, y)
+```
+
+
+```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "75%", fig.align = "center"}
+knitr::include_graphics(here::here("imagenes", "tt_05_img_15_setdiff.png"))
+```
+
+Puedes probar tú mismo a cambiar el orden del los df's en `setdiff()`:
+
+```{r, echo = TRUE, eval = FALSE}
+setdiff(y, x)
+```
+
+
+
+
+<br>
+
+##### setqual
+
+Sirve para determinar si 2 df's son iguales (dsin importar el orden en que estén las filas)
+
+```{r, echo = TRUE, eval = TRUE}
+setequal(x, y)
+```
+
+
+```{r, echo = TRUE, eval = TRUE}
+setequal(union(x, y), union(y, x))
+```
+
+<br>
+<br>
+
+-----------------------------
+
+# Esperando a GODOT/ggplot2
+
+<br>
+
+Bueno, pues hemos visto "TODO" sobre manipulación de datos. El próximo tutorial va de visualización: hacia ggplot2
+
+Aquí un pequeño avance:
+
+
+```{r, echo = TRUE, eval = TRUE}
+library("ggplot2")
+my_plot <- ggplot(gapminder, aes(x = continent, y = lifeExp)) +
+  geom_boxplot(outlier.colour = "hotpink") +
+  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4) +
+  labs(title = "Experanza de vida (por continente)",
+       subtitle = "Datos de gapminder. 1952-2007(observaciones cada 5 años)",
+       caption = "Source: Gapminder. Jenny Bryan rocks in gapminder vignette!!", 
+       x = "Continente", y = "Esperanza de Vida (lifeExp)") 
+```
+
+<br>
+
+```{r, echo = FALSE, eval = TRUE}
+my_plot
+```
+
+<br>
+<br>
+
+
+```{r, echo = TRUE, eval = TRUE}
+gapminder2 <- gapminder %>% mutate(year = as.factor(year))
+
+library("ggplot2")
+my_plot <- ggplot(gapminder2, aes(x = year, y = lifeExp)) +
+  geom_boxplot(outlier.colour = "hotpink") +
+  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4) +
+  labs(title = "Experanza de vida (por año)",
+       subtitle = "Datos de gapminder. 1952-2007(observaciones cada 5 años)",
+       caption = "Source: Gapminder. Jenny Bryan rocks in gapminder vignette!!", 
+       x = "Periodo", y = "Esperanza de Vida (lifeExp)") 
+```
+
+<br>
+
+
+```{r, echo = FALSE, eval = TRUE}
+my_plot
+```
+
+<br>
+
+```{r, echo = TRUE, eval = TRUE}
+library("ggplot2")
+my_plot <- ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) +
+  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4) +
+  labs(title = "Experanza de vida vs. GDP (per cápita)",
+       subtitle = "Datos de gapminder. 1952-2007(observaciones cada 5 años)",
+       caption = "Source: Gapminder. Jenny Bryan rocks in gapminder vignette!!", 
+       x = "GDP (per cápita)", y = "Esperanza de Vida (lifeExp)") 
+```
+
+<br>
+
+```{r, echo = FALSE, eval = TRUE}
+my_plot
+```
+
+<br>
+
+---------------
+
+# Tidylog package
+
+Una herramienta que os puede ser de utilidad para aprender el uso de `dplyr` es el paquete [`tidylog`](https://github.com/elbersb/tidylog). Este paquete nos da feedback instantáneo sobre qué hacemos cuando usamos las principales funciones de `dplyr` y `tidyr`. Véamoslo en acción:
+
+
+```{r, echo = TRUE, eval = TRUE, message = TRUE}
+library("dplyr")
+library("tidyr")
+library("tidylog", warn.conflicts = FALSE)
+filtered <- filter(mtcars, cyl == 4)
+mutated <- mutate(mtcars, new_var = wt ** 2)
+```
+
+Si os fijáis, cada vez que ejecutas una función de `dplyr` nos devuelve un mensaje explicándonos que se ha hecho. Por ejemplo la linea de código `filtered <- filter(mtcars, cyl == 4)` ha creado un nuevo data.frame donde se han eliminado 21 filas del df original: `#> filter: removed 21 rows (66%), 11 rows remaining`.
+
+La segunda linea de código `mutated <- mutate(mtcars, new_var = wt ** 2)` ha creado una nueva variable con `mutate()`: `#> mutate: new variable 'new_var' with 29 unique values and 0% NA`.
+
+
+
+<br>
+
+---------------
+
+# Tidyverse vs. Base R
+
+
+Todo lo que se puede hacer con dplyr, tidyr etc. ,también se puede hacer con Base-R pero de una manera mucho menos intuitiva. 
+
+
+El siguiente ejemplo esta sacado de [este post](https://www.r-bloggers.com/when-i-use-plyrdplyr/). Son dos trozos de código que hacen exactamente lo mismo:
+
+Con el tidyverse:
+
+```{r, echo = TRUE, eval = FALSE}
+library(dplyr)
+mtcars %>% 
+  group_by(cyl, am) %>%
+  select(mpg, cyl, wt, am) %>%
+  summarise(avgmpg = mean(mpg), avgwt = mean(wt)) %>%
+  filter(avgmpg > 20)
+```
+
+Con la sintaxis de base R:
+
+
+```{r, echo = TRUE, eval = FALSE}
+filter(
+  summarise(
+    select(
+      group_by(mtcars, cyl, am),
+      mpg, cyl, wt, am),
+    avgmpg = mean(mpg), avgwt = mean(wt)),
+  avgmpg > 20)
+```
+
+O puesto en horizontal
+
+```{r, echo = TRUE, eval = FALSE}
+filter(summarise(select(group_by(mtcars, cyl, am),  mpg, cyl, wt, am),avgmpg = mean(mpg), avgwt = mean(wt)), avgmpg > 20)
+```
+
+<br>
+
+
+##### Otros 2 ejemplos de comparación tidyverse versus Base-R:
+
+```{r, echo = TRUE, eval = FALSE}
+df %>% filter(country == "Spain") %>%  select(year, lifeExp)
+
+df[df$country == "Spain", c("year", "lifeExp")] 
+```
+
+Este último ejemplo lo introduzco porque quiero recordar [estas trasparencias](https://cerebralmastication.github.io/down_with_opp_dplyr.html#/) que explican que el paquete `dbplyr` traduce expresiones de dplyr a SQL. El código de las transparencias está [aquí](https://github.com/CerebralMastication/Presentations), y [aquí](https://db.rstudio.com/dplyr/) puedes aprender como hacer queries SQL a un database utilizando la sintaxis de dplyr.
+
+```{r, echo = TRUE, eval = FALSE}
+#- con tidyverse
+df_cars %>% 
+  select(longname, cyl, hp) %>%
+  mutate( shortname = word(longname, 1) ) %>%
+  select( - longname)  ->
+df_cars_limited
+head( df_cars_limited )
+
+#- con dplyr PERO sin %>% 
+head(
+  select(
+    mutate( 
+      select(df_cars, longname, cyl, hp) , 
+      shortname = word(longname, 1) 
+      ), 
+    -longname 
+    )
+)
+```
+
+
+<br>
+<br>
+
+---------------------------------------------
+
+<br>
+
+# Bibliografía
+
+- [Introducción a dplyr](http://stat545.com/block009_dplyr-intro.html). Jenny Bryan nos cuenta (en sus FANTASTICOS materiales para el curso STAT545) los rudimentos de dplyr. Buena parte de este tutorial se basa en el suyo.
+
+- [dplyr functions for a single dataset](http://stat545.com/block010_dplyr-end-single-table.html). Otro material de Jenny del curso STAT545 sobre dplyr
+
+- [dplyr CHEAT SHEET](https://www.rstudio.com/resources/cheatsheets/). FANTASTIQUÉRRIMA!!! Impresionante!!
+
+- [Cápitulo de R4DS sobre "dplyr"](http://r4ds.had.co.nz/transform.html). De Hadley. Fantástico libro y fantástico capítulo sobre manejo de datos (dplyr).
+
+- [A new data processing workflow for R: dplyr, magrittr, tidyr, ggplot2](http://zevross.com/blog/2015/01/13/a-new-data-processing-workflow-for-r-dplyr-magrittr-tidyr-ggplot2/). Post de un nuevo convencido de las bondades del tidyverse. Un ejemplo sencillo pero ilustrativo.
+
+- [Wide & Long Data](https://stanford.edu/~ejdemyr/r-tutorials/wide-and-long/) Post que explica los beneficios de trabajar con datos en formato long (tidy).
+
+- [La biblia del tidy data](ftp://cran.r-project.org/pub/R/web/packages/tidyr/vignettes/tidy-data.html). Vignette de tidyr package escrita por Hadley Wickham que explica con MUCHO detalle que son los tidy data.
+
+- [Lesser known dplyr functions](https://statisticaloddsandends.wordpress.com/2019/08/30/lesser-known-dplyr-functions/). Un post fantástico sobre algunas funciones no tan conocidas de `dplyr`.
+
+- [Viñetas oficiales de dplyr 1.0.0](https://dplyr.tidyverse.org/index.html). Están en la sección "Artículos". Explican muy bien el funcionamiento de las nuevas funciones de dplyr 1.0.0
+
+- Durante el proceso de auncio oficial de dplyr 1.0.0 se publicaron una serie de posts oficiales del tidyverse, concretamente [aquí](https://www.tidyverse.org/blog/2020/06/dplyr-1-0-0/), [aquí](https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-and-vctrs/), [aquí](https://www.tidyverse.org/blog/2020/03/dplyr-1-0-0-select-rename-relocate/), [aquí](https://www.tidyverse.org/blog/2020/05/dplyr-1-0-0-last-minute-additions/) y [aquí](https://www.tidyverse.org/blog/2020/03/dplyr-1-0-0-summarise/).Están muy bien.
+
+- Keith McNulty también me ayudo a entender dplyr 1.00: [aquí](https://towardsdatascience.com/what-you-need-to-know-about-the-new-dplyr-1-0-0-7eaaaf6d78ac) y [aquí](https://towardsdatascience.com/five-tidyverse-tricks-you-may-not-know-about-c5026d5a19da)
+
+- Rebecca Barter también hizo un [muy buen post](http://www.rebeccabarter.com/blog/2020-07-09-across/). 
+
+- Quizás el tutorial más completo que he visto lo hizo el equipo de ThinkR: [aquí](https://thinkr.fr/hey-quoi-de-neuf-dplyr-le-point-sur-la-v1/). Está en francés.
+
+
+
+
+--------------------------------------------
+
+
