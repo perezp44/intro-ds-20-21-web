@@ -144,7 +144,7 @@ En esta sección pretendo responder a posibles dudas/preguntas que creo que os p
 
 ##### Nunca he programado ¿podré seguir el curso?
 
-Por supuesto, empezaremos con nivel cero, PERO, lo que si que tengo que deciros es que si tu nivel de conocimientos informáticos y/o de programación no es muy elevado (o nulo) haz el esfuerzo de no perderte las 3 primeras clases y tratar de ir entendiéndolo, para eso están las tutorías, **NO lo dejes para el final**, si no, se te hará bola.
+Por supuesto. Empezaremos con nivel cero, PERO, lo que si que tengo que deciros es que si tu nivel de conocimientos informáticos y/o de programación no es muy elevado (o nulo) haz el esfuerzo de no perderte las 3 primeras clases y tratar de ir entendiéndolo, para eso están las tutorías, **NO lo dejes para el final**, si no, se te hará bola.
 
 <br>
 

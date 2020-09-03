@@ -15,7 +15,7 @@ output:
 
 -------------------
 
-En esta sección iré subiendo los tutoriales conforme las vaya actualizando. Se supone que algún día juntare todos los tutoriales en un `bookdown`, una especie de libro electrónico hecho con R, de momento, para la web del curso prefiero este formato.
+En esta sección iré subiendo los tutoriales conforme las vaya actualizando. Se supone que algún día juntaré todos los tutoriales en un `bookdown`, una especie de libro electrónico hecho con R; de momento, para la web del curso prefiero el formato actual.
 
 Todas los tutoriales están hechos con R, de hecho, una de las cosas que has de aprender durante el curso es a hacer ficehros parecidos a estos tutoriales. Concretamente, los 2 proyectos del curso tendrás que presentarlos en este formato. Verás que es sencillo.
 

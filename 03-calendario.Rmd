@@ -46,8 +46,11 @@ output:
 
 - Prepara tu ordenador; es decir, instálate R, RStudio y los paquetes. [Aquí](./mas-recursos/Instrucciones_instalacion-a.html){target="_blank"} tienes una guía para la instalación. Si tienes algún problema con la instalación contacta conmigo por email.
 
-- Si quieres puedes echarle un vistazo a las 2 primeras transparencias: [aquí](./slides/ss_01_presentacion-curso.html){target="_blank"} y [aquí]()
-    
+- Lee el primer turorial: [`Tutorial 01: Introducción`](./tutoriales/tt_01_introduccion_v4.html){target="_blank"}. Es solo leer, no hay que estudiar nada; además se lee fácil. Se trata simplemente de poner en contexto el curso y hablar un poco de que es esto de la "era del Big Data", la ciencia de datos etc ...
+
+- Si quieres, puedes echarle un vistazo a las 2 primeras transparencias: [aquí](./slides/ss_01_presentacion-curso.html){target="_blank"} y [aquí](./slides/ss_02_tema-1.html). 
+
+
 
 <br>
 
