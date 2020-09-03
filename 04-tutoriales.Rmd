@@ -46,3 +46,6 @@ Todas los tutoriales están hechos con R, de hecho, una de las cosas que has de 
 
 
 - [`Tutorial 08: Tablas`](./tutoriales/tt_08_tablas_v2.html){target="_blank"}. El fichero que genera el tutorial está [aquí](./tutoriales/tt_08_tablas_v2.Rmd)
+
+
+<br><br>
