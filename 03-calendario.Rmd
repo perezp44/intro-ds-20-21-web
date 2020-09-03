@@ -43,13 +43,13 @@ output:
 
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
-- Lee la sección [`Guía del curso``](https://perezp44.github.io/intro-ds-20-21-web/01-guia-del-curso.html) de la página web del curso.
+- Lee la sección [`Guía del curso`](https://perezp44.github.io/intro-ds-20-21-web/01-guia-del-curso.html) de la página web del curso.
   
 - Créate una cuenta en [Github](https://github.com/){target="_blank"}. La usaremos para acceder a varios servicios web.
 
-- Prepara tu ordenador; es decir, instálate R, RStudio y los paquetes. [Aquí]() tienes una guía para la instalación. Si tienes algún problema con la instalación contacta conmigo por email.
+- Prepara tu ordenador; es decir, instálate R, RStudio y los paquetes. [Aquí](./mas-recursos/Instrucciones_instalacion-a.html) tienes una guía para la instalación. Si tienes algún problema con la instalación contacta conmigo por email.
 
-- Si quieres puedes echarle un vistazo a las 2 primeras transparencias: [aquí]() y [aquí]()
+- Si quieres puedes echarle un vistazo a las 2 primeras transparencias: [aquí](./slides/ss_01_presentacion-curso.html){target="_blank"} y [aquí]()
     
 
 <br>
