@@ -125,6 +125,8 @@ Ya he hecho referencia varias veces a que tendremos que seguir, evidentemente, e
 
 Además, sed responsables, y si tenéis algún síntoma quedaros en casa por precaución; a pesar de que he insistido varias veces que es importante asistir a clase, más importante es la salud. Si alguien tiene que quedarse en casa por este motivo, que contacte conmigo y veremos como organizamos tutorias para que pueda seguir el curso mientras hace la cuarentena o simplemente está en casa por algún síntoma. 
 
+Si algún día yo tengo algún síntoma o sospecha de que puedo tener covid, me quedaré en casa, os avisaría lo antes posible y las clases pararían a impartirse por la BBC del aula virtual en el horario habitual.
+
 - Si tienes dudas sobre tus síntomas, puedes realizarte un autotest o acceder a más información a través de la web de la Consellería de Sanitat: <http://www.san.gva.es/web_estatica/index_va.html>{target="_blank"} . 
 
 - Si crees que puedes tener covid llama al teléfono habilitado por la Generalitat: **ante cualquier síntoma llama al 900 300 555**.
@@ -153,6 +155,20 @@ Por supuesto. Empezaremos con nivel cero, PERO, lo que si que tengo que deciros 
 Ya he dicho que el curso es una introducción a la Ciencia de Datos con R. Vas a aprender muchas cosas (espero), pero principalmente a utilizar R para hacer análisis de datos.
 
 Espero que al final del curso seáis capaces de entender código R, replicar los análisis que se publican en sitios como [R-bloggers](https://www.r-bloggers.com/) y ser capaces de hacer análisis de datos propios con R.
+
+El año pasado le dedicamos poco tiempo al proyecto: sólo aportaba 1,25 puntos de la nota final. No le dedicamos tiempo a pulirlos, pero aún así salieron bastante bien. Aquí tienes una muestra de los proyectos que presentaron los estudiantes el curso pasado:
+
+- **Elecciones 28-A**: las [Slides](https://raw.githack.com/jcotanda/elecciones28A/master/slides.html#1), el [Informe](https://raw.githack.com/jcotanda/elecciones28A/master/report.html) y el [repo](https://github.com/jcotanda/elecciones28A)
+
+- **Proyecto-AGA**: las [Slides](https://raw.githack.com/andreu2398/Project-AGA/master/Presentacio.html){target="_blank"}, el [Informe](https://raw.githack.com/andreu2398/Project-AGA/master/Project-AGA--.Rmd--final.html){target="_blank"} y el [repo](https://github.com/andreu2398/Project-AGA){target="_blank"}
+
+- **La revolución del triple en la NBA**: las [Slides](https://raw.githack.com/7antoniosegovia/proyecto_eco_uv/master/NBA_Proyecto/presentacion.html){target="_blank"}, el [Informe](https://raw.githack.com/7antoniosegovia/proyecto_eco_uv/master/NBA_Proyecto/script_informe.html){target="_blank"} y el [repo](https://github.com/7antoniosegovia/proyecto_eco_uv){target="_blank"}
+
+- **Delitos en Europa**: las [Slides](https://raw.githack.com/teodoromouniertebas/ProyectoTeodoroAdrian/master/Proyecto_final_R/Slides/Presentacio.html){target="_blank"}, el [Informe](https://raw.githack.com/teodoromouniertebas/ProyectoTeodoroAdrian/master/Proyecto_final_R/Proyecto/Proyecto-Final-R.html){target="_blank"} y el [repo](https://github.com/teodoromouniertebas/ProyectoTeodoroAdrian){target="_blank"}
+
+<br>
+
+El resto de trabajos están en el [repo del curso 2019-2020](https://github.com/perezp44/tutoriales_intro_DS). No tendrás fácil verlos porque no les enseñe a desplegar sus proyectos en una web. Fallo mio!!! pero es que a todo no se llega.
 
 <br>
 
