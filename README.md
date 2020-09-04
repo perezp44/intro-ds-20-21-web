@@ -11,7 +11,6 @@
 
 ------------------------------------------------------------------------
 
-# Curso Programación y manejo de datos 2020-21
 
 <img src="/imagenes/mola-mazo.png" align="right" width="200" height="240"/>
 
