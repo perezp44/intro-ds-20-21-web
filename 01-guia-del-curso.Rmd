@@ -114,6 +114,8 @@ Tal como figura en la adenda covid-19 a la [Guía Docente](./pdfs/Guia-Docente.p
 
 Daré los detalles concretos acerca de la evaluación continua la segunda o tercera semana del curso. Estos detalles se publicarán en el [`Aula Virtual`](https://aulavirtual.uv.es/course/view.php?id=9254){target="_blank"} 
 
+Aunque quizás sea mejor, como han hecho en varios países, dejar la evaluación a un algoritmo. Lo puedes leer [aquí](https://www.enriquedans.com/2020/09/algoritmos-y-educacion-no-tan-rapido.html) y [aquí](https://www.eldiario.es/internacional/boris-johnson-da-marcha-modifica-sistema-usaba-algoritmo-calificar-estudiantes_1_6170221.html). Evidentemente lo de usar un algoritmo es una broma. Me gustaría pero ...
+
 
 --------------------
 

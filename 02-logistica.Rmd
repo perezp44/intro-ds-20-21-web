@@ -66,18 +66,6 @@ Estos 3 últimos es fácil que no los usemos, pero per si de cas, aquí están:
 <br>
 
 
-## Algunas guías
-
-- [Guía Docente](./pdfs/Guia-Docente.pdf)
-
-- [Guía de instalación R y RStudio](./mas-recursos/Instrucciones_instalacion-a.html)
-
-----------------------
-
-
-<br>
-
-
 ## Bibliografía
 
 La bibliografía que figura en la Guía Docente es:

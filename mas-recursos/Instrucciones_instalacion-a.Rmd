@@ -4,7 +4,7 @@ author: "Pedro J. Pérez"
 date: "`r Sys.Date()`"  
 output:
   html_document:
-    theme: paper
+    theme: sandstone
     highlight: textmate 
     self_contained: yes
     number_sections: no
@@ -124,6 +124,6 @@ Si tú sistema operativo es Windows, tendrás que tener instalado [`Rtools`](htt
 
 <br>
 
-PD2: Si tienes un Mac es conveniente instalar XQuartz, para ello sólo tienes que buscar el instalador en <https://www.xquartz.org/>.
+PD2: Como nos cuentasn [aquí](https://psyteachr.github.io/msc-data-skills/installingr.html), si tienes un Mac, es conveniente instalar XQuartz, para ello sólo tienes que buscar el instalador en <https://www.xquartz.org/>.
 
 <br>
