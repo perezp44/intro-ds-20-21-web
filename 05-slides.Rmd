@@ -23,14 +23,13 @@ Las 2 primeras transparencias están hechas en el formato `ioslides`. Para el re
 
 <br>
 
-- [`Slides-01: Presentación](./slides/ss_01_presentacion/ss_01_presentacion-curso.html){target="_blank"}. El fichero que genera las transparencias está [aquí](./slides/ss_01_presentacion/ss_01_presentacion-curso.Rmd)
+- [Slides-01: Presentación](./slides/ss_01_presentacion/ss_01_presentacion-curso.html){target="_blank"}. El fichero que genera las transparencias está [aquí](./slides/ss_01_presentacion/ss_01_presentacion-curso.Rmd)
 
 
-- [`Slides-02: Tema 1](./slides/ss_02_tema-1/ss_02_tema-1.html){target="_blank"}. El fichero que genera las transparencias está [aquí](./slides/ss_02_tema-1/ss_02_tema-1.Rmd)
+- [Slides-02: Tema 1](./slides/ss_02_tema-1/ss_02_tema-1.html){target="_blank"}. El fichero que genera las transparencias está [aquí](./slides/ss_02_tema-1/ss_02_tema-1.Rmd)
 
 
-
-- [`Slides-03: Primeros pasos con R](./slides/ss_03_inicio-curso/ss_03_primeros-pasos.html){target="_blank"}. El `.Rmd` está [aquí](./slides/ss_03_inicio-curso/ss_03_primeros-pasos.Rmd)
+- [Slides-03: Primeros pasos con R](./slides/ss_03_inicio-curso/ss_03_primeros-pasos.html){target="_blank"}. El `.Rmd` está [aquí](./slides/ss_03_inicio-curso/ss_03_primeros-pasos.Rmd)
 
 
 <br><br>
