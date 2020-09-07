@@ -37,10 +37,10 @@ options(scipen = 999) #- para quitar la notacion cientifica
 
 Bienvenidos a la web de la asignatura **`Programación y manejo de datos en la era del Big Data`**, que se impartirá durante el curso académico 2020-21 en el [Grado de Economía](https://www.uv.es/uvweb/universidad/es/estudios-grado/oferta-grados/oferta-grados/grado-economia-1285846094474/Titulacio.html?id=1285847455792){target="_blank"} de la Universidad de Valencia. Para crear está web se utiliza [este repositorio](https://github.com/perezp44/intro-ds-20-21-web){target="_blank"} alojado en Github.
 
-Como sabéis, la asignatura se imparte en el primer semestre del cuarto curso del Grado en Economía. Es una asignatura optativa, código 36494, con una carga lectiva total de 6 ECTS. La asignatura es una **introducción a la ciencia de datos**: pretende iniciar a los estudiantes en este campo presentando una panorámica de tópicos, y exponiéndoos, quizás por primera vez en la carrera, a la programación.
+La asignatura se imparte en el primer semestre del cuarto curso del Grado en Economía. Es una asignatura optativa, código 36494, con una carga lectiva total de 6 ECTS. La asignatura es una **introducción a la ciencia de datos**: pretende iniciar a los estudiantes en este campo presentando una panorámica de tópicos, y exponiéndoles, quizás por primera vez en la carrera, a la programación.
 
 
-De momento, 1 de septiembre, **está previsto que las clases se desarrollen de manera presencial**, pero es posible (esperemos que no!!), que tengamos que cambiar a clases online. Ya lo veremos!!
+De momento, 7 de septiembre, **está previsto que las clases se desarrollen de manera presencial**, pero es posible (esperemos que no!!), que tengamos que cambiar a clases online. Ya lo veremos!!
 
 Incluso aunque las clases puedan desarrollarse en el aula, va a ser un curso extraño: al ser una asignatura optativa no seremos muchos, unos 35, pero estaremos en un aula de Teoría, llevaremos mascarillas y no podremos interactuar/acercarnos. Esto condicionará, aún no tengo del todo claro cómo, la forma de impartir y recibir las clases, así que **necesitaré vuestra ayuda!!!** Siempre se necesita la ayuda de los estudiantes para que un curso funcione, pero en estas condiciones aún más. Intentaré/intentaremos aprender lo máximo posible sobre R y Ciencia de Datos a pesar de las condiciones. 
 

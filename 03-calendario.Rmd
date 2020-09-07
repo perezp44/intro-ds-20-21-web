@@ -16,7 +16,7 @@ output:
 
 -------------------
 
-- Este apartado iré actualizándolo conforme pasen las semanas. Aquí os pondré los objetivos y tareas previas para cada clase. **TENÉIS** que hacer las tareas previas.
+- Este apartado iré actualizándolo conforme pasen las semanas. Aquí os dejaré las tareas previas a cada clase. **TENÉIS** que hacer las tareas previas.
 
 
 - Las clases serán los viernes de 15:30 a 19:30 en el aula 513 del aulario Sur. Haremos descansos. Veremos cómo.
@@ -51,7 +51,6 @@ output:
 - Si quieres, puedes echarle un vistazo a las 2 primeras transparencias: [aquí](./slides/ss_01_presentacion-curso.html){target="_blank"} y [aquí](./slides/ss_02_tema-1.html). 
 
 
-
 <br>
 
 ##### ¿Qué haremos en la primera clase?
@@ -60,8 +59,11 @@ output:
 
   - Hablar de la evaluación y forma de trabajo en el curso.
   
-  - 
+  - Hablar un poco de algunas de las ideas del Tema 1
   
+  - ¿Cómo trabajaremos con R? Workflow
+  
+  - Ejemplos iniciales
   
 
 <br>
@@ -71,19 +73,20 @@ output:
 
 Muchas veces para (medio) entender/saber hacer estas cosas tendrás que asistir a tutorías o estudiar o preguntar a un compañero, o .... 
 
+  - ¿Qué es la ciencia de datos?
+  
+  - ¿Qué es R y RStudio? ¿Y los paquetes?
 
-   - What is
+  - ¿Qué son los ficheros .R? ¿Y los .Rmd? ¿Y los Rprojects?
+   
+  - Saber interactuar con R a través de Rprojects
+   
+  - y unas cuantas cosas de R-base: asignación, funciones, tipo de datos
   
 
 <br>
 
-Too much  for the first class? I don't think so, but we will see ...
-
-<br>
-
-**Challenge:** Intenta a ver si puedes correr este ejemplo e tu ordenador. Si no puedes no te preocupes.
-
-<br>
+Too much for the first class? Seguramente sí. Al final veremos lo que podamos. Primero tenemos que adptarnos a las condiciones .
 
 -----------------------
 
@@ -93,74 +96,14 @@ Too much  for the first class? I don't think so, but we will see ...
 
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
-    - read 
-    
-
-<br>
-
-##### ¿Qué haremos en la primera clase?
-
-  - talk a
-
-<br>
-
-
-##### Cosas que has de (medio) entender/saber hacer después de la clase
-
-Muchas veces para (medio) entender/saber hacer estas cosas tendrás que asistir a tutorías o estudiar o preguntar a un compañero, o .... 
-
-
-   - What is 
-   
-
-<br>
-
-Too much  for the first class? I don't think so, but we will see ...
-
-<br>
-
-**Challenge:** 
-
-
-
 <br>
 
 -----------------------
 
 <br>
 
-## 3ª clase (25-sept)
+## 3ª clase (2-oct)
 
 
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
-    - read 
-    
-
-<br>
-
-##### ¿Qué haremos en la primera clase?
-
-  - talk a
-
-<br>
-
-
-##### Cosas que has de (medio) entender/saber hacer después de la clase
-
-Muchas veces para (medio) entender/saber hacer estas cosas tendrás que asistir a tutorías o estudiar o preguntar a un compañero, o .... 
-
-
-   - What is 
-   
-
-<br>
-
-Too much  for the first class? I don't think so, but we will see ...
-
-<br>
-
-**Challenge:** If yo
-
-
-<br>

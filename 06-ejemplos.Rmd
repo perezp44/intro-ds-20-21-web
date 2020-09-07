@@ -18,7 +18,7 @@ output:
 
 - Aquí iré subiendo los ejemplos y pruebas que haremos en clase de clase conforme las vaya preparando:
 
-- Aún no tengo claro como gestionar los ejemplos, si en la web o directamente en un repo
+- Aún no tengo claro del todo si en la web o directamente en un repo
 
 --------------------------
 

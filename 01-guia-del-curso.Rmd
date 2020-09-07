@@ -16,7 +16,7 @@ output:
 
 -------------------
 
-En esta sección voy a contaros un poco la filosofía/enfoque del curso; principalmente cómo será la forma de trabajar en clase y en casa^[Tenéis también que tener claro que lo que voy a escribir aquí puede estar sujeto a cambios, ¿qué porqué pueden haber haber cambios? pues por muchas razones, una de ellas es evolución de la pandemia, otra es que aún no os conozco.]. También diré algo sobre la evaluación. Por favor, **leed completamente esta sección**. Es importante!!
+En esta sección voy a contaros un poco la filosofía/enfoque del curso; principalmente cómo será la forma de trabajar en clase y en casa^[Tenéis también que tener claro que lo que voy a escribir aquí puede estar sujeto a cambios, ¿qué porqué pueden haber haber cambios? pues por muchas razones, una de ellas es evolución de la pandemia, otra es que aún no os conozco.]. También diré algo sobre la evaluación. 
 
 <br>
 
@@ -70,7 +70,7 @@ Ya dentro de clase, la dinámica será la siguiente: el profesor, yo, explicaré
 
 Buena parte de las sesiones estaréis resolviendo problemas/cuestiones con el ordenador. Lo ideal es trabajar en parejas, se aprende mucho más y más rápido, pero este año, esto va a ser complicado^[Igual esto no es imposible del todo. Veremos si es posible suplir la proximidad física con alguna aplicación de mensajería.]. Lo normal es atascarse de vez en cuando mientras estás resolviendo una tarea, y muchas veces es tu compañero el que te saca del apuro. Yo tampoco voy a poder pasearme por las mesas para ver como lo estáis haciendo, así que esto limitará, en parte, el que yo pueda ayudaros. 
 
-Esta situación provocada por el covid hará que las clases tengan que ser más **pautadas y pausadas**: no cerraremos un tópico/tarea hasta que todos hayáis acabado, esto implica que iremos un poco más lentos y también implica que **no podéis despistaros** ya que si no seguís el ritmo se resentirá el aprendizaje de vuestros compañeros. Buff, que estrés!!! No, yo creo que al final las cosas saldrán bien y nos divertiremos y aprenderemos, **PERO** tenéis que tener muy claro que **no podéis venir a clase de espectadores** a ver que ocurre, tenéis que trabajar en clase y haber trabajado en casa, no os podéis quedar atrás. Si te vas quedando atrás, en una o dos clases no entenderás nada, y no porque las cosas que veamos sean difíciles, no, sino que hay que ir paso a paso y, a veces, entenderlas por tu cuenta sí que es complicado. 
+Esta situación provocada por el covid hará que las clases, al menos las primeras, tengan que ser más **pautadas y pausadas**: no cerraremos un tópico/tarea hasta que todos hayáis acabado, esto implica que iremos un poco más lentos y también implica que **no podéis despistaros** ya que si no seguís el ritmo se resentirá el aprendizaje de vuestros compañeros. Buff, que estrés!!! No, yo creo que al final las cosas saldrán bien y nos divertiremos y aprenderemos, **PERO** tenéis que tener muy claro que **no podéis venir a clase de espectadores** a ver que ocurre, tenéis que trabajar en clase y haber trabajado en casa, no os podéis quedar atrás. Si te vas quedando atrás, en una o dos clases no entenderás nada, y no porque las cosas que veamos sean difíciles, no, sino que hay que ir paso a paso y, a veces, entenderlas por tu cuenta sí que es complicado. 
 
 
 ------------------
@@ -79,9 +79,9 @@ Esta situación provocada por el covid hará que las clases tengan que ser más 
 
 ## The "plan"
 
-Mi idea/plan es **confiar en que os va a gustar la asignatura** y que vais a trabajar lo necesario tanto en casa como en clase, con lo que las clases serán fáciles a pesar de las limitaciones impuestas por el covid.
+Mi idea/plan es **confiar en que os va a gustar la asignatura** y que vais a trabajar lo necesario, tanto en casa como en clase, con lo que las clases serán fáciles a pesar de las limitaciones impuestas por el covid.
 
-Como os he dicho, las clases son los viernes, antes de cada clase publicaré en esta web, en la sección [`Calendario`](https://perezp44.github.io/intro-ds-20-21-web/03-calendario.html) el esquema de la clase, las transparencias que utilizaré y el trabajo previo que tendréis que hacer. Si puedo publicaré esos guiones no mas tarde de los lunes. Las transparencias puede que tarden un poco más, pero estarán disponibles en la web antes de cada clase.
+Como os he dicho, las clases son los viernes, antes de cada clase publicaré en esta web, en la sección [`Calendario`](https://perezp44.github.io/intro-ds-20-21-web/03-calendario.html) el trabajo previo que tendréis que hacer. Si puedo publicaré esos guiones no mas tarde de los lunes. 
 
 El plan consiste en que vosotros hacéis el trabajo previo antes de venir a clase, de forma que el viernes podéis seguir sin demasiados problemas las clases. De vez en cuando os tendré que hacer pruebas en el aula que también formarán parte de la evaluación continua. 
 
@@ -129,9 +129,7 @@ Además, sed responsables, y si tenéis algún síntoma quedaros en casa por pre
 
 Si algún día yo tengo algún síntoma o sospecha de que puedo tener covid, me quedaré en casa, os avisaría lo antes posible y las clases pararían a impartirse por la BBC del aula virtual en el horario habitual.
 
-- Si tienes dudas sobre tus síntomas, puedes realizarte un autotest o acceder a más información a través de la web de la Consellería de Sanitat: <http://www.san.gva.es/web_estatica/index_va.html>{target="_blank"} . 
-
-- Si crees que puedes tener covid llama al teléfono habilitado por la Generalitat: **ante cualquier síntoma llama al 900 300 555**.
+- Espero que no, pero si crees que puedes tener covid,  llama al teléfono habilitado por la Generalitat: **ante cualquier síntoma llama al 900 300 555**.
 
 - Página web de la UV sobre covid: <https://www.uv.es/uvweb/universidad/es/coronavirus-1286119460428.html)>{target="_blank"} 
 
