@@ -108,14 +108,22 @@ knitr::include_graphics(here::here("imagenes", "00-instrucciones_02.png"))
 
 -------------------
 
-Suerte con la instalación!!
-
--------------------
+Suerte con la instalación!! Seguro que lo has hecho bien!!
 
 <br>
 
-PD: Para **comprobar que has instalado correctamente R, RStudio y los paquetes**, pincha [aquí]() se volvera a abrir uan ventana diciendo que se va a abrir un fichero con RStudio. Acepta. Selecciona todo otra vez y dale al `RUN`. Igual que has hecho al instalar los paquetes
+De todas formas, para **comprobar que todo está correcto**:
 
+- primero cierra RStudio,  
+
+- luego pincha [aquí](https://perezp44.github.io/intro-ds-20-21-web/mas-recursos/comprobar-instalacion.Rmd){target="_blank"}. Se abrirá una ventana diciendo que se va a abrir RStudio. Acepta. Se abrirá RStudio y un archivo. Tienes que pinchar en el icono que hay arriba: es azul i pone Knitr, abajo puede ver una foto del icono. No se verá exactamente igual, pero pincha en ese icono.
+
+
+```{r, echo = FALSE}
+knitr::include_graphics(here::here("imagenes", "tt_02_img_10_Rmd-4.png") ) 
+```
+
+-------------------
 
 <br>
 
@@ -124,6 +132,6 @@ Si tú sistema operativo es Windows, tendrás que tener instalado [`Rtools`](htt
 
 <br>
 
-PD2: Como nos cuentasn [aquí](https://psyteachr.github.io/msc-data-skills/installingr.html), si tienes un Mac, es conveniente instalar XQuartz, para ello sólo tienes que buscar el instalador en <https://www.xquartz.org/>.
+PD2: Como nos cuentan [aquí](https://psyteachr.github.io/msc-data-skills/installingr.html), si tienes un Mac, es conveniente instalar XQuartz, para ello sólo tienes que buscar el instalador en <https://www.xquartz.org/>.
 
 <br>
