@@ -15,11 +15,11 @@ output:
 
 -------------------
 
-En esta sección iré subiendo las transparencias de clase conforme las vaya preparando. Todas las transparencias están hechas con R, de hecho, una de las cosas que has de aprender durante el curso es a hacer transparencias desde R. 
+En esta sección iré subiendo las transparencias de clase conforme las vaya preparando. Las 2 primeras transparencias están hechas en el formato [`ioslides`](https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html){target="_blank"}. Para el resto, seguramente, usaré otro formato: [`xaringan`](https://bookdown.org/yihui/rmarkdown/xaringan.html){target="_blank"}.
 
-Concretamente, habrá un trabajo en equipo (3 personas), donde entre otras cosas, tendréis que hacer unas transparencias para presentar vuestro proyecto. Tendréis que hacer las transparencias con R, usando el formato [`ioslides`](https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html){target="_blank"}. 
+Todas las transparencias están hechas con R, de hecho, una de las cosas que has de aprender durante el curso es a hacer transparencias desde R. Concretamente, habrá un trabajo en equipo (3 personas), donde entre otras cosas, tendréis que hacer unas transparencias para presentar vuestro proyecto. Tendréis que hacer las transparencias con R, usando el formato [`ioslides`]. 
 
-Las 2 primeras transparencias están hechas en el formato `ioslides`. Para el resto, seguramente, usaré otro formato: [`xaringan`](https://bookdown.org/yihui/rmarkdown/xaringan.html){target="_blank"}.
+
 
 <br>
 

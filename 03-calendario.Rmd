@@ -86,7 +86,7 @@ Muchas veces para (medio) entender/saber hacer estas cosas tendrás que asistir 
 
 <br>
 
-Too much for the first class? Seguramente sí. Al final veremos lo que podamos. Primero tenemos que adptarnos a las condiciones .
+Too much for the first class? Igual sí. Al final veremos lo que podamos. Primero tenemos que adaptarnos a las condiciones .
 
 -----------------------
 
@@ -107,3 +107,4 @@ Too much for the first class? Seguramente sí. Al final veremos lo que podamos. 
 
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
+<br><br>
