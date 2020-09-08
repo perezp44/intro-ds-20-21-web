@@ -21,19 +21,19 @@ Todas los tutoriales están hechos con R; de hecho, una de las cosas que has de 
 
 <br>
 
-- [`Prefacio`](./tutoriales/tt_00_prefacio_v3.html){target="_blank"}. 
+- [`Prefacio`](./tutoriales/tt_00_prefacio.html){target="_blank"}. 
 
 
-- [`Tutorial 01: Introducción`](./tutoriales/tt_01_introduccion_v4.html){target="_blank"}. 
+- [`Tutorial 01: Introducción`](./tutoriales/tt_01_introduccion_.html){target="_blank"}. 
 
 
-- [`Tutorial 02: Workflow`](./tutoriales/tt_02_primeros-pasos-con-R_v2.html){target="_blank"}. 
+- [`Tutorial 02: Workflow`](./tutoriales/tt_02_primeros-pasos-con-R.html){target="_blank"}. 
 
 
-- [`Tutorial 03: R base`](./tutoriales/tt_03_R-base_v5.html){target="_blank"}. 
+- [`Tutorial 03: R base`](./tutoriales/tt_03_R-base.html){target="_blank"}. 
 
 
-- [`Tutorial 04: Cargar datos`](./tutoriales/tt_04_cargar_datos_v8.html){target="_blank"}. 
+- [`Tutorial 04: Cargar datos`](./tutoriales/tt_04_cargar_datos.html){target="_blank"}. 
 
 
 <br><br>
