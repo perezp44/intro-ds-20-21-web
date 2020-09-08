@@ -24,7 +24,7 @@ Todas los tutoriales están hechos con R; de hecho, una de las cosas que has de 
 - [`Prefacio`](./tutoriales/tt_00_prefacio.html){target="_blank"}. 
 
 
-- [`Tutorial 01: Introducción`](./tutoriales/tt_01_introduccion_.html){target="_blank"}. 
+- [`Tutorial 01: Introducción`](./tutoriales/tt_01_introduccion.html){target="_blank"}. 
 
 
 - [`Tutorial 02: Workflow`](./tutoriales/tt_02_primeros-pasos-con-R.html){target="_blank"}. 
