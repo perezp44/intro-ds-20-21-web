@@ -30,13 +30,13 @@ Esta sección sirve para poner en un mismo lugar todos los recursos y materiales
 - [**`Jitsi link to make e-meetings`**](https://meet.jit.si/intro-to-DS_UV_2020-21){target="_blank"}: Una room de Jitsi para hacer reuniones online. Seguramente la utilizaré para las tutorías online.
 
 
-- [**`Uploader`**](https://driveuploader.com/upload/iHPEJDltDn/){target="_blank"}: Un servicio que utilizaré para recoger vuestros trabajos. Ya os diré como funciona. Lo abriré cuando tenga que recoger trabajos.
+- [**`Uploader`**](https://driveuploader.com/upload/x1Qx7fev79/){target="_blank"}: Un servicio que utilizaré para recoger vuestros trabajos. Ya os diré como funciona. Lo abriré cuando tenga que recoger trabajos.
 
 <br>
 
-Estos 3 últimos es fácil que no los usemos, pero per si de cas, aquí están:
+Estos 3 últimos es fácil que los usemos menos, pero per si de cas, aquí están:
 
-- [**`Apuntes colaborativos en HackMD`**](https://hackmd.io/zUgsCA6zR4GzyojiS2YIZQ){target="_blank"}: para hacer apuntes colaborativos. Es como Google Docs pero en MD. Veremos si al final lo usamos, aún lo estoy probando.
+- [**`Apuntes colaborativos en HackMD`**](https://hackmd.io/mLBp682ZTaWWKgN-gk35qg){target="_blank"}: para hacer apuntes colaborativos. Es como Google Docs pero en MD. Veremos si al final lo usamos, aún lo estoy probando.
 
 
 - [**`Cuestionario de Google`**](https://forms.gle/kvrZbuw6XtRDhki98){target="_blank"}: Generalmente recogeré los trabajos con el `uploader` o por mail, pero esa función también podría hacerla este cuestionario.
