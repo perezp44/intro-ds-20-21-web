@@ -232,7 +232,7 @@ Además aprenderemos como bajar datos a través de APIs:
 
 Lo que vamos a  hacer en este tutorial para aprender a importar (y exportar) datos en R es elegir un fichero de datos precargado en R y exportarlo a un determinado formato para luego importar el archivo generado o exportado. Repetiremos esto para distintos formatos de datos. 
 
-Da igual que archivo de datos usar, pero por fastidiar a Vicente (y porque es un fichero ligero) utilizaremos un conjunto de datos famoso: "el [`iris`](https://es.wikipedia.org/wiki/Iris_flor_conjunto_de_datos) dataset" que fue utilizado por Ronald Fisher. Iris contiene 150 observaciones de 5 variables: mediciones de 5 características sobre 150 flores de la especie Iris.
+Da igual que archivo de datos usar, así que utilizaremos un conjunto de datos famoso y que pesa poco: "el [`iris`](https://es.wikipedia.org/wiki/Iris_flor_conjunto_de_datos) dataset" que fue utilizado por Ronald Fisher. Iris contiene 150 observaciones de 5 variables: mediciones de 5 características sobre 150 flores de la especie Iris.
 
 
 <br>
