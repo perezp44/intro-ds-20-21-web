@@ -1,0 +1,190 @@
+---
+title: "Bitácora"
+author:
+  name: Pedro J. Pérez
+  affiliation: Universidad de Valencia | Dpto. Análisis Económico
+  # email: pedro.j.perez@uv.es
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  html_document:
+  #  css: !expr here::here("assets", "styles_pjp.css")  #-https://stackoverflow.com/questions/56681879/how-to-use-here-for-paths-to-css-before-body-and-after-bod
+    theme: paper
+    highlight: textmate 
+    self_contained: yes
+    number_sections: no
+    toc: true
+    toc_depth: 3 
+    toc_float: 
+      collapsed: false
+      smooth_scroll: false
+    #code_folding: show
+    #self_contained: TRUE
+    #df_print: kable
+    #code_download: true
+editor_options: 
+  chunk_output_type: console
+#bibliography: "`r here::here('assets', 'biblio.bib')`"  #- joooder. single quotes https://community.rstudio.com/t/use-here-here-function-in-yaml-option/18667/9
+---
+
+
+```{r chunk_setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, message = FALSE, warning = FALSE, include = TRUE,
+                      cache = FALSE, cache.path = "/caches/", comment = "#>",
+                      #fig.width = 7, fig.height= 7,   
+                      #out.width = 7, out.height = 7,
+                      collapse = TRUE,  fig.show = "hold",
+                      fig.asp = 7/9, out.width = "60%", fig.align = "center")
+```
+
+```{r options_setup, echo = FALSE}
+options(scipen = 999) #- quitar notación científica
+```
+
+
+<div class = "blue">
+<br> **BITACORA:** el objetivo es crear los **EJEMPLOS** que usaré durante el curso BigData para el curso 2020-21 <br>
+</div>
+
+
+
+
+Crear un listado de ejemplos para BigData 2020-21. Dos grupos: posibles y preparados. Creo que varias categorías:
+
+  - muy-sencillos  
+  - sencillos  
+  - con miga  
+  - dificiles pero  
+  - muy difíciles  
+
+
+
+
+
+# 1. Ideas/pkgs/pots a usar
+
+Pues eso cosas q creo que tienen potencial/recorrido
+
+- `rgeoboundaries` es un pkg con las Political Administrative Boundaries Dataset: <https://github.com/wmgeolab/rgeoboundaries>. Tengo un ejemplo a medias
+
+- `tibbletime `: pks q es Time-aware tibbles; puedo enseñarles a ver ST: <https://github.com/business-science/tibbletime>
+
+- un post sobre uso bicicleta en Auckland: <https://kimnewzealand.github.io/2019/04/08/bike-network/>   usa datos de OSM
+
+- pkg para datos de WhatsApp: <https://github.com/JBGruber/rwhatsapp>
+
+
+# 2. EJEMPLOS
+
+# 1. Ejemplos ya preparados
+
+## muy-sencillos  
+
+## sencillos  
+
+## con miga  
+
+## dificiles pero 
+
+## muy difíciles  
+
+
+<br>
+
+# 2. Ejemplos posibles
+
+
+## muy-sencillos  
+
+## sencillos  
+
+## con miga  
+
+- \@nowosad: esperanza de vida por países en el tiempo: mapas, animados etc...: https://nowosad.github.io/post/life-expectancy-animated   (creo que se puede hacer bien. solo hay un pequeño pb al ppio)
+
+- es un ejemplo chulo se baja datos de unmeployment claims con el pkg tidyquant y hace varios graáicos https://rviews.rstudio.com/2020/04/16/state-unemployment-claims/
+
+## dificiles pero
+
+
+- gráfico animado con datos de alcohol: está bien, pero sin pasarse, los datos son de WHO, el único Pb es que el código es muy largo 
+
+  - \@ikashnitsky repo on GitHub https://github.com/VictimOfMaths/WHOGISAH  
+  - el gráfico (en realidad un gif):  https://twitter.com/VictimOfMaths/status/1192494930788265991?s=20
+
+
+- starwars social networs y más gráficos: [post](http://evelinag.com/blog/2015/12-15-star-wars-social-network/), [otro post](http://evelinag.com/blog/2016/01-25-social-network-force-awakens/index.html)
+
+
+
+## muy difíciles  
+
+
+# 3. Temáticos
+
+
+## Economia
+
+- replicar tablas de The Economist. el codigo es viejuno, pero ... https://macro.cepremap.fr/article/2020-06/economic-indicators/
+
+
+- un ejemplo chulo, que se mira la cotizacion de una accion: https://curious-joe.net/post/have-r-look-after-your-stock/
+- salarios NBA: https://statisticaloddsandends.wordpress.com/2020/08/29/nba-salaries/
+
+
+- migraciones en EU, pues son flujos de gente y esta chulo y creo que fácil: <https://fcorowe.github.io/mappingeuflows/>
+
+
+## covid
+
+- corona worst days: un heatmap muy chulo y más: [post](https://cedricscherer.netlify.app/2020/03/31/corona-covid-19-death-tolls-worst-day-so-far/) y el [repo](https://github.com/Z3tt/Corona-Worst-Days)
+
+- datoooos covid: https://kjhealy.github.io/covdata/index.html
+
+- API para Oxford covid database: https://github.com/como-ph/oxcovid19
+
+
+## scrapping
+
+- audiencias del senado chileno: [post](https://rivaquiroga.cl/posts/2020/05/scraping-audiencias-senado-parte-1/)
+
+- scrapping de rotten tomatoes: https://selbydavid.com/2020/05/06/films/
+
+- parece q es good para scrapping. lo han retuiteado molt: https://ryo-n7.github.io/2020-05-14-webscrape-soccer-data-with-R/
+
+- un video de 5 minutos pa webscrepping easy: https://www.youtube.com/watch?v=OHi6E8jegQg
+
+- paper q explica como y porque SCRAPPING etc...de las 2 Mines : https://www.datapedagogy.com/post/web-scrape/
+
+
+## ML
+
+
+- usar Keras para generar dialogos de Star Wars: \@LucyStats: This post shows how to mimic Star Wars characters' speech using neural nets in #rstats!
+🔗 https://www.kaggle.com/guidant/mimicking-star-wars-characters-using-a-i-rnn  Authors website: https://g-dant.github.io/
+
+
+
+## Valencia
+
+
+- los del ayuntamiento de VLC \@EstadisticaVLC: un gráfico de facetas sobre el número de personas por hogar en #València por #distritos proveniente de los resultados del #BarómetroVLC de marzo de 2020.
+El código:     https://bit.ly/2y87lc0 https://twitter.com/EstadisticaVLC/status/1261258230262632448/photo/1
+
+# 4. mapas
+
+- isocronas con mapboxapi: [post](https://walker-data.com/mapboxapi/)
+
+- culburra map [art]: hace como un cuadro: <https://github.com/deanmarchiori/culburra>. ya tengo el script, PERO habría que modificarlos para que sea de Valencia o de cualquier pueblo
+
+
+
+
+
+# ZZ. Biblio
+
+En realidad sitios de casos:
+
+- casos de rOpensci: quieren recopilar casos q usen sus pkgs . Hicieron un post, [aquí](https://ropensci.org/blog/2019/10/15/use-cases/). El listado decasos creo que es este: <https://discuss.ropensci.org/latest>
+
+
+
