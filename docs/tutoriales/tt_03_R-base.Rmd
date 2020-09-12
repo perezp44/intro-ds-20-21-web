@@ -411,8 +411,8 @@ Hay alguno mas (`all()`, `any()`, `&&` y `||`) pero suficiente con estos tres pr
 
 
 ```{r}
-(4 > 3) & (3 < 2)     #- Y: como se cumplen las dos condiciones nos devuelve TRUE
-(1==2) | (2 >3)       #- O: Como no se cumple ninguna de las 2 condiciones nos devuelve FALSE
+(4 > 3) & (3 > 2)     #- Y: como se cumplen las dos condiciones nos devuelve TRUE
+(1 == 2) | (2 >3)       #- O: Como no se cumple ninguna de las 2 condiciones nos devuelve FALSE
 !(4 > 3)              #- NOT: 4 es mayor que 3 es TRUE, pero el ! delante de esa condición la niega y pasa a FALSE
 !!(4 > 3)             #- si niegas dos veces, vuelves al principio: TRUE
 
@@ -1195,7 +1195,7 @@ Por supuesto se pueden multiplicar matrices, calcular inversas etc etc...
 # 4.  Arrays
 
 
-Otra estructura para almacenar valores en R son los arrays. Son matrices multidimensionales. No las usaremos mucho, en realidad nada. Cambien es una estructura de datos homogénea; es decir, sus elementos tienen que ser todos del mismo tipo
+Otra estructura para almacenar valores en R son los arrays. Son matrices multidimensionales. No las usaremos mucho, en realidad nada. También es una estructura de datos homogénea; es decir, sus elementos tienen que ser todos del mismo tipo
 
 
 ```{r}
@@ -1204,7 +1204,12 @@ Otra estructura para almacenar valores en R son los arrays. Son matrices multidi
 
 <br>
 
-Podéis imaginar que si tuviésemos que hacer subsetting de un array, tendríamos que utilizar `[ , , ]`.
+Podéis imaginar que si tuviésemos que hacer subsetting de un array, tendríamos que utilizar `[ , , ]`. Por ejemplo
+
+```{r}
+aa[1, 2 , 1]
+```
+
 
 
 <br>

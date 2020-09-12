@@ -124,7 +124,7 @@ substring(bb, 2, nchar(bb))  #- substring() extrae caracteres de un string
 
 
 # Operaciones lógicas ----------------------------------------------------------
-(4 > 3) & (3 < 2)     #- Y: como se cumplen las dos condiciones nos devuelve TRUE
+(4 > 3) & (3 > 2)     #- Y: como se cumplen las dos condiciones nos devuelve TRUE
 (1==2) | (2 >3)       #- O: Como no se cumple ninguna de las 2 condiciones nos devuelve FALSE
 !(4 > 3)              #- NOT: 4 es mayor que 3 es TRUE, pero el ! delante de esa condición la niega y pasa a FALSE
 !!(4 > 3)             #- si niegas dos veces, vuelves al principio: TRUE
