@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Primeros pasos con R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Pedro J. Pérez" />
+    <meta name="date" content="2020-09-14" />
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link href="libs/countdown/countdown.css" rel="stylesheet" />
+    <script src="libs/countdown/countdown.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Primeros pasos con R
+## – Slides 03 –
+### Pedro J. Pérez
+### 2020-09-14
+
+---
+
+
+
+
+
+
+
+class: inverse, center, middle
+
+# Dar órdenes a R
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+### Es lo primero que hemos de aprender
+
+
+---
+
+#### Durante el curso daremos ordenes a R de varias maneras:
+
+&lt;br&gt;
+
+--
+
+1) En la **consola**: solo hay que escribir la orden y pulsar la tecla .purple[ENTER]  
+
+--
+  - .white.bg-green[Tarea] en la consola, intenta darle a R la orden de sumar `2+2`
+
+&lt;br&gt;
+
+--
+
+2) Usando un script o **fichero .R**: Hay que crear un fichero `.R` siguiendo esta ruta de menús: .purple[File &gt; New file &gt; R Script]. Una vez has creado el fichero, escribes la instrucción y pulsas las teclas .purple[CONTROL]  + .purple[ENTER] 
+
+
+--
+
+  - .white.bg-green[Tarea] dale a R la orden de sumar `2+2`, pero esta vez desde un script o fichero .R  
+  
+--
+
+  - .white.bg-green[Tarea] Guarda el fichero que has creado. Ponle el nombre "prueba-01.R" 
+
+&lt;br&gt;
+
+--
+
+3) Usando un fichero Rmarkdown o **fichero .Rmd**: tienes que crear un fichero `.Rmd` siguiendo esta ruta de menús: .purple[File &gt; New file &gt; R Markdown...]. 
+
+  - Esta forma la veremos en un ratito.
+
+---
+
+##### .white.bg-green[Tarea] 
+
+1. Cierra RStudio
+    
+1. Ejecuta las siguientes lineas de código en R
+
+  
+  ```r
+  # operaciones básicas con R
+  2 + 2    
+  2 - 2    
+  2 * 2    
+  2 / 2 
+  
+  # Potenciación (se puede hacer con el operador ^ o con **)
+  3^2    
+  3**2
+  
+  # división entera y módulo
+  11 %/% 5    # división entera 
+  11 %% 5     # módulo (resto de la división entera)
+  ```
+
+-----------------------------
+
+
+--
+- ¿Cómo lo has hecho? ¿Qué ha ocurrido?
+
+- ¿Las has ejecutado todas de golpe o una a una? 
+
+- ¿Alguien se ha atascado? No ... a ver quien puede hacer que R se atasque.
+
+
+---
+class: inverse, center, middle
+
+# Creación de Rprojects
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+### Siempre trabajaremos dentro de un Rproject, así que hay que saber crearlos
+
+
+---
+#### Durante el curso siempre trabajaremos desde/con Rprojects
+
+Para **crear un Rproject** has de:
+
+1. Abrir RStudio
+
+2. Seguir la siguiente ruta de menús: .purple[File &gt; New Project &gt; New Directory &gt; New Project]. 
+
+3. Guardar el RProject; para ello has de ponerle un nombre y decidir la ruta donde se creará el RProject.
+
+--
+
+&lt;br&gt;
+
+-----------------------------------------
+
+.white.bg-green[Tarea] Crea un Rproject en el escritorio/Desktop de tu ordenador. Ponle el nombre: "my-proyecto-01"
+
+----------------------------------------
+
+&lt;br&gt;
+--
+
+- ¿Qué ha pasado?
+
+- ¿Qué pensáis que es el Rproject que habéis creado?
+
+
+---
+
+##### .white.bg-green[Tarea]: 
+
+1. Cierra RStudio
+    
+2. Borra la carpeta del Rproject "my-proyecto-01"
+
+3. Crea un nuevo Rproject llamado "my-proyecto-02"
+
+4. Cierra RStudio
+
+5. Abre el proyecto "my-proyecto-02".   
+
+--------------------------------
+
+--
+
+.white.bg-purple[Ayuda]: hay 2 formas de abrirlo:   
+  - La primera es abrir la carpeta del RProject y hacer doble-click en el archivo "my-proyecto-02.Rproj", sí el fichero con el icono azulito.   
+  
+  - La segunda forma es abrir RStudio y pinchar en el desplegable que hay en la esquina superior-derecha.
+    
+--------------------------------
+
+&lt;br&gt;
+
+--
+
+- ¿Has podido abrir el RProject de las 2 maneras?
+
+
+---
+class: inverse, center, middle
+
+
+# Creación de archivos y carpetas dentro del Rproject
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+### Los Rprojects son carpetas normales y corrientes para tu sistema operativo
+
+---
+
+##### Organizando nuestro Rproject
+
+Los Rprojects son carpetas donde guardaremos todos los ficheros que nos hagan falta para un análisis de datos. Generalmente nos harán falta datos, imágenes, etc ... y es mejor ser organizado y guardar los datos en una carpeta, las imágenes en otra, etc ...
+
+&lt;br&gt;
+
+--
+
+Para **crear carpetas** dentro de un Rproject se puede hacer de 2 formas:
+
+- Desde tu sistema operativo. Seguro que has creado carpetas!!!
+
+- Desde RStudio. En el panel inferior-derecha. En la pestaña "Files", verás un icono que pone "New Folder". Pínchalo.
+
+--
+
+&lt;br&gt;
+
+-----------------------------------------
+
+.white.bg-green[Tarea] Crea dos subcarpetas dentro de tu Rproject. Una que se llame "datos" y otra que se llame "imagenes". Crea cada carpeta de una forma diferente.
+
+----------------------------------------
+
+--
+
+-----------------------------------------
+
+.white.bg-green[Tarea] Borra la subcarpeta "imagenes"
+
+----------------------------------------
+
+--
+
+- ¿Cómo la has borrado? hay dos maneras (bueno más, pero ....)
+
+---
+class: inverse, center, middle
+
+# Dar órdenes a R (otra vez)
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+###  Sí, esto fue lo primero que hicimos, pero ahora vamos a dar ordenes a R desde dentro del Rproject
+
+---
+
+##### .white.bg-green[Tarea] 
+
+1. Cierra RStudio
+
+1. Vuelve a abrir el Rproject
+    
+1. Desde el RProject, ejecuta las siguientes lineas de código en R
+
+1. No las ejecutes desde la consola, sino desde un archivo .R. Guarda el archivo y llamalo "mis-calculos-01.R"
+
+  
+  ```r
+  #- Ante la duda usa los paréntesis
+  6 + 2 * 5   
+  (6 + 2) * 5
+  
+  #- Operaciones de varias lineas
+  2  + 2 + 2 + 2 + 2 +
+  10 + 
+  30
+  ```
+-----------------------------
+
+
+<div class="countdown" id="timer_5f5f2f74" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">00</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">15</span></code>
+</div>
+
+
+
+
+--
+
+&lt;br&gt;
+
+- ¿Donde has guardado el archivo "mis-calculos-01.R"?
+
+
+---
+
+class: inverse, center, middle
+
+# Gestionar los archivos de nuestro RProject
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+### Hay que aprender a borrar, crear y mover archivos dentro del Rproject
+
+---
+
+Recuerda que puedes gestionar (borrar, crear, mover, renombrar, ...) los archivos de tu RProject con tu sistema operativo o desde RStudio: **se puede hacer de las 2 maneras**.
+
+
+<div class="countdown" id="timer_5f5f32a0" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">00</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">15</span></code>
+</div>
+
+--
+
+&lt;br&gt;
+
+---------------
+
+.white.bg-green[Tarea] 
+
+- Borra el archivo "mis-calculos-01.R"  
+
+- Crea otro archivo llamado "mis-calculos-02.R" en la carpeta "datos". En este archivo tienes que escribir una linea de comentario y una linea con una expresión/orden de R.
+
+- Mueve el archivo "mis-calculos-02.R" de la carpeta "datos" a la carpeta raíz del RProject.
+
+&lt;br&gt;
+
+-----------------------------
+
+--
+
+- Bueno, pues yo creo que enough de aprender a manejarse con RStudio. ¿Recordáis que es RStudio?  ¿Qué es un Rproject?
+
+- ¿Y la consola? ¿Y los ficheros. R?  
+
+
+---
+class: inverse, center, middle
+
+# Algunos ejemplos
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+### Vamos a ver algunos ejemplos para ir familiarizándonos con RStudio, los Rprojects y un poco de la sintaxis de R.
+
+---
+
+.white.bg-purple[Primer ejemplo]: 
+
+- Crea un nuevo RProject llamado `my-ejemplos-01`
+
+- En el Rproject que has creado ejecuta en un fichero .R el siguiente código
+
+
+
+
+```r
+#- repo del paquete:  https://github.com/GuangchuangYu/meme/
+
+library(meme)    #- install.packages("meme")
+
+fotaca &lt;- system.file("success.jpg", package = "meme")
+
+meme(fotaca, "SÍ q puedes!!!", "Tú puedes aprender R!!", size = 2.0, color = "purple")
+```
+
+
+----------------------------------------------------
+
+&lt;br&gt;&lt;br&gt;
+
+.white.bg-green[Tarea]: 
+En la url de abajo hay una foto. Úsala para hacer un meme
+
+```r
+https://i1.wp.com/production-wordpress-assets.s3.amazonaws.com/blog/wp-content/uploads/2013/03/wisdom_of_the_ancients-1.png?resize=485%2C270&amp;ssl=1
+```
+
+
+
+---
+.panelset[
+.panel[.panel-name[Tarea]
+
+En la url de abajo hay una foto. Úsala para hacer un meme.
+
+&lt;br&gt;
+
+```r
+https://i1.wp.com/production-wordpress-assets.s3.amazonaws.com/blog/wp-content/uploads/2013/03/wisdom_of_the_ancients-1.png?resize=485%2C270&amp;ssl=1
+```
+]
+
+.panel[.panel-name[Solución]
+
+&lt;br&gt;
+
+- Ni se te ocurra mirar la solución hasta que lo hayas intentado!!! 
+
+- te rindes? Bueno, a veces hay que rendirse, mira en el siguiente tab.
+]
+
+.panel[.panel-name[Más]
+
+- Te has rendido, bueno ....
+
+
+```r
+fotaca &lt;- "https://i1.wp.com/production-wordpress-assets.s3.amazonaws.com/blog/wp-content/uploads/2013/03/wisdom_of_the_ancients-1.png?resize=485%2C270&amp;ssl=1"
+
+meme(fotaca, "SÍ q puedes!!!", "Tú puedes aprender R!!", size = 2.0 , color = "purple")
+```
+
+]
+]
+
+---
+class: inverse, center, middle
+
+# Vamos a por más ejemplos
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+### Pero  ahora no vamos a ir tan pausados, os voy a tirar un poco a la piscina
+
+
+---
+class: center
+
+### Es muy importante la actitud!!!
+
+--
+.pull-left[
+##### No hay que agobiarse ...
+
+&lt;img src="../imagenes/ss_03_img_01_angry-computer.jpg" width="1067" /&gt;
+]
+
+--
+.pull-right[
+
+#### ... mejor dejarse llevar
+
+&lt;img src="../imagenes/ss_03_img_02_baby-surf.jpg" width="855" /&gt;
+]
+
+---
+
+.white.bg-purple[Tarea]: vamos a crear todos un proyecto con el mismo nombre y estructura; aunque en realidad lo vamos a descargar de internet, para ello:
+
+1. cierra RStudio
+
+2. abre RStudio pinchando en su icono. (No lo abras a través de un Rproject)
+
+3. Este paso lo haré yo, así que esperad a que lo haga yo y seguidme: Global options (para ver el default working directory)
+
+4. Copia y ejecuta el código de abajo
+
+
+```r
+file_to_download &lt;- "my_BigData_ejemplos.zip" 
+url &lt;- paste0("https://github.com/perezp44/intro-ds-20-21-web/raw/master/ejemplos/", file_to_download)
+download.file(url, destfile = file_to_download)
+unzip(zipfile = file_to_download)
+file.remove(file_to_download)        
+```
+
+-------------------------
+
+&lt;br&gt;
+
+--
+
+- Habéis descargado una carpeta de una dirección de internet. Como esa carpeta era un Rproject, en realidad habéis creado un Rproject en vuestro working directory.
+
+
+- Cerrad RStudio y buscad el Rproject que hemos creado. Se llama "my_BigData_ejemplos" y abridlo
+
+
+---
+
+Bueno, ya tenemos todos un Rproject con el mismo nombre y con la misma estructura de carpetas. En este proyecto es donde **haremos los ejemplos y casos del curso**.
+
+&lt;br&gt;
+
+.white.bg-purple[Tarea]: hagamos el primer ejemplo, para ello:
+
+- **Abre el Rproject**  "my_BigData_ejemplos" 
+
+- Dentro del Rproject **abre el fichero**: "_bajar-ejemplos.R"
+
+- Copia la linea de código de abajo y pégala en el archivo "_bajar-ejemplos.R"
+
+
+
+```r
+file_to_download &lt;- "ej_01_ejemplo-inicial.R" 
+```
+
+- Ejecuta el código del archivo "_bajar-ejemplos.R". Esto hará que se cree un nuevo archivo en tu Rproject: se creará un archivo llamado "ej_01_ejemplo-inicial.R" 
+
+--
+
+&lt;br&gt;
+
+- Abre ese archivo y lee/mira el código. Intenta adivinar que hará el código
+
+- Ejecuta el código linea por linea e intenta entender que está haciendo
+
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

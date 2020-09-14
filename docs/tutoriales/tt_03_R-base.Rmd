@@ -963,9 +963,9 @@ aa + bb
 ```
 
 
-### Reciclyng
+### Recycling
 
-Si intentamos hacer una operación con dos vectores pero estos no tienen el mismo orden, entonces R, automáticamente reciclará el vector más corto hasta que alcance la longitud del más grande y así poder hacer la operación. Este comportamiento se conoce como reciclyng. Por ejemplo:
+Si intentamos hacer una operación con dos vectores pero estos no tienen el mismo orden, entonces R, automáticamente reciclará el vector más corto hasta que alcance la longitud del más grande y así poder hacer la operación. Este comportamiento se conoce como recycling. Por ejemplo:
 
 Un ejemplo:
 
@@ -1013,7 +1013,7 @@ aa >= bb
 aa != bb
 ```
 
-En las operaciones de comparación también aplica el reciclying:
+En las operaciones de comparación también aplica el recycling:
 
 ```{r}
 aa <- 1:3

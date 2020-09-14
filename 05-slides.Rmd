@@ -27,6 +27,9 @@ Todas las transparencias están hechas con R, de hecho, una de las cosas que has
 
 - [Slides-02: Tema 1](./slides/ss_02_tema-1/ss_02_tema-1.html){target="_blank"}.
 
+- [Slides-03: Primeros pasos](./slides/ss_03_inicio-curso/ss_03_primeros-pasos.html){target="_blank"}.
+
+- [Slides-04: R base](./slides/ss_04_R-base-01/ss_04_R-base-01.html){target="_blank"}.
 
 
 <br><br>
