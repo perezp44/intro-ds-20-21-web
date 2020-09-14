@@ -422,8 +422,8 @@ class: center
 .pull-left[
 ##### No hay que agobiarse ...
 
-```{r, echo=FALSE}
-knitr::include_graphics("../imagenes/ss_03_img_01_angry-computer.jpg")
+```{r, echo = FALSE}
+knitr::include_graphics("./imagenes/ss_03_img_01_angry-computer.jpg") 
 ```
 ]
 
@@ -432,8 +432,8 @@ knitr::include_graphics("../imagenes/ss_03_img_01_angry-computer.jpg")
 
 #### ... mejor dejarse llevar
 
-```{r, echo=FALSE}
-knitr::include_graphics("../imagenes/ss_03_img_02_baby-surf.jpg")
+```{r, echo = FALSE}
+knitr::include_graphics("./imagenes/ss_03_img_02_baby-surf.jpg") 
 ```
 ]
 
