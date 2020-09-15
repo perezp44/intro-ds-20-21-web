@@ -118,6 +118,13 @@ Este *cartoon*, en cierta manera, complementa el tweet anterior:
 knitr::include_graphics(here::here("imagenes", "01_Rob-you-use-R.png"))
 ```
 
+<br>
+
+Además, como me gusta el tema: el siguiente tweet es la respuesta a \@tlyzawx que se quejaba en Twitter de que después de usar Phyton varios años, aún tuviese que buscar ayuda cada vez que usaba la librería *Matplotlib*. Le contesta \@dopplershift uno de los desarrolladores de la libreria.
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I have been using Python for 15 years and have been a matplotlib core developer for over 10. I google things about the library all the time.</p>&mdash; Ryan May (@dopplershift) <a href="https://twitter.com/dopplershift/status/1271614146312908800?ref_src=twsrc%5Etfw">June 13, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+
 
 
 <br><br><br><br>
