@@ -114,7 +114,7 @@ Este *cartoon*, en cierta manera, complementa el tweet anterior:
 
 
 
-```{r , echo=FALSE, fig.cap="From https://jonocarroll.github.io/ggeasyan   , an adpatation of https://xkcd.com/1168/", eval = TRUE, fig.asp = 4/4, out.width = "95%", fig.align = "left"}
+```{r , echo=FALSE, fig.cap="From https://jonocarroll.github.io/ggeasy   , an adpatation of https://xkcd.com/1168/", eval = TRUE, fig.asp = 4/4, out.width = "95%", fig.align = "left"}
 knitr::include_graphics(here::here("imagenes", "01_Rob-you-use-R.png"))
 ```
 
