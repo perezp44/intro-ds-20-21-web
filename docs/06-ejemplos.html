@@ -28,6 +28,81 @@
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { font-weight: bold; } /* Alert */
+code span.an { font-style: italic; } /* Annotation */
+code span.cf { font-weight: bold; } /* ControlFlow */
+code span.co { font-style: italic; } /* Comment */
+code span.cv { font-style: italic; } /* CommentVar */
+code span.do { font-style: italic; } /* Documentation */
+code span.dt { text-decoration: underline; } /* DataType */
+code span.er { font-weight: bold; } /* Error */
+code span.in { font-style: italic; } /* Information */
+code span.kw { font-weight: bold; } /* Keyword */
+code span.pp { font-weight: bold; } /* Preprocessor */
+code span.wa { font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 
 
 <style type="text/css">
@@ -404,16 +479,16 @@ div.tocify {
 <div id="ejemplos" class="section level3">
 <h3>Ejemplos</h3>
 <hr />
-<ul>
-<li><p>Aquí iré subiendo los ejemplos y pruebas que haremos en clase de clase conforme las vaya preparando:</p></li>
-<li><p>Aún no tengo claro del todo si en la web o directamente en un repo</p></li>
-</ul>
-<hr />
-<p><br></p>
-</div>
-<div id="ejercicios" class="section level3">
-<h3>Ejercicios</h3>
-<hr />
+<p>Los ejemplos y casos que hagamos durante el curso muchas veces provendrán de los propios tutoriales.</p>
+<p>Durante el curso he de evaluaros, así que muchos de los ejemplos nuevos os los facilitaré cuando hagamos las pruebas, ya sean estas en casa o en el aula.</p>
+<p>Además, en clase vamos a usar un Rproject, llamado <code>my_BigData_ejemplos</code> con ejemplos adicionales, algunos de ellos los usaremos en clase. Actualmente el Rproject contiene básicamente los ejemplos del año 2019. Poco a poco iremos añadiendo ejemplos nuevos al proyecto.</p>
+<p>Para descargaros el Rproject <code>my_BigData_ejemplos</code> tienes que ejecutar en RStudio las siguientes instrucciones:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>file_to_download &lt;-<span class="st"> &quot;my_BigData_ejemplos.zip&quot;</span> </span>
+<span id="cb1-2"><a href="#cb1-2"></a>url &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;https://github.com/perezp44/intro-ds-20-21-web/raw/master/ejemplos/&quot;</span>, file_to_download)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">download.file</span>(url, <span class="dt">destfile =</span> file_to_download)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">unzip</span>(<span class="dt">zipfile =</span> file_to_download)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">file.remove</span>(file_to_download)</span></code></pre></div>
+<p>No hace falta que lo hagas ahora, mejor si te esperas al primer día de clase, os lo explico un poco más y lo hacemos todos juntos.</p>
 <p><br><br></p>
 </div>
 

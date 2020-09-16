@@ -16,16 +16,24 @@ output:
 
 -------------------
 
-- Aquí iré subiendo los ejemplos y pruebas que haremos en clase de clase conforme las vaya preparando:
+Los ejemplos y casos que hagamos durante el curso muchas veces provendrán de los propios tutoriales.
 
-- Aún no tengo claro del todo si en la web o directamente en un repo
+Durante el curso he de evaluaros, así que muchos de los ejemplos nuevos os los facilitaré cuando hagamos las pruebas, ya sean estas en casa o en el aula.
 
---------------------------
+Además, en clase vamos a usar un Rproject, llamado `my_BigData_ejemplos` con ejemplos adicionales, algunos de ellos los usaremos en clase. Actualmente el Rproject contiene básicamente los ejemplos del año 2019. Poco a poco iremos añadiendo ejemplos nuevos al proyecto.
 
-<br>
+Para descargaros el Rproject `my_BigData_ejemplos` tienes que ejecutar en RStudio las siguientes instrucciones:
 
-### Ejercicios
+```{r, eval = FALSE}
+file_to_download <- "my_BigData_ejemplos.zip" 
+url <- paste0("https://github.com/perezp44/intro-ds-20-21-web/raw/master/ejemplos/", file_to_download)
+download.file(url, destfile = file_to_download)
+unzip(zipfile = file_to_download)
+file.remove(file_to_download)
+```
 
--------------------
+No hace falta que lo hagas ahora, mejor si te esperas al primer día de clase, os lo explico un poco más y lo hacemos todos juntos.
+
+
 
 <br><br>
