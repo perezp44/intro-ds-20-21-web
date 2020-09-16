@@ -103,8 +103,9 @@ La bibliografía que figura en la Guía Docente es:
 
 La comunidad R es muy dinámica y en general comparte sus materiales, lo que hace que los recursos para aprender R sean, exagerando un poco, casi infinitos. Es imposible abarcarlo todo, es una avalancha continúa de nuevas paquetes, análisis, cursos, libros, etc....
 
-En unos días pondré aquí algunos recursos que pueden seros útiles; de todas formas mira lo que dice Jesse Mostipak sobre aprender **#rstats**:
+Mas abajo tenéis un listado de recursos, pero, de todas formas, mira lo que dice Jesse Mostipak sobre aprender **#rstats**:
 
+<br>
 
 <blockquote class="twitter-tweet" data-dnt="true" data-theme="dark"><p lang="en" dir="ltr">My <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> learning path:<br><br>1. Install R<br>2. Install RStudio<br>3. Google &quot;How do I [THING I WANT TO DO] in R?&quot;<br><br>Repeat step 3 ad infinitum.</p>&mdash; Jesse Mostipak (@kierisi) <a href="https://twitter.com/kierisi/status/898534740051062785?ref_src=twsrc%5Etfw">August 18, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
@@ -120,9 +121,86 @@ knitr::include_graphics(here::here("imagenes", "01_Rob-you-use-R.png"))
 
 <br>
 
-Además, como me gusta el tema: el siguiente tweet es la respuesta a \@tlyzawx que se quejaba en Twitter de que después de usar Phyton varios años, aún tuviese que buscar ayuda cada vez que usaba la librería *Matplotlib*. Le contesta \@dopplershift uno de los desarrolladores de la libreria.
+Además, como me gusta el tema: el siguiente tweet es la respuesta a \@tlyzawx que se quejaba en Twitter de que después de usar Phyton varios años, aún tuviese que buscar ayuda cada vez que usaba la librería *Matplotlib*. Le contesta \@dopplershift uno de los desarrolladores de la librería.
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I have been using Python for 15 years and have been a matplotlib core developer for over 10. I google things about the library all the time.</p>&mdash; Ryan May (@dopplershift) <a href="https://twitter.com/dopplershift/status/1271614146312908800?ref_src=twsrc%5Etfw">June 13, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+<br>
+
+-------------------
+
+
+
+
+
+
+    
+#### Recursos para buscar inspiración para tus proyectos
+    
+  - [R-weekly](https://rweekly.org/): cada semana envían un archivo con los mejores análisis hechos con R esa semana. Tienes que apuntarte [aquí](https://feedburner.google.com/fb/a/mailverify?uri=rweekly&loc=en_US).
+    
+  - [R-bloggers](https://www.r-bloggers.com/): Un agregador de blogs relacionados con R.
+    
+  - [Kaggle](https://www.kaggle.com/datasets): plataforma para aprender ML. Encontrarás datos y análisis de estos.
+  
+  - [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday): cada semana lanzan una competición de visualización con unos datos.
+
+<br>
+
+#### Más recursos
+
+  - [Quick-R](http://www.statmethods.net/)
+    
+  - [r-statistics.co](http://r-statistics.co/)
+  
+  - [swirl](https://swirlstats.com/): swirl teaches you R programming and data science interactively, at your own pace, and right in the R console!
+
+    - [R views](https://rviews.rstudio.com/): Un blog de la comunidad R editado por RStudio. Cada mes saca un post con los mejores 40 paquetes de ese mes; por ejemplo, [aquí[(https://rviews.rstudio.com/2020/08/27/july-2020-top-40-new-cran-packages/)] tienes el de julio de 2020.
+
+  - Si al final acabas utilizando R para tus análisis, seguramente acabarás utilizando [Stack Overflow](http://stackoverflow.com/questions/tagged/r). Es una comunidad de programadores, en la que muchas veces resolverás las dudas que te puedan surgir en tu aprendizaje sobre R, 
+
+<br>
+
+#### Propuestas para aprender R
+
+  - [How to get started with Data Science using R](https://www.r-bloggers.com/how-to-get-started-with-data-science-using-r/)
+
+  - [Tutorials for learning R](https://www.r-bloggers.com/how-to-learn-r-2/#h.nl3rvdr3ycsc)
+
+<br>
+
+#### Necesito un paquete para ...   
+
+  - [Listado sencillo](https://support.rstudio.com/hc/en-us/articles/201057987-Quick-list-of-useful-R-packages)
+    
+  - [Listado completo de CRAN agrupado por temática](https://www.rdocumentation.org/taskviews#Bayesian)
+
+
+  - [AWESOME list de pkgs](https://github.com/qinwf/awesome-R)
+
+
+  - [Listado de pkgs agrupados por fase del análisis](https://github.com/rstudio/RStartHere?utm_content=buffercf5d8&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer)
+
+
+```{r, echo = FALSE,  eval = FALSE,  fig.asp = 1/2, out.width = "70%", fig.align = "center"}
+knitr::include_graphics("./imagenes/tt_0_data-science.png")
+```
+
+
+<br>
+
+#### Awesome list
+
+Mucha gente hace sus propias listas de recursos R, aquí tienes algunas:
+
+
+- [Awesome R Learning Resources](https://github.com/iamericfletcher/awesome-r-learning-resources)  
+
+- [Learning R resources](https://github.com/Joscelinrocha/Learning-R-Resources)
+
+<br>
+
+
 
 
 
