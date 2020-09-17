@@ -56,10 +56,9 @@ Estos 3 últimos es fácil que los usemos menos, pero per si de cas, aquí está
 - [**`Transparencias`**](https://perezp44.github.io/intro-ds-20-21-web/05-slides.html): las transparencias (o slides) que usaré para dar clase. Las puedes encontrar en la sección `Slides` de esta misma web.
 
 
-- [**`Ejercicios`**](https://perezp44.github.io/intro-ds-20-21-web/06-ejemplos.html): asociados a las transparencias
+- [**`Ejemplos/Ejercicios`**](https://perezp44.github.io/intro-ds-20-21-web/06-ejemplos.html):  iré colgando conforme avancen las clases.
 
 
-- **`Ejemplos`**: pues eso ejemplos
 
 ----------------------
 

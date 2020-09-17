@@ -10,6 +10,14 @@ output:
     toc_float: true
 ---
 
+
+
+
+```{r klippy, echo = FALSE}
+klippy::klippy(position = c("top", "right")) #- remotes::install_github("rlesur/klippy")
+```
+
+
 <br>
 
 ### Ejemplos
@@ -20,7 +28,7 @@ Los ejemplos y casos que hagamos durante el curso muchas veces provendrán de lo
 
 Durante el curso he de evaluaros, así que muchos de los ejemplos nuevos os los facilitaré cuando hagamos las pruebas, ya sean estas en casa o en el aula.
 
-Además, en clase vamos a usar un Rproject, llamado `my_BigData_ejemplos` con ejemplos adicionales, algunos de ellos los usaremos en clase. Actualmente el Rproject contiene básicamente los ejemplos del año 2019. Poco a poco iremos añadiendo ejemplos nuevos al proyecto.
+Además, en clase vamos a usar un Rproject, llamado `my_BigData_ejemplos` con ejemplos adicionales, algunos de ellos los usaremos en clase. Actualmente el Rproject `my_BigData_ejemplos` contiene básicamente los ejemplos del año 2019. Poco a poco iremos añadiendo ejemplos nuevos al proyecto.
 
 Para descargaros el Rproject `my_BigData_ejemplos` tienes que ejecutar en RStudio las siguientes instrucciones:
 

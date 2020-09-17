@@ -24,6 +24,10 @@
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -475,13 +479,17 @@ div.tocify {
 </div>
 
 
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
 <p><br></p>
 <div id="ejemplos" class="section level3">
 <h3>Ejemplos</h3>
 <hr />
 <p>Los ejemplos y casos que hagamos durante el curso muchas veces provendrán de los propios tutoriales.</p>
 <p>Durante el curso he de evaluaros, así que muchos de los ejemplos nuevos os los facilitaré cuando hagamos las pruebas, ya sean estas en casa o en el aula.</p>
-<p>Además, en clase vamos a usar un Rproject, llamado <code>my_BigData_ejemplos</code> con ejemplos adicionales, algunos de ellos los usaremos en clase. Actualmente el Rproject contiene básicamente los ejemplos del año 2019. Poco a poco iremos añadiendo ejemplos nuevos al proyecto.</p>
+<p>Además, en clase vamos a usar un Rproject, llamado <code>my_BigData_ejemplos</code> con ejemplos adicionales, algunos de ellos los usaremos en clase. Actualmente el Rproject <code>my_BigData_ejemplos</code> contiene básicamente los ejemplos del año 2019. Poco a poco iremos añadiendo ejemplos nuevos al proyecto.</p>
 <p>Para descargaros el Rproject <code>my_BigData_ejemplos</code> tienes que ejecutar en RStudio las siguientes instrucciones:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>file_to_download &lt;-<span class="st"> &quot;my_BigData_ejemplos.zip&quot;</span> </span>
 <span id="cb1-2"><a href="#cb1-2"></a>url &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;https://github.com/perezp44/intro-ds-20-21-web/raw/master/ejemplos/&quot;</span>, file_to_download)</span>
