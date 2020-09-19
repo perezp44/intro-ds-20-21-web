@@ -81,8 +81,6 @@ Muchas veces para (medio) entender/saber hacer estas cosas tendrás que asistir 
    
   - Saber interactuar con R a través de Rprojects
    
-  - y unas cuantas cosas de R-base: asignación, funciones, tipo de datos
-  
 
 <br>
 
@@ -95,6 +93,25 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 ## 2ª clase (25-sept)
 
 ##### **`Homework`** (para hacer antes de ir a clase) 
+
+- Leer el e-mail que os he mandado a vuestro correo de la UV y hacer (si quieres) las 3 tareas extra-oficiales que allí os cuento. Además, en el mail hay una cuarta tarea, está cuarta tarea sí es oficial, hay que hacerla.
+
+- Leer el [tutorial nº 2](https://perezp44.github.io/intro-ds-20-21-web/tutoriales/tt_02_primeros-pasos-con-R.html). En el tutorial aparece una pequeña explicación de las ventajas de usar Rprojects y hace hincapié en el concepto de **rutas relativas**. Trata de entenderlo, lógicamente, pero si tienes dudas/problemas no pasa nada, lo trabajaremos en profundidad cuando empecemos el tutorial nº 04, supongo que en la tercera sesión/viernes del curso.
+
+- Configurar RStudio. Para ello tienes que seguir las instrucciones que figuran en el tutorial nº 2, concretamente [aquí](https://perezp44.github.io/intro-ds-20-21-web/tutoriales/tt_02_primeros-pasos-con-R.html#Configurando_RStudio). Es importante que tengamos todos la misma configuración, ya explicaré la razón en clase.
+
+
+
+##### ¿Qué haremos en la segunda clase?
+
+  - Finalizar las [Slides-03: Primeros pasos](./slides/ss_03_inicio-curso/ss_03_primeros-pasos.html){target="_blank"}. para tratar de acabar de entender/habituarnos a RStudio, los Rprojects etc ...
+  
+- Estaremos un buen rato con el ejemplo "ej_01_ejemplo-inicial.R"; es un análisis muy simple, pero ejemplifica bien lo que haremos durante el curso.
+  
+- Utilizaremos el fichero "ej_01_ejemplo-inicial.Rmd" para crear una primera capa para entender los ficheros .Rmd
+  
+- Ver todo los que podamos de R-base, para ello utilizaremos las [Slides-04: R base](./slides/ss_04_R-base-01/ss_04_R-base-01.html){target="_blank"}. Es muy importante entender algunos conceptos como asignación, tipos de datos, estructuras de datos, funciones ...
+
 
 <br>
 
