@@ -99,7 +99,7 @@ A pesar de que confío en que tengamos suerte y podamos cumplir con "the plan", 
 
 ## Logística
 
-El curso es eminentemente práctico, por lo que es necesario que los estudiantes tengan acceso a un ordenador durante las clases. Dada la situación sanitaria actual, las clases se impartirán en el aula 513 (aula de teoría) por lo que se hace **necesario que cada estudiante venga a clase con su propio portátil**.
+El curso es eminentemente práctico, por lo que es necesario que los estudiantes tengan acceso a un ordenador durante las clases. Dada la situación sanitaria actual, las clases se impartirán en el aula 103 (aula de teoría) por lo que se hace **necesario que cada estudiante venga a clase con su propio portátil**.
 
 Durante el curso utilizaremos diversos recursos: transparencias, ejemplos, ejercicios, bibliografía, etc... Puedes encontrar todos los detalles en la sección [`Logística`](https://perezp44.github.io/intro-ds-20-21-web/02-logistica.html) de la página web.
 

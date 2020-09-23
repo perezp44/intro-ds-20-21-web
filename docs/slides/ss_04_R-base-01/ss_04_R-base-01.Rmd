@@ -878,8 +878,8 @@ log(base = 10, 1000)
 
 #### Para finalizar (de momento) con las funciones, 3 cosas:
 
-- Leeros el **apéndice A.1** del libro [Data Visualization
-A practical introduction](https://socviz.co/index.html#preface) de Kieran Healy. El apéndice está aquí[https://socviz.co/appendix.html#a-little-more-about-r], y se llama **"How to read an R help page"**. 
+- Leeros el **apéndice A.1.1** del libro [Data Visualization
+A practical introduction](https://socviz.co/index.html#preface) de Kieran Healy. El apéndice está (aquí)[https://socviz.co/appendix.html#a-little-more-about-r], y se llama **"How to read an R help page"**. 
 
 
 --

@@ -1,0 +1,79 @@
+---
+title: "Entrega de los trabajos que formen parte de la evaluación continua"
+author: "Pedro J. Pérez"
+date: "`r Sys.Date()`"  
+output:
+  html_document: 
+    theme: simplex
+    highlight: tango
+    toc: yes
+    toc_float: yes
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+--------------------------------------------
+
+Como sabéis, a lo largo del curso os mandaré algunas tareas/ejercicios que formarán parte de la evaluación continua. Algunas de estas tareas serán para resolver en casa y otras se resolverán en el aula.
+
+
+Lo normal  es que cada ejercicio/tarea que forme parte de la evaluación continua, ya sea para hacer en casa como en el aula, tenga unas instrucciones propias de realización, así como una fecha límite para su entrega. En este documento se describen las instrucciones generales de entrega.
+
+
+<br>
+
+### ¿Cómo entregar los ejercicios que formen parte de la evaluación continua?
+
+Salvo que las instrucciones especificas de un ejercicio especifiquen una vía de entrega alternativa, Los ejercicios/tareas que hagamos en clase o en casa y que formen parte de la **evaluación continua** se entregarán a través de un `uploader`. Simplemente habrá que depositar el archivo final en la siguiente dirección: <https://driveuploader.com/upload/x1Qx7fev79/>.
+
+Si el `uploader`estuviese cerrado tendrás que pinchar en el recuadro para solicitar su apertura.
+
+<br>
+
+### ¿Cuantos archivos habrá que entregar?
+
+Salvo que las instrucciones especificas de un ejercicio especifiquen algo diferente, lo normal es que tengáis que entregar un único archivo, concretamente un fichero comprimido o fichero .zip. 
+
+Generalmente resolveréis el ejercicios utilizando un Rproject, pero una vez hayáis resuelto el ejercicio, tendréis que comprimir ese Rproject en un fichero .zip. Este fichero .zip será el que tengáis que subir al `uploader`.
+
+<br>
+
+### ¿Qué nombre he de poner a los archivos?
+
+Buena pregunta. Ya sabéis que el profesor es un poco pejiguero con los nombre de los ficheros, así que intentad cumplir con las instrucciones de entrega relativas a los nombre de los ficheros: es la única forma de saber de quien es cada ejercicio entregado.
+
+
+Salvo que las instrucciones especificas de un ejercicio especifiquen algo diferente, lo normal es que tengáis que resolver el ejercicio utilizando un Rproject. El nombre del Rproject deberá ser:  
+
+`entrega-<nº de entrega>-<NPA>-<Primer apellido>-<Primer nombre>`
+
+<br>
+
+#### Un ejemplo
+
+Se entiende mejor con un ejemplo, así que imagina que una persona cuyo nombre fuera María Antonia y sus apellidos fueran: Nuñez-Balboa Pérez. Fíjate que su primer nombre tiene tildes y su primer apellido es compuesto y tiene una eñe.
+
+Imagina que María Antonia tiene que entregar la tercera entrega, en ese caso, su Rproject debería llamarse: `entrega-03-HBR454545-Nunez-Maria`. 
+
+Cuando María tenga que entregar la doceava entrega, su Rproject se llamará: `entrega-12-HBR454545-Nunez-Maria`.
+
+
+Fíjate que en el nombre del fichero no puede haber tildes, ni eñes, ni espacios en blanco, y debe haber exactamente 4 guiones `-`.
+    
+<br>
+
+### ¿Cómo deberá llamarse el fichero .zip que hemos de entregar?
+
+Igual que el Rproject que tengas que entregar más la extensión. zip
+
+<br>
+
+#### Un ejemplo
+
+Imagina que María tiene que entregar la quinta entrega. En ese caso su Rproject debe llamarse `entrega-05-HBR454545-Nunez-Maria`; por lo tanto el fichero .zip que finalmente entregue debe llamarse `entrega-05-HBR454545-Nunez-Maria.zip`.
+
+Dentro de ese fichero .zip estará el Rproject `entrega-05-HBR454545-Nunez-Maria`
+
