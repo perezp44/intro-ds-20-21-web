@@ -152,7 +152,7 @@ knitr::include_graphics(here::here("imagenes", "tt_02_img_07_RStudio-opciones-2.
 
 En tu ordenador debe quedar todo igual excepto las dos primeras cajas de texto:
 
-  - la primera caja que le dice a RStudio que versión de R ha de usar y donde está en tu ordenador. En mi caso, cuando estaba escribiendo estas notas, estaba usando la versión 3.5.3 de 64 bites de R, por eso en mi caja pone "[64-bit] C:\Program Files\R\R-3.5.3" que es la ruta donde tenía yo R en mi ordenador.  Esta caja de texto no la has de cambiar, déjala tal y como la encuentres 
+  - la primera caja que le dice a RStudio que versión de R ha de usar y donde está en tu ordenador. En mi caso, cuando estaba escribiendo estas notas, estaba usando la versión 3.5.3 de 64 bytes de R, por eso en mi caja pone "[64-bit] C:\Program Files\R\R-3.5.3" que es la ruta donde tenía yo R en mi ordenador.  Esta caja de texto no la has de cambiar, déjala tal y como la encuentres 
 
   - la segunda caja le dice a RStudio donde se guardarán los archivos que vayamos generando; es decir, indica el directorio de trabajo por defecto.  Como yo habitualmente trabajo en el escritorio de mi PC, en la imagen de abajo pone  "C:/Users/perezp/Desktop". Te recomiendo trabajar sobre el escritorio o Desktop, pero puedes seleccionar la carpeta en la que más cómoda trabajes.
 
@@ -288,7 +288,7 @@ Es más fácil hacerlo que contarlo, aunque puede que te atasques en alguna cosa
 ¿Cómo le decimos a R que ejecute la tercera linea  `5 * 6`? Cuando lo hacíamos en la consola simplemente había que pulsar <kbd>Enter</kbd>, pero ahora estamos trabajando en un script: hay que situar el cursor en la linea que queremos ejecutar y darle a <kbd>Crtl</kbd> + <kbd>Enter</kbd>. R ejecutará la instrucción y nos devolverá el resultado en la consola. 
 
 
-Enseguida aprenderemos más instrucciones o funciones de R, ahora solo estamos intentando familiarizándonos con el interface de RStudio. Ya sabemos como crear un fichero con instrucciones de R (ó script) y como ejecutar esas instrucciones. 
+Enseguida aprenderemos más instrucciones o funciones de R, ahora solo estamos intentando familiarizándonos con el interfaz de RStudio. Ya sabemos como crear un fichero con instrucciones de R (ó script) y como ejecutar esas instrucciones. 
 
 Lo normal es que guardes tus scripts en un archivo por si tuvieses que volver a correr las mismas instrucciones más adelante. Para guardar tus instrucciones en un fichero sólo tienes que seguir esta ruta de menús en RStudio: `File > Save as ...`  
 
@@ -300,7 +300,7 @@ Esto vas a acabar entendiéndolo en poco tiempo, pero cuanto antes lo entiendas 
 
 Bien, ya sabemos hacer que R ejecute nuestras instrucciones: podemos ejecutar ordenes en la Consola (con <kbd>Enter</kbd>) o en un script (<kbd>Crtl</kbd> + <kbd>Enter</kbd>). Usaremos la consola a veces, muchas veces trabajaremos con scripts o ficheros .R pero, poco a poco, acabaremos trabajando de otra forma. 
 
-Como queremos que nuestros análisis sean reproducibles, habitualmente trabajaremos con `Rprojects` y con `ficheros .Rmd`. **Sí!!**, en lugar de con `ficheros .R` (o scripts) trabajaremos con `ficheros  **Rmarkdown` ó `ficheros .Rmd`. Ya lo veremos, pero antes tendremos que familiarizarnos un poco más con el lenguaje R. De momento seguimos con el interfaz de RStudio.
+Como queremos que nuestros análisis sean reproducibles, habitualmente trabajaremos con `Rprojects` y con `ficheros .Rmd`. **Sí!!**, en lugar de con `ficheros .R` (o scripts) trabajaremos con `ficheros  **Rmarkdown**` ó `ficheros .Rmd`. Ya lo veremos, pero antes tendremos que familiarizarnos un poco más con el lenguaje R. De momento seguimos con el interfaz de RStudio.
 
 <br>
 
@@ -340,7 +340,7 @@ Voy a intentar resumir yo lo que nos aconseja Jenny:
 
 - los nombres de los archivos y las carpetas también son importantes. Hay que intentar que los nombres de los archivos sean explicativos de lo que hace o contiene el archivo. Los nombres de los ficheros han de ser legibles por las personas, pero también por las máquinas. Jenny lo explica [aquí](https://speakerdeck.com/jennybc/how-to-name-files). Por favor, no dejéis espacios en blanco en los nombres de los ficheros, si queréis separar palabras usad `-` y/o `_`. No uséis espacios en blanco!!!
 
-- una de las características más interesantes de un Rproject es que el directorio de trabajo del proyecto es la propia carpeta del proyecto^[Sí, sé que si parece un sólo un trabalenguas, pero es muy importante que esto lo acabes entendiendo. Cuando lo entiendas, y seguro que lo haces pronto, verás que en realidad es muy fácil.]. Repito, en un Rproject, el directorio de trabajo es la propia carpeta del Rproject, y así podemos trabajar con **rutas** o paths **relativas**, lo que tiene la ventaja de que las rutas relativas funcionarán en cualquier ordenador^[esto lo conseguiremos trabajando con Rprojects y con el paquete `here`. Lo veremos pronto].
+- una de las características más interesantes de un Rproject es que el directorio de trabajo del proyecto es la propia carpeta del proyecto^[Sí, sé que si parece un trabalenguas, pero es muy importante que esto lo acabes entendiendo. Cuando lo entiendas, y seguro que lo haces pronto, verás que en realidad es muy fácil.]. Repito, en un Rproject, el directorio de trabajo es la propia carpeta del Rproject, y así podemos trabajar con **rutas** o paths **relativas**, lo que tiene la ventaja de que las rutas relativas funcionarán en cualquier ordenador^[Esto lo conseguiremos trabajando con Rprojects y con el paquete `here`. Lo veremos pronto].
 
 <br>
 

@@ -22,6 +22,6 @@ En esta sección pondré cosas varias como:
 
 - [Listado de paquetes a instalar](./mas-recursos/paquetes-R-a-instalar.R)
 
-- [Intrucciones de entrega de las tareas de la evaluación continua](/mas-recursos/como-entregar-las-tareas-uploader.html){target="_blank"}
+- [Intrucciones de entrega de las tareas de la evaluación continua](./mas-recursos/como-entregar-las-tareas-uploader.html){target="_blank"}
 
 <br><br>
