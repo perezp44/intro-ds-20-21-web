@@ -152,7 +152,7 @@ Además, como me gusta el tema: el siguiente tweet es la respuesta a \@tlyzawx q
     
   - [r-statistics.co](http://r-statistics.co/)
   
-  - [Modern Drive](https://moderndive.com/): un libro, bueno un bookdown que me gusta.
+  - [Modern Drive](https://moderndive.com/): un libro, en realidad un bookdown, que me gusta.
   
   - [swirl](https://swirlstats.com/): swirl teaches you R programming and data science interactively, at your own pace, and right in the R console!
 
