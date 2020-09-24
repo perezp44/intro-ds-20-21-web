@@ -152,11 +152,13 @@ Además, como me gusta el tema: el siguiente tweet es la respuesta a \@tlyzawx q
     
   - [r-statistics.co](http://r-statistics.co/)
   
+  - [Modern Drive](https://moderndive.com/): un libro, bueno un bookdown que me gusta.
+  
   - [swirl](https://swirlstats.com/): swirl teaches you R programming and data science interactively, at your own pace, and right in the R console!
 
   - [R views](https://rviews.rstudio.com/): Un blog de la comunidad R editado por RStudio. Cada mes saca un post con los mejores 40 paquetes de ese mes; por ejemplo, [aquí[(https://rviews.rstudio.com/2020/08/27/july-2020-top-40-new-cran-packages/)] tienes el de julio de 2020.
 
-  - Si al final acabas utilizando R para tus análisis, seguramente acabarás utilizando [Stack Overflow](http://stackoverflow.com/questions/tagged/r). Es una comunidad de programadores, en la que muchas veces resolverás las dudas que te puedan surgir en tu aprendizaje sobre R, 
+  - [Stack Overflow](http://stackoverflow.com/questions/tagged/r): si al final acabas utilizando R para tus análisis, seguramente acabarás utilizando Stack Overflow. Es una comunidad de programadores, en la que muchas veces resolverás las dudas que te puedan surgir en tu aprendizaje sobre R. 
 
 <br>
 
