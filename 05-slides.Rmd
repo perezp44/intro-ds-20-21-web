@@ -31,5 +31,8 @@ Todas las transparencias están hechas con R, de hecho, una de las cosas que has
 
 - [Slides-04: R base](./slides/ss_04_R-base-01/ss_04_R-base-01.html){target="_blank"}.
 
+- [Slides-05: Importar y exportar datos (WIP)](./slides/ss_05_cargar-datos/ss_05_cargar-datos.html){target="_blank"}.
+
+
 
 <br><br>

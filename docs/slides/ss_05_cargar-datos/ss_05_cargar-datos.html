@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Importar/cargar datos</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Pedro J. Pérez" />
+    <meta name="date" content="2020-09-24" />
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Importar/cargar datos
+## – Slides 05 –
+### Pedro J. Pérez
+### 2020-09-24
+
+---
+
+
+
+
+
+
+
+class: inverse, center, middle
+
+# Importación de datos
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+### Es la primera etapa para comenzar un análisis de datos
+
+&lt;br&gt;
+
+&lt;img src="./imagenes/ss_04_img_01_cargar-datos.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## ¿Donde narices están los datos?
+
+- Pues como el amor: Love is in the air. Vamos que están en todas partes.
+
+- Vale, ¿pero donde? 
+
+--
+
+
+&lt;br&gt;
+
+- De verdad, están en muchos sitios, pero básicamente en 3:  
+
+  - en bases de datos (RDBMS, noSQL, etc ...): una base de datos es una herramienta que almacena datos de forma organizada. 
+
+  - en la "web" y dispositivos "inteligentes"  
+
+  - en **ficheros**
+
+---
+class: inverse, center, middle
+
+## Nos centraremos en datos almacenados en ficheros
+
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+#### Sí, habitualmente, en R se trabaja con datos provenientes de ficheros. 
+
+&lt;br&gt;
+
+#### Esos datos, en general, se almacenan internamente en R como data.frames/tibbles
+
+---
+
+#### Basicamente aprenderemos a analizar/manejar/manipular datos almacenados en ficheros
+
+- Sí, trabajaremos en R con datos almacenados en **ficheros**
+
+- Sí, PERO ... ese fichero con datos se ha podido generar de varias formas: 
+
+  - alguien ha generado "a mano" el fichero  
+  
+  - alguien ha generado el fichero haciendo una consulta a una base de datos (seguramente a través de una API)  
+  
+  - alguien ha generado el fichero obteniendo los datos directamente de internet (Webscrapping)
+
+&lt;br&gt;
+
+---
+
+#### Aprenderemos a manejar datos almacenados en ficheros
+
+- Además, los tipos de datos más habituales en Ciencias Sociales on los **datos tabulares**.
+
+
+- Ya sabéis que los datos almacenados en ficheros pueden estar en varios formatos: `.csv`, `.xlsx`, `.sav` , `.dta`, `.json`, `.xml`, etc ..., etc ...
+
+&lt;br&gt;
+
+--
+
+- Además, lógicamente, el fichero con los datos que vamos a analizar puede estar ("físicamente") en varios sitios:  
+
+  - en un paquete de R
+
+  - en nuestro ordenador  
+  
+  - en internet  
+  
+---
+ 
+### Unas ideas generales
+
+- Generalmente usaremos **datos tabulares almacenados en archivos** e internamente como data.frames.
+
+--
+
+- RStudio permite cargar datos a través de menús (`File &gt; Import Dataset`). Por menús se pueden cargar datos CSV, EXCEL, SPSS, SAS y STATA. Se puede hacer, pero no lo haremos, ¿por qué?
+
+--
+
+- Para importar y exportar los datos usaremos funciones, funciones que pertenecen a algún paquete. Podríamos usar los paquetes de R-base, pero ya sabéis que el curso está orientado al `tidyverse`.
+
+--
+
+- Los principales paquetes del tidyverse para importar y exportar datos son: [`readr`](https://readr.tidyverse.org/), [`haven`](https://haven.tidyverse.org/) y [`readxl`](https://readxl.tidyverse.org/).
+
+--
+
+- A pesar de ello, vamos a usar un paquete que, sin que lo veamos, llama/utiliza indirectamente esos paquetes y otros, y que permite importar y exportar ficheros en casi cualquier formato. 
+
+- Es el paquete [`rio`](https://github.com/leeper/rio). En su web pone que el paquete **rio** es "A Swiss-Army Knife for Data I/O".
+ 
+--
+
+---------------------
+
+Bueno, ya vale de "teoría", vamos a aprender a cargar/importar datos mediante una serie de ejemplos. Vamos alla:
+ 
+ 
+ 
+ 
+---
+class: inverse, center, middle
+
+## Ejemplos
+
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+#### Ejemplos para aprender a importar datos en R
+
+---
+
+### Datos almacenados en los paquetes
+
+- Sí, los paquetes suelen tener funciones y documentación, pero también datos.
+
+
+- Intenta entender que hacen las siguientes instrucciones. En nada lo explico yo.
+
+
+
+```r
+(.packages())        #- returns the names of the currently attached packages 
+aa &lt;-  as.data.frame(.packages())
+
+iris
+find("iris")
+
+my_iris &lt;- iris
+find("my_iris")
+
+iris &lt;- iris
+find("iris")
+```
+
+---
+
+#### Datos almacenados en los paquetes
+
+
+.bg-washed-purple.b--dark-purple.ba.bw2.br3.shadow-5.ph4.mt5[
+
+.panelset[
+.panel[.panel-name[Tarea]
+
+Resulta que quiero usar unos datos, es el fichero de datos `penguins`, pero resulta que ese fichero de datos está disponible en un paquete. El paquete se llama `palmerpenguins`. El paquete está en CRAN, pero si quiere ver su repo en Github, está [aquí](https://github.com/allisonhorst/palmerpenguins).
+
+Bueno, la tarea está clara: carga en memoria los datos de los pingüinos, el fichero `penguins`.
+
+&lt;br&gt;
+
+]
+
+.panel[.panel-name[Solución]
+
+&lt;br&gt;
+
+- Ni se te ocurra mirar la solución hasta que lo hayas intentado!!! 
+
+- te rindes? Bueno, a veces hay que rendirse, mira en el siguiente tab.
+
+]
+
+.panel[.panel-name[Más]
+
+- Te has rendido, bueno ...., primero tienes que instalar el paquete, luego cargarlo en meoria y ya puedes lamar al fichero de datos `penguins`
+
+
+```r
+#- install.packages("palmerpenguins")
+library(palmerpenguins)
+data(package = "palmerpenguins")  #- el paquete tiene 2 conjuntos de datos
+
+#- ya podemos usar los datos
+penguins
+my_penguins &lt;- penguins
+
+#- quiero tb hablaros de la siguiente expresión
+palmerpenguins::penguins
+```
+
+]
+]
+]
+
+   
+---
+class: inverse, center, middle
+
+# Importación de datos
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+### Vamos a usar el paquete *rio* para cargar datos
+
+&lt;br&gt;
+
+---
+
+#### Importando datos con el paquete `rio`
+
+- `rio` solo tiene dos funciones: `import()` y `export()`. ¿Adivinas que hace cada una de ellas?
+
+--
+
+- Empecemos con `import()`. La función `import()` tiene varios argumentos, pero generalmente solo usaremos el primero.
+
+- Su primer argumento se llama `file` y su descripción es: "A character string naming a file, URL, or single-file .zip or .tar archive". WTF!!
+
+--
+
+.bg-washed-purple.b--dark-purple.ba.bw2.br3.shadow-5.ph4.mt5[
+
+.panelset[
+.panel[.panel-name[Tarea]
+
+En esta dirección de internet: &lt;https://raw.githubusercontent.com/perezp44/iris_data/master/data/iris.csv&gt; hay un fichero de datos. 
+
+Por favor, utiliza la función `rio::import()` para cargar esos datos en memoria de R
+
+
+]
+
+.panel[.panel-name[Solución 1]
+
+
+```r
+la_direccion &lt;- "https://raw.githubusercontent.com/perezp44/iris_data/master/data/iris.csv"
+
+rio::import(la_direccion)    #- ¿???
+
+aa &lt;-  rio::import(la_direccion)  #- como un data.frame
+
+bb &lt;- rio::import(la_direccion, setclass = "tibble")  #- como tibble
+
+cc &lt;- tibble::as_tibble(aa)
+```
+
+]
+]
+]
+
+---
+class: inverse, center, middle
+
+# Exportación de datos
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+### Luego seguiremos cargando/importando datos, ahora vamos a exportar
+
+---
+#### Exportando datos con el paquete `rio`
+
+- Tenéis que usar la función `rio::export()`. Esta función tambien tiene varios argumentos, pero los princiaples son los primeros, llamados `"x"` y `"file"`
+
+
+--
+
+.bg-washed-purple.b--dark-purple.ba.bw2.br3.shadow-5.ph4.mt5[
+
+.panelset[
+
+.panel[.panel-name[Tarea 1]
+
+
+Tendrás que apañártelas para hacer la siguiente tarea. No patixques, en seguida lo hacemos juntos, pero seguro que la mayoría sabréis sin ayuda.
+
+&lt;br&gt;
+
+Por favor, utiliza la función `rio::export()` para exportar a un fichero (de tu ordenador) el conjunto de datos `iris` en formato `.csv`.
+
+]
+
+.panel[.panel-name[Solución 1]
+
+
+```r
+my_iris &lt;- iris
+rio::export(my_iris, "my_iris.csv")
+
+rio::export( x = my_iris, file = "my_iris.csv")
+```
+
+]
+
+.panel[.panel-name[Tarea 2]
+
+- ¿Donde se ha guardado el fichero "my_iris.csv"?
+
+- Puedes guardar ahora otra vez iris, pero que se guarde en una subcarpeta del Rroject, concretamente en una subcarpeta llamada `"pruebas"`. Primero tendrás que crear esa carpeta.
+
+]
+
+
+.panel[.panel-name[Solución 2]
+
+- Puedes crear la carpeta "pruebas" a mano, pero yo prefiero crearla con código
+
+
+```r
+fs::dir_create("pruebas")   #- creo el subdirectorio
+
+rio::export(my_iris, "./pruebas/my_iris.csv")
+```
+
+- Otra forma de hacerlo. Tiene ventajas, y es la forma que usaremos cuando nos aconstumbremos
+
+
+```r
+ruta &lt;- here::here("pruebas", "my_iris.csv")
+rio::export(my_iris, ruta)
+
+rio::export(my_iris, here::here("pruebas", "my_iris.csv"))
+```
+
+]
+]
+]
+
+---
+#### Seguimos exportando datos con el paquete `rio`
+
+.bg-washed-purple.b--dark-purple.ba.bw2.br3.shadow-5.ph4.mt5[
+
+.panelset[
+
+.panel[.panel-name[Tarea 1]
+
+Por favor, utiliza la función `rio::export()` para exportar el conjunto de datos `iris` a varios ficheros de tu ordenador. 
+
+Concretamente has de exportar `iris` a los siguientes formatos: `.csv`, `.xlsx` y `.sav`.
+]
+
+.panel[.panel-name[Solución 1]
+
+
+```r
+rio::export(iris, here::here("pruebas", "iris.csv"))
+
+rio::export(iris, here::here("pruebas", "iris.xlsx"))
+
+rio::export(iris, here::here("pruebas", "iris.sav"))
+```
+
+]
+
+.panel[.panel-name[Tarea 2]
+
+Por favor, utiliza la función `rio::export()` para exportar el conjunto de datos `penguins` del paquete `palmerpenguins` a varios ficheros de tu ordenador. 
+
+Concretamente has de exportar los datos de los pingüinos a los siguientes formatos: `.csv`, `.xlsx`  y `.dta`.
+]
+
+
+.panel[.panel-name[Solución 2]
+
+
+```r
+rio::export(palmerpenguins::penguins, here::here("pruebas", "pinguinos.csv"))
+
+rio::export(palmerpenguins::penguins, here::here("pruebas", "pinguinos.xlsx"))
+
+rio::export(palmerpenguins::penguins, here::here("pruebas", "pinguinos.dta"))
+```
+
+]
+]
+]
+
+
+---
+class: inverse, center, middle
+
+# Volvemos a IMPORTAR
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+### Vamos a importar los ficheros que hemos creado previamente.
+
+---
+
+#### Seguimos importando datos con el paquete `rio`
+
+.bg-washed-purple.b--dark-purple.ba.bw2.br3.shadow-5.ph4.mt5[
+
+.panelset[
+
+.panel[.panel-name[Tarea 1]
+
+Por favor, utiliza la función `rio::import()` para importar (cargar en memoria) los datos que hay en el fichero `"./pruebas/iris.csv"`
+
+Después importa los datos del fichero: `"./pruebas/iris.xlsx"`
+]
+
+.panel[.panel-name[Solución 1]
+
+
+```r
+rm(list = ls())
+
+iris_1 &lt;- rio::import(here::here("pruebas", "iris.csv"))
+
+iris_2 &lt;- rio::import(here::here("pruebas", "iris.xlsx"))
+```
+
+]
+
+.panel[.panel-name[Tarea 2]
+
+Por favor, utiliza la función `rio::import()` para importar los datos que haya en el fichero: `"./pruebas/pinguinos.csv"`.
+
+Después importa los datos del fichero: `"./pruebas/pinguinos.xlsx"`
+
+Después importa los datos del fichero: `"./pruebas/pinguinos.dta"`
+
+]
+
+
+.panel[.panel-name[Solución 2]
+
+Esta vez ya no hay solución!!! Tienes que aconstumbrarte a escribir en R. 
+
+Ya te manejas leyendo, PERO hay que empezar a escribir!!
+
+
+
+]
+]
+]
+
+---
+
+### Una última cosa
+
+Es importante que diferencieis entre descargarse un fichero y cargar el fichero en R, cargar el fichero en memoria de R
+
+
+
+```r
+#- en esta url hay un fichero de datos en formato .csv
+my_url &lt;- "https://raw.githubusercontent.com/perezp44/iris_data/master/data/iris.csv"
+  
+download.file(url = my_url, 
+              destfile = here::here("pruebas", "iris_descargado.csv")
+```
+
+
+
+```r
+aa &lt;- rio::import(my_url)
+```
+
+
+Podemos descargar y luego cargar en memoria
+
+
+
+
+---
+class: inverse, center, middle
+
+# Algunos BONUS de I/O
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+### Con lo que hemos visto hasta ahora nos apañamos, pero conviene ver alguna cosa más ...
+
+---
+
+#### Bonus 1:  exportar los datos de un df en un archivo `.xlsx` ya existente.
+
+
+
+```r
+#- bonus: le añadimos un libro mas al archivo "./pruebas/iris.xlsx"
+export(x = iris, 
+       file = here::here("pruebas", "iris.xlsx"), 
+       `which` = "iris_2")
+```
+
+--
+
+&lt;br&gt;
+
+----------------
+
+&lt;br&gt;
+
+
+#### Bonus 2: (!!) exportar 2 df's en un único archivo `.xlsx`
+
+
+
+```r
+rio::export(x = `list`(iris = iris, pinguinos = palmerpenguins::penguins), 
+            file = here::here("pruebas", "my_iris_pinguinos.xlsx")
+```
+
+---
+
+
+#### Bonus 3: (!!) importar una hoja/libro especifica de un archivo `.xlsx`
+
+
+```r
+iris_1 &lt;- import(here::here("pruebas", "my_iris_pinguinos.xlsx") #- solo importa el primer libro
+                 
+pinguinos_1 &lt;- import(here::here("pruebas", "my_iris_pinguinos.xlsx", 
+                      `sheet = 2`) 
+                      
+                      
+pinguinos_2 &lt;- import(here::here("pruebas", "my_iris_pinguinos.xlsx", 
+                      `sheet = "pinguinos"`) 
+```
+
+---
+
+#### Bonus 4: (!!!!) importamos todos los libros de un archivo `.xlsx`
+
+
+```r
+*library(readxl)
+
+my_dfs_list &lt;- lapply(excel_sheets(here::here("pruebas", "my_iris_pinguinos.xlsx")), 
+                       read_excel,
+                       path = here::here("pruebas", "my_iris_pinguinos.xlsx"))
+```
+
+&lt;br&gt;
+
+--
+
+------------
+
+&lt;br&gt;
+
+#### Bonus 5: (!!!!!!) importamos todos archivos de datos de una carpeta concreta; por ejemplo vamos a cargar en memoria de R todos los ficheros de datos que tenemos en la carpeta `"pruebas"`
+
+
+
+```r
+#- importamos todos los archivos que hemos creado en "./datos/pruebas/"
+*library(purrr)
+my_carpeta &lt;- here::here("pruebas")
+
+lista_de_archivos &lt;- list.files(my_carpeta)  #- Ok con base ...
+lista_de_archivos &lt;- fs::dir_ls(my_carpeta)  #- pero mejor con el pkg "fs"
+
+my_dfs_list_2 &lt;- `map`(lista_de_archivos, rio::import)
+```
+
+---
+
+##### Vamos a dejar limpia la carpeta `"./pruebas/"`
+
+
+
+```r
+#- vamos a borrar los archivos q hemos creado:
+list.files("./pruebas")     #- listado de archivos en la carpeta "./pruebas"
+
+file.remove("./datos/pruebas/mtcars.xlsx")   #- xq no funciona
+
+#- las borramos todas
+file.remove(file.path("./datos/pruebas", list.files("./datos/pruebas"))) 
+
+# con fs
+
+dir_delete("dir")
+
+# remove files from the directory
+file_delete(path(tmp, "my-file.txt"))
+```
+
+---
+class: inverse, center, middle
+
+# Aún tenemos que ver alguna cosa más
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+--
+
+&lt;br&gt;
+
+Formatos de datos propios de R
+
+Obtener datos a través de API's
+
+Webscrapping
+
+---
+
+### Formatos de datos propios de R
+
+
+- Guardar datos en formatos como `.csv` o `.xlsx` es lo más habitual si quieres abrir estos datos en otros programas, pero ...
+
+- ... pero al grabar en estos formatos guardas los datos, PERO no guardas los metadatos; por ejmplo, si una columna la has definido como un factor o como integer, esta información se perderá. En estos casos, una solución es usar el formato propio de R.
+
+- Hay dos posibilidades:
+
+    - si quieres grabar un solo objeto, es preferible hacerlo como `.Rds`
+    
+    - si quieres grabar varios objetos tienes que hacerlo como `RData` o abreviado como `.Rda`
+
+---
+
+- El formato .RData tienen la ventaja de que puedes guardar varios objetos a la vez
+
+
+
+```r
+save(mtcars, iris,  file = here::here("pruebas", "mtcars_and_iris.RData")
+```
+
+- Para cargar en memoria un fichero `.rda` o `.RData`  tienes que usar la función `load()`
+
+
+```r
+load("./datos/pruebas/mtcars_and_iris.RData")
+```
+
+- Una “desventaja” del formato RData es que al importar un fichero .RData, los objetos que contiene se cargan siempre con el nombre con el que fueron grabados.
+
+
+- En formato `.rds`
+
+
+
+```r
+#- guardar en formato .rds
+saveRDS(iris, here::here("pruebas", "iris_1.rds"))          #- con base-R
+
+readr::write_rds(iris, here::here("pruebas", "iris_2.rds")) #- con pkg "readr"
+
+*rio::export(mtcars, here::here("pruebas", "iris_3.rds"))
+```
+
+
+---
+
+### Acceder a datos a través de API's
+
+
+```r
+# install.packages("eurostat")
+library("eurostat")
+df &lt;- get_eurostat("cult_emp_sex", time_format = 'raw', keepFlags = T)       #- bajamos los datos de la tabla "cult_emp_sex": empleo cultural por genero"
+```
+
+---
+
+Si quieres probar tu mismo:
+
+
+```r
+# install.packages("eurostat")
+library("eurostat")
+
+#- podemos buscar un  "tema" con la f. search_eurostat()
+aa &lt;- search_eurostat("employment", type = "all") 
+
+#- elegimos una tabla de Eurostat
+my_table &lt;- "hlth_silc_17"   #- elegimos una tabla; por ejemplo "hlth_silc_17": "Healthy life expectancy based on self-perceived health"
+label_eurostat_tables(my_table) #- da informacion sobre la Base de datos q estas buscando
+
+#------------------ descargamos los datos con get_eurostat()
+df &lt;- get_eurostat(my_table, time_format = "raw", keepFlags = TRUE )       #- bajamos los datos de una tabla
+df_l &lt;- label_eurostat(df)        #- pone labels: Spain en lugar de su código (mas legible,menos fácil de programar)
+```
+
+
+---
+
+### Webscrapping
+
+
+
+```r
+library("rvest")
+library("tidyverse")
+my_url &lt;- "https://es.wikipedia.org/wiki/Anexo:Municipios_de_la_provincia_de_Teruel"
+
+content &lt;- read_html(my_url)
+
+body_table &lt;- content %&gt;% html_nodes('body')  %&gt;%
+                    html_nodes('table') %&gt;%
+                    html_table(dec = ",") 
+
+Teruel &lt;- body_table[[1]]  #- estoy haciendo subsetting de una lista
+```
+
+Vamos a arreglar un poco la tablas
+
+
+```r
+names(Teruel) &lt;- c("Nombre", "Extension", "Poblacion", "Densidad", "Comarca", "Partido_judicial", "Altitud")
+library(stringr)
+Teruel &lt;- Teruel %&gt;% map(str_trim) %&gt;% as_tibble() #- quita caracteres al final
+Teruel &lt;- Teruel %&gt;% mutate(Altitud = str_replace_all(Altitud,"[[:punct:]]", "")) 
+Teruel &lt;- Teruel %&gt;% mutate(Altitud = as.double(Altitud)) %&gt;% arrange(desc(Altitud))
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"highlightSpans": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
