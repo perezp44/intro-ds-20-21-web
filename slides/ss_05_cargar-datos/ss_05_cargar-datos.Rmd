@@ -1,5 +1,5 @@
 ---
-title: "Importar/cargar datos"
+title: "Importar (y exportar) datos"
 subtitle: "-- Slides 05 --"  
 author: 
   - "Pedro J. Pérez"
@@ -37,12 +37,12 @@ class: inverse, center, middle
 
 <html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>
 
-### Es la primera etapa para comenzar un análisis de datos
+#### Es la primera etapa para comenzar un análisis de datos
 
 <br>
 
 ```{r,  echo = FALSE, eval = TRUE, fig.asp = 4/2, out.width = "70%", fig.align = "center"}
-knitr::include_graphics("./imagenes/ss_04_img_01_cargar-datos.png")
+knitr::include_graphics("./imagenes/ss_05_img_01_cargar-datos.png")
 ```
 
 ---
@@ -100,7 +100,7 @@ class: inverse, center, middle
 
 #### Aprenderemos a manejar datos almacenados en ficheros
 
-- Además, los tipos de datos más habituales en Ciencias Sociales on los **datos tabulares**.
+- Además, los tipos de datos más habituales en Ciencias Sociales son los **datos tabulares**.
 
 
 - Ya sabéis que los datos almacenados en ficheros pueden estar en varios formatos: `.csv`, `.xlsx`, `.sav` , `.dta`, `.json`, `.xml`, etc ..., etc ...
@@ -139,7 +139,7 @@ class: inverse, center, middle
 
 - A pesar de ello, vamos a usar un paquete que, sin que lo veamos, llama/utiliza indirectamente esos paquetes y otros, y que permite importar y exportar ficheros en casi cualquier formato. 
 
-- Es el paquete [`rio`](https://github.com/leeper/rio). En su web pone que el paquete **rio** es "A Swiss-Army Knife for Data I/O".
+- Utilizaremos el paquete [`rio`](https://github.com/leeper/rio). En su web pone que el paquete **rio** es "A Swiss-Army Knife for Data I/O".
  
 --
 
@@ -172,13 +172,14 @@ class: inverse, center, middle
 
 ```{r, echo = TRUE, eval = FALSE}
 
-(.packages())        #- returns the names of the currently attached packages 
+(.packages()) #- nos da los nombres de los "currently attached packages"
 aa <-  as.data.frame(.packages())
 
 iris
-find("iris")
+str(iris)     #- qué es iris?
+find("iris")  #- donde estaba iris?
 
-my_iris <- iris
+my_iris <- iris  #- "hacemos" una copia de iris?
 find("my_iris")
 
 iris <- iris
@@ -215,20 +216,20 @@ Bueno, la tarea está clara: carga en memoria los datos de los pingüinos, el fi
 
 .panel[.panel-name[Más]
 
-- Te has rendido, bueno ...., primero tienes que instalar el paquete, luego cargarlo en meoria y ya puedes lamar al fichero de datos `penguins`
+- Te has rendido, bueno ...., primero tienes que instalar el paquete, luego cargarlo en memoria y ya puedes llamar al fichero de datos `penguins`
 
 ```{r, echo = TRUE, eval = FALSE}
+
 #- install.packages("palmerpenguins")
 library(palmerpenguins)
 data(package = "palmerpenguins")  #- el paquete tiene 2 conjuntos de datos
 
-#- ya podemos usar los datos
+#- ya podemos usar los datos de penguins xq hemos cargado (attach) el paquete en memoria de R
 penguins
 my_penguins <- penguins
 
 #- quiero tb hablaros de la siguiente expresión
 palmerpenguins::penguins
-
 ```
 
 ]
@@ -276,14 +277,14 @@ Por favor, utiliza la función `rio::import()` para cargar esos datos en memoria
 .panel[.panel-name[Solución 1]
 
 ```{r, eval = FALSE}
+rm(list = ls()) #- antes vamos a limpiar el Global env.
+
 la_direccion <- "https://raw.githubusercontent.com/perezp44/iris_data/master/data/iris.csv"
 
-rio::import(la_direccion)    #- ¿???
+rio::import(la_direccion)    #- ¿qué ha pasado???
 
 aa <-  rio::import(la_direccion)  #- como un data.frame
-
 bb <- rio::import(la_direccion, setclass = "tibble")  #- como tibble
-
 cc <- tibble::as_tibble(aa)
 ```
 
@@ -303,7 +304,7 @@ class: inverse, center, middle
 ---
 #### Exportando datos con el paquete `rio`
 
-- Tenéis que usar la función `rio::export()`. Esta función tambien tiene varios argumentos, pero los princiaples son los primeros, llamados `"x"` y `"file"`
+- Tenéis que usar la función `rio::export()`. Esta función también tiene varios argumentos, pero los principales son los dos primeros, llamados `"x"` y `"file"`
 
 
 --
@@ -326,10 +327,13 @@ Por favor, utiliza la función `rio::export()` para exportar a un fichero (de tu
 .panel[.panel-name[Solución 1]
 
 ```{r, eval = FALSE}
+rm(list = ls()) #- antes vamos a limpiar el Global env.
+
 my_iris <- iris
+
 rio::export(my_iris, "my_iris.csv")
 
-rio::export( x = my_iris, file = "my_iris.csv")
+rio::export(x = my_iris, file = "my_iris.csv")
 ```
 
 ]
@@ -353,7 +357,7 @@ fs::dir_create("pruebas")   #- creo el subdirectorio
 rio::export(my_iris, "./pruebas/my_iris.csv")
 ```
 
-- Otra forma de hacerlo. Tiene ventajas, y es la forma que usaremos cuando nos aconstumbremos
+- Otra forma de hacerlo. Tiene ventajas, y es la forma que usaremos cuando nos acostumbremos
 
 ```{r, eval = FALSE}
 
@@ -466,7 +470,7 @@ Después importa los datos del fichero: `"./pruebas/pinguinos.dta"`
 
 .panel[.panel-name[Solución 2]
 
-Esta vez ya no hay solución!!! Tienes que aconstumbrarte a escribir en R. 
+Esta vez ya no hay solución!!! Tienes que acostumbrarte a escribir en R. 
 
 Ya te manejas leyendo, PERO hay que empezar a escribir!!
 
@@ -488,28 +492,29 @@ pinguinos_3 <- rio::import(here::here("pruebas", "pinguinos.dta"))
 
 ### Una última cosa
 
-Es importante que diferencieis entre descargarse un fichero y cargar el fichero en R, cargar el fichero en memoria de R
+Es importante que diferenciéis entre descargarse un fichero y cargar el fichero en R, cargar el fichero en memoria de R
 
+<br>
+
+- Con `download.file()` descargamos el fichero y lo guardamos en un fichero en nuestro ordenador
 
 ```{r, eval = FALSE}
 #- en esta url hay un fichero de datos en formato .csv
 my_url <- "https://raw.githubusercontent.com/perezp44/iris_data/master/data/iris.csv"
   
 download.file(url = my_url, 
-              destfile = here::here("pruebas", "iris_descargado.csv")
+              destfile = here::here("pruebas", "iris_descargado.csv"))
 ```
+
+<br>
+
+- Con `rio::import()` no guardamos el fichero, sino que **lo cargamos en memoria de R**, en el Global Env.
 
 
 ```{r, eval = FALSE}
 aa <- rio::import(my_url)
 ```
 
-
-Podemos descargar y luego cargar en memoria
-
-```{r}
-
-```
 
 
 ---
@@ -528,7 +533,7 @@ class: inverse, center, middle
 
 ```{r, eval = FALSE}
 #- bonus: le añadimos un libro mas al archivo "./pruebas/iris.xlsx"
-export(x = iris, 
+rio::export(x = iris, 
        file = here::here("pruebas", "iris.xlsx"), 
        `which` = "iris_2")
 ```
@@ -547,7 +552,7 @@ export(x = iris,
 
 ```{r, eval = FALSE}
 rio::export(x = `list`(iris = iris, pinguinos = palmerpenguins::penguins), 
-            file = here::here("pruebas", "my_iris_pinguinos.xlsx")
+            file = here::here("pruebas", "my_iris_pinguinos.xlsx"))
 ```
 
 ---
@@ -556,14 +561,13 @@ rio::export(x = `list`(iris = iris, pinguinos = palmerpenguins::penguins),
 #### Bonus 3: (!!) importar una hoja/libro especifica de un archivo `.xlsx`
 
 ```{r, eval = FALSE}
-iris_1 <- import(here::here("pruebas", "my_iris_pinguinos.xlsx") #- solo importa el primer libro
-                 
-pinguinos_1 <- import(here::here("pruebas", "my_iris_pinguinos.xlsx", 
-                      `sheet = 2`) 
-                      
-                      
-pinguinos_2 <- import(here::here("pruebas", "my_iris_pinguinos.xlsx", 
-                      `sheet = "pinguinos"`) 
+iris_1 <- rio::import(here::here("pruebas", "my_iris_pinguinos.xlsx"))  #- solo importa el primer libro
+  
+pinguinos_1 <- rio::import(here::here("pruebas", "my_iris_pinguinos.xlsx"), 
+                                      sheet = 2)
+
+pinguinos_2 <- rio::import(here::here("pruebas", "my_iris_pinguinos.xlsx"), 
+                                      sheet = "pinguinos")
 ```
 
 ---
@@ -591,7 +595,7 @@ my_dfs_list <- lapply(excel_sheets(here::here("pruebas", "my_iris_pinguinos.xlsx
 
 
 ```{r, eval = FALSE}
-#- importamos todos los archivos que hemos creado en "./datos/pruebas/"
+#- importamos todos los archivos que hemos creado en "./pruebas/"
 library(purrr)  #<<
 my_carpeta <- here::here("pruebas")
 
@@ -607,20 +611,17 @@ my_dfs_list_2 <- `map`(lista_de_archivos, rio::import)
 
 
 ```{r, eval = FALSE}
-#- vamos a borrar los archivos q hemos creado:
+#- vamos a limpiar el Rproject: vamos a borrar los archivos q hemos creado:
+
 list.files("./pruebas")     #- listado de archivos en la carpeta "./pruebas"
 
-file.remove("./datos/pruebas/mtcars.xlsx")   #- xq no funciona
+file.remove("./pruebas/pinguinos.dta")   #- borramos un archivo
 
-#- las borramos todas
-file.remove(file.path("./datos/pruebas", list.files("./datos/pruebas"))) 
+#- borramos todos los archivos de ./pruebas/
+file.remove(file.path("./pruebas", list.files("./pruebas"))) 
 
-# con fs
-
-dir_delete("dir")
-
-# remove files from the directory
-file_delete(path(tmp, "my-file.txt"))
+#- borramos toda la carpeta con el pkg fs
+fs::dir_delete("pruebas")
 
 ```
 
@@ -637,7 +638,11 @@ class: inverse, center, middle
 
 Formatos de datos propios de R
 
+--
+
 Obtener datos a través de API's
+
+--
 
 Webscrapping
 
@@ -648,39 +653,58 @@ Webscrapping
 
 - Guardar datos en formatos como `.csv` o `.xlsx` es lo más habitual si quieres abrir estos datos en otros programas, pero ...
 
-- ... pero al grabar en estos formatos guardas los datos, PERO no guardas los metadatos; por ejmplo, si una columna la has definido como un factor o como integer, esta información se perderá. En estos casos, una solución es usar el formato propio de R.
+- ... pero al grabar en estos formatos guardas los datos, PERO no guardas los metadatos; por ejemplo, si una columna la has definido como un factor o como integer, esta información se perderá. En estos casos, una solución es usar los formatos propios de R.
 
-- Hay dos posibilidades:
+<br>
 
-    - si quieres grabar un solo objeto, es preferible hacerlo como `.Rds`
+#### R tiene 2 formatos propios de datos (.rds y .rda)
+
+  - si quieres grabar un solo objeto, es preferible hacerlo como `.Rds`
     
-    - si quieres grabar varios objetos tienes que hacerlo como `RData` o abreviado como `.Rda`
+  - si quieres grabar varios objetos tienes que hacerlo como `RData` o abreviado como `.Rda`
 
 ---
 
-- El formato .RData tienen la ventaja de que puedes guardar varios objetos a la vez
+#### Formato .RData
 
+El formato `.RData` tienen la ventaja de que **puedes guardar varios objetos a la vez**.
+
+Una “desventaja” del formato RData es que al importar un fichero .RData, los objetos que contiene se cargan siempre con el nombre con el que fueron grabados.
+
+<br>
+
+- Exportando datos a formato `.Rda`
 
 ```{r, eval = FALSE}
 save(mtcars, iris,  file = here::here("pruebas", "mtcars_and_iris.RData")
 ```
 
-- Para cargar en memoria un fichero `.rda` o `.RData`  tienes que usar la función `load()`
+<br>
+
+- Importando datos en formato `.Rda`: tienes que usar la función `load()`
 
 ```{r, eval = FALSE}
-load("./datos/pruebas/mtcars_and_iris.RData")
+load(here::here("pruebas", "mtcars_and_iris.RData"))
 ```
 
-- Una “desventaja” del formato RData es que al importar un fichero .RData, los objetos que contiene se cargan siempre con el nombre con el que fueron grabados.
+<br>
 
 
-- En formato `.rds`
+---
 
+#### Formato .rds
+
+- Exportar datos a formato `.rds`
 
 ```{r, eval = FALSE}
 #- guardar en formato .rds
 saveRDS(iris, here::here("pruebas", "iris_1.rds"))          #- con base-R
+```
 
+- Importar datos en formato `.rds`
+
+
+```{r, eval = FALSE}
 readr::write_rds(iris, here::here("pruebas", "iris_2.rds")) #- con pkg "readr"
 
 rio::export(mtcars, here::here("pruebas", "iris_3.rds"))    #<<
@@ -688,22 +712,33 @@ rio::export(mtcars, here::here("pruebas", "iris_3.rds"))    #<<
 
 
 ---
+class: inverse, center, middle
 
-### Acceder a datos a través de API's
+## Acceder a datos a través de API's
 
-```{r, eval = FALSE}
-# install.packages("eurostat")
-library("eurostat")
-df <- get_eurostat("cult_emp_sex", time_format = 'raw', keepFlags = T)       #- bajamos los datos de la tabla "cult_emp_sex": empleo cultural por genero"
-```
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>
+
+##### Hay muuuuuchas organizaciones que ofrecen datos a traves de API's y, en muchas ocasiones, hay un paquete de R para acceder fácilmente a ellos!!!
 
 ---
 
-Si quieres probar tu mismo:
+### Eurostat
+
 
 ```{r, eval = FALSE}
 # install.packages("eurostat")
-library("eurostat")
+library(eurostat)
+
+df <- get_eurostat("cult_emp_sex", time_format = 'raw', keepFlags = T)       #- bajamos los datos de la tabla "cult_emp_sex": empleo cultural por genero"
+```
+
+<br>
+
+- Si quieres probar tu mismo a bajar datos de Eurostat:
+
+```{r, eval = FALSE}
+# install.packages("eurostat")
+library(eurostat)
 
 #- podemos buscar un  "tema" con la f. search_eurostat()
 aa <- search_eurostat("employment", type = "all") 
@@ -712,20 +747,51 @@ aa <- search_eurostat("employment", type = "all")
 my_table <- "hlth_silc_17"   #- elegimos una tabla; por ejemplo "hlth_silc_17": "Healthy life expectancy based on self-perceived health"
 label_eurostat_tables(my_table) #- da informacion sobre la Base de datos q estas buscando
 
-#------------------ descargamos los datos con get_eurostat()
-df <- get_eurostat(my_table, time_format = "raw", keepFlags = TRUE )       #- bajamos los datos de una tabla
-df_l <- label_eurostat(df)        #- pone labels: Spain en lugar de su código (mas legible,menos fácil de programar)
+#-  descargamos los datos con get_eurostat()
+df <- get_eurostat(my_table, time_format = "raw", keepFlags = TRUE )   #- bajamos los datos de una tabla
+df_l <- label_eurostat(df)        #- pone labels: mas legible, menos fácil de programar
 ```
-
 
 ---
 
+### El paquete `quantmod`
+
+Permite acceder a una gran variedad de datos económicos. [Aquí](https://www.quantmod.com/) está su web.
+
+```{r, eval = FALSE}
+library(quantmod)  #- install.packages("quantmod")
+
+#- For stocks and shares, the yahoo source is used. 
+facebook  <- getSymbols(Symbols = 'FB', src = 'yahoo', auto.assign = FALSE)  
+
+#- For currencies and metals, the oanda source is used. S
+tc_euro_dolar <- getSymbols(Symbols = 'EUR/USD', src = 'oanda', auto.assign = FALSE)   
+
+#- For economics series, the FRED source is used. 
+Japan_GDP <- getSymbols(Symbols = 'JPNNGDP', src = 'FRED', auto.assign = FALSE)   
+```
+
+
+
+
+---
+class: inverse, center, middle
+
+## Webscrapping
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>
+
+### Obtener datos directamente de páginas web, de su código html.
+
+---
 ### Webscrapping
+
+- Pueblos más "altos" de Teruel
 
 
 ```{r, eval = FALSE}
-library("rvest")
-library("tidyverse")
+library(rvest)
+library(tidyverse)
 my_url <- "https://es.wikipedia.org/wiki/Anexo:Municipios_de_la_provincia_de_Teruel"
 
 content <- read_html(my_url)
@@ -734,10 +800,11 @@ body_table <- content %>% html_nodes('body')  %>%
                     html_nodes('table') %>%
                     html_table(dec = ",") 
 
+#- solo hay una tabla
 Teruel <- body_table[[1]]  #- estoy haciendo subsetting de una lista
 ```
 
-Vamos a arreglar un poco la tablas
+Vamos a arreglar un poco la tabla
 
 ```{r, eval = FALSE}
 names(Teruel) <- c("Nombre", "Extension", "Poblacion", "Densidad", "Comarca", "Partido_judicial", "Altitud")
@@ -745,5 +812,208 @@ library(stringr)
 Teruel <- Teruel %>% map(str_trim) %>% as_tibble() #- quita caracteres al final
 Teruel <- Teruel %>% mutate(Altitud = str_replace_all(Altitud,"[[:punct:]]", "")) 
 Teruel <- Teruel %>% mutate(Altitud = as.double(Altitud)) %>% arrange(desc(Altitud))
+```
+
+
+---
+### Webscrapping
+
+- Covid
+
+```{r,eval = FALSE}
+library(rvest)
+library(tidyverse)
+
+my_url <- "https://es.wikipedia.org/wiki/Pandemia_de_enfermedad_por_coronavirus_de_2020_en_Espa%C3%B1a"
+
+content <- read_html(my_url)
+body_table <- content %>% html_nodes('body')  %>%
+  html_nodes('table') %>%
+  html_table(dec = ",", fill = TRUE) 
+
+#- la página web tiene 16 tablas
+tabla_8 <- body_table[[8]]  
+tabla_11 <- body_table[[11]]  
+```
+
+
+---
+class: inverse, center, middle
+
+# That's all - FIN!!
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>
+
+<br>
+
+#### Se acabaron las slides. En la siguiente página solo está el código de las slides en un único chunk.
+
+
+
+
+---
+
+#### El código de las slides (en un único chunk)
+
+
+```{r, eval = FALSE}
+#- script de las slides 05: importar datos --------------------------
+
+(.packages())   #- nos da los nombres de los "currently attached packages"
+aa <-  as.data.frame(.packages())
+
+iris
+str(iris)     #- qué es iris?
+find("iris")  #- donde estaba iris?
+
+my_iris <- iris  #- "hacemos" una copia de iris?
+find("my_iris")
+
+iris <- iris
+find("iris")
+
+#-----------------------
+#- install.packages("palmerpenguins")
+library(palmerpenguins)
+data(package = "palmerpenguins")  #- el paquete tiene 2 conjuntos de datos
+
+#- ya podemos usar los datos de penguins xq hemos cargado (attach) el paquete en memoria de R
+penguins
+my_penguins <- penguins
+
+#- quiero tb hablaros de la siguiente expresión
+palmerpenguins::penguins
+
+
+#---------------------------
+rm(list = ls()) #- antes vamos a limpiar el Global env.
+
+la_direccion <- "https://raw.githubusercontent.com/perezp44/iris_data/master/data/iris.csv"
+
+rio::import(la_direccion)    #- ¿qué ha pasado???
+
+aa <-  rio::import(la_direccion)  #- como un data.frame
+bb <- rio::import(la_direccion, setclass = "tibble")  #- como tibble
+cc <- tibble::as_tibble(aa)
+
+
+#------------------------
+rm(list = ls()) #- antes vamos a limpiar el Global env.
+
+my_iris <- iris
+
+rio::export(my_iris, "my_iris.csv")
+
+rio::export(x = my_iris, file = "my_iris.csv")
+
+#- 
+fs::dir_create("pruebas")   #- creo el subdirectorio
+rio::export(my_iris, "./pruebas/my_iris.csv")
+
+
+ruta <- here::here("pruebas", "my_iris.csv")
+rio::export(my_iris, ruta)
+
+rio::export(my_iris, here::here("pruebas", "my_iris.csv"))
+
+
+rio::export(iris, here::here("pruebas", "iris.csv"))
+rio::export(iris, here::here("pruebas", "iris.xlsx"))
+rio::export(iris, here::here("pruebas", "iris.sav"))
+
+rio::export(palmerpenguins::penguins, here::here("pruebas", "pinguinos.csv"))
+rio::export(palmerpenguins::penguins, here::here("pruebas", "pinguinos.xlsx"))
+rio::export(palmerpenguins::penguins, here::here("pruebas", "pinguinos.dta"))
+
+rm(list = ls())
+iris_1 <- rio::import(here::here("pruebas", "iris.csv"))
+iris_2 <- rio::import(here::here("pruebas", "iris.xlsx"))
+
+pinguinos_1 <- rio::import(here::here("pruebas", "pinguinos.csv"))
+pinguinos_2 <- rio::import(here::here("pruebas", "pinguinos.xlsx"))
+pinguinos_3 <- rio::import(here::here("pruebas", "pinguinos.dta"))
+
+
+#- en esta url hay un fichero de datos en formato .csv
+my_url <- "https://raw.githubusercontent.com/perezp44/iris_data/master/data/iris.csv"
+download.file(url = my_url, 
+              destfile = here::here("pruebas", "iris_descargado.csv"))
+
+
+aa <- rio::import(my_url)
+
+
+#- bonus: le añadimos un libro mas al archivo "./pruebas/iris.xlsx"
+#- bonus: le añadimos un libro mas al archivo "./pruebas/iris.xlsx"
+#- bonus: le añadimos un libro mas al archivo "./pruebas/iris.xlsx"
+rio::export(x = iris, 
+            file = here::here("pruebas", "iris.xlsx"), 
+            which = "iris_2")
+
+#- Bonus 2
+rio::export(x = list(iris = iris, pinguinos = palmerpenguins::penguins), 
+            file = here::here("pruebas", "my_iris_pinguinos.xlsx"))
+
+#- Bonus 3
+iris_1 <- rio::import(here::here("pruebas", "my_iris_pinguinos.xlsx"))  #- solo importa el primer libro
+
+pinguinos_1 <- rio::import(here::here("pruebas", "my_iris_pinguinos.xlsx"), 
+                                      sheet = 2)
+pinguinos_2 <- rio::import(here::here("pruebas", "my_iris_pinguinos.xlsx"), 
+                                      sheet = "pinguinos")
+
+
+#- Bonus 4
+library(readxl)
+my_dfs_list <- lapply(excel_sheets(here::here("pruebas", "my_iris_pinguinos.xlsx")), 
+                      read_excel,
+                      path = here::here("pruebas", "my_iris_pinguinos.xlsx"))
+
+
+#- Bonus 5
+
+#- importamos todos los archivos que hemos creado en "./pruebas/"
+library(purrr)
+my_carpeta <- here::here("pruebas")
+lista_de_archivos <- list.files(my_carpeta)  #- Ok con base ...
+lista_de_archivos <- fs::dir_ls(my_carpeta)  #- pero mejor con el pkg "fs"
+my_dfs_list_2 <- map(lista_de_archivos, rio::import)
+
+
+#- limpiamos ---------------------------------------
+#- vamos a borrar los archivos q hemos creado:
+list.files("./pruebas")     #- listado de archivos en la carpeta "./pruebas"
+file.remove("./pruebas/pinguinos.dta")   #- xq no funciona
+
+#- borramos todos los archivos de ./pruebas/
+file.remove(file.path("./pruebas", list.files("./pruebas"))) 
+
+#  borramos toda la carpeta
+fs::dir_delete("pruebas")
+
+
+
+
+# retrieve Facebook quotes
+x <- quantmod::getSymbols(Symbols = 'FB', src = 'yahoo', auto.assign = FALSE)   
+tail(x)
+
+
+
+
+
+#- Webscrapping página covid de la wikipedia
+
+library("rvest")
+library("tidyverse")
+my_url <- "https://es.wikipedia.org/wiki/Pandemia_de_enfermedad_por_coronavirus_de_2020_en_Espa%C3%B1a"
+content <- read_html(my_url)
+body_table <- content %>% html_nodes('body')  %>%
+  html_nodes('table') %>%
+  html_table(dec = ",", fill = TRUE) 
+
+tabla_8 <- body_table[[8]]  
+tabla_11 <- body_table[[11]]  
+
 ```
 

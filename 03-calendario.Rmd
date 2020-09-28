@@ -132,7 +132,7 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 - Leer e intentar ejecutar el código de las [Slides-04: R base](./slides/ss_04_R-base-01/ss_04_R-base-01.html){target="_blank"}. 
 
-- Leer e intentar ejecutar el código de las [Slides-05: Importar y exportar datos (WIP)](./slides/ss_05_cargar-datos/ss_05_cargar-datos.html){target="_blank"}. Mejor si llegas al final, pero hasta donde llegues.
+- Leer e intentar ejecutar el código de las [Slides-05: Importar y exportar datos](./slides/ss_05_cargar-datos/ss_05_cargar-datos.html){target="_blank"}. Mejor si llegas al final, pero hasta donde llegues.
 
 
 ##### ¿Qué haremos en la tercera clase?
@@ -143,7 +143,7 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 - Acabar con el "tema" de R-base. Para ello utilizaremos las [Slides-04: R base](./slides/ss_04_R-base-01/ss_04_R-base-01.html){target="_blank"}.
 
-- Empezar a importar/exportar datos. Para ello usaremos las [Slides-05: Importar y exportar datos (WIP)](./slides/ss_05_cargar-datos/ss_05_cargar-datos.html){target="_blank"}.
+- Empezar a importar/exportar datos. Para ello usaremos las [Slides-05: Importar y exportar datos](./slides/ss_05_cargar-datos/ss_05_cargar-datos.html){target="_blank"}.
   
   
   
