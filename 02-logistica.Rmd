@@ -44,9 +44,9 @@ Estos 3 últimos es fácil que los usemos menos, pero per si de cas, aquí está
 - [**`RStudio Cloud Project`**](https://rstudio.cloud/project/1543128){target="_blank"}: El año pasado este recurso nos resulto muy útil, pero ahora la versión gratuita tiene límite de tiempo, aunque de momento yo sí lo estoy usando para dar clase en el aula.
 
 
-- [**`Apuntes colaborativos en HackMD`**](https://hackmd.io/mLBp682ZTaWWKgN-gk35qg){target="_blank"}: para hacer apuntes colaborativos. Es como Google Docs pero en MD. Veremos si al final lo usamos, aún lo estoy probando. De momento la gente no se anima. la verdad es que lo he incentivado poco, bueno nada, igual debería hacerlo: se aprende mucho haciendo apuntes en común.
+- [**`Apuntes colaborativos en HackMD`**](https://hackmd.io/mLBp682ZTaWWKgN-gk35qg){target="_blank"}: para hacer apuntes colaborativos. Es como Google Docs pero en MD. Veremos si al final lo usamos, aún lo estoy probando. De momento la gente no se anima. la verdad es que lo he incentivado poco, bueno nada. Igual debería incentivarlo: se aprende mucho haciendo apuntes en común.
 
-- [**`Página del curso en Piazza`**](https://piazza.com/uv.es/fall2020/36494/home){target="_blank"}: es una plataforma que usan muchos cursos para resolver cuestiones y "colaborar" en la resolución de tareas. Ya veremos si acabamos usándolo.
+- [**`Página del curso en Piazza`**](https://piazza.com/uv.es/fall2020/36494/home){target="_blank"}: es una plataforma que se  usa en muchos cursos para resolver cuestiones y "colaborar" en la resolución de tareas. Ya veremos si acabamos usándolo.
 
 
 

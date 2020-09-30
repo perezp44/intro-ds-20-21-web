@@ -1,0 +1,4029 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data munging: the tidyverse way</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Pedro J. Pérez" />
+    <meta name="date" content="2020-09-30" />
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Data munging: the tidyverse way
+## – Slides 06 –
+### Pedro J. Pérez
+### 2020-09-30
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+class: inverse, center, middle
+
+# Data munging: the tidyverse way
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+---
+class: inverse
+
+#### Aprendimos a cargar datos, pero es raro que los datos esten preparados para empezar nuestro análisis, así que hay que "arreglar/limpiar" los datos. 
+
+&lt;br&gt;
+
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+--
+
+##### Antes de empezar el verdadero análisis, tenemos que: 
+
+##### 1) hacer nuestros datos tidy,
+
+##### 2) arreglarlos para que sean útiles para nuestros propósitos.
+
+
+
+&lt;br&gt;
+
+&lt;img src="./imagenes/ss_06_img_01_data-wrangle.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Limpieza de los datos
+
+- El procesado/limpieza de los datos suele ocupar un 80% del tiempo de un análisis de datos.
+
+
+
+&gt; Classroom data are like teddy bears; real data are like a grizzly with salmon blood dripping out its mouth. —- [@JennyBryan]
+
+
+&lt;img src="./imagenes/ss_06_img_02_grizlly-vs-teddy.jpg" width="85%" style="display: block; margin: auto;" /&gt;
+
+
+- Aprenderemos a limpiar y transformar datos en R. Priorizaremos la nueva forma de hacer las cosas en R (o workflow) conocido como [**tidyverse**](https://www.tidyverse.org/). 
+
+
+
+---
+background-image: url(imagenes/ss_06_img_03_tidyverse-hex.png)
+background-position: 95% 5%
+background-size: 7%
+
+#### Tidyverse
+
+Conjunto de paquetes que trabajan en armonía y que permiten una nueva forma de escribir/programar en R.
+
+
+
+&lt;iframe src="https://www.tidyverse.org/" width="100%" height="400px"&gt;&lt;/iframe&gt;
+
+---
+background-image: url(imagenes/ss_06_img_03_tidyverse-hex.png)
+background-position: 95% 5%
+background-size: 7%
+
+#### Principales pkgs del Tidyverse
+
+
+.pull-left[
+- **`tidyr`**: convertir a tidy data  
+
+- **`dplyr`**: para manipular datos    
+
+- **`ggplot2`**: para hacer gráficos  
+
+
+- .grey[**`readr`**: para importar datos]
+- .grey[**`tibble`**: data frames actualizados]   
+- .grey[**`forcast`**: para manipular factores]
+- .grey[**`stringr`**: para manipular strings]
+- .grey[**`purrr`**: functional programming]  
+
+
+- .grey[ ... y algunos más]
+
+]
+
+.pull-right[
+&lt;img src="./imagenes/ss_06_img_05_pkgs-tidyverse.png" width="120%" style="display: block; margin: auto;" /&gt;
+]
+
+
+&amp;nbsp;  
+
+.bg-washed-green.b--dark-green.ba.bw2.br3.shadow-5.ph4.mt5[
+Nos centraremos en los **tres primeros paquetes**, principalmente en **`dplyr`** y **`ggplot2`**.
+]
+
+
+
+
+---
+background-image: url(imagenes/ss_06_img_03_tidyverse-hex.png)
+background-position: 95% 5%
+background-size: 7%
+
+#### Tidyverse
+
+
+&gt; Programs must be written for people to read, and only incidentally for machines to execute  -- Hal Abelson
+
+&amp;nbsp;  
+
+Dos principios del *tidyverse*:
+
+  - Los scripts deben ser **"fácilmente" legibles por las personas**  
+  
+  - **Resolver problemas complejos** encadenando funciones simples con el **operador pipe (`%&gt;%`)**
+
+
+&lt;br&gt;
+
+#### The pipe
+
+El operador **pipe** se lo debemos a Stefan Bache en su pkg [magrittr](https://github.com/tidyverse/magrittr)
+
+
+&lt;img src="./imagenes/ss_06_img_04_pipe-hex.png" width="15%" style="display: block; margin: auto;" /&gt;
+
+---
+class: inverse, center, middle
+background-image: url(imagenes/ss_06_img_04_pipe-hex.png)
+background-position: 95% 5%
+background-size: 15%
+
+# The pipe
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+El operador %&gt;% es crucial en el tidyverse. hay que entenderlo. Es fácil. Pronto os sentiréis cómodos con él.
+
+---
+background-image: url(imagenes/ss_06_img_04_pipe-hex.png)
+background-position: 95% 5%
+background-size: 7%
+
+#### The pipe
+
+The pipe es un operador que pasa el elemento que está a su izquierda como un argumento de la función que tiene a la derecha. .red[That's all!!!]
+
+.bg-washed-green.b--dark-green.ba.bw2.br3.shadow-5.ph4.mt5[
+**Con expresiones** el operador pipe hace: 
+
+.red[f](.orange[object], .purple[args. of the f.])  .grey[...  es equivalente a  ...] .orange[object] %&gt;% .red[f](.purple[args. of the f.])
+]
+
+&amp;nbsp;  
+
+
+##### Igual os resulta más fácil con ejemplos. Las siguientes 2 expresiones hacen exactamente lo mismo:
+
+
+```r
+library(palmerpenguins)
+
+head(penguins, n = 4) #- forma habitual de llamar/usar la función head()
+
+penguins %&gt;% head(. , n = 4) #- usando el operador pipe
+```
+
+
+---
+background-image: url(imagenes/ss_06_img_04_pipe-hex.png)
+background-position: 95% 5%
+background-size: 7%
+
+#### The pipe (más ejemplos)
+
+Estas 3 expresiones también son equivalentes, hacen exactamente lo mismo:
+
+
+```r
+head(penguins, n = 4)         #- forma habitual de llamar/usar la función head()
+
+penguins %&gt;% head(. , n = 4)  #- usando el operador pipe (con el punto actuando como placeholder)
+
+penguins %&gt;% head(n = 4)      #- usando el operador pipe (SIN el punto)
+```
+
+--
+
+-------------------
+
+¿Qué hace la siguiente expresión?
+
+
+```r
+4 %&gt;% head(penguins, .)
+```
+
+--
+
+---------------------
+
+Y, ¿por qué no funciona la siguiente expresión?
+
+
+```r
+4 %&gt;% head(penguins)
+```
+
+
+--
+
+---------------------
+Intenta descubrir/entender que hace la siguiente expresión:
+
+
+```r
+letters %&gt;% paste0( "-----" ,  .  ,  "!!!" ) %&gt;% toupper
+```
+
+
+
+---
+class: inverse, center, middle
+background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-position: 95% 5%
+background-size: 15%
+
+
+# Tidy data
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+Para trabajar à la tidyverse es crucial que los datos sean "tidy". El concepto de datos tidy es sencillo. Hacer los datos tidy no tanto pero tenemos un paquete para hacerlo fácil: el pkg `tidyr` 
+
+---
+background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-position: 95% 5%
+background-size: 7%
+
+#### Tidy data
+
+Un aspecto importante del tidyverse es hacer los datos **tidy**. 
+
+Unos datos son tidy si: (1) cada columna es una variable, (2) cada fila es una observación y (3) cada valor debe estar en su propia celda.
+
+&lt;br&gt;
+
+&gt; A dataset is a **collection of values**. Every value belongs to a variable and an observation. 
+
+&gt; A variable contains all values that measure the same underlying attribute (like height, temperature, duration) across units.   
+
+&gt; An observation contains all values measured on the same unit (like a person, or a day, or a race) across atributes.
+
+
+&lt;img src="./imagenes/ss_06_img_11_tidy-data.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+
+---
+background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-position: 95% 5%
+background-size: 7%
+
+#### Tidy data  
+
+Veámoslo un poco con ejemplos:
+
+.panelset[
+.panel[.panel-name[Ejemplo 1]
+.pull-left[
+
+```r
+data_1 &lt;- data.frame(
+            year  = c("2014", "2015", "2016"),  
+            Pedro = c(100, 500, 200), 
+            Carla = c(400, 600, 250), 
+            María = c(200, 700, 900)  )
+```
+]
+.pull-right[
+
+```r
+gt::gt(data_1)
+```
+
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#kqohempdrv .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#kqohempdrv .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kqohempdrv .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#kqohempdrv .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#kqohempdrv .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kqohempdrv .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kqohempdrv .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#kqohempdrv .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#kqohempdrv .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#kqohempdrv .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#kqohempdrv .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#kqohempdrv .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#kqohempdrv .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#kqohempdrv .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#kqohempdrv .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#kqohempdrv .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#kqohempdrv .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#kqohempdrv .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#kqohempdrv .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kqohempdrv .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#kqohempdrv .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kqohempdrv .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#kqohempdrv .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kqohempdrv .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kqohempdrv .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#kqohempdrv .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kqohempdrv .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#kqohempdrv .gt_left {
+  text-align: left;
+}
+
+#kqohempdrv .gt_center {
+  text-align: center;
+}
+
+#kqohempdrv .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#kqohempdrv .gt_font_normal {
+  font-weight: normal;
+}
+
+#kqohempdrv .gt_font_bold {
+  font-weight: bold;
+}
+
+#kqohempdrv .gt_font_italic {
+  font-style: italic;
+}
+
+#kqohempdrv .gt_super {
+  font-size: 65%;
+}
+
+#kqohempdrv .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="kqohempdrv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">year</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Pedro</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Carla</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">María</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">2014</td>
+      <td class="gt_row gt_right">100</td>
+      <td class="gt_row gt_right">400</td>
+      <td class="gt_row gt_right">200</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">2015</td>
+      <td class="gt_row gt_right">500</td>
+      <td class="gt_row gt_right">600</td>
+      <td class="gt_row gt_right">700</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">2016</td>
+      <td class="gt_row gt_right">200</td>
+      <td class="gt_row gt_right">250</td>
+      <td class="gt_row gt_right">900</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+]
+]
+
+.panel[.panel-name[Ejemplo 2]
+.pull-left[
+
+```r
+data_2 &lt;- data.frame(names = c("Pedro", "Carla", "María"), 
+                      W_2014 = c(100, 400, 200), 
+                      W_2015 = c(500, 600, 700),
+                      W_2016 = c(200, 250, 900)   )
+```
+]
+.pull-right[
+
+```r
+gt::gt(data_2)
+```
+
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#pfynwrrvuz .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#pfynwrrvuz .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pfynwrrvuz .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#pfynwrrvuz .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#pfynwrrvuz .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pfynwrrvuz .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pfynwrrvuz .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#pfynwrrvuz .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#pfynwrrvuz .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#pfynwrrvuz .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#pfynwrrvuz .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#pfynwrrvuz .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#pfynwrrvuz .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#pfynwrrvuz .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#pfynwrrvuz .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#pfynwrrvuz .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#pfynwrrvuz .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#pfynwrrvuz .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#pfynwrrvuz .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pfynwrrvuz .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#pfynwrrvuz .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pfynwrrvuz .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#pfynwrrvuz .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pfynwrrvuz .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pfynwrrvuz .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#pfynwrrvuz .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pfynwrrvuz .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#pfynwrrvuz .gt_left {
+  text-align: left;
+}
+
+#pfynwrrvuz .gt_center {
+  text-align: center;
+}
+
+#pfynwrrvuz .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#pfynwrrvuz .gt_font_normal {
+  font-weight: normal;
+}
+
+#pfynwrrvuz .gt_font_bold {
+  font-weight: bold;
+}
+
+#pfynwrrvuz .gt_font_italic {
+  font-style: italic;
+}
+
+#pfynwrrvuz .gt_super {
+  font-size: 65%;
+}
+
+#pfynwrrvuz .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="pfynwrrvuz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">names</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">W_2014</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">W_2015</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">W_2016</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">Pedro</td>
+      <td class="gt_row gt_right">100</td>
+      <td class="gt_row gt_right">500</td>
+      <td class="gt_row gt_right">200</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Carla</td>
+      <td class="gt_row gt_right">400</td>
+      <td class="gt_row gt_right">600</td>
+      <td class="gt_row gt_right">250</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">María</td>
+      <td class="gt_row gt_right">200</td>
+      <td class="gt_row gt_right">700</td>
+      <td class="gt_row gt_right">900</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+]
+]
+
+.panel[.panel-name[Ejemplo 3]
+.pull-left[
+
+```r
+data_3 &lt;- data.frame(
+            names =rep(c("Pedro", "Carla", "María"), times = 3),  
+            year = rep(c("2014", "2015", "2016"), each = 3),
+            salario = c(100, 400, 200, 500, 600, 700, 200, 250,900) )
+```
+]
+.pull-right[
+
+```r
+gt::gt(data_3)
+```
+
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#wxknxxnpzs .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#wxknxxnpzs .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wxknxxnpzs .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#wxknxxnpzs .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#wxknxxnpzs .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wxknxxnpzs .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wxknxxnpzs .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#wxknxxnpzs .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#wxknxxnpzs .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#wxknxxnpzs .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#wxknxxnpzs .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#wxknxxnpzs .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#wxknxxnpzs .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#wxknxxnpzs .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#wxknxxnpzs .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#wxknxxnpzs .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#wxknxxnpzs .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#wxknxxnpzs .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#wxknxxnpzs .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wxknxxnpzs .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#wxknxxnpzs .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wxknxxnpzs .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#wxknxxnpzs .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wxknxxnpzs .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wxknxxnpzs .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#wxknxxnpzs .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wxknxxnpzs .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#wxknxxnpzs .gt_left {
+  text-align: left;
+}
+
+#wxknxxnpzs .gt_center {
+  text-align: center;
+}
+
+#wxknxxnpzs .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#wxknxxnpzs .gt_font_normal {
+  font-weight: normal;
+}
+
+#wxknxxnpzs .gt_font_bold {
+  font-weight: bold;
+}
+
+#wxknxxnpzs .gt_font_italic {
+  font-style: italic;
+}
+
+#wxknxxnpzs .gt_super {
+  font-size: 65%;
+}
+
+#wxknxxnpzs .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="wxknxxnpzs" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">names</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">year</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">salario</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">Pedro</td>
+      <td class="gt_row gt_left">2014</td>
+      <td class="gt_row gt_right">100</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Carla</td>
+      <td class="gt_row gt_left">2014</td>
+      <td class="gt_row gt_right">400</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">María</td>
+      <td class="gt_row gt_left">2014</td>
+      <td class="gt_row gt_right">200</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Pedro</td>
+      <td class="gt_row gt_left">2015</td>
+      <td class="gt_row gt_right">500</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Carla</td>
+      <td class="gt_row gt_left">2015</td>
+      <td class="gt_row gt_right">600</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">María</td>
+      <td class="gt_row gt_left">2015</td>
+      <td class="gt_row gt_right">700</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Pedro</td>
+      <td class="gt_row gt_left">2016</td>
+      <td class="gt_row gt_right">200</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Carla</td>
+      <td class="gt_row gt_left">2016</td>
+      <td class="gt_row gt_right">250</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">María</td>
+      <td class="gt_row gt_left">2016</td>
+      <td class="gt_row gt_right">900</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+]
+]
+]
+
+
+---
+class: inverse, center, middle
+background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-position: 95% 5%
+background-size: 13%
+
+
+# Tidy data en formato *LONG*
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+Para trabajar à la tidyverse es crucial que los datos sean "tidy" y además que estén en formato *LONG*. 
+
+Es importante aprender a pasar de datos WIDE a LONG y viceversa. 
+
+Con el pkg tidyr es sencillo pero ...
+
+---
+background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-position: 95% 5%
+background-size: 6%
+#### De wide a LONG format con `pivot_longer()`
+
+
+&lt;img src="./imagenes/ss_06_img_09_wide-long.png" width="90%" style="display: block; margin: auto;" /&gt;
+   
+.panelset[
+.panel[.panel-name[Tarea]
+ Aquí tienes un df en formato ANCHO, pásalo a formato LARGO
+
+
+```r
+data_2 &lt;- data.frame(names = c("Pedro", "Carla", "María"), 
+                      W_2014 = c(100, 400, 200), 
+                      W_2015 = c(500, 600, 700),
+                      W_2016 = c(200, 250, 900) )
+data_wide &lt;- data_2   
+```
+]
+
+.panel[.panel-name[Solución]
+
+
+```r
+#- la función pivot_longer() transforma los datos de formato ancho(wide) a formato largo(long)
+
+data_long &lt;- data_wide %&gt;% 
+             tidyr::pivot_longer(cols = 2:4, names_to = "periodo")
+```
+]
+]
+
+
+---
+background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-position: 95% 5%
+background-size: 6%
+#### De long a WIDE format con `pivot_wider()`
+
+
+&lt;img src="./imagenes/ss_06_img_10_wide-long.png" width="90%" style="display: block; margin: auto;" /&gt;
+   
+.panelset[
+.panel[.panel-name[Tarea]
+En el ejercicio anterior hemos creado un df en formato LONG, lo hemos llamado `df_long`. 
+
+La tarea consiste en convertir `df_long` a formato ANCHO.
+
+]
+
+.panel[.panel-name[Solución]
+
+
+```r
+data_wide2 &lt;- data_long %&gt;% 
+              tidyr::pivot_wider(names_from = periodo, 
+                                 values_from = value)
+```
+]
+]
+
+---
+class: inverse, center, middle
+
+## Más funciones de *tidyr*
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+#### El paquete *tidyr* tiene muchas funciones. Veremos dos: *separate()* y *unite()*
+
+
+---
+background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-position: 95% 5%
+background-size: 6%
+#### `separate()` y `unite()`
+
+- `separate()` y `unite()` facilitan el separar y unir columnas. Por ejemplo fíjate en el siguiente dataframe:
+
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#bbybbhcxvp .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#bbybbhcxvp .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#bbybbhcxvp .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#bbybbhcxvp .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#bbybbhcxvp .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bbybbhcxvp .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#bbybbhcxvp .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#bbybbhcxvp .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#bbybbhcxvp .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#bbybbhcxvp .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#bbybbhcxvp .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#bbybbhcxvp .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#bbybbhcxvp .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#bbybbhcxvp .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#bbybbhcxvp .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#bbybbhcxvp .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#bbybbhcxvp .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#bbybbhcxvp .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#bbybbhcxvp .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bbybbhcxvp .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#bbybbhcxvp .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bbybbhcxvp .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#bbybbhcxvp .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bbybbhcxvp .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#bbybbhcxvp .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#bbybbhcxvp .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#bbybbhcxvp .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#bbybbhcxvp .gt_left {
+  text-align: left;
+}
+
+#bbybbhcxvp .gt_center {
+  text-align: center;
+}
+
+#bbybbhcxvp .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#bbybbhcxvp .gt_font_normal {
+  font-weight: normal;
+}
+
+#bbybbhcxvp .gt_font_bold {
+  font-weight: bold;
+}
+
+#bbybbhcxvp .gt_font_italic {
+  font-style: italic;
+}
+
+#bbybbhcxvp .gt_super {
+  font-size: 65%;
+}
+
+#bbybbhcxvp .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="bbybbhcxvp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">names</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">year</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">Pedro_Navaja</td>
+      <td class="gt_row gt_right">1978</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Bob_Dylan</td>
+      <td class="gt_row gt_right">1941</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Cid_Campeador</td>
+      <td class="gt_row gt_right">1048</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+
+--
+
+
+.panelset[
+.panel[.panel-name[Separar la 1ª columna]
+.pull-left[
+
+```r
+df_a &lt;- df %&gt;% 
+      separate(col = names, 
+              into = c("Nombre", "Apellido"),
+              sep  = "_")
+```
+]
+.pull-right[
+
+```r
+gt::gt(df_a)
+```
+
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#wyiiawnapc .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#wyiiawnapc .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wyiiawnapc .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#wyiiawnapc .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#wyiiawnapc .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wyiiawnapc .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wyiiawnapc .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#wyiiawnapc .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#wyiiawnapc .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#wyiiawnapc .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#wyiiawnapc .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#wyiiawnapc .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#wyiiawnapc .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#wyiiawnapc .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#wyiiawnapc .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#wyiiawnapc .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#wyiiawnapc .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#wyiiawnapc .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#wyiiawnapc .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wyiiawnapc .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#wyiiawnapc .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wyiiawnapc .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#wyiiawnapc .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wyiiawnapc .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wyiiawnapc .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#wyiiawnapc .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wyiiawnapc .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#wyiiawnapc .gt_left {
+  text-align: left;
+}
+
+#wyiiawnapc .gt_center {
+  text-align: center;
+}
+
+#wyiiawnapc .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#wyiiawnapc .gt_font_normal {
+  font-weight: normal;
+}
+
+#wyiiawnapc .gt_font_bold {
+  font-weight: bold;
+}
+
+#wyiiawnapc .gt_font_italic {
+  font-style: italic;
+}
+
+#wyiiawnapc .gt_super {
+  font-size: 65%;
+}
+
+#wyiiawnapc .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="wyiiawnapc" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Nombre</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Apellido</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">year</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">Pedro</td>
+      <td class="gt_row gt_left">Navaja</td>
+      <td class="gt_row gt_right">1978</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Bob</td>
+      <td class="gt_row gt_left">Dylan</td>
+      <td class="gt_row gt_right">1941</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Cid</td>
+      <td class="gt_row gt_left">Campeador</td>
+      <td class="gt_row gt_right">1048</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+]
+]
+
+.panel[.panel-name[Volvamos a unir las columnas]
+.pull-left[
+
+```r
+df_b &lt;- df_a %&gt;% 
+       unite(Nombre_y_Apellido, 
+             Nombre:Apellido, 
+             sep = "&amp;")
+```
+]
+.pull-right[
+
+```r
+gt::gt(df_b)
+```
+
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#zpdhibqveq .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#zpdhibqveq .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#zpdhibqveq .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#zpdhibqveq .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#zpdhibqveq .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zpdhibqveq .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#zpdhibqveq .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#zpdhibqveq .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#zpdhibqveq .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#zpdhibqveq .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#zpdhibqveq .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#zpdhibqveq .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#zpdhibqveq .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#zpdhibqveq .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#zpdhibqveq .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#zpdhibqveq .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#zpdhibqveq .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#zpdhibqveq .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#zpdhibqveq .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zpdhibqveq .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#zpdhibqveq .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zpdhibqveq .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#zpdhibqveq .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zpdhibqveq .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#zpdhibqveq .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#zpdhibqveq .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#zpdhibqveq .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#zpdhibqveq .gt_left {
+  text-align: left;
+}
+
+#zpdhibqveq .gt_center {
+  text-align: center;
+}
+
+#zpdhibqveq .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#zpdhibqveq .gt_font_normal {
+  font-weight: normal;
+}
+
+#zpdhibqveq .gt_font_bold {
+  font-weight: bold;
+}
+
+#zpdhibqveq .gt_font_italic {
+  font-style: italic;
+}
+
+#zpdhibqveq .gt_super {
+  font-size: 65%;
+}
+
+#zpdhibqveq .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="zpdhibqveq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Nombre_y_Apellido</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">year</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">Pedro&amp;Navaja</td>
+      <td class="gt_row gt_right">1978</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Bob&amp;Dylan</td>
+      <td class="gt_row gt_right">1941</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Cid&amp;Campeador</td>
+      <td class="gt_row gt_right">1048</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+]
+]
+]
+
+---
+class: inverse, center, middle
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 95% 5%
+background-size: 15%
+
+## DPLYR
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+#### *dplyr* es el paquete más importante a la hora de manipular datos.
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### DPLYR
+
+- `dplyr` es un paquete que permite manipular datos de forma intuitiva. Tiene 6-7 funciones o verbos principales. 
+
+- Cada uno de ellos hace “una sola cosa”, así que para realizar transformaciones complejas hay que ir concatenando instrucciones sencillas con el operador pipe (`%&gt;%`)
+
+&lt;br&gt;
+
+--
+
+#### Sintaxis 
+
+Todas las funciones tienen una estructura o comportamiento similar:
+
+  - el primer argumento siempre es un df (esto es importante).      
+  - los siguientes argumentos describen que hacer con los datos.     
+  - el resultado es siempre un nuevo df (esto es importante).  
+
+
+Las siguientes 3 expresiones hacen exactamente lo mismo:
+
+
+```r
+filter(df, X1 &gt;= 10)
+
+df %&gt;% filter(. , X1 &gt;= 10)
+
+df %&gt;% filter(X1 &gt;= 10)
+```
+
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### Principales funciones de dplyr
+
+  - **`filter()`** : selecciona **filas** (que cumplen una o varias condiciones)
+  - **`arrange()`**: reordena las filas
+  - **`rename()`** : cambia los nombres de las columnas 
+  - **`select()`** : selecciona **columnas** 
+  - **`mutate()`** : crea nuevas variables
+  - **`summarise()`** : resume (colapsa) unos cuantos valores a uno sólo. Por ejemplo, calcula la media, moda, etc... de un conjunto de valores
+ 
+--
+ 
+Hay una séptima función:
+
+  - **`group_by()`** : permite agrupar filas en función de una o varias condiciones
+
+--
+
+&lt;br&gt;
+
+Y después de `dplyr 1.0.0`, en mayo de 2020, 2 más:
+
+  - **`across()`**   y **`where()`**. Estas funciones son un poco diferentes, solo se usan en combinación de otra función/verbo. Son 2 funciones que en la jerga del tidyverse no son verbos sino adverbios. Lo vemos
+
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### 1.A **`filter()`**: permite seleccionar **filas**
+
+Filas que cumplan una determinadas condiciones o criterios lógicos. Por ejemplo:
+
+
+```r
+#- vamos a trabajar con los datos del [pkg gapminder](https://github.com/jennybc/gapminder)
+
+gapminder &lt;- gapminder::gapminder
+```
+
+
+
+
+```r
+#- Observaciones de España (country == "Spain")
+aa &lt;- gapminder %&gt;% filter(country == "Spain") 
+
+#- filas con valores de "lifeExp" &lt; 29
+aa &lt;- gapminder %&gt;% filter(lifeExp &lt; 29)       
+
+#- filas con valores de "lifeExp" entre [29, 32]
+aa &lt;- gapminder %&gt;% filter(lifeExp &gt;=  29 , lifeExp &lt;= 32)   
+aa &lt;- gapminder %&gt;% filter(lifeExp &gt;=  29 &amp;  lifeExp &lt;= 32)  
+aa &lt;- gapminder %&gt;% filter(`between`(lifeExp, 29, 32))       
+
+#- observaciones de países de África con lifeExp &gt; 32
+aa &lt;- gapminder %&gt;% filter(lifeExp &gt; 72 &amp;  continent == "Africa") 
+
+#- observaciones de países de África o Asia con lifeExp &gt; 32
+aa &lt;- gapminder %&gt;% filter(lifeExp &gt; 72 &amp;  continent `%in%` c("Africa", "Asia") )  
+aa &lt;- gapminder %&gt;% filter(lifeExp &gt; 72 &amp; (continent == "Africa" | continent == "Asia") )  
+```
+
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### 1.B **`slice()`**: permite seleccionar **filas** pero **por posición**.
+
+`filter()` y `slice()` ambas seleccionan filas, la primera por condiciones y la segunda por posición:
+
+
+```r
+#- selecciona las observaciones de la décima a la quinceava
+aa &lt;- gapminder %&gt;% slice(c(10:15)) 
+
+#- selecciona las observaciones de la 12 a 13 Y de la 44 a 46, Y las 4 últimas
+aa &lt;- gapminder %&gt;% 
+     slice( c(12:14, 44:46, n()-4:n()) ) #- AQUI hay un `error`, tenéis que arreglarlo. 
+
+#- Pista: igual os ayuda crear una columna con el índice de rows y repetir el cálculo
+aa &lt;- gapminder %&gt;% mutate(index = 1:n())
+aa &lt;- gapminder %&gt;% slice( c(12:14, 44:46, n()-4:n()) )
+```
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### 1.C Variantes de **`slice()`**
+
+- `slice_max()` y `slice_min()`: seleccionan filas con valor máximo (o mínimo) de una variable: 
+
+
+```r
+#- selecciona las 3 filas con mayor valor de lifeExp
+aa &lt;- gapminder %&gt;% slice_max(lifeExp, n = 3)
+
+#- selecciona las 4 filas con MENOR valor de pop
+aa &lt;- gapminder %&gt;% slice_min(pop, n = 4)
+
+#- observaciones en el primer decil en cuanto a esperanza de vida, 10% con menor esperanza de vida
+aa &lt;- gapminder %&gt;% slice_min(lifeExp, `prop` = 0.1)
+
+#- 1% de observaciones con mayor población. Imagino que estarán China e India
+aa &lt;- gapminder %&gt;% slice_max(pop, prop = 0.01)
+```
+
+--
+
+---------------------
+
+A veces se necesita obtener una muestra aleatoria de los datos: por ejemplo con `slice_sample()`:
+
+
+
+```r
+#- selecciona (aleatoriamente) 100 filas de los datos
+aa &lt;- gapminder %&gt;% `slice_sample`(n = 100)
+
+#- selecciona (aleatoriamente) un 5% de los datos
+aa &lt;- gapminder %&gt;% slice_sample(prop = 0.05)
+```
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### 2. **`arrange()`**: permite **reordenar las filas** de un df
+
+
+
+
+```r
+#- ordena las filas de MENOR a mayor según los valores de la v. lifeExp 
+aa &lt;- gapminder %&gt;% arrange(lifeExp)
+
+#- ordena las filas de MAYOR a menor según los valores de la v. lifeExp
+aa &lt;- gapminder %&gt;% arrange(`desc`(lifeExp))  
+
+#- ordena las filas de MENOR a mayor según los valores de la v. lifeExp. 
+#- Si hay empates se resuelve con la variable "pop"
+aa &lt;- gapminder %&gt;% arrange(lifeExp, pop) 
+```
+
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### 3. **`rename()`**: permite cambiar los nombres de las variables
+
+
+
+
+```r
+#- cambia los nombres de lifeExp y gdpPercap a life_exp y gdp_percap 
+gapminder %&gt;% rename(life_exp = lifeExp,  gdp_percap = gdpPercap)
+```
+
+##### la función names() es útil
+
+
+```r
+#-(!!) la función names() de R-base es muy útil. 
+aa &lt;- gapminder
+
+names(aa) &lt;- names(aa) %&gt;% toupper
+names(aa) &lt;- names(aa) %&gt;% tolower
+```
+
+#### `rename_with()` permite hacer transformaciones más complejas, 
+
+
+```r
+aa &lt;- gapminder
+
+aa %&gt;% `rename_with`(toupper)
+
+rename_with(aa, toupper, starts_with("Life") | contains("countr"))
+
+rename_with(aa, ~ str_replace(.x, "e", "Ö"))  #- (!!!!)
+```
+
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### 4.A **`select()`** se utiliza para seleccionar variables
+
+
+##### seleccionar variables por nombre
+
+
+
+```r
+aa &lt;- gapminder %&gt;% select(year, lifeExp) 
+```
+
+##### seleccionar variables por posición
+
+
+```r
+aa &lt;- gapminder %&gt;% select(1:3, 5)
+```
+
+
+--
+
+-----------------
+
+##### eliminar variables
+
+
+
+```r
+aa &lt;- gapminder %&gt;% select(-year)
+
+#- Para eliminar varias variables
+aa &lt;- gapminder %&gt;% select(-`c`(year, lifeExp))
+```
+
+##### eliminar variables por posición
+
+
+
+```r
+aa &lt;- gapminder %&gt;% select(-`c`(1:3, 5))
+```
+
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### 4.B **`select()`** junto a la función  **`where()`**
+
+- `select()` y `where()` son dos funciones, sí, pero en la jerga del tidyverse, `select()` es un verbo y `where()` es un adverbio, cualifica/cambia lo que hace `select()`.
+
+--
+
+------------------
+
+##### ejemplo de uso
+
+- En `gapminder` las 2 primeras variables (country y continent) son factores y las 4 siguientes son variable numéricas. 
+
+- Imagina que queremos seleccionar sólo las variables que son numéricas. Podemos hacerlo por nombre o por posición pero mejor con `select()` y la función auxiliar `where()`
+
+
+
+```r
+aa &lt;- gapminder %&gt;% select(is.numeric)        #- funciona, pero ...
+
+aa &lt;- gapminder %&gt;% select(`where`(is.numeric)) #- es "preferible" esta segunda expresión
+```
+
+--
+
+---------------
+
+- Si queremos seleccionar las variables que **no** son numéricas haríamos:
+
+
+
+```r
+aa &lt;- gapminder %&gt;% select(`!`where(is.numeric)) 
+```
+
+
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### 4.C.1 **`select()`** para renombrar y reordenar las variables
+
+
+
+
+```r
+#- dejamos en aa solamente a las columnas "year" y "pop"; ADEMÁS, ahora, "pop" irá antes que "year"
+aa &lt;- gapminder %&gt;% select(pop, year)
+
+#- dejamos en aa solamente a las columnas "year" y "pop" y les cambiamos el nombre
+aa &lt;- gapminder %&gt;% select(poblacion = pop, año = year)
+```
+
+&lt;br&gt;
+
+Imagina que quieres que la última columna pase a ser la primera (manías!!). Podemos hacerlo con select y `everything()`. everything es una **función auxiliar**:
+
+
+```r
+#- "gdpPercap" que es la última columna pasa a ser la primera
+aa &lt;- gapminder %&gt;% select(gdpPercap, `everything()`)
+```
+
+--
+
+&lt;br&gt;
+
+------------
+
+
+#### 4.C.2  `relocate() ` otra función para reordenar las variables de un df
+
+
+```r
+aa &lt;- gapminder %&gt;% dplyr::`relocate`(country, .after = lifeExp)
+
+aa &lt;- gapminder %&gt;% dplyr::relocate(country, .before = lifeExp)
+```
+
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### 5 **`mutate()`** para crear nuevas variables
+
+- Por ejemplo, creamos la variable: GDP = pop*gdpperCap
+
+
+
+```r
+aa &lt;- gapminder %&gt;% mutate(GDP = pop*gdpPercap)
+```
+
+Por defecto, la nueva variable creada se situará al final del df, a no ser que usemos los argumentos `.after` y `.before`
+
+
+
+```r
+aa &lt;- gapminder %&gt;% mutate(GDP = pop*gdpPercap, .after = country)
+
+aa &lt;- gapminder %&gt;% mutate(GDP = pop*gdpPercap, .before = country)
+```
+
+
+
+
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### 6.A **`summarize()`** para "resumir" variables
+
+- Coge una variable como input y devuelve un solo valor; por ejemplo, haya la media aritmética (o el mínimo, o el máximo ...) de una columna/variable.
+
+- Empezamos "resumiendo" una sola variable:
+
+
+```r
+aa &lt;- gapminder %&gt;% summarise(media = mean(lifeExp))  
+aa &lt;- gapminder %&gt;% summarise(desviacion_tipica = sd(lifeExp))  
+aa &lt;- gapminder %&gt;% summarise(max(pop))  
+aa &lt;- gapminder %&gt;% summarise(NN = `n()`)  
+
+aa &lt;- gapminder %&gt;% `count`()      #- más adelante veremos la utilidad de count()
+```
+
+--
+
+---------------------
+
+- "Resumimos" dos variables:
+
+
+```r
+#- retornará 2 valores: las medias de "lifeExp" y "gdpPercap"
+aa &lt;- gapminder %&gt;% summarise(mean(`lifeExp`), mean(`gdpPercap`))  
+```
+
+
+--
+
+---------------------
+
+- Hacemos 2 resúmenes de una variable:
+
+
+```r
+#- retornará 2 valores: la media y sd de la v. "lifeExp"
+aa &lt;- gapminder %&gt;% summarise(`mean`(lifeExp), `sd`(lifeExp))
+```
+
+
+
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### 6.B **`summarize()`** con `across()`
+
+Usar `across()` permitirá calcular estadísticos de todas las variables, o de subconjuntos de estas, de manera más cómoda:
+
+
+
+```r
+#- media de cada una de las 6 variables. Devuelve 2 warnings porque las 2 primeras son textuales. No se puede calcular la media de continent y country
+gapminder %&gt;% summarise(`across`(everything(), mean) ) 
+
+#- calculamos la media de tercera a la sexta variable
+gapminder %&gt;% summarise(`across`(3:6, mean) ) 
+```
+
+&lt;br&gt;
+
+O sea, `across()` permite seleccionar variables para hacer summaries. Dentro de `across()` se puede utilizar `where()` para aplicar criterios lógicos para seleccionar variables: 
+
+
+```r
+gapminder %&gt;% summarise(across(`where`(is.numeric), mean)) 
+
+#- con los nombres de los argumentos (más largo pero conviene verlo de vez en cuando)
+gapminder %&gt;% summarise(across(.cols = `where`(is.numeric), .fns = mean)) 
+```
+
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### 6.B **`summarize()`** con `across()`  y varias funciones(list)
+
+- Si quieres calcular dos summaries de varias variables; por ejemplo la media y la desviación típica de un grupo de variables, tendrás que seguir utilizando `summarise()` con `across()` pero, además, tendrás que poner la lista de funciones dentro de `list`. Veámoslo:
+
+
+
+```r
+#- calculamos la media y desviación típica de las columnas 3 a 6.
+gapminder %&gt;% summarise(across(3:6, `list`(media = mean, desv = sd)))
+
+#- lo mismo, pero explicitando los nombres de los argumentos
+gapminder %&gt;% summarise(across(.cols = 3:6, .fns = list(media = mean, desv = sd) ))
+
+#- lo mismo otra vez, pero eligiendo el nombre de las variables que se van aa crear con .names
+gapminder %&gt;% summarise(across(3:6, list(media = mean, desv = sd), .names = "{fn}_{col}"))
+```
+
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### 7. **`group_by()`**. Con está función ya se puede ver la potencia de `dplyr`
+
+En análisis de datos muchas operaciones  queremos calcularlas para distintos grupos (hombre, mujer ...). `group_by()` permite hacerlo.
+
+`group_by()`coge un df y lo convierte en un **"df agrupado"**. En ese nuevo "df agrupado", las operaciones que hagamos con `summarise()` se harán por separado para cada uno de los grupos que hayamos definido. Ahora lo vemos.
+
+--
+
+
+```r
+#- cogemos df y lo (des)agrupamos por grupos 
+#- definidos por la variable "continent"; o sea, habrá 5 grupos
+#- después con summarise() calcularemos el nº de observaciones en cada grupo;
+#- es decir, nos retornará un df con una fila por cada continente
+
+aa &lt;- gapminder %&gt;% group_by(continent) %&gt;% summarise(NN = n()) 
+aa
+```
+
+```
+## # A tibble: 5 x 2
+##   continent    NN
+##   &lt;fct&gt;     &lt;int&gt;
+## 1 Africa      624
+## 2 Americas    300
+## 3 Asia        396
+## 4 Europe      360
+## 5 Oceania      24
+```
+
+
+
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### 7. **`group_by()`**. 
+
+#### ¿Cuantos países hay en la base de datos? 
+
+- Una forma "chapucera" de hacerlo
+
+
+```r
+aa &lt;- gapminder %&gt;% group_by(country) %&gt;%  
+          summarize(NN = n())
+```
+
+--
+
+--------------------
+
+- Mejor así:
+
+
+
+```r
+#- cogemos df y lo agrupamos por "continent", 
+#- después calculamos 2 cosas: el número de observaciones o rows
+#- y el número de países en cada continente (NN_countries)
+aa &lt;- gapminder %&gt;% group_by(continent) %&gt;%  
+          summarize(NN = n(), 
+                    NN_countries = `n_distinct`(country)) 
+aa
+```
+
+```
+## # A tibble: 5 x 3
+##   continent    NN NN_countries
+##   &lt;fct&gt;     &lt;int&gt;        &lt;int&gt;
+## 1 Africa      624           52
+## 2 Americas    300           25
+## 3 Asia        396           33
+## 4 Europe      360           30
+## 5 Oceania      24            2
+```
+
+
+---
+background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-position: 99% 1%
+background-size: 6%
+
+#### 7. **`group_by()`**. 
+
+- También se puede así:
+
+
+
+```r
+aa &lt;- gapminder %&gt;% group_by(continent) %&gt;%  
+          summarize(NN = n(), 
+                    NN_countries = `length`(`unique`(country)) )
+aa
+```
+
+```
+## # A tibble: 5 x 3
+##   continent    NN NN_countries
+##   &lt;fct&gt;     &lt;int&gt;        &lt;int&gt;
+## 1 Africa      624           52
+## 2 Americas    300           25
+## 3 Asia        396           33
+## 4 Europe      360           30
+## 5 Oceania      24            2
+```
+
+---
+class: inverse, center, middle
+
+# Ejemplos para afianzar y ganar confianza con  *dplyr*
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+Una vez tenemos, aunque sea con pinzas, los conocimientos necesarios de *dplyr*, ya podemos hacer ejemplos o preguntas de verdad. El objetivo es afianzarlos y ganar confianza con *dplyr*. Vamos allaaaa ....
+
+---
+
+### Ejemplos para practicar `dplyr`
+
+.bg-washed-purple.b--dark-purple.ba.bw2.br3.shadow-5.ph4.mt5[
+.panelset[
+.panel[.panel-name[Tarea 1]
+Primero algo sencillo para calentar: hay que calcular **la esperanza de vida media por continente**.
+
+]
+.panel[.panel-name[Solución 1]
+
+
+```r
+#- cogemos df y lo agrupamos por "continent", 
+#- después calculamos la media de "lifeExp"
+
+gapminder %&gt;% group_by(continent) %&gt;%  
+              summarize(mean(lifeExp)) 
+```
+
+```
+## # A tibble: 5 x 2
+##   continent `mean(lifeExp)`
+##   &lt;fct&gt;               &lt;dbl&gt;
+## 1 Africa               48.9
+## 2 Americas             64.7
+## 3 Asia                 60.1
+## 4 Europe               71.9
+## 5 Oceania              74.3
+```
+
+]
+.panel[.panel-name[Tarea 2]
+Calculemos la esperanza de vida media por continente en el primer periodo (1952)
+]
+.panel[.panel-name[Solución 2]
+
+
+```r
+#- cogemos df y filtramos para quedarnos con las observaciones de 1952
+#- después lo agrupamos por "continent", 
+#- después calculamos la media de "lifeExp"
+
+gapminder %&gt;% filter(year == "1952") %&gt;%  
+              group_by(continent) %&gt;%  
+              summarize(mean(lifeExp)) 
+```
+]
+.panel[.panel-name[Tarea 3]
+
+¿Qué hace este trozo de código?
+
+
+```r
+gapminder %&gt;% filter(year `%in%` c(1952, 2007)) %&gt;%  
+             group_by(continent, year) %&gt;%  
+             summarize(mean(lifeExp), mean(gdpPercap)) 
+```
+
+]
+.panel[.panel-name[Solución 3]
+
+```r
+#- cogemos df y filtramos las observaciones de 1952 y 2007
+#- agrupamos por "continent", 
+#- después calculamos la media de "lifeExp" y de "gdpPercap"
+
+gapminder %&gt;% filter(year %in% c(1952, 2007)) %&gt;%  
+             group_by(continent, year) %&gt;%  
+             summarize(mean(lifeExp), mean(gdpPercap)) 
+```
+
+```
+## # A tibble: 10 x 4
+## # Groups:   continent [5]
+##    continent  year `mean(lifeExp)` `mean(gdpPercap)`
+##    &lt;fct&gt;     &lt;int&gt;           &lt;dbl&gt;             &lt;dbl&gt;
+##  1 Africa     1952            39.1             1253.
+##  2 Africa     2007            54.8             3089.
+##  3 Americas   1952            53.3             4079.
+##  4 Americas   2007            73.6            11003.
+##  5 Asia       1952            46.3             5195.
+##  6 Asia       2007            70.7            12473.
+##  7 Europe     1952            64.4             5661.
+##  8 Europe     2007            77.6            25054.
+##  9 Oceania    1952            69.3            10298.
+## 10 Oceania    2007            80.7            29810.
+```
+]
+]
+]
+
+---
+#### Más ejemplos (para recordar `across()`)
+
+
+
+```r
+#- Voy a crear un nuevo df: "gapminder_gr" o "gapminder agrupado"
+gapminder_gr &lt;- gapminder %&gt;% filter(year %in% c(1952, 2007)) %&gt;%
+                 group_by(continent, year) 
+#- y sobre "gapminder_gr" iremos haciendo cálculos
+  
+#- si queremos calcular la media de varias variables tenemos que usar across()
+gapminder_gr %&gt;% summarise(across(c(lifeExp, gdpPercap), mean))
+
+#- si queremos calcular la media de todas las variables numéricas tenemos que usar across() y where()
+gapminder_gr %&gt;% summarise(across(where(is.numeric), mean))
+
+#- si queremos calcular la media y la mediana, hay que usar list()
+gapminder_gr %&gt;% summarise(across(c(lifeExp, gdpPercap), 
+                            list (media = mean, mediana = median) ))
+
+#- si ponemos los nombres de los argumentos quedaría como
+gapminder_gr %&gt;% summarise(across(.cols = c(lifeExp, gdpPercap), 
+                                  .fns = list (media = mean, mediana = median)))
+
+#- además, podemos controlar el nombre de las variables creadas con el argumento .names
+gapminder_gr %&gt;% summarise(across(c(lifeExp, gdpPercap), 
+                        list (media = mean, mediana = median), 
+                        .names = "{fn}_{col}"))
+```
+
+
+---
+class: inverse, center, middle
+
+# Ahora ya preguntas de VERDAD
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+Yo creo que ya medio pilotáis, así que vamos a tratar de resolver alguna pregunta "de verdad"
+
+---
+
+##### pregunta de verdad: ¿en que continente ha aumentado más la esperanza de vida en el periodo 1952-2007?
+
+
+.bg-washed-purple.b--dark-purple.ba.bw2.br3.shadow-5.ph4.mt5[
+.panelset[
+.panel[.panel-name[Intento 0]
+
+
+```r
+gapminder %&gt;% 
+  filter(year %in% c(1952, 2007)) %&gt;%  
+  group_by(continent, year) %&gt;% 
+  summarize(media = mean(lifeExp)) %&gt;% ungroup()
+```
+
+```
+## # A tibble: 10 x 3
+##    continent  year media
+##    &lt;fct&gt;     &lt;int&gt; &lt;dbl&gt;
+##  1 Africa     1952  39.1
+##  2 Africa     2007  54.8
+##  3 Americas   1952  53.3
+##  4 Americas   2007  73.6
+##  5 Asia       1952  46.3
+##  6 Asia       2007  70.7
+##  7 Europe     1952  64.4
+##  8 Europe     2007  77.6
+##  9 Oceania    1952  69.3
+## 10 Oceania    2007  80.7
+```
+]
+
+.panel[.panel-name[Intento 1]
+
+```r
+#- se puede hacer de una vez, pero vamos a partir el código en 2 trozos
+aa &lt;- gapminder %&gt;% filter(year %in% c(1952, 2007)) %&gt;%  
+  group_by(continent, year) %&gt;% 
+  summarize(media = mean(lifeExp)) %&gt;% ungroup()
+
+aa1 &lt;- aa %&gt;% group_by(continent) %&gt;% 
+  summarise(min_l = min(media), max_l = max(media)) %&gt;% 
+  mutate(dif = max_l-min_l) %&gt;% 
+  arrange(desc(dif))
+
+aa1
+```
+
+```
+## # A tibble: 5 x 4
+##   continent min_l max_l   dif
+##   &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Asia       46.3  70.7  24.4
+## 2 Americas   53.3  73.6  20.3
+## 3 Africa     39.1  54.8  15.7
+## 4 Europe     64.4  77.6  13.2
+## 5 Oceania    69.3  80.7  11.5
+```
+
+]
+.panel[.panel-name[Intento 2]
+
+```r
+#- segundo intento: se puede hacer de una vez, pero vamos a partir el código en 2 trozos
+aa &lt;- gapminder %&gt;% filter(year %in% c(1952, 2007)) %&gt;%  
+         group_by(continent, year) %&gt;% 
+         summarize(media = mean(lifeExp)) %&gt;% ungroup() 
+
+#- usamos lag()
+aa1 &lt;- aa %&gt;% group_by(continent) %&gt;% 
+              arrange(year) %&gt;%
+              mutate(variac_l = media - lag(media))
+
+#- mostramos los resultados
+aa1 %&gt;% filter(year == 2007) %&gt;% arrange(desc(variac_l))
+```
+
+```
+## # A tibble: 5 x 4
+## # Groups:   continent [5]
+##   continent  year media variac_l
+##   &lt;fct&gt;     &lt;int&gt; &lt;dbl&gt;    &lt;dbl&gt;
+## 1 Asia       2007  70.7     24.4
+## 2 Americas   2007  73.6     20.3
+## 3 Africa     2007  54.8     15.7
+## 4 Europe     2007  77.6     13.2
+## 5 Oceania    2007  80.7     11.5
+```
+]
+
+.panel[.panel-name[Otra forma]
+
+```r
+#- esta parte es común
+aa &lt;- gapminder %&gt;% 
+  filter(year %in% c(1952, 2007)) %&gt;%  
+  group_by(continent, year) %&gt;% 
+  summarize(media = mean(lifeExp)) %&gt;% ungroup()
+
+#- pero ahora usamos pivot_wider()
+aa %&gt;% pivot_wider(names_from = year, values_from = media) %&gt;% 
+     mutate(dif_l = `2007` - `1952`) %&gt;% 
+     arrange(desc(dif_l))
+```
+
+```
+## # A tibble: 5 x 4
+##   continent `1952` `2007` dif_l
+##   &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1 Asia        46.3   70.7  24.4
+## 2 Americas    53.3   73.6  20.3
+## 3 Africa      39.1   54.8  15.7
+## 4 Europe      64.4   77.6  13.2
+## 5 Oceania     69.3   80.7  11.5
+```
+
+]
+]
+]
+
+---
+
+##### Otra pregunta: ¿qué hace el código de abajo?
+
+
+.bg-washed-purple.b--dark-purple.ba.bw2.br3.shadow-5.ph4.mt5[
+
+
+
+```r
+aa &lt;- gapminder %&gt;% 
+  group_by(continent, year) %&gt;% 
+  select(continent, year, lifeExp) %&gt;% 
+  summarise(mean_life = mean(lifeExp)) %&gt;% 
+  arrange(year) %&gt;% 
+  mutate(incre_mean_life_0 = mean_life - `first`(mean_life)) %&gt;% 
+  mutate(incre_mean_life_t = mean_life - `lag`(mean_life)) %&gt;% 
+  arrange(continent)
+
+#- por ejemplo veamos el resultado para Europe
+aa %&gt;% filter(continent == "Europe")
+```
+]
+
+
+---
+
+#### Por favor, sed conscientes de que: "**Las cosas no salen a la primera**"
+
+En palabras de Jennyfer Bryan:
+
+.bg-washed-purple.b--dark-purple.ba.bw2.br3.shadow-5.ph4.mt5[
+
+&gt; Break the code into pieces, starting at the top, and inspect the intermediate results. That’s certainly how I was able to write such a thing. These commands do not leap fully formed out of anyone’s forehead – they are built up gradually, with lots of errors and refinements along the way. Is the statement above really hard for you to read? If yes, then by all means break it into pieces and make some intermediate objects. Your code should be easy to write and read when you’re done.
+]
+
+---
+#### Otra pregunta "de verdad"
+
+
+
+.bg-washed-purple.b--dark-purple.ba.bw2.br3.shadow-5.ph4.mt5[
+.panelset[
+.panel[.panel-name[Tarea 1]
+- ¿Cómo ha evolucionado la esperanza de vida en España?
+]
+.panel[.panel-name[Solución 1]
+
+
+```r
+#- variación de lifeExp en Spain año a año (bueno lustro a lustro)
+gapminder %&gt;% group_by(country) %&gt;% 
+  select(country, year, lifeExp) %&gt;% 
+  mutate(lifeExp_gain_cada_lustro = lifeExp - `lag`(lifeExp)) %&gt;% 
+  filter(country == "Spain" )
+```
+
+```
+## # A tibble: 12 x 4
+## # Groups:   country [1]
+##    country  year lifeExp lifeExp_gain_cada_lustro
+##    &lt;fct&gt;   &lt;int&gt;   &lt;dbl&gt;                    &lt;dbl&gt;
+##  1 Spain    1952    64.9                   NA    
+##  2 Spain    1957    66.7                    1.72 
+##  3 Spain    1962    69.7                    3.03 
+##  4 Spain    1967    71.4                    1.75 
+##  5 Spain    1972    73.1                    1.62 
+##  6 Spain    1977    74.4                    1.33 
+##  7 Spain    1982    76.3                    1.91 
+##  8 Spain    1987    76.9                    0.6  
+##  9 Spain    1992    77.6                    0.670
+## 10 Spain    1997    78.8                    1.2  
+## 11 Spain    2002    79.8                    1.01 
+## 12 Spain    2007    80.9                    1.16
+```
+
+]
+.panel[.panel-name[Tarea 2]
+ ¿Y la variación acumulada? Fácil!! Sólo tendríamos que sumar o acumular la variable "lifeExp_gain_cada_lustro" que hemos generado anteriormente, así que sólo habría que añadir una linea a nuestro código:
+]
+.panel[.panel-name[Sol 2.a]
+
+```r
+gapminder %&gt;% group_by(country) %&gt;% 
+  select(country, year, lifeExp) %&gt;% 
+  mutate(lifeExp_gain_cada_lustro = lifeExp - lag(lifeExp)) %&gt;% 
+  
+#- Al final para hacerlo (como había pensado) me han hecho falta 2 lineas, 
+#- porque la primera observación de "lifeExp_gain_cada_lustro" es un NA 
+#- y eso hacía que la función `cumsum()` no funcionase.
+  
+mutate(lifeExp_gain_cada_lustro2 = 
+ `ifelse`(is.na(lifeExp_gain_cada_lustro), 0, lifeExp_gain_cada_lustro)) %&gt;% 
+mutate(lifeExp_gain_acumulado = `cumsum`(lifeExp_gain_cada_lustro2)) %&gt;%   
+filter(country == "Spain")
+```
+]
+.panel[.panel-name[Sol 2.b]
+Otra solución, además es más fácil:
+
+
+```r
+#- ganancia acumulada (otra forma de hacer lo mismo)
+gapminder %&gt;% group_by(country) %&gt;% 
+  select(country, year, lifeExp) %&gt;% 
+  mutate(lifeExp_gain_acumulada = lifeExp - lifeExp[1])  %&gt;% 
+  filter(country == "Spain")
+```
+
+```
+## # A tibble: 12 x 4
+## # Groups:   country [1]
+##    country  year lifeExp lifeExp_gain_acumulada
+##    &lt;fct&gt;   &lt;int&gt;   &lt;dbl&gt;                  &lt;dbl&gt;
+##  1 Spain    1952    64.9                   0   
+##  2 Spain    1957    66.7                   1.72
+##  3 Spain    1962    69.7                   4.75
+##  4 Spain    1967    71.4                   6.5 
+##  5 Spain    1972    73.1                   8.12
+##  6 Spain    1977    74.4                   9.45
+##  7 Spain    1982    76.3                  11.4 
+##  8 Spain    1987    76.9                  12.0 
+##  9 Spain    1992    77.6                  12.6 
+## 10 Spain    1997    78.8                  13.8 
+## 11 Spain    2002    79.8                  14.8 
+## 12 Spain    2007    80.9                  16.0
+```
+
+]
+
+]
+]
+
+---
+
+#### A ver si entendéis estos ejemplos
+
+
+
+.bg-washed-purple.b--dark-purple.ba.bw2.br3.shadow-5.ph4.mt5[
+.panelset[
+.panel[.panel-name[Ejemplo 1]
+
+
+```r
+aa &lt;- gapminder %&gt;%
+  filter(continent == "Asia") %&gt;%
+  select(year, country, lifeExp) %&gt;%
+  group_by(year) %&gt;%
+  `slice_max`(n = 3, lifeExp) %&gt;% 
+  arrange(year) 
+```
+
+]
+.panel[.panel-name[Ejemplo 2]
+
+Una **función auxiliar** que es **muy útil** al utilizarla junto a mutate: `case_when()`. 
+
+
+```r
+aa &lt;- gapminder %&gt;%
+  group_by(continent, year)  %&gt;%
+  mutate(media_lifeExp = mean(lifeExp)) %&gt;% 
+  mutate(media_gdpPercap = mean(gdpPercap)) %&gt;% 
+  mutate(GOOD_or_BAD = `case_when`( 
+    lifeExp &gt; mean(lifeExp) &amp; gdpPercap &gt; mean(gdpPercap)  ~ "good",
+    lifeExp &lt; mean(lifeExp) &amp; gdpPercap &lt; mean(gdpPercap)  ~ "bad" ,
+    lifeExp &lt; mean(lifeExp) | gdpPercap &lt; mean(gdpPercap)  ~ "medium"
+    )) %&gt;%
+  filter(country == "Spain")
+```
+]
+]
+]
+
+---
+class: inverse, center, middle
+
+#  Combinando (joining) df's
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+Hasta ahora hemos trabajado con un único df; pero muchas veces tenemos que trabajar con datos que están en varias tablas, así que muchas veces tendremos que juntar o fusionar tablas.
+
+---
+
+#### Dos casos ideales (sencillos de unir): `bind_cols()` y `bind_rows()`
+
+
+1. Si los 2 dfs tienen **exactamente las mismas filas** o unidades de análisis ( y ademas en el mismo orden). En este caso, solo habría que juntar en una misma tabla las columnas de df1 y de df2. Esto lo podemos hacer con `bind_cols()` (o con **c**bind() de R-base)
+
+
+```r
+df_1 &lt;- iris[ , 1:2]  ; df_2 &lt;- iris[ , 3:5]
+
+df_1 &lt;- iris %&gt;% select(1:2)  ; df_2 &lt;- iris %&gt;% select(3:5) 
+
+df_3 &lt;- `bind_cols`(df_1, df_2)
+
+identical(iris, df_3)
+```
+--
+
+--------------
+
+
+2. Si los 2 dfs tienen **exactamente las mismas columnas** ( y ademas en el mismo orden). En este caso, se trataría simplemente de juntar todas las observaciones o filas de los 2 df's. Esto lo podemos hacer con `bind_rows()` (o con **r**bind() de R-base)
+
+
+
+```r
+df_1 &lt;- iris[1:75, ]  ; df_2 &lt;- iris[76:150, ]
+
+df_1 &lt;- iris %&gt;% slice(1:75)  ; df_2 &lt;- iris %&gt;% slice(76:150) 
+
+df_3 &lt;- `bind_rows`(df_1, df_2)
+
+identical(iris, df_3)
+```
+
+---
+### 3 tipos de uniones de tablas
+
+
+En dplyr hay 3 tipos de funciones(verbos) que se ocupan de diferentes operaciones para unir datasets:
+
+  - **Mutating joins**, añade nuevas variables (o columnas) a un dataframe (df1). Estas nuevas columnas vienen de un segundo df2 (hay varias mutating joins, dependiendo del criterio para seleccionar las filas)
+
+  - **Filtering joins**, filtra las filas (observaciones) de un dataframe (df1) basándose en sí las filas de df1 coinciden (match) o no con una observación del segundo df2
+
+  - **Set operations**, combina las observaciones de los dos datasets (df1 y df2) as if they were set elements.
+
+
+---
+#### Las uniones más comunes son las **mutating joins**.
+
+
+Hay **3/4 tipos de mutating joins**. Su sintaxis es idéntica, sólo se diferencian en que las filas que se seleccionan dependen del criterio para hacer el match:
+
+  - `inner_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2, PERO **solo retorna las filas de df1 que tienen una equivalencia en df2**. (la equivalencia se define en función del valor de una variable o variables comunes en df1 y df2)
+  
+  - `left_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2; en cuanto a las filas, **retorna TODAS las filas de df1**. (Si hubiesen varios matches entre df1 e df2 se retornan todas las combinaciones!!!!)
+  
+ - `full_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2; en cuanto a las filas, **retorna TODAS las filas de df1 y de df2**. Osea, retorna TODAS las filas y TODAS las columnas de las 2 tablas. (Donde no hay matches retorna NA's)
+ 
+---
+### Veamos algún ejemplo de Mutating joins
+
+
+.bg-washed-purple.b--dark-purple.ba.bw2.br3.shadow-5.ph4.mt5[
+.panelset[
+.panel[.panel-name[Inner join]
+
+
+```r
+#- only includes observations that match in both x and y
+df_inner &lt;- inner_join(x, y)
+```
+
+
+&lt;img src="./imagenes/ss_06_img_12_inner-join.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+]
+.panel[.panel-name[Full join]
+
+
+
+```r
+#- full_join() includes all observations from x and y
+df_full_join &lt;- full_join(x, y)
+```
+
+
+&lt;img src="./imagenes/ss_06_img_13_full-join.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+
+]
+.panel[.panel-name[Left join]
+
+
+```r
+#- includes all observations in x, regardless of whether they match or not. 
+#- This is the most commonly used join because it ensures that you don’t lose observations from your primary table.
+df_left_join &lt;- left_join(x, y)
+```
+
+
+&lt;img src="./imagenes/ss_06_img_14_left-join.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+]
+]
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"highlightSpans": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

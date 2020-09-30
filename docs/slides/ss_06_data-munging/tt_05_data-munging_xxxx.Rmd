@@ -1124,7 +1124,7 @@ aa <- gapminder %>% summarise(mean(lifeExp), mean(gdpPercap))
 
 Antes de pasar a ver `group_by()`, vamos a utilizar las 2 nuevas funciones `across()` y `where()`.
 
-Muchas veces en un trabajo se han de calcular estadísticos de **todas las variables** del df. Esto se hace con `summarise()`, PERO utilizando también una función de ayuda (helper function): `across()`^[Hasta la aparición de dplyr 1.0.0 en mayo de 2020, se utilizaba la función `sumarise_all()`]. A veces también hay que usar otra helper function: `where()`.
+Muchas veces en un trabajo se han de calcular estadísticos de **todas las variables** del df. Esto se puede hacer con `summarise()`, PERO es más cómodo si utilizas también una función auxiliar (helper function): `across()`^[Hasta la aparición de dplyr 1.0.0 en mayo de 2020, se utilizaba la función `sumarise_all()`]. A veces también hay que usar otra helper function: `where()`.
 
 La sintaxis de `across()` es:  
 
@@ -1676,31 +1676,9 @@ Los ejemplos e imágenes usados en esta sección se basan en los creados por [Ma
 
 #### Dos casos ideales (sencillos de unir): `bind_cols()` y `bind_rows()`
 
-1. Si los 2 dfs tienen **exactamente las mismas filas** o unidades de análisis ( y ademas en el mismo orden). En este caso, solo habría que juntar en una misma tabla las columnas de df1 y de df2. Esto lo podemos hacer con `bind_cols()` (o con **c**bind() de R-base).
-
-
-```{r, eval = FALSE}
-df_1 <- iris[ , 1:2]  ; df_2 <- iris[ , 3:5]
-
-df_1 <- iris %>% select(1:2)  ; df_2 <- iris %>% select(3:5) 
-
-df_3 <- `bind_cols`(df_1, df_2)
-
-identical(iris, df_3)
-```
-
+1. Si los 2 dfs tienen **exactamente las mismas filas** o unidades de análisis ( y ademas en el mismo orden). En este caso, solo habría que juntar en una misma tabla las columnas de df1 y de df2. Esto lo podemos hacer con `bind_cols()` (o con **c**bind() de R-base)
 
 2. Si los 2 dfs tienen **exactamente las mismas columnas** ( y ademas en el mismo orden). En este caso, se trataría simplemente de juntar todas las observaciones o filas de los 2 df's. Esto lo podemos hacer con `bind_rows()` (o con **r**bind() de R-base)
-
-```{r, eval = FALSE}
-df_1 <- iris[1:75, ]  ; df_2 <- iris[76:150, ]
-
-df_1 <- iris %>% slice(1:75)  ; df_2 <- iris %>% slice(76:150) 
-
-df_3 <- `bind_rows`(df_1, df_2)
-
-identical(iris, df_3)
-```
 
 
 <br>
