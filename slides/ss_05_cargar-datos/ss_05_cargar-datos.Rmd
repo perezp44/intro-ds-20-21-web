@@ -196,7 +196,7 @@ find("iris")
 .panelset[
 .panel[.panel-name[Tarea]
 
-Resulta que quiero usar unos datos, es el fichero de datos `penguins`, pero resulta que ese fichero de datos está disponible en un paquete. El paquete se llama `palmerpenguins`. El paquete está en CRAN, pero si quiere ver su repo en Github, está [aquí](https://github.com/allisonhorst/palmerpenguins).
+Resulta que quiero usar unos datos, es el fichero de datos `penguins`, pero resulta que ese fichero de datos está disponible en un paquete. El paquete se llama `palmerpenguins`. El paquete está en CRAN, pero si quieres ver su repo en Github, está [aquí](https://github.com/allisonhorst/palmerpenguins).
 
 Bueno, la tarea está clara: carga en memoria los datos de los pingüinos, el fichero `penguins`.
 
@@ -697,17 +697,22 @@ load(here::here("pruebas", "mtcars_and_iris.RData"))
 - Exportar datos a formato `.rds`
 
 ```{r, eval = FALSE}
-#- guardar en formato .rds
 saveRDS(iris, here::here("pruebas", "iris_1.rds"))          #- con base-R
+
+readr::write_rds(iris, here::here("pruebas", "iris_2.rds")) #- con pkg "readr"
+
+rio::export(iris, here::here("pruebas", "iris_3.rds"))    #<< 
 ```
 
 - Importar datos en formato `.rds`
 
 
 ```{r, eval = FALSE}
-readr::write_rds(iris, here::here("pruebas", "iris_2.rds")) #- con pkg "readr"
+my_iris_1 <- readRDS(here::here("pruebas", "iris_3.rds"))  #- con R-base
 
-rio::export(mtcars, here::here("pruebas", "iris_3.rds"))    #<<
+my_iris_1 <-readr::read_rds(here::here("pruebas", "iris_3.rds")) #- tidyverse
+
+my_iris_2 <- rio::import(here::here("pruebas", "iris_3.rds"))    #<<
 ```
 
 
