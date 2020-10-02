@@ -25,7 +25,7 @@ Para descargar un fchero de Google Drive tienes que:
 library(googledrive)  #-install.packages("googledrive")
 
 # aa <- drive_find(n_max = 30)
-# x <- drive_get(id = "1hkxmruS8kaL5gnDstCf8mADdc8FqQFhX")
+# x <- drive_get(id = "....")
 
 file_to_download <- "entrega_01.zip"
 aa <- drive_get(file_to_download)
