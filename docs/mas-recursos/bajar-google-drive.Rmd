@@ -1,0 +1,38 @@
+---
+title: "Bajar ficheros de Google Drive"
+author: "Pedro J. Pérez"
+date: "2/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r klippy, echo = FALSE}
+klippy::klippy(position = c("top", "right")) #- remotes::install_github("rlesur/klippy")
+```
+
+
+Resulta que en el ordenador del aula no me funcionan los usb (he probado 3), así que algunos ficheros que necesito en clase los subo a Google Drive.
+
+Para descargar un fchero de Google Drive tienes que:
+
+```{r, eval = FALSE}
+#- bajar ficheros de Google Drive: https://googledrive.tidyverse.org/
+library(googledrive)  #-install.packages("googledrive")
+
+# aa <- drive_find(n_max = 30)
+# x <- drive_get(id = "1hkxmruS8kaL5gnDstCf8mADdc8FqQFhX")
+
+file_to_download <- "entrega_01.zip"
+aa <- drive_get(file_to_download)
+
+drive_download(file_to_download, path = file_to_download)
+unzip(zipfile = file_to_download)
+
+```
+
+

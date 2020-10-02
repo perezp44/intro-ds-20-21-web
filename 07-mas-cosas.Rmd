@@ -24,4 +24,6 @@ En esta sección pondré cosas varias como:
 
 - [Intrucciones de entrega de las tareas de la evaluación continua](./mas-recursos/como-entregar-las-tareas-uploader.html){target="_blank"}
 
+- [Descargar ficheros de Google Drive](./mas-recursos/bajar-google-drive.html){target="_blank"}. Este fichero es solo para mi. Para usarlo en el aula.
+
 <br><br>
