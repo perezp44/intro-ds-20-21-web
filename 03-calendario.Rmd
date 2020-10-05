@@ -147,4 +147,49 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
   
   
   
+ 
+<br>
+
+-----------------------
+
+<br>
+
+## 4ª clase (16-oct)
+
+
+##### **`Homework`** (para hacer antes de ir a clase) 
+
+- Leer el e-mail que os he mandado a vuestro correo de la UV. Esta vez no hay entrega pero os hablo de varios asuntos.
+
+- Otra vez, la principal tarea que tenéis que hacer es repasar lo que hemos visto.
+
+- Leer e intentar ejecutar el código de las [Slides-05: Importar y exportar datos](./slides/ss_05_cargar-datos/ss_05_cargar-datos.html){target="_blank"}. 
+
+- Leer todo lo que puedas del [`Tutorial 05: Data munging`](./tutoriales/tt_05_data-munging.html){target="_blank"}. El tutorial 04 no es importante que lo leas, pero sí el tutorial 05.
+
+- Por favor, aquellos que no tengan bien configurado RStudio que lo hagan esta semana. Para ello tienes que seguir las instrucciones que figuran en el tutorial nº 2, concretamente [aquí](https://perezp44.github.io/intro-ds-20-21-web/tutoriales/tt_02_primeros-pasos-con-R.html#Configurando_RStudio).
+
+
+
+##### ¿Qué haremos en la cuarta clase?
+
+- Hablar sobre los 2 proyectos que forman parte de la evaluación continua, principalmente del trabajo en equipo.
+
+- Empezar por fin con el `tidyverse`:
+
+    - Aprenderemos a importar y exportar datos. para ello usaremos las [Slides-05: Importar y exportar datos](./slides/ss_05_cargar-datos/ss_05_cargar-datos.html){target="_blank"}. 
+  
+
+    - Empezar a manipular datos à la tidyverse. Presentaremos ideas/conceptos como "the pipe" y "tidy data" y empezaremos a usar 2 paquetes del tidyverse: `tidyr` y `dplyr`, el principal paquete para manipular datos. Para ello usaremos las [Slides-06: Data munging](./slides/ss_06_data-munging/ss_06_data-munging.html){target="_blank"}.
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
   <br><br><br><br>
