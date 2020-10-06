@@ -4,7 +4,7 @@
     <title>Data munging: the tidyverse way</title>
     <meta charset="utf-8" />
     <meta name="author" content="Pedro J. Pérez" />
-    <meta name="date" content="2020-09-30" />
+    <meta name="date" content="2020-10-06" />
     <script src="libs/clipboard/clipboard.min.js"></script>
     <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
@@ -16,6 +16,15 @@
     <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <script src="libs/jquery/jquery.min.js"></script>
+    <link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+    <script src="libs/datatables-binding/datatables.js"></script>
+    <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+    <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+    <link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+    <script src="libs/crosstalk/js/crosstalk.min.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -23,9 +32,9 @@
 class: center, middle, inverse, title-slide
 
 # Data munging: the tidyverse way
-## – Slides 06 –
+## – Slides 05 (bis) –
 ### Pedro J. Pérez
-### 2020-09-30
+### 2020-10-06
 
 ---
 
@@ -60,7 +69,7 @@ class: inverse
 
 ##### Antes de empezar el verdadero análisis, tenemos que: 
 
-##### 1) hacer nuestros datos tidy,
+##### 1) hacer nuestros datos TIDY,
 
 ##### 2) arreglarlos para que sean útiles para nuestros propósitos.
 
@@ -68,7 +77,7 @@ class: inverse
 
 &lt;br&gt;
 
-&lt;img src="./imagenes/ss_06_img_01_data-wrangle.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="./imagenes/ss_05_img_01_data-wrangle.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -81,7 +90,7 @@ class: inverse
 &gt; Classroom data are like teddy bears; real data are like a grizzly with salmon blood dripping out its mouth. —- [@JennyBryan]
 
 
-&lt;img src="./imagenes/ss_06_img_02_grizlly-vs-teddy.jpg" width="85%" style="display: block; margin: auto;" /&gt;
+&lt;img src="./imagenes/ss_05_img_02_grizlly-vs-teddy.jpg" width="85%" style="display: block; margin: auto;" /&gt;
 
 
 - Aprenderemos a limpiar y transformar datos en R. Priorizaremos la nueva forma de hacer las cosas en R (o workflow) conocido como [**tidyverse**](https://www.tidyverse.org/). 
@@ -89,7 +98,7 @@ class: inverse
 
 
 ---
-background-image: url(imagenes/ss_06_img_03_tidyverse-hex.png)
+background-image: url(imagenes/ss_05_img_03_tidyverse-hex.png)
 background-position: 95% 5%
 background-size: 7%
 
@@ -102,7 +111,7 @@ Conjunto de paquetes que trabajan en armonía y que permiten una nueva forma de 
 &lt;iframe src="https://www.tidyverse.org/" width="100%" height="400px"&gt;&lt;/iframe&gt;
 
 ---
-background-image: url(imagenes/ss_06_img_03_tidyverse-hex.png)
+background-image: url(imagenes/ss_05_img_03_tidyverse-hex.png)
 background-position: 95% 5%
 background-size: 7%
 
@@ -129,7 +138,7 @@ background-size: 7%
 ]
 
 .pull-right[
-&lt;img src="./imagenes/ss_06_img_05_pkgs-tidyverse.png" width="120%" style="display: block; margin: auto;" /&gt;
+&lt;img src="./imagenes/ss_05_img_05_pkgs-tidyverse.png" width="120%" style="display: block; margin: auto;" /&gt;
 ]
 
 
@@ -143,7 +152,7 @@ Nos centraremos en los **tres primeros paquetes**, principalmente en **`dplyr`**
 
 
 ---
-background-image: url(imagenes/ss_06_img_03_tidyverse-hex.png)
+background-image: url(imagenes/ss_05_img_03_tidyverse-hex.png)
 background-position: 95% 5%
 background-size: 7%
 
@@ -168,11 +177,11 @@ Dos principios del *tidyverse*:
 El operador **pipe** se lo debemos a Stefan Bache en su pkg [magrittr](https://github.com/tidyverse/magrittr)
 
 
-&lt;img src="./imagenes/ss_06_img_04_pipe-hex.png" width="15%" style="display: block; margin: auto;" /&gt;
+&lt;img src="./imagenes/ss_05_img_04_pipe-hex.png" width="15%" style="display: block; margin: auto;" /&gt;
 
 ---
 class: inverse, center, middle
-background-image: url(imagenes/ss_06_img_04_pipe-hex.png)
+background-image: url(imagenes/ss_05_img_04_pipe-hex.png)
 background-position: 95% 5%
 background-size: 15%
 
@@ -183,7 +192,7 @@ background-size: 15%
 El operador %&gt;% es crucial en el tidyverse. hay que entenderlo. Es fácil. Pronto os sentiréis cómodos con él.
 
 ---
-background-image: url(imagenes/ss_06_img_04_pipe-hex.png)
+background-image: url(imagenes/ss_05_img_04_pipe-hex.png)
 background-position: 95% 5%
 background-size: 7%
 
@@ -213,7 +222,7 @@ penguins %&gt;% head(. , n = 4) #- usando el operador pipe
 
 
 ---
-background-image: url(imagenes/ss_06_img_04_pipe-hex.png)
+background-image: url(imagenes/ss_05_img_04_pipe-hex.png)
 background-position: 95% 5%
 background-size: 7%
 
@@ -267,7 +276,7 @@ letters %&gt;% paste0( "-----" ,  .  ,  "!!!" ) %&gt;% toupper
 
 ---
 class: inverse, center, middle
-background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-image: url(imagenes/ss_05_img_06_tidyr-hex.png)
 background-position: 95% 5%
 background-size: 15%
 
@@ -276,10 +285,10 @@ background-size: 15%
 
 &lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
 
-Para trabajar à la tidyverse es crucial que los datos sean "tidy". El concepto de datos tidy es sencillo. Hacer los datos tidy no tanto pero tenemos un paquete para hacerlo fácil: el pkg `tidyr` 
+Para trabajar à la tidyverse es crucial que los datos sean "tidy". El concepto de datos tidy es sencillo. Hacer los datos tidy no tanto pero tenemos un paquete para hacerlo fácil: el pkg *tidyr* 
 
 ---
-background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-image: url(imagenes/ss_05_img_06_tidyr-hex.png)
 background-position: 95% 5%
 background-size: 7%
 
@@ -287,7 +296,7 @@ background-size: 7%
 
 Un aspecto importante del tidyverse es hacer los datos **tidy**. 
 
-Unos datos son tidy si: (1) cada columna es una variable, (2) cada fila es una observación y (3) cada valor debe estar en su propia celda.
+Unos datos son tidy si: (1) cada columna es una variable, (2) cada fila es una observación y (3) cada valor debe esta/tiene su propia celda.
 
 &lt;br&gt;
 
@@ -298,11 +307,11 @@ Unos datos son tidy si: (1) cada columna es una variable, (2) cada fila es una o
 &gt; An observation contains all values measured on the same unit (like a person, or a day, or a race) across atributes.
 
 
-&lt;img src="./imagenes/ss_06_img_11_tidy-data.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="./imagenes/ss_05_img_11_tidy-data.png" width="75%" style="display: block; margin: auto;" /&gt;
 
 
 ---
-background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-image: url(imagenes/ss_05_img_06_tidyr-hex.png)
 background-position: 95% 5%
 background-size: 7%
 
@@ -325,376 +334,11 @@ data_1 &lt;- data.frame(
 .pull-right[
 
 ```r
-gt::gt(data_1)
+DT::datatable(data_1)
 ```
 
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
-}
-
-#kqohempdrv .gt_table {
-  display: table;
-  border-collapse: collapse;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#kqohempdrv .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#kqohempdrv .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#kqohempdrv .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 4px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#kqohempdrv .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#kqohempdrv .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#kqohempdrv .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#kqohempdrv .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#kqohempdrv .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#kqohempdrv .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#kqohempdrv .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#kqohempdrv .gt_group_heading {
-  padding: 8px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#kqohempdrv .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#kqohempdrv .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#kqohempdrv .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#kqohempdrv .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#kqohempdrv .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#kqohempdrv .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 12px;
-}
-
-#kqohempdrv .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#kqohempdrv .gt_first_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-}
-
-#kqohempdrv .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#kqohempdrv .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#kqohempdrv .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#kqohempdrv .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#kqohempdrv .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding: 4px;
-}
-
-#kqohempdrv .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#kqohempdrv .gt_sourcenote {
-  font-size: 90%;
-  padding: 4px;
-}
-
-#kqohempdrv .gt_left {
-  text-align: left;
-}
-
-#kqohempdrv .gt_center {
-  text-align: center;
-}
-
-#kqohempdrv .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#kqohempdrv .gt_font_normal {
-  font-weight: normal;
-}
-
-#kqohempdrv .gt_font_bold {
-  font-weight: bold;
-}
-
-#kqohempdrv .gt_font_italic {
-  font-style: italic;
-}
-
-#kqohempdrv .gt_super {
-  font-size: 65%;
-}
-
-#kqohempdrv .gt_footnote_marks {
-  font-style: italic;
-  font-size: 65%;
-}
-</style>
-<div id="kqohempdrv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">year</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Pedro</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Carla</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">María</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr>
-      <td class="gt_row gt_left">2014</td>
-      <td class="gt_row gt_right">100</td>
-      <td class="gt_row gt_right">400</td>
-      <td class="gt_row gt_right">200</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">2015</td>
-      <td class="gt_row gt_right">500</td>
-      <td class="gt_row gt_right">600</td>
-      <td class="gt_row gt_right">700</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">2016</td>
-      <td class="gt_row gt_right">200</td>
-      <td class="gt_row gt_right">250</td>
-      <td class="gt_row gt_right">900</td>
-    </tr>
-  </tbody>
-  
-  
-</table></div>
+<div id="htmlwidget-e4676d74df6d6432debc" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e4676d74df6d6432debc">{"x":{"filter":"none","data":[["1","2","3"],["2014","2015","2016"],[100,500,200],[400,600,250],[200,700,900]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>year<\/th>\n      <th>Pedro<\/th>\n      <th>Carla<\/th>\n      <th>María<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 ]
 ]
 
@@ -711,376 +355,16 @@ data_2 &lt;- data.frame(names = c("Pedro", "Carla", "María"),
 .pull-right[
 
 ```r
-gt::gt(data_2)
+knitr::kable(data_2)
 ```
 
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
-}
 
-#pfynwrrvuz .gt_table {
-  display: table;
-  border-collapse: collapse;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
 
-#pfynwrrvuz .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#pfynwrrvuz .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#pfynwrrvuz .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 4px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#pfynwrrvuz .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#pfynwrrvuz .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#pfynwrrvuz .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#pfynwrrvuz .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#pfynwrrvuz .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#pfynwrrvuz .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#pfynwrrvuz .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#pfynwrrvuz .gt_group_heading {
-  padding: 8px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#pfynwrrvuz .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#pfynwrrvuz .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#pfynwrrvuz .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#pfynwrrvuz .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#pfynwrrvuz .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#pfynwrrvuz .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 12px;
-}
-
-#pfynwrrvuz .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#pfynwrrvuz .gt_first_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-}
-
-#pfynwrrvuz .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#pfynwrrvuz .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#pfynwrrvuz .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#pfynwrrvuz .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#pfynwrrvuz .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding: 4px;
-}
-
-#pfynwrrvuz .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#pfynwrrvuz .gt_sourcenote {
-  font-size: 90%;
-  padding: 4px;
-}
-
-#pfynwrrvuz .gt_left {
-  text-align: left;
-}
-
-#pfynwrrvuz .gt_center {
-  text-align: center;
-}
-
-#pfynwrrvuz .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#pfynwrrvuz .gt_font_normal {
-  font-weight: normal;
-}
-
-#pfynwrrvuz .gt_font_bold {
-  font-weight: bold;
-}
-
-#pfynwrrvuz .gt_font_italic {
-  font-style: italic;
-}
-
-#pfynwrrvuz .gt_super {
-  font-size: 65%;
-}
-
-#pfynwrrvuz .gt_footnote_marks {
-  font-style: italic;
-  font-size: 65%;
-}
-</style>
-<div id="pfynwrrvuz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">names</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">W_2014</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">W_2015</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">W_2016</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr>
-      <td class="gt_row gt_left">Pedro</td>
-      <td class="gt_row gt_right">100</td>
-      <td class="gt_row gt_right">500</td>
-      <td class="gt_row gt_right">200</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">Carla</td>
-      <td class="gt_row gt_right">400</td>
-      <td class="gt_row gt_right">600</td>
-      <td class="gt_row gt_right">250</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">María</td>
-      <td class="gt_row gt_right">200</td>
-      <td class="gt_row gt_right">700</td>
-      <td class="gt_row gt_right">900</td>
-    </tr>
-  </tbody>
-  
-  
-</table></div>
+|names | W_2014| W_2015| W_2016|
+|:-----|------:|------:|------:|
+|Pedro |    100|    500|    200|
+|Carla |    400|    600|    250|
+|María |    200|    700|    900|
 ]
 ]
 
@@ -1104,13 +388,15 @@ gt::gt(data_3)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#wxknxxnpzs .gt_table {
+#gailozovxl .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
   font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
   background-color: #FFFFFF;
   width: auto;
   border-top-style: solid;
@@ -1127,7 +413,7 @@ gt::gt(data_3)
   border-left-color: #D3D3D3;
 }
 
-#wxknxxnpzs .gt_heading {
+#gailozovxl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1139,7 +425,7 @@ gt::gt(data_3)
   border-right-color: #D3D3D3;
 }
 
-#wxknxxnpzs .gt_title {
+#gailozovxl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1149,7 +435,7 @@ gt::gt(data_3)
   border-bottom-width: 0;
 }
 
-#wxknxxnpzs .gt_subtitle {
+#gailozovxl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1159,13 +445,13 @@ gt::gt(data_3)
   border-top-width: 0;
 }
 
-#wxknxxnpzs .gt_bottom_border {
+#gailozovxl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wxknxxnpzs .gt_col_headings {
+#gailozovxl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1180,7 +466,7 @@ gt::gt(data_3)
   border-right-color: #D3D3D3;
 }
 
-#wxknxxnpzs .gt_col_heading {
+#gailozovxl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1200,7 +486,7 @@ gt::gt(data_3)
   overflow-x: hidden;
 }
 
-#wxknxxnpzs .gt_column_spanner_outer {
+#gailozovxl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1212,15 +498,15 @@ gt::gt(data_3)
   padding-right: 4px;
 }
 
-#wxknxxnpzs .gt_column_spanner_outer:first-child {
+#gailozovxl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wxknxxnpzs .gt_column_spanner_outer:last-child {
+#gailozovxl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wxknxxnpzs .gt_column_spanner {
+#gailozovxl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1232,7 +518,7 @@ gt::gt(data_3)
   width: 100%;
 }
 
-#wxknxxnpzs .gt_group_heading {
+#gailozovxl .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1254,7 +540,7 @@ gt::gt(data_3)
   vertical-align: middle;
 }
 
-#wxknxxnpzs .gt_empty_group_heading {
+#gailozovxl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1269,19 +555,15 @@ gt::gt(data_3)
   vertical-align: middle;
 }
 
-#wxknxxnpzs .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#wxknxxnpzs .gt_from_md > :first-child {
+#gailozovxl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wxknxxnpzs .gt_from_md > :last-child {
+#gailozovxl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wxknxxnpzs .gt_row {
+#gailozovxl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1300,7 +582,7 @@ gt::gt(data_3)
   overflow-x: hidden;
 }
 
-#wxknxxnpzs .gt_stub {
+#gailozovxl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1312,7 +594,7 @@ gt::gt(data_3)
   padding-left: 12px;
 }
 
-#wxknxxnpzs .gt_summary_row {
+#gailozovxl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1322,7 +604,7 @@ gt::gt(data_3)
   padding-right: 5px;
 }
 
-#wxknxxnpzs .gt_first_summary_row {
+#gailozovxl .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1332,7 +614,7 @@ gt::gt(data_3)
   border-top-color: #D3D3D3;
 }
 
-#wxknxxnpzs .gt_grand_summary_row {
+#gailozovxl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1342,7 +624,7 @@ gt::gt(data_3)
   padding-right: 5px;
 }
 
-#wxknxxnpzs .gt_first_grand_summary_row {
+#gailozovxl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1352,7 +634,11 @@ gt::gt(data_3)
   border-top-color: #D3D3D3;
 }
 
-#wxknxxnpzs .gt_table_body {
+#gailozovxl .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#gailozovxl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1361,7 +647,7 @@ gt::gt(data_3)
   border-bottom-color: #D3D3D3;
 }
 
-#wxknxxnpzs .gt_footnotes {
+#gailozovxl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1375,13 +661,13 @@ gt::gt(data_3)
   border-right-color: #D3D3D3;
 }
 
-#wxknxxnpzs .gt_footnote {
+#gailozovxl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#wxknxxnpzs .gt_sourcenotes {
+#gailozovxl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1395,46 +681,46 @@ gt::gt(data_3)
   border-right-color: #D3D3D3;
 }
 
-#wxknxxnpzs .gt_sourcenote {
+#gailozovxl .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#wxknxxnpzs .gt_left {
+#gailozovxl .gt_left {
   text-align: left;
 }
 
-#wxknxxnpzs .gt_center {
+#gailozovxl .gt_center {
   text-align: center;
 }
 
-#wxknxxnpzs .gt_right {
+#gailozovxl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wxknxxnpzs .gt_font_normal {
+#gailozovxl .gt_font_normal {
   font-weight: normal;
 }
 
-#wxknxxnpzs .gt_font_bold {
+#gailozovxl .gt_font_bold {
   font-weight: bold;
 }
 
-#wxknxxnpzs .gt_font_italic {
+#gailozovxl .gt_font_italic {
   font-style: italic;
 }
 
-#wxknxxnpzs .gt_super {
+#gailozovxl .gt_super {
   font-size: 65%;
 }
 
-#wxknxxnpzs .gt_footnote_marks {
+#gailozovxl .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="wxknxxnpzs" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="gailozovxl" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -1500,7 +786,7 @@ gt::gt(data_3)
 
 ---
 class: inverse, center, middle
-background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-image: url(imagenes/ss_05_img_06_tidyr-hex.png)
 background-position: 95% 5%
 background-size: 13%
 
@@ -1516,13 +802,13 @@ Es importante aprender a pasar de datos WIDE a LONG y viceversa.
 Con el pkg tidyr es sencillo pero ...
 
 ---
-background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-image: url(imagenes/ss_05_img_06_tidyr-hex.png)
 background-position: 95% 5%
 background-size: 6%
 #### De wide a LONG format con `pivot_longer()`
 
 
-&lt;img src="./imagenes/ss_06_img_09_wide-long.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="./imagenes/ss_05_img_09_wide-long.png" width="90%" style="display: block; margin: auto;" /&gt;
    
 .panelset[
 .panel[.panel-name[Tarea]
@@ -1552,13 +838,13 @@ data_long &lt;- data_wide %&gt;%
 
 
 ---
-background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-image: url(imagenes/ss_05_img_06_tidyr-hex.png)
 background-position: 95% 5%
 background-size: 6%
 #### De long a WIDE format con `pivot_wider()`
 
 
-&lt;img src="./imagenes/ss_06_img_10_wide-long.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="./imagenes/ss_05_img_10_wide-long.png" width="90%" style="display: block; margin: auto;" /&gt;
    
 .panelset[
 .panel[.panel-name[Tarea]
@@ -1590,7 +876,7 @@ class: inverse, center, middle
 
 
 ---
-background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-image: url(imagenes/ss_05_img_06_tidyr-hex.png)
 background-position: 95% 5%
 background-size: 6%
 #### `separate()` y `unite()`
@@ -1601,13 +887,15 @@ background-size: 6%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#bbybbhcxvp .gt_table {
+#bgbwoinjfu .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
   font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
   background-color: #FFFFFF;
   width: auto;
   border-top-style: solid;
@@ -1624,7 +912,7 @@ background-size: 6%
   border-left-color: #D3D3D3;
 }
 
-#bbybbhcxvp .gt_heading {
+#bgbwoinjfu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1636,7 +924,7 @@ background-size: 6%
   border-right-color: #D3D3D3;
 }
 
-#bbybbhcxvp .gt_title {
+#bgbwoinjfu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1646,7 +934,7 @@ background-size: 6%
   border-bottom-width: 0;
 }
 
-#bbybbhcxvp .gt_subtitle {
+#bgbwoinjfu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1656,13 +944,13 @@ background-size: 6%
   border-top-width: 0;
 }
 
-#bbybbhcxvp .gt_bottom_border {
+#bgbwoinjfu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bbybbhcxvp .gt_col_headings {
+#bgbwoinjfu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1677,7 +965,7 @@ background-size: 6%
   border-right-color: #D3D3D3;
 }
 
-#bbybbhcxvp .gt_col_heading {
+#bgbwoinjfu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1697,7 +985,7 @@ background-size: 6%
   overflow-x: hidden;
 }
 
-#bbybbhcxvp .gt_column_spanner_outer {
+#bgbwoinjfu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1709,15 +997,15 @@ background-size: 6%
   padding-right: 4px;
 }
 
-#bbybbhcxvp .gt_column_spanner_outer:first-child {
+#bgbwoinjfu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bbybbhcxvp .gt_column_spanner_outer:last-child {
+#bgbwoinjfu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bbybbhcxvp .gt_column_spanner {
+#bgbwoinjfu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1729,7 +1017,7 @@ background-size: 6%
   width: 100%;
 }
 
-#bbybbhcxvp .gt_group_heading {
+#bgbwoinjfu .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1751,7 +1039,7 @@ background-size: 6%
   vertical-align: middle;
 }
 
-#bbybbhcxvp .gt_empty_group_heading {
+#bgbwoinjfu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1766,19 +1054,15 @@ background-size: 6%
   vertical-align: middle;
 }
 
-#bbybbhcxvp .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#bbybbhcxvp .gt_from_md > :first-child {
+#bgbwoinjfu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bbybbhcxvp .gt_from_md > :last-child {
+#bgbwoinjfu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bbybbhcxvp .gt_row {
+#bgbwoinjfu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1797,7 +1081,7 @@ background-size: 6%
   overflow-x: hidden;
 }
 
-#bbybbhcxvp .gt_stub {
+#bgbwoinjfu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1809,7 +1093,7 @@ background-size: 6%
   padding-left: 12px;
 }
 
-#bbybbhcxvp .gt_summary_row {
+#bgbwoinjfu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1819,7 +1103,7 @@ background-size: 6%
   padding-right: 5px;
 }
 
-#bbybbhcxvp .gt_first_summary_row {
+#bgbwoinjfu .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1829,7 +1113,7 @@ background-size: 6%
   border-top-color: #D3D3D3;
 }
 
-#bbybbhcxvp .gt_grand_summary_row {
+#bgbwoinjfu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1839,7 +1123,7 @@ background-size: 6%
   padding-right: 5px;
 }
 
-#bbybbhcxvp .gt_first_grand_summary_row {
+#bgbwoinjfu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1849,7 +1133,11 @@ background-size: 6%
   border-top-color: #D3D3D3;
 }
 
-#bbybbhcxvp .gt_table_body {
+#bgbwoinjfu .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#bgbwoinjfu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1858,7 +1146,7 @@ background-size: 6%
   border-bottom-color: #D3D3D3;
 }
 
-#bbybbhcxvp .gt_footnotes {
+#bgbwoinjfu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1872,13 +1160,13 @@ background-size: 6%
   border-right-color: #D3D3D3;
 }
 
-#bbybbhcxvp .gt_footnote {
+#bgbwoinjfu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#bbybbhcxvp .gt_sourcenotes {
+#bgbwoinjfu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1892,46 +1180,46 @@ background-size: 6%
   border-right-color: #D3D3D3;
 }
 
-#bbybbhcxvp .gt_sourcenote {
+#bgbwoinjfu .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#bbybbhcxvp .gt_left {
+#bgbwoinjfu .gt_left {
   text-align: left;
 }
 
-#bbybbhcxvp .gt_center {
+#bgbwoinjfu .gt_center {
   text-align: center;
 }
 
-#bbybbhcxvp .gt_right {
+#bgbwoinjfu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bbybbhcxvp .gt_font_normal {
+#bgbwoinjfu .gt_font_normal {
   font-weight: normal;
 }
 
-#bbybbhcxvp .gt_font_bold {
+#bgbwoinjfu .gt_font_bold {
   font-weight: bold;
 }
 
-#bbybbhcxvp .gt_font_italic {
+#bgbwoinjfu .gt_font_italic {
   font-style: italic;
 }
 
-#bbybbhcxvp .gt_super {
+#bgbwoinjfu .gt_super {
   font-size: 65%;
 }
 
-#bbybbhcxvp .gt_footnote_marks {
+#bgbwoinjfu .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="bbybbhcxvp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="bgbwoinjfu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -1981,13 +1269,15 @@ gt::gt(df_a)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#wyiiawnapc .gt_table {
+#ljrsvijocu .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
   font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
   background-color: #FFFFFF;
   width: auto;
   border-top-style: solid;
@@ -2004,7 +1294,7 @@ gt::gt(df_a)
   border-left-color: #D3D3D3;
 }
 
-#wyiiawnapc .gt_heading {
+#ljrsvijocu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2016,7 +1306,7 @@ gt::gt(df_a)
   border-right-color: #D3D3D3;
 }
 
-#wyiiawnapc .gt_title {
+#ljrsvijocu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2026,7 +1316,7 @@ gt::gt(df_a)
   border-bottom-width: 0;
 }
 
-#wyiiawnapc .gt_subtitle {
+#ljrsvijocu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2036,13 +1326,13 @@ gt::gt(df_a)
   border-top-width: 0;
 }
 
-#wyiiawnapc .gt_bottom_border {
+#ljrsvijocu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wyiiawnapc .gt_col_headings {
+#ljrsvijocu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2057,7 +1347,7 @@ gt::gt(df_a)
   border-right-color: #D3D3D3;
 }
 
-#wyiiawnapc .gt_col_heading {
+#ljrsvijocu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2077,7 +1367,7 @@ gt::gt(df_a)
   overflow-x: hidden;
 }
 
-#wyiiawnapc .gt_column_spanner_outer {
+#ljrsvijocu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2089,15 +1379,15 @@ gt::gt(df_a)
   padding-right: 4px;
 }
 
-#wyiiawnapc .gt_column_spanner_outer:first-child {
+#ljrsvijocu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wyiiawnapc .gt_column_spanner_outer:last-child {
+#ljrsvijocu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wyiiawnapc .gt_column_spanner {
+#ljrsvijocu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2109,7 +1399,7 @@ gt::gt(df_a)
   width: 100%;
 }
 
-#wyiiawnapc .gt_group_heading {
+#ljrsvijocu .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2131,7 +1421,7 @@ gt::gt(df_a)
   vertical-align: middle;
 }
 
-#wyiiawnapc .gt_empty_group_heading {
+#ljrsvijocu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2146,19 +1436,15 @@ gt::gt(df_a)
   vertical-align: middle;
 }
 
-#wyiiawnapc .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#wyiiawnapc .gt_from_md > :first-child {
+#ljrsvijocu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wyiiawnapc .gt_from_md > :last-child {
+#ljrsvijocu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wyiiawnapc .gt_row {
+#ljrsvijocu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2177,7 +1463,7 @@ gt::gt(df_a)
   overflow-x: hidden;
 }
 
-#wyiiawnapc .gt_stub {
+#ljrsvijocu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2189,7 +1475,7 @@ gt::gt(df_a)
   padding-left: 12px;
 }
 
-#wyiiawnapc .gt_summary_row {
+#ljrsvijocu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2199,7 +1485,7 @@ gt::gt(df_a)
   padding-right: 5px;
 }
 
-#wyiiawnapc .gt_first_summary_row {
+#ljrsvijocu .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2209,7 +1495,7 @@ gt::gt(df_a)
   border-top-color: #D3D3D3;
 }
 
-#wyiiawnapc .gt_grand_summary_row {
+#ljrsvijocu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2219,7 +1505,7 @@ gt::gt(df_a)
   padding-right: 5px;
 }
 
-#wyiiawnapc .gt_first_grand_summary_row {
+#ljrsvijocu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2229,7 +1515,11 @@ gt::gt(df_a)
   border-top-color: #D3D3D3;
 }
 
-#wyiiawnapc .gt_table_body {
+#ljrsvijocu .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ljrsvijocu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2238,7 +1528,7 @@ gt::gt(df_a)
   border-bottom-color: #D3D3D3;
 }
 
-#wyiiawnapc .gt_footnotes {
+#ljrsvijocu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2252,13 +1542,13 @@ gt::gt(df_a)
   border-right-color: #D3D3D3;
 }
 
-#wyiiawnapc .gt_footnote {
+#ljrsvijocu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#wyiiawnapc .gt_sourcenotes {
+#ljrsvijocu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2272,46 +1562,46 @@ gt::gt(df_a)
   border-right-color: #D3D3D3;
 }
 
-#wyiiawnapc .gt_sourcenote {
+#ljrsvijocu .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#wyiiawnapc .gt_left {
+#ljrsvijocu .gt_left {
   text-align: left;
 }
 
-#wyiiawnapc .gt_center {
+#ljrsvijocu .gt_center {
   text-align: center;
 }
 
-#wyiiawnapc .gt_right {
+#ljrsvijocu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wyiiawnapc .gt_font_normal {
+#ljrsvijocu .gt_font_normal {
   font-weight: normal;
 }
 
-#wyiiawnapc .gt_font_bold {
+#ljrsvijocu .gt_font_bold {
   font-weight: bold;
 }
 
-#wyiiawnapc .gt_font_italic {
+#ljrsvijocu .gt_font_italic {
   font-style: italic;
 }
 
-#wyiiawnapc .gt_super {
+#ljrsvijocu .gt_super {
   font-size: 65%;
 }
 
-#wyiiawnapc .gt_footnote_marks {
+#ljrsvijocu .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="wyiiawnapc" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="ljrsvijocu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -2363,13 +1653,15 @@ gt::gt(df_b)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#zpdhibqveq .gt_table {
+#tijxrfczyh .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
   font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
   background-color: #FFFFFF;
   width: auto;
   border-top-style: solid;
@@ -2386,7 +1678,7 @@ gt::gt(df_b)
   border-left-color: #D3D3D3;
 }
 
-#zpdhibqveq .gt_heading {
+#tijxrfczyh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2398,7 +1690,7 @@ gt::gt(df_b)
   border-right-color: #D3D3D3;
 }
 
-#zpdhibqveq .gt_title {
+#tijxrfczyh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2408,7 +1700,7 @@ gt::gt(df_b)
   border-bottom-width: 0;
 }
 
-#zpdhibqveq .gt_subtitle {
+#tijxrfczyh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2418,13 +1710,13 @@ gt::gt(df_b)
   border-top-width: 0;
 }
 
-#zpdhibqveq .gt_bottom_border {
+#tijxrfczyh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zpdhibqveq .gt_col_headings {
+#tijxrfczyh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2439,7 +1731,7 @@ gt::gt(df_b)
   border-right-color: #D3D3D3;
 }
 
-#zpdhibqveq .gt_col_heading {
+#tijxrfczyh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2459,7 +1751,7 @@ gt::gt(df_b)
   overflow-x: hidden;
 }
 
-#zpdhibqveq .gt_column_spanner_outer {
+#tijxrfczyh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2471,15 +1763,15 @@ gt::gt(df_b)
   padding-right: 4px;
 }
 
-#zpdhibqveq .gt_column_spanner_outer:first-child {
+#tijxrfczyh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zpdhibqveq .gt_column_spanner_outer:last-child {
+#tijxrfczyh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zpdhibqveq .gt_column_spanner {
+#tijxrfczyh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2491,7 +1783,7 @@ gt::gt(df_b)
   width: 100%;
 }
 
-#zpdhibqveq .gt_group_heading {
+#tijxrfczyh .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2513,7 +1805,7 @@ gt::gt(df_b)
   vertical-align: middle;
 }
 
-#zpdhibqveq .gt_empty_group_heading {
+#tijxrfczyh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2528,19 +1820,15 @@ gt::gt(df_b)
   vertical-align: middle;
 }
 
-#zpdhibqveq .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#zpdhibqveq .gt_from_md > :first-child {
+#tijxrfczyh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zpdhibqveq .gt_from_md > :last-child {
+#tijxrfczyh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zpdhibqveq .gt_row {
+#tijxrfczyh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2559,7 +1847,7 @@ gt::gt(df_b)
   overflow-x: hidden;
 }
 
-#zpdhibqveq .gt_stub {
+#tijxrfczyh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2571,7 +1859,7 @@ gt::gt(df_b)
   padding-left: 12px;
 }
 
-#zpdhibqveq .gt_summary_row {
+#tijxrfczyh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2581,7 +1869,7 @@ gt::gt(df_b)
   padding-right: 5px;
 }
 
-#zpdhibqveq .gt_first_summary_row {
+#tijxrfczyh .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2591,7 +1879,7 @@ gt::gt(df_b)
   border-top-color: #D3D3D3;
 }
 
-#zpdhibqveq .gt_grand_summary_row {
+#tijxrfczyh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2601,7 +1889,7 @@ gt::gt(df_b)
   padding-right: 5px;
 }
 
-#zpdhibqveq .gt_first_grand_summary_row {
+#tijxrfczyh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2611,7 +1899,11 @@ gt::gt(df_b)
   border-top-color: #D3D3D3;
 }
 
-#zpdhibqveq .gt_table_body {
+#tijxrfczyh .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#tijxrfczyh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2620,7 +1912,7 @@ gt::gt(df_b)
   border-bottom-color: #D3D3D3;
 }
 
-#zpdhibqveq .gt_footnotes {
+#tijxrfczyh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2634,13 +1926,13 @@ gt::gt(df_b)
   border-right-color: #D3D3D3;
 }
 
-#zpdhibqveq .gt_footnote {
+#tijxrfczyh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#zpdhibqveq .gt_sourcenotes {
+#tijxrfczyh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2654,46 +1946,46 @@ gt::gt(df_b)
   border-right-color: #D3D3D3;
 }
 
-#zpdhibqveq .gt_sourcenote {
+#tijxrfczyh .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#zpdhibqveq .gt_left {
+#tijxrfczyh .gt_left {
   text-align: left;
 }
 
-#zpdhibqveq .gt_center {
+#tijxrfczyh .gt_center {
   text-align: center;
 }
 
-#zpdhibqveq .gt_right {
+#tijxrfczyh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zpdhibqveq .gt_font_normal {
+#tijxrfczyh .gt_font_normal {
   font-weight: normal;
 }
 
-#zpdhibqveq .gt_font_bold {
+#tijxrfczyh .gt_font_bold {
   font-weight: bold;
 }
 
-#zpdhibqveq .gt_font_italic {
+#tijxrfczyh .gt_font_italic {
   font-style: italic;
 }
 
-#zpdhibqveq .gt_super {
+#tijxrfczyh .gt_super {
   font-size: 65%;
 }
 
-#zpdhibqveq .gt_footnote_marks {
+#tijxrfczyh .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="zpdhibqveq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="tijxrfczyh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -2724,7 +2016,7 @@ gt::gt(df_b)
 
 ---
 class: inverse, center, middle
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 95% 5%
 background-size: 15%
 
@@ -2735,7 +2027,7 @@ background-size: 15%
 #### *dplyr* es el paquete más importante a la hora de manipular datos.
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -2771,7 +2063,7 @@ df %&gt;% filter(X1 &gt;= 10)
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -2794,15 +2086,27 @@ Hay una séptima función:
 
 &lt;br&gt;
 
-Y después de `dplyr 1.0.0`, en mayo de 2020, 2 más:
+Y después de `dplyr 1.0.0`, en mayo de 2020, dos funciones más:
 
   - **`across()`**   y **`where()`**. Estas funciones son un poco diferentes, solo se usan en combinación de otra función/verbo. Son 2 funciones que en la jerga del tidyverse no son verbos sino adverbios. Lo vemos
 
 
+--
+
+##### Vamos a trabajar con los datos del [pkg gapminder](https://github.com/jennybc/gapminder)
+
+
+
+```r
+gapminder &lt;- gapminder::gapminder  #- cargamos los datos
+```
+
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
+
+
 
 #### 1.A **`filter()`**: permite seleccionar **filas**
 
@@ -2810,15 +2114,9 @@ Filas que cumplan una determinadas condiciones o criterios lógicos. Por ejemplo
 
 
 ```r
-#- vamos a trabajar con los datos del [pkg gapminder](https://github.com/jennybc/gapminder)
-
-gapminder &lt;- gapminder::gapminder
-```
+gapminder &lt;- gapminder::gapminder  #- cargamos los datos
 
 
-
-
-```r
 #- Observaciones de España (country == "Spain")
 aa &lt;- gapminder %&gt;% filter(country == "Spain") 
 
@@ -2840,7 +2138,7 @@ aa &lt;- gapminder %&gt;% filter(lifeExp &gt; 72 &amp; (continent == "Africa" | 
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -2863,7 +2161,7 @@ aa &lt;- gapminder %&gt;% slice( c(12:14, 44:46, n()-4:n()) )
 ```
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -2903,7 +2201,7 @@ aa &lt;- gapminder %&gt;% slice_sample(prop = 0.05)
 ```
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -2926,7 +2224,7 @@ aa &lt;- gapminder %&gt;% arrange(lifeExp, pop)
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -2966,7 +2264,7 @@ rename_with(aa, ~ str_replace(.x, "e", "Ö"))  #- (!!!!)
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -3014,7 +2312,7 @@ aa &lt;- gapminder %&gt;% select(-`c`(1:3, 5))
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -3055,7 +2353,7 @@ aa &lt;- gapminder %&gt;% select(`!`where(is.numeric))
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -3100,7 +2398,7 @@ aa &lt;- gapminder %&gt;% dplyr::relocate(country, .before = lifeExp)
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -3129,7 +2427,7 @@ aa &lt;- gapminder %&gt;% mutate(GDP = pop*gdpPercap, .before = country)
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -3178,7 +2476,7 @@ aa &lt;- gapminder %&gt;% summarise(`mean`(lifeExp), `sd`(lifeExp))
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -3210,7 +2508,7 @@ gapminder %&gt;% summarise(across(.cols = `where`(is.numeric), .fns = mean))
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -3233,15 +2531,15 @@ gapminder %&gt;% summarise(across(3:6, list(media = mean, desv = sd), .names = "
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
 #### 7. **`group_by()`**. Con está función ya se puede ver la potencia de `dplyr`
 
-En análisis de datos muchas operaciones  queremos calcularlas para distintos grupos (hombre, mujer ...). `group_by()` permite hacerlo.
+En análisis de datos muchas operaciones  queremos calcularlas para distintos grupos (p. ej. mujer/hombre,  ...). `group_by()` permite hacerlo.
 
-`group_by()`coge un df y lo convierte en un **"df agrupado"**. En ese nuevo "df agrupado", las operaciones que hagamos con `summarise()` se harán por separado para cada uno de los grupos que hayamos definido. Ahora lo vemos.
+`group_by()`coge un df y lo convierte en un **"df agrupado"**. En ese nuevo "df agrupado", las operaciones que hagamos, se harán por separado para cada uno de los grupos que hayamos definido. Ahora lo vemos.
 
 --
 
@@ -3271,7 +2569,7 @@ aa
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -3318,7 +2616,7 @@ aa
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -3852,12 +3150,28 @@ Hay **3/4 tipos de mutating joins**. Su sintaxis es idéntica, sólo se diferenc
 
   - `inner_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2, PERO **solo retorna las filas de df1 que tienen una equivalencia en df2**. (la equivalencia se define en función del valor de una variable o variables comunes en df1 y df2)
   
-  - `left_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2; en cuanto a las filas, **retorna TODAS las filas de df1**. (Si hubiesen varios matches entre df1 e df2 se retornan todas las combinaciones!!!!)
+  - `left_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2; en cuanto a las filas, **retorna TODAS las filas de df1**. (Si hubiesen varios matches entre df1 e df2 se retornan todas las combinaciones!!!!)  
   
- - `full_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2; en cuanto a las filas, **retorna TODAS las filas de df1 y de df2**. Osea, retorna TODAS las filas y TODAS las columnas de las 2 tablas. (Donde no hay matches retorna NA's)
+  - `full_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2; en cuanto a las filas, **retorna TODAS las filas de df1 y de df2**. Osea, retorna TODAS las filas y TODAS las columnas de las 2 tablas. (Donde no hay matches retorna NA's)
+  
+--
+
+  
+------------------
+
+Para ver algún ejemplo de joins usaremos estos 2 df's:
+
+
+```r
+x &lt;- tibble(id = 1:3, x = paste0("x", 1:3))
+
+y &lt;- tibble(id = (1:4)[-3], y = paste0("y", (1:4)[-3]))
+```
+
+
  
 ---
-### Veamos algún ejemplo de Mutating joins
+#### Veamos algún ejemplo de Mutating joins
 
 
 .bg-washed-purple.b--dark-purple.ba.bw2.br3.shadow-5.ph4.mt5[
@@ -3871,7 +3185,7 @@ df_inner &lt;- inner_join(x, y)
 ```
 
 
-&lt;img src="./imagenes/ss_06_img_12_inner-join.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="./imagenes/ss_05_img_12_inner-join.png" width="75%" style="display: block; margin: auto;" /&gt;
 
 ]
 .panel[.panel-name[Full join]
@@ -3884,7 +3198,7 @@ df_full_join &lt;- full_join(x, y)
 ```
 
 
-&lt;img src="./imagenes/ss_06_img_13_full-join.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="./imagenes/ss_05_img_13_full-join.png" width="75%" style="display: block; margin: auto;" /&gt;
 
 
 ]
@@ -3898,7 +3212,7 @@ df_left_join &lt;- left_join(x, y)
 ```
 
 
-&lt;img src="./imagenes/ss_06_img_14_left-join.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="./imagenes/ss_05_img_14_left-join.png" width="75%" style="display: block; margin: auto;" /&gt;
 
 ]
 ]

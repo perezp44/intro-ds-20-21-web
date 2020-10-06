@@ -33,7 +33,7 @@ Todas las transparencias están hechas con R, de hecho, una de las cosas que has
 
 - [Slides-05: Importar y exportar datos](./slides/ss_05_cargar-datos/ss_05_cargar-datos.html){target="_blank"}.
 
-- [Slides-06: Data munging (WIP)](./slides/ss_06_data-munging/ss_06_data-munging.html){target="_blank"}.
+- [Slides-05(bis): Data munging](./slides/ss_05_data-munging/ss_05_data-munging.html){target="_blank"}.
 
 
 

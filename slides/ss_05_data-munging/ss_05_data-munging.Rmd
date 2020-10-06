@@ -1,6 +1,6 @@
 ---
 title: "Data munging: the tidyverse way"
-subtitle: "-- Slides 06 --"  
+subtitle: "-- Slides 05 (bis) --"  
 author: 
   - "Pedro J. Pérez"
 date: '`r Sys.Date()`'
@@ -61,7 +61,7 @@ class: inverse
 
 ##### Antes de empezar el verdadero análisis, tenemos que: 
 
-##### 1) hacer nuestros datos tidy,
+##### 1) hacer nuestros datos TIDY,
 
 ##### 2) arreglarlos para que sean útiles para nuestros propósitos.
 
@@ -70,7 +70,7 @@ class: inverse
 <br>
 
 ```{r,  echo = FALSE, eval = TRUE, fig.asp = 4/2, out.width = "70%", fig.align = "center"}
-knitr::include_graphics("./imagenes/ss_06_img_01_data-wrangle.png")
+knitr::include_graphics("./imagenes/ss_05_img_01_data-wrangle.png")
 ```
 
 ---
@@ -85,7 +85,7 @@ knitr::include_graphics("./imagenes/ss_06_img_01_data-wrangle.png")
 
 
 ```{r, echo = FALSE, eval = TRUE, fig.asp = 4/2, out.width = "85%", fig.align = "center"}
-knitr::include_graphics("./imagenes/ss_06_img_02_grizlly-vs-teddy.jpg")
+knitr::include_graphics("./imagenes/ss_05_img_02_grizlly-vs-teddy.jpg")
 ```
 
 
@@ -94,7 +94,7 @@ knitr::include_graphics("./imagenes/ss_06_img_02_grizlly-vs-teddy.jpg")
 
 
 ---
-background-image: url(imagenes/ss_06_img_03_tidyverse-hex.png)
+background-image: url(imagenes/ss_05_img_03_tidyverse-hex.png)
 background-position: 95% 5%
 background-size: 7%
 
@@ -109,7 +109,7 @@ knitr::include_url("https://www.tidyverse.org/")
 ```
 
 ---
-background-image: url(imagenes/ss_06_img_03_tidyverse-hex.png)
+background-image: url(imagenes/ss_05_img_03_tidyverse-hex.png)
 background-position: 95% 5%
 background-size: 7%
 
@@ -137,7 +137,7 @@ background-size: 7%
 
 .pull-right[
 ```{r,  echo = FALSE, eval = TRUE,  out.width = "120%", fig.align = "center"}
-knitr::include_graphics("./imagenes/ss_06_img_05_pkgs-tidyverse.png")
+knitr::include_graphics("./imagenes/ss_05_img_05_pkgs-tidyverse.png")
 ```
 ]
 
@@ -152,7 +152,7 @@ Nos centraremos en los **tres primeros paquetes**, principalmente en **`dplyr`**
 
 
 ---
-background-image: url(imagenes/ss_06_img_03_tidyverse-hex.png)
+background-image: url(imagenes/ss_05_img_03_tidyverse-hex.png)
 background-position: 95% 5%
 background-size: 7%
 
@@ -178,12 +178,12 @@ El operador **pipe** se lo debemos a Stefan Bache en su pkg [magrittr](https://g
 
 
 ```{r,  echo = FALSE, eval = TRUE, fig.asp = 4/2, out.width = "15%", fig.align = "center"}
-knitr::include_graphics("./imagenes/ss_06_img_04_pipe-hex.png")
+knitr::include_graphics("./imagenes/ss_05_img_04_pipe-hex.png")
 ```
 
 ---
 class: inverse, center, middle
-background-image: url(imagenes/ss_06_img_04_pipe-hex.png)
+background-image: url(imagenes/ss_05_img_04_pipe-hex.png)
 background-position: 95% 5%
 background-size: 15%
 
@@ -194,7 +194,7 @@ background-size: 15%
 El operador %>% es crucial en el tidyverse. hay que entenderlo. Es fácil. Pronto os sentiréis cómodos con él.
 
 ---
-background-image: url(imagenes/ss_06_img_04_pipe-hex.png)
+background-image: url(imagenes/ss_05_img_04_pipe-hex.png)
 background-position: 95% 5%
 background-size: 7%
 
@@ -223,7 +223,7 @@ penguins %>% head(. , n = 4) #- usando el operador pipe
 
 
 ---
-background-image: url(imagenes/ss_06_img_04_pipe-hex.png)
+background-image: url(imagenes/ss_05_img_04_pipe-hex.png)
 background-position: 95% 5%
 background-size: 7%
 
@@ -273,7 +273,7 @@ letters %>% paste0( "-----" ,  .  ,  "!!!" ) %>% toupper
 
 ---
 class: inverse, center, middle
-background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-image: url(imagenes/ss_05_img_06_tidyr-hex.png)
 background-position: 95% 5%
 background-size: 15%
 
@@ -282,10 +282,10 @@ background-size: 15%
 
 <html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>
 
-Para trabajar à la tidyverse es crucial que los datos sean "tidy". El concepto de datos tidy es sencillo. Hacer los datos tidy no tanto pero tenemos un paquete para hacerlo fácil: el pkg `tidyr` 
+Para trabajar à la tidyverse es crucial que los datos sean "tidy". El concepto de datos tidy es sencillo. Hacer los datos tidy no tanto pero tenemos un paquete para hacerlo fácil: el pkg *tidyr* 
 
 ---
-background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-image: url(imagenes/ss_05_img_06_tidyr-hex.png)
 background-position: 95% 5%
 background-size: 7%
 
@@ -293,7 +293,7 @@ background-size: 7%
 
 Un aspecto importante del tidyverse es hacer los datos **tidy**. 
 
-Unos datos son tidy si: (1) cada columna es una variable, (2) cada fila es una observación y (3) cada valor debe estar en su propia celda.
+Unos datos son tidy si: (1) cada columna es una variable, (2) cada fila es una observación y (3) cada valor debe esta/tiene su propia celda.
 
 <br>
 
@@ -305,12 +305,12 @@ Unos datos son tidy si: (1) cada columna es una variable, (2) cada fila es una o
 
 
 ```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "75%", fig.align = "center"}
-knitr::include_graphics("./imagenes/ss_06_img_11_tidy-data.png")
+knitr::include_graphics("./imagenes/ss_05_img_11_tidy-data.png")
 ```
 
 
 ---
-background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-image: url(imagenes/ss_05_img_06_tidyr-hex.png)
 background-position: 95% 5%
 background-size: 7%
 
@@ -331,7 +331,7 @@ data_1 <- data.frame(
 ]
 .pull-right[
 ```{r, echo = TRUE}
-gt::gt(data_1)
+DT::datatable(data_1)
 ```
 ]
 ]
@@ -347,7 +347,7 @@ data_2 <- data.frame(names = c("Pedro", "Carla", "María"),
 ]
 .pull-right[
 ```{r, echo = TRUE}
-gt::gt(data_2)
+knitr::kable(data_2)
 ```
 ]
 ]
@@ -372,7 +372,7 @@ gt::gt(data_3)
 
 ---
 class: inverse, center, middle
-background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-image: url(imagenes/ss_05_img_06_tidyr-hex.png)
 background-position: 95% 5%
 background-size: 13%
 
@@ -388,14 +388,14 @@ Es importante aprender a pasar de datos WIDE a LONG y viceversa.
 Con el pkg tidyr es sencillo pero ...
 
 ---
-background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-image: url(imagenes/ss_05_img_06_tidyr-hex.png)
 background-position: 95% 5%
 background-size: 6%
 #### De wide a LONG format con `pivot_longer()`
 
 
 ```{r,  echo = FALSE, eval = TRUE, fig.asp = 4/2, out.width = "90%", fig.align = "center"}
-knitr::include_graphics("./imagenes/ss_06_img_09_wide-long.png")
+knitr::include_graphics("./imagenes/ss_05_img_09_wide-long.png")
 ```
    
 .panelset[
@@ -427,14 +427,14 @@ data_long <- data_wide %>%
 
 
 ---
-background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-image: url(imagenes/ss_05_img_06_tidyr-hex.png)
 background-position: 95% 5%
 background-size: 6%
 #### De long a WIDE format con `pivot_wider()`
 
 
 ```{r,  echo = FALSE, eval = TRUE, fig.asp = 4/2, out.width = "90%", fig.align = "center"}
-knitr::include_graphics("./imagenes/ss_06_img_10_wide-long.png")
+knitr::include_graphics("./imagenes/ss_05_img_10_wide-long.png")
 ```
    
 .panelset[
@@ -467,7 +467,7 @@ class: inverse, center, middle
 
 
 ---
-background-image: url(imagenes/ss_06_img_06_tidyr-hex.png)
+background-image: url(imagenes/ss_05_img_06_tidyr-hex.png)
 background-position: 95% 5%
 background-size: 6%
 #### `separate()` y `unite()`
@@ -520,7 +520,7 @@ gt::gt(df_b)
 
 ---
 class: inverse, center, middle
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 95% 5%
 background-size: 15%
 
@@ -531,7 +531,7 @@ background-size: 15%
 #### *dplyr* es el paquete más importante a la hora de manipular datos.
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -566,7 +566,7 @@ df %>% filter(X1 >= 10)
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -589,29 +589,35 @@ Hay una séptima función:
 
 <br>
 
-Y después de `dplyr 1.0.0`, en mayo de 2020, 2 más:
+Y después de `dplyr 1.0.0`, en mayo de 2020, dos funciones más:
 
   - **`across()`**   y **`where()`**. Estas funciones son un poco diferentes, solo se usan en combinación de otra función/verbo. Son 2 funciones que en la jerga del tidyverse no son verbos sino adverbios. Lo vemos
 
 
+--
+
+##### Vamos a trabajar con los datos del [pkg gapminder](https://github.com/jennybc/gapminder)
+
+
+```{r}
+gapminder <- gapminder::gapminder  #- cargamos los datos
+```
+
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
+
+
 
 #### 1.A **`filter()`**: permite seleccionar **filas**
 
 Filas que cumplan una determinadas condiciones o criterios lógicos. Por ejemplo:
 
-```{r}
-#- vamos a trabajar con los datos del [pkg gapminder](https://github.com/jennybc/gapminder)
-
-gapminder <- gapminder::gapminder
-```
-
-
-
 ```{r, echo = TRUE, eval = FALSE}
+gapminder <- gapminder::gapminder  #- cargamos los datos
+
+
 #- Observaciones de España (country == "Spain")
 aa <- gapminder %>% filter(country == "Spain") 
 
@@ -633,7 +639,7 @@ aa <- gapminder %>% filter(lifeExp > 72 & (continent == "Africa" | continent == 
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -655,7 +661,7 @@ aa <- gapminder %>% slice( c(12:14, 44:46, n()-4:n()) )
 ```
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -693,7 +699,7 @@ aa <- gapminder %>% slice_sample(prop = 0.05)
 ```
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -715,7 +721,7 @@ aa <- gapminder %>% arrange(lifeExp, pop)
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -752,7 +758,7 @@ rename_with(aa, ~ str_replace(.x, "e", "Ö"))  #- (!!!!)
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -796,7 +802,7 @@ aa <- gapminder %>% select(-`c`(1:3, 5))
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -835,7 +841,7 @@ aa <- gapminder %>% select(`!`where(is.numeric))
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -877,7 +883,7 @@ aa <- gapminder %>% dplyr::relocate(country, .before = lifeExp)
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -904,7 +910,7 @@ aa <- gapminder %>% mutate(GDP = pop*gdpPercap, .before = country)
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -950,7 +956,7 @@ aa <- gapminder %>% summarise(`mean`(lifeExp), `sd`(lifeExp))
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -980,7 +986,7 @@ gapminder %>% summarise(across(.cols = `where`(is.numeric), .fns = mean))
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -1002,15 +1008,15 @@ gapminder %>% summarise(across(3:6, list(media = mean, desv = sd), .names = "{fn
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
 #### 7. **`group_by()`**. Con está función ya se puede ver la potencia de `dplyr`
 
-En análisis de datos muchas operaciones  queremos calcularlas para distintos grupos (hombre, mujer ...). `group_by()` permite hacerlo.
+En análisis de datos muchas operaciones  queremos calcularlas para distintos grupos (p. ej. mujer/hombre,  ...). `group_by()` permite hacerlo.
 
-`group_by()`coge un df y lo convierte en un **"df agrupado"**. En ese nuevo "df agrupado", las operaciones que hagamos con `summarise()` se harán por separado para cada uno de los grupos que hayamos definido. Ahora lo vemos.
+`group_by()`coge un df y lo convierte en un **"df agrupado"**. En ese nuevo "df agrupado", las operaciones que hagamos, se harán por separado para cada uno de los grupos que hayamos definido. Ahora lo vemos.
 
 --
 
@@ -1028,7 +1034,7 @@ aa
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -1062,7 +1068,7 @@ aa
 
 
 ---
-background-image: url(imagenes/ss_06_img_07_dplyr-hex-new.png)
+background-image: url(imagenes/ss_05_img_07_dplyr-hex-new.png)
 background-position: 99% 1%
 background-size: 6%
 
@@ -1453,12 +1459,27 @@ Hay **3/4 tipos de mutating joins**. Su sintaxis es idéntica, sólo se diferenc
 
   - `inner_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2, PERO **solo retorna las filas de df1 que tienen una equivalencia en df2**. (la equivalencia se define en función del valor de una variable o variables comunes en df1 y df2)
   
-  - `left_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2; en cuanto a las filas, **retorna TODAS las filas de df1**. (Si hubiesen varios matches entre df1 e df2 se retornan todas las combinaciones!!!!)
+  - `left_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2; en cuanto a las filas, **retorna TODAS las filas de df1**. (Si hubiesen varios matches entre df1 e df2 se retornan todas las combinaciones!!!!)  
   
- - `full_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2; en cuanto a las filas, **retorna TODAS las filas de df1 y de df2**. Osea, retorna TODAS las filas y TODAS las columnas de las 2 tablas. (Donde no hay matches retorna NA's)
+  - `full_join(df1,df2)`: Retorna todas las columnas de df1 y también las de df2; en cuanto a las filas, **retorna TODAS las filas de df1 y de df2**. Osea, retorna TODAS las filas y TODAS las columnas de las 2 tablas. (Donde no hay matches retorna NA's)
+  
+--
+
+  
+------------------
+
+Para ver algún ejemplo de joins usaremos estos 2 df's:
+
+```{r}
+x <- tibble(id = 1:3, x = paste0("x", 1:3))
+
+y <- tibble(id = (1:4)[-3], y = paste0("y", (1:4)[-3]))
+```
+
+
  
 ---
-### Veamos algún ejemplo de Mutating joins
+#### Veamos algún ejemplo de Mutating joins
 
 
 .bg-washed-purple.b--dark-purple.ba.bw2.br3.shadow-5.ph4.mt5[
@@ -1472,7 +1493,7 @@ df_inner <- inner_join(x, y)
 
 
 ```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "75%", fig.align = "center"}
-knitr::include_graphics("./imagenes/ss_06_img_12_inner-join.png")
+knitr::include_graphics("./imagenes/ss_05_img_12_inner-join.png")
 ```
 
 ]
@@ -1486,7 +1507,7 @@ df_full_join <- full_join(x, y)
 
 
 ```{r , echo=FALSE, eval = TRUE, fig.asp = 4/2, out.width = "75%", fig.align = "center"}
-knitr::include_graphics("./imagenes/ss_06_img_13_full-join.png")
+knitr::include_graphics("./imagenes/ss_05_img_13_full-join.png")
 ```
 
 
@@ -1501,7 +1522,7 @@ df_left_join <- left_join(x, y)
 
 
 ```{r, echo = FALSE, eval = TRUE, fig.asp = 4/2, out.width = "75%", fig.align = "center"}
-knitr::include_graphics("./imagenes/ss_06_img_14_left-join.png")
+knitr::include_graphics("./imagenes/ss_05_img_14_left-join.png")
 ```
 
 ]
