@@ -8,6 +8,8 @@ output:
     highlight: monochrome 
     self_contained: yes
     number_sections: no
+    includes:
+       in_header: google-analytics.html
     #toc: true
     #toc_float: true
     #code_folding: show
