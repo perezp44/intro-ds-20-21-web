@@ -7,6 +7,8 @@ output:
     highlight: monochrome 
     self_contained: yes
     number_sections: no
+    includes:
+       in_header: google-analytics.html
 ---
 
 <br>
