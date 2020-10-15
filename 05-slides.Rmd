@@ -37,6 +37,11 @@ Todas las transparencias están hechas con R, de hecho, una de las cosas que has
 
 - [Slides-05(bis): Data munging](./slides/ss_05_data-munging/ss_05_data-munging.html){target="_blank"}.
 
+- [Slides-06(A): Ggplot2 (primeras ideas)](./slides/ss_06_ggplot2/ss_06_ggplot2_A.html){target="_blank"}.
+
+- [Slides-06(B): Ggplot2 (más elementos)](./slides/ss_06_ggplot2/ss_06_ggplot2_B.html){target="_blank"}.
+
+- [Slides-06(B): Ggplot2 (distintos tipos de gráficos)](./slides/ss_06_ggplot2/ss_06_ggplot2_C.html){target="_blank"}.
 
 
 <br><br>

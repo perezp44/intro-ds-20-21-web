@@ -1,0 +1,19 @@
+<!--- definiendo estilos CSS o HTML -->
+
+
+body {
+  text-align: justify;           #- justificar el texto del body
+  #background-color: lightblue;
+  line-height:1.4;               #- anchura de las lineas 1.0 is the default in Firefox. 2.0 provides a large space
+}
+
+p {
+  text-align: justify;           #- justificar el texto del body
+  #background-color: lightblue;
+  line-height:1.4;               #- anchura de las lineas 1.0 is the default in Firefox. 2.0 provides a large space
+  margin: 20px 0 20px 0;         #- top, izquierda, abajo, left
+}
+
+
+
+#- https://htmlcolorcodes.com/es/nombres-de-los-colores/

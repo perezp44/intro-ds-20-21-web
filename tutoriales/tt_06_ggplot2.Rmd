@@ -1,0 +1,2495 @@
+---
+title: "Visualización con ggplot2 (WIP)"
+author: "Pedro J. Pérez"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+#date: "2020/03/05 (updated: `r Sys.Date()`)"
+output:
+  html_document:
+    css: !expr here::here("assets", "styles_pjp.css") #-https://stackoverflow.com/questions/56681879/how-to-use-here-for-paths-to-css-before-body-and-after-bod
+    theme: paper
+    highlight: textmate 
+    toc: true
+    toc_depth: 3 
+    toc_float: 
+      collapsed: true
+      smooth_scroll: true
+    self_contained: true
+    number_sections: false
+    #code_folding: show
+    df_print: kable
+    code_download: true
+editor_options: 
+  chunk_output_type: console
+bibliography: "`r here::here('assets', 'biblio.bib')`"  #- joooder. single quotes https://community.rstudio.com/t/use-here-here-function-in-yaml-option/18667/9
+---
+
+```{r chunk_setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, message = FALSE, warning = FALSE, 
+                      cache = FALSE, cache.path = "/caches/", comment = "#>",
+                      #fig.width = 7, fig.height= 7,   
+                      #out.width = 7, out.height = 7,
+                      collapse = TRUE,  fig.show = "hold",
+                      fig.asp = 7/9, out.width = "60%", fig.align = "center")
+```
+
+
+
+```{r options_setup, echo = F}
+options(scipen = 999) #- para quitar la notacion cientifica
+```
+
+```{r, echo = FALSE}
+library(knitr)
+library(here)
+library(tidyverse)
+#devtools::install_github("thomasp85/patchwork")
+library(patchwork)
+```
+
+```{r klippy, echo = FALSE}
+klippy::klippy(position = c("top", "right")) #- remotes::install_github("rlesur/klippy")
+```
+
+
+## 1. Introducción
+
+Los gráficos e infografías son, cada vez más, una parte importante de la mayoría de textos escritos, ya sean estos  un informe técnico, un artículo de periódico o un TFG. En el caso de la ciencia de datos, como puede verse abajo en la infografía, el análisis y la exploración de los datos es un proceso iterativo en el que la visualización y la generación de gráficos ocupa un lugar destacado.
+
+```{r, echo = FALSE, out.width = "75%", fig.align = "center", fig.cap = "R for Data Science (http://r4ds.had.co.nz/)"}
+knitr::include_graphics(here::here("imagenes", "tt_06_img_01_explore-visualice.png") ) 
+```
+
+
+
+Uno de los instrumentos y tareas fundamentales de un científico de datos es la capacidad de realizar visualizaciones de datos apropiadas y convincentes. El análisis gráfico no solo ayuda en la exploración y comprensión de los datos, sino que es fundamental a la hora de mostrar las posibles relaciones entre variables, descubrir relaciones o patrones ocultos, y descartar o sugerir nuevas preguntas sobre los datos. 
+
+
+
+El entorno R tiene diversos sistemas para visualizar datos, los dos más utilizados son el sistema gráfico de R-base y el ecosistema asociado al paquete `ggplot2`. Por diversas razones, en el curso usaremos el entorno `ggplot2` para hacer nuestros gráficos; de hecho, en la actualidad `ggplot2`, dada su rapidez en la iteración entre gráficos, versatilidad y la cuidada estética que tienen sus gráficos, se ha convertido, al menos por el momento, en el sistema estándar para hacer gráficos en R. Por ejemplo, [¿cómo creéis que hace la BBC sus gráficos?](https://medium.com/bbc-visual-and-data-journalism/how-the-bbc-visual-and-data-journalism-team-works-with-graphics-in-r-ed0b35693535){target="_blank"}, evidentemente con R y `ggplot2`. Puedes ver uno de sus repositorios [aquí](https://github.com/bbc/bbplot){target="_blank"} y su cookbook [aquí](http://bit.ly/bbcggplot2){target="_blank"}. 
+
+
+Con `ggplot2` es sencillo hacer gráficos con calidad para ser publicados o mostrados, además de que, dada su sintaxis modular, hace sencillo el reutilizar los gráficos durante el proceso de análisis. El paquete `ggplot2` fue inicialmente desarrollado por [Hadley Wickham](http://hadley.nz/){target="_blank"}, pero actualmente el ecosistema ggplot es el resultado de toda una comunidad de usuarios que contribuye a enriquecer el sistema gráfico con sus extensiones y paquetes auxiliares.
+
+
+En palabras de Hadley en su [libro sobre ggplot2](https://ggplot2-book.org/){target="_blank"}:
+
+> ggplot2 is an R package for producing statistical, or data, graphics, but it is unlike most other graphics packages because it has a deep underlying grammar. This grammar, based on the Grammar of Graphics (Wilkinson 2005), is made up of a set of independent components that can be composed in many different ways. This makes ggplot2 very powerful because you are not limited to a set of pre-specified graphics, but you can create new graphics that are precisely tailored for your problem. This may sound overwhelming, but **because there is a simple set of core principles and very few special cases, ggplot2 is also easy to learn** (although it may take a little time to forget your preconceptions from other graphics tools).
+
+
+Sí, con `ggplot2` es "fácil" hacer rápidamente gráficos de calidad, PERO dominar todos los detalles del paquete sí que es complicado, pero no nos hace falta conocerlo todo. Además, hay que tener en cuenta que `ggplot2` es un paquete/entorno en constante evolución. Actualmente está en la versión 3.2.1. Bueno, en marzo de 2020 apareció la versión 3.3.0. 
+
+
+Para entender esta idea de la constante evolución y el papel que tiene la comunidad de usuarios en el desarrollo de R y sus paquetes puedes leer [este tweet](https://twitter.com/ClausWilke/status/1166356210783870976){target="_blank"} y las respuestas a él. En el tweet sólo se anuncia una pequeña mejora en como `ggplot2` gestiona los títulos de los gráficos pero genera reacciones en la comunidad de usuarios. 
+
+La redes sociales pueden hacerse eco de la evolución de un paquete, pero donde habitualmente se produce la discusión/colaboración entre usuarios es en plataformas como [Github](https://github.com/){target="_blank"}. Por ejemplo, puedes ver como se gestó está pequeña  mejora [aquí](https://github.com/tidyverse/ggplot2/issues/3252){target="_blank"}. Fue la issue 3252 de `ggplot2`. Otro ejemplo, justo cuando estaba escribiendo este párrafo, leí [este otro tweet](https://twitter.com/thomasp85/status/1166609529771102208){target="_blank"} anunciando otra mejora en `ggplot2`.
+
+
+La página web de `ggplot2` puedes encontrarla [aquí](https://ggplot2.tidyverse.org/){target="_blank"}. En ella puedes encontrar documentos de ayuda y la [referencia oficial](https://ggplot2.tidyverse.org/reference/index.html){target="_blank"}. Para darte cuenta de todo lo que se puede hacer con el ecosistema ggplot  visita [esta página](https://exts.ggplot2.tidyverse.org/gallery/){target="_blank"} donde podrás ver los 79 "paquetes auxiliares" o extensiones a `ggplot2`.
+
+
+Para hacer "buenos" gráficos con `ggplot2 `no sólo es necesario entender la sintaxis y los pormenores del paquete, sino que quizás se necesite algo más. Por ejemplo, algo de experiencia y cierta capacidad visual y estética; incluso hay quien dice que hacer buenos gráficos es un arte. Para intentar mejorar vuestros gráficos o evitar ciertos errores, [aquí](https://robjhyndman.com/hyndsight/graphics/){target="_blank"} tenéis algunas reglas/consejos, y [aquí](https://www.r-bloggers.com/teaching-and-learning-materials-for-data-visualization/){target="_blank"} un curso completo sobre visualización^[El repo donde se aloja el código para recrear el libro está [aquí](https://github.com/clauswilke/dataviz)] con [bookdown incluido](https://serialmentor.com/dataviz/){target="_blank"}.
+
+Entenderás muy bien que hacer buenos gráficos exige conocimiento y mucho trabajo al ver el video de [este post](https://karaman.is/blog/2020/07/making-of/), donde se ven las versiones previas para que al final saliese esta preciosura de gŕafico:
+
+
+```{r, echo = FALSE, fig.asp = 7/9}
+tweetrmd::tweet_embed("https://twitter.com/geokaramanis/status/1247586395876741120", theme = "light", align = "center", maxwidth = 400)
+```
+
+Otro ejemplo del making-of de un gráfico puedes verlo [aquí](https://twitter.com/MaiaPelletier/status/1287922855926214657).
+
+
+Otros dos libros sobre visualización con el código de los ejemplos hechos con `ggplot2`, [aquí](https://socviz.co/index.html#preface) y [aquí](https://socviz.co/lookatdata.html#lookatdata){target="_blank"}. Finalmente, algunos consejos de la [BBC](https://bbc.github.io/rcookbook/){target="_blank"} sobre visualización.
+
+Como también se aprende los errores, [aquí](https://medium.economist.com/mistakes-weve-drawn-a-few-8cdd8a42d368){target="_blank"} tienes un articulo de The Economist donde muestran errores que ellos mismos han cometido haciendo gráficos. Además pueden descargarse los datos.Otro ejemplo de gráfico un poquito tendencioso, esta vez del Washington Post:
+
+
+```{r, echo = FALSE, fig.asp = 7/9}
+tweetrmd::tweet_embed("https://twitter.com/andypressman/status/1122512664813604865", theme = "light", align = "center", maxwidth = 400)
+```
+
+<br>
+
+## 2. Ideas básicas sobre ggplot2
+
+Ya se dijo que `ggplot2` es un paquete R desarrollado por Hadley Wickham, aunque actualmente es el resultado de la colaboración de múltiples desarrolladores. `ggplot2` implementa en R [The Grammar of Graphics](https://www.springer.com/gp/book/9780387245447) de L. Wilkinson, un sistema coherente para describir y construir gráficos. El énfasis de ggplot2 está en la exploración rápida de datos, especialmente de datos de alta dimensionalidad. Con `ggplot2` es sencillo ir transformando el gráfico mientras se van analizando los datos. 
+
+
+
+Para empezar a entender la "filosofía" de `ggplot2`, os planteo una pregunta medio retórica: ¿qué vemos en el gráfico de abajo?
+
+
+```{r, echo = FALSE, out.width = "60%"}
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_point()
+```
+
+
+Pues sí, es un gráfico de puntos y nos ayuda a ver las relaciones que existen entre 3 variables. Estamos habituados a ello, pero vamos a pensar en el gráfico desde la óptica de "The Grammar of Graphics" implementada en el paquete `ggplot2`. 
+
+En nuestro gráfico se representan por medio de puntos, en el espacio X-Y, y mediante los distintos colores de los puntos, las observaciones de 3 variables. Bien, nada muy novedoso, todos los sistemas gráficos hacen este tipo de gráficos. Los gráficos de `ggplot2` se realizan mediante la superposición de elementos/capas. Podemos pensar que el gráfico que hemos visto es una capa. ¿Cómo creamos este gráfico o capa en `ggplot2`?
+
+Pues, una de las principales ideas para entender `ggplot2` es que cada capa de un gráfico tiene 3 componentes o elementos principales:
+
+
+  - **los datos** que se van a representar  (sencillo, para hacer un gráfico hacen falta datos). Para ello utilizaremos generalmente la función `ggplot()`
+  
+  - **un conjunto de propiedades estéticas asociadas a alguna variable del conjunto de datos**. Por ejemplo, la variable Sepal.Lenght está asociada al eje X, ala posición en el eje X. Por su parte, el color de los puntos (otra característica visual o estética) está asociado a los valores de la variable Species. Es decir, usando la terminología de `ggplot2`, las distintas variables están asociadas o mapeadas a determinadas características estéticas. El mapeo de variables con estéticas se hará con la función `aes()`  de **aes**thetics. (esto ya no es tan estándar, se explica en breve)
+  
+  - **el elemento geométrico que se va a representar**. En nuestro caso el elemento geométrico que se utiliza para representar los valores de las variables son los puntos, pero podrían haber sido las lineas o las barras ... Para especificar el elemento geométrico que vamos a usar en nuestro gráfico se utiliza la familia de funciones `geom_xx()`; por ejemplo `geom_point()` si queremos puntos, `geom_line()` si queremos que las relaciones entre las variables se representen/visualicen como lineas.
+  
+Así en abstracto puede ser complicado entender del todo que quiere decir todo esto. Vamos a verlo con ejemplos concretos. De momento, para explicar las principales características de `ggplot2` utilizaré un conjunto de datos famoso, pero  odiado por algunos, por haber sido utilizado en numerosos ejemplos y cursos: el [iris dataset](https://es.wikipedia.org/wiki/Conjunto_de_datos_flor_iris).
+
+El conjunto de datos `iris` contiene datos sobre 150 flores, en concreto sobre 150 lirios. `iris` tiene 5 variables, 4 de ellas miden la longitud y el ancho del pétalo y sépalo de los 150 lirios. Estas 4 primeras variables son cuantitativas y continuas; mientras que la quinta variable es categórica, indicando la clase o variedad de los lirios, ya que en los datos hay 3 especies distintas de lirios (setosa, versicolor y virginica). Con estos datos, con 3 de sus variables, se ha creado el gráfico que ves más arriba.
+
+<br>
+
+**PRIMER GRÁFICO**: Para comenzar nuestras andanzas con `ggplot2` intentaremos replicar con código R el gráfico de arriba; aunque al principio sólo utilizaremos 2 variables: haremos un gráfico de puntos de la longitud del sépalo frente a la longitud del pétalo.
+
+Hacer un gráfico con `ggplot2` requiere de varias etapas, 
+
+  - la primera de ellas consiste en usar la función `ggplot()` para inicializar el gráfico. 
+  
+  - en segundo lugar, tendremos que especificar que conjunto de datos usaremos en el gráfico. 
+  
+  - en tercer lugar tendremos que especificar que variables irán asociadas a determinados elementos visuales o estéticos del gráfico 
+  
+  - por último, en cuarto lugar, tendremos que especificar que tipo de gráfico o geometría usaremos para visualizar las observaciones.
+  
+  
+Veámoslo más detenidamente.
+
+En `ggplot2`, para hacer un gráfico **se empieza SIEMPRE llamando a la función `ggplot()`**. Si tecleamos `ggplot()` en la consola o en un script, parece que no ocurre nada, pero tras la llamada a la función `ggplot()`, R ha creado un objeto, un contenedor para nuestro futuro gráfico. Aún no vemos el gráfico, faltan cosas, pero ya lo hemos inicializado. Si quieres ver el objeto/contenedor que hemos creado con la llamada a `ggplot()` tienes que asignarle un nombre, así podrás verlo en la pestaña "Environment" de RStudio. 
+
+
+Para verlo tienes que hacer:
+
+```{r, eval = FALSE}
+my_grafico <- ggplot()
+```
+
+`my_grafico`, es un objeto R, concretamente una lista con 9 elementos, que tendremos que ir "llenando" para hacer nuestro gráfico. 
+
+
+Generalmente, dentro de la función `ggplot()` se suele especificar el conjunto de datos que vas a utilizar para hacer el gráfico. A diferencia de los gráficos de R-base, `ggplot2` no permite graficar vectores: **los datos que se suministran han de ser SIEMPRE data.frames** o similares.
+
+
+```{r, eval = FALSE}
+ggplot(data = iris)
+ggplot(iris)
+```
+
+
+
+Ya está, con cualquiera de las 2 instrucciones de arriba, son equivalentes^[Tienes que entender porque son equivalentes. Busca la ayuda de la función y verás que el primer argumento de la función es data, así que si, como ocurre en la segunda expresión, no ponemos el nombre del argumento de la función, R tomará iris como el valor del primer argumento. Parece un trabalenguas pero es importante], ya hemos inicializado el gráfico y le hemos dicho que datos vamos a usar. 
+
+Dijimos que para comenzar haríamos un gráfico de puntos de la variable `Sepal.Length` frente a `Petal.Length`; así que **tenemos que decirle a `ggplot2` que variables de `iris` queremos visualizar y con que propiedades estéticas queremos asociar cada variable**. Para ello utilizaremos la función `aes()` dentro de `ggplot()`. Lo hacemos con la siguiente expresión:
+
+
+```{r, eval = FALSE}
+ggplot(iris, aes(x = Sepal.Length,  y = Petal.Length))
+```
+
+Aún no vemos el gráfico, pero con `aes()` le hemos dicho a R/ggplot2 que queremos asociar/mapear la variable Sepal.Length al eje x, y la variable Petal.Length al eje y. Fíjate que, en la pestaña de gráficos de RStudio, ya vemos los ejes del gráfico; además, fíjate que `ggplot2` ya ha calculado para nosotros el rango de las variables para ajustar los ejes.
+
+
+Al igual que antes, podemos omitir los nombres de las opciones de la función `aes()`. Esta función puede tener muchos argumentos (veremos algunos), pero los 2 primeros son siempre x (el eje x) y después y (el eje y o vertical de mi gráfico); es decir podríamos hacer lo siguiente que es más rápido de teclear.
+
+
+```{r, eval = FALSE}
+ggplot(iris, aes(Sepal.Length, Petal.Length))
+```
+
+Con esta instrucción le estamos diciendo a `ggplot2` que vamos a hacer un gráfico con los datos del data.frame `iris` y que vamos a asociar/conectar/mapear la variable `Sepal.Length` con el eje x, y la variable `Petal.Length` con el eje y del gráfico. Perfecto, pero entonces ¿por qué no vemos el gráfico? La razón estriba en que no le hemos dicho a `ggplot2` qué tipo de gráfico queremos (de puntos, de lineas etc...). El tipo de gráfico se explicita con una familia de funciones: `geom_xx()` o **geom**etrías. Hay muchas geometrías o tipos de gráficos que podemos usar. Ya lo veremos!!! Nosotros queremos hacer un gráfico de puntos, así que, de la familia de **geom**etrías tenemos que  usar `geom_point()`. Veámoslo.
+
+
+```{r, out.width = "50%"}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point()
+```
+
+Como vemos los puntos del gráfico se visualizan en color negro, con un tamaño, una transparencia y una forma determinadas. Obviamente todo esto se puede cambiar dentro de `geom_point()` con las opciones adecuadas. Por ejemplo:
+
+
+```{r, out.width = "50%"}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point(color = "red", size = 2, alpha = 0.2)
+```
+
+
+
+Ya casi está. No es tan complicado. Ya hemos visto las ideas fundamentales de la visualización con `ggplot2`:
+
+1. Los gráficos se inician con la función `ggplot()`. Generalmente aquí se especifican los datos (data.frame) que queremos utilizar  
+
+2. La función `aes()` sirve para asociar/mappear variables con atributos/características estéticas del gráfico. De hecho el nombre del función `aes()` viene de **aes**thetics. Las **aes**thetics más importantes de un gráfico suelen ser los ejes x e y, por eso se ponen siempre al principio de `aes()`; es decir, son los 2 primeros argumentos de `aes()`. En nuestro ejemplo hemos asociado la variable `Sepal.Length` con el eje x, y la variable `Petal.Length` con el eje y. Veremos más **aes**thetics, como por ejemplo el color o el tamaño (de los puntos ... o de las lineas o ...)
+
+3. Con `geom_**()` elegimos el tipo o **geom**etría de gráfico. Hay muchos tipos de gráficos, así que habrán muchos **geoms**. Por ejemplo: geom_point(), geom_line(), geom_ ...
+
+
+Estas 3 ideas son las principales para entender ggplot2. Después hay muchas más opciones y elementos que serán muy importantes para conseguir un buen gráfico, pero en cierta forma son secundarias; por ejemplo, los títulos, los ejes, las escalas, el tema etc... lo iremos viendo poco a poco.
+
+<br>
+
+Afiancemos las ideas principales de la visualización con `ggplot2`. ¿Piensa que hará la siguiente linea de código?
+
+
+```{r, eval = FALSE}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_line()
+```
+
+La primera parte de la instrucción es igual a la anterior: queremos un gráfico con el data.frame iris y queremos asociar la variable Sepal.Length con el eje x, con la propiedad **aes**thetic eje x y Petal.Length con el eje y; pero le hemos pedido un gráfico de lineas (geom_line()). En este caso hacer un gráfico de lineas no tiene mucho sentido, pero si se lo pedimos a R, este nos hace caso y nos lo muestra.
+
+
+```{r, echo = FALSE, out.width = "49%"}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_line()
+```
+
+<br>
+
+Ya dije que una de las características importantes de `ggplot2`  es que funciona por capas que se van superponiendo; para ir añadiendo capas a nuestro gráfico tenemos que usar el símbolo **`+`**. Por ejemplo si quisiéramos ver los puntos y las lineas ¿Cómo lo hacemos?
+
+
+```{r, out.width = "49%"}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() + geom_line()
+```
+
+<br>
+
+Tampoco son muy útiles la lineas en este gráfico.
+
+
+
+Otra geometría o **geom_()** que se usa mucho es `geom_smooth()`. Probémosla:
+
+
+```{r}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() +  geom_smooth()
+```
+
+Del gráfico puede inferirse que hay una relación, no lineal, pero sí directa o positiva entre la longitud del sépalo y del pétalo; pero también se aprecia que hay al menos dos grupos distintos de lirios. Hay un grupo de observaciones cuyo pétalo parece ser claramente menor que el del resto de lirios. Veamos si esto se debe o esta asociado al tipo de lirio, recuerda que hay 3 tipos de lirios, asociados a la variable `iris$Species`. Para verlo en nuestro gráfico lo que vamos a hacer es asociar/mapear la variable `Species` con la **aes**thetics color:
+
+
+
+```{r}
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_point() 
+```
+
+Pues parece que sí, que la especie de lirios "setosa" es más pequeña, al menos en longitud, del sépalo, pero sobre todo del pétalo.
+
+La variable `Species` podríamos haberla asociado a la estética tamaño (size), o a la estética forma (shape) pero no sería tan útil ni quedaría tan bonito el gráfico. Fíjate que incluso R nos avisa de que asociar la propiedad o **aes**thetic tamaño con una variable categórica como Species no es muy recomendable.
+
+
+```{r, warning = TRUE}
+ggplot(iris, aes(Sepal.Length, Petal.Length, size = Species)) + geom_point() 
+```
+
+También podemos asociar la variable `Species` a la estética "forma"(shape). Lo hacemos en la expresión de más abajo. Como veis, ahora las diferencias entre especies de lirios no se aprecian tan bien como cuando usábamos `color = Species`
+
+
+```{r}
+ggplot(iris, aes(Sepal.Length, Petal.Length, shape = Species)) + geom_point() 
+```
+
+
+Os va a costar hacer gráficos, normal!!!, pero espero que la idea principal ya la tengáis. Lo que pasa es que no os he contado todo, en realidad es un poco más complejo y versátil. Lo medio explico en el siguiente apartado.
+
+
+<br>
+
+###  Más ideas sobre ggplot2
+
+Ya tenéis las ideas principales para hacer gráficos con `ggplot2`, pero no os lo he contado todo, tampoco lo voy a hacer ahora, pero si contaré las cosas de una forma diferente para que tengáis más flexibilidad/versatilidad a la hora de hacer gráficos. Si queréis saber toda la verdad^[Si alguno de vosotros me pregunta por la verdad adoptaré semblante hierático y sólo diré lo siguiente: geom_point() is a short-hand for layer(geom = "point", stat = "identity", position = "identity") ó apelaré a la canción de Albert Pla, según me de.] tendréis que ir al libro de Hadley, concretamente [aquí](https://ggplot2-book.org/layers.html).
+
+La forma que os he contado  de hacer gráficos `ggplot2` es la que veréis habitualmente, yo también hago mis gráficos así, solo que para entender mejor el funcionamiento, la sintaxis de `ggplot2`, os lo tengo que contar otra vez de una forma un poco diferente o ampliada. 
+
+Un gráfico de ggplot2 se inicia llamando a la función `ggplot()` eso es cierto y también es verdad que generalmente dentro de `ggplot()` se indica el data.frame que vas a utilizar y con `aes()` que variables vas a usar y con que elementos visuales o estéticos quieres asociar cada una de la variables que vas a utilizar^[En `aes()` no sólo puedes poner variables, sino transformaciones de ellas, por ejemplo aes(x = v1 ^ 2, y = v1 / v2). También se pueden mappear variables con constantes aes(x = 1, colour = "loquesea")]. Correcto, pero .... en realidad un gráfico ggplot2 se hace por capas, cada capa se especifica con una función de la familia `geom_xx()`, así que en realidad los datos y las `aes()` se "deberían" especificar dentro de la función geom_xx()`. 
+
+Parece un poco de lío pero en cuanto lo entiendas es muy fácil y te puede dar más flexibilidad a la hora de hacer tus gráficos. Empecemos: ¿recuerdas que hacen las lineas/expresiones de abajo?
+
+
+```{r, eval = FALSE}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() 
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() + geom_line()
+```
+
+Podemos pensar que las funciones que hacen la representación gráfica realmente son las `geom_xx()`; es ahí donde deberíamos especificar los datos y variables/estéticas que queremos usar, pero si no las especificamos en la función `geom()`, entonces, ggplot2 mirará a ver si existen, si están especificados, dentro de `ggplot()`.
+
+
+Ahora que ya sabemos el funcionamiento básico de `ggplot2`, veamos algunos detalles mediante algunos ejemplos. Hasta ahora hemos especificado el data.frame que queremos graficar con `ggplot(data = my_df)` o con `ggplot(my_df)` y las variables que queremos ver, y a que propiedad estética queremos asociarla, con la función `aes()` **dentro de `ggplot()`**. Si lo hacemos así, todos los `geoms_xx()` que utilicemos compartirán el conjunto de datos y las variables/estéticas a mappear y mostrar; pero a veces, en gráficos más complejos podemos querer hacer que cada `geom_xx()` muestre datos y/o variables distintas. 
+
+Entender que cada `geom_xx()` puede estar asociado a distintos data.frames y/o variables es importante para tener más versatilidad con `ggplot2`.Por ejemplo, las siguientes tres expresiones hacen el mismo gráfico. Se suele utilizar la primera expresión, pero la segunda y tercera expresiones son "más flexibles", aunque es verdad que si sólo se utiliza un `geom_xx()` no ganamos nada por usar la segunda o tercera expresión, pero no será el caso si en nuestro gráfico necesitamos usar varios `geom_xx()`
+
+
+
+```{r, eval = FALSE}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point()
+
+ggplot(iris) + geom_point(aes(Sepal.Length, Petal.Length))
+
+ggplot() + geom_point(data = iris, aes(Sepal.Length, Petal.Length))
+```
+
+Fíjate, como detalle, pero importante, que si utilizas la tercera expresión; es decir, si especificas los datos dentro de la función `geom_xx()`, es necesario poner el nombre del argumento ; es decir, debes poner `data = iris`, no puedes poner solo `iris`. Yo me olvido siempre de este detalle^[En este caso sí quiero que me preguntéis por este detalle. Es algo que ya deberías saber/intuir pero ...].
+
+```{r, echo = FALSE}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point()
+```
+
+
+
+En este caso (como el gráfico solo tiene una capa, como sólo usamos un `geom(_xx)`) no ganamos nada por usar la segunda o tercera expresión; PERO, cuando usemos varios `geom_xx()` esto nos dará muchas posibilidades para nuestro gráfico. 
+
+Intenta descubrir las diferencias y funcionamiento de las 3 siguientes instrucciones. Recuerda que puedes correr las instrucciones en R para ver que hacen exactamente.
+
+```{r, eval = FALSE}
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_point() + geom_smooth()
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point(aes(color = Species)) + geom_smooth()
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() + geom_smooth(aes(color = Species))
+```
+
+
+Veámoslas una a una:
+
+1. Los datos y las 3 variables/estéticas dentro de ggplot()
+
+```{r}
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_point() + geom_smooth()
+```
+
+En este caso los 2 geoms comparten el conjunto de datos (iris) y las variables/estéticas a graficar
+
+<br>
+
+2. Los datos y 2 variables/estéticas dentro de ggplot(), pero una tercera variable (Species), asociada a la estética color, aparece solamente en `geom_point()`
+
+
+```{r}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point(aes(color = Species)) + geom_smooth()
+```
+
+<br>
+
+3. Los datos y 2 variables/estéticas dentro de ggplot(), pero una tercera variable (Species), asociada a la estética color, aparece solamente en `geom_smooth()`
+
+
+
+```{r}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() + geom_smooth(aes(color = Species))
+```
+
+Espero, seguro!!, que te has dado cuenta de que si especificas el data.frame y las variables/estéticas dentro de `ggplot()` esto afectará a todos los geoms del gráfico; pero lo que se especifique dentro de un `geom_xx()` solo afecta a esa geometría.
+
+<br>
+
+**Otro ejemplo** para entenderlo, ¿por qué no funciona la siguiente expresión?
+
+```{r, eval = FALSE, message = TRUE}
+ggplot(iris) + geom_point(aes(Sepal.Length, Petal.Length)) + geom_smooth(aes(color = Species))
+```
+
+Pues porque para poder representar la linea suavizada se utiliza `geom_smooth()`, y `geom_smooth()` necesita como mínimo tener variables asociadas a las estéticas x e y. Como veis, dentro de `geom_smooth()` solo hemos especificado la estética "color" y tampoco hemos especificado en la función `ggplot()` que variables se asocian con x e y. Por lo tanto, `geom_smooth()` no puede hacer su trabajo, le faltan los "datos" de x e y para calcular/obtener la linea suavizada. 
+
+Vamos con **otros ejemplos**. La siguientes expresiones tampoco funcionarán^[En realidad la tercera expresión sí correrá, pero sólo mostrará los puntos, no las lineas.] si intentáis correrlas en vuestro ordenador. ¿Por qué?
+
+
+
+```{r, eval = FALSE, message = TRUE}
+ggplot() + geom_point(data = iris, aes(Sepal.Length, Petal.Length)) + geom_line(aes(Sepal.Length, Petal.Length))
+
+ggplot(aes(Sepal.Length, Petal.Length)) + geom_point(data = iris) + geom_line()
+
+ggplot() + geom_point(data = iris, aes(Sepal.Length, Petal.Length)) + geom_line()
+```
+
+<br>
+
+**Otro ejemplo:** hagamos algo más marciano/complicado. Supón que quieres hacer un gráfico diferenciando los puntos por color para las tres especies de lirios, pero quieres que solo se vea la linea suavizada para las dos especies más grandes (virginica y versicolor). Los lirios más pequeños son los de la clase setosa. Igual se puede hacer de otra forma pero la que me viene a la cabeza es hacer lo siguiente:
+
+
+Primero, crear un dataset que sólo contenga a los lirios grandes, los de las especies virginica y versicolor.
+
+```{r}
+iris2 <- iris %>% filter(Species != "setosa") #- me quedo con los lirios que no son de clase "setosa"
+```
+
+Para después hacer el gráfico con cualquiera de las 2 expresiones siguientes. Prefiero la segunda porque hay que teclear/escribir menos, pero puede que sea más didáctica la primera.
+
+```{r, eval = FALSE}
+ggplot() + geom_point(data = iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_smooth(data = iris2, aes(Sepal.Length, Petal.Length) ) 
+
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point(aes(color = Species)) + geom_smooth(data = iris2)
+```
+
+<br>
+
+**Otro ejemplo** más: ¿y si quisiéramos que las 2 especies grandes se representen con el mismo color? Hay varias soluciones, una de las más marcianas es la que propongo abajo. Es una solución rara, pero creo que os ayudará a entender `ggplot2`
+
+Primero voy a crear un nuevo data.frame sólo con las observaciones de los lirios pequeños, los de la clase setosa.
+
+```{r}
+iris_setosa <- iris %>% filter(Species == "setosa") #- me quedo con los lirios pequeños, los de clase "setosa"
+```
+
+
+```{r}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() + geom_point(data = iris_setosa, aes(color = Species)) + geom_smooth(data = iris2,aes(Sepal.Length, Petal.Length) )
+```
+
+Otra solución, quizás más lógica, consiste en primero agrupar las 2 especies de lirios grandes (versicolor y virginica) en una sola clase.
+
+
+```{r}
+iris_solo_2_clases <- iris %>% mutate(Species_2 = ifelse(Species %in% c("versicolor", "virginica"), "versi_virgi", "setosa"))
+```
+
+Para después hacer el gráfico. Además el gráfico lo podemos hacer al menos de 2 maneras, la segunda mucho mejor, la primera expresión es un poco enrevesada:
+
+```{r, eval = FALSE}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() + geom_point(data = iris_setosa, aes(color = Species)) + geom_smooth(data = iris_solo_2_clases,aes(Sepal.Length, Petal.Length, color = Species_2) )
+
+ggplot(iris_solo_2_clases, aes(Sepal.Length, Petal.Length, color = Species_2)) + geom_point() + geom_smooth()
+```
+
+
+```{r, echo = FALSE}
+ggplot(iris_solo_2_clases, aes(Sepal.Length, Petal.Length, color = Species_2)) + geom_point() + geom_smooth()
+```
+
+
+Como veis, en `ggplot2` hay varias maneras de hacer el mismo gráfico. Esto al principio puede abrumar/molestar, pero muestra la flexibilidad de la sintaxis.
+
+
+Para ir acabando con la "filosofía"/sintaxis/gramática de `ggplot2` intenta imaginar que gráficos hacen las 6 expresiones de más abajo.
+
+Si no puedes, recuerda que siempre puedes ejecutar las ordenes en el ordenador. Fíjate sobre todo en la tercera expresión
+
+```{r, eval = FALSE}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() + geom_smooth()
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_point() + geom_smooth()
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_point(color = "purple") + geom_smooth()
+
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_point() + geom_smooth(color = "brown")
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() + geom_smooth(aes(color = Species))
+ggplot(iris) + geom_point(aes(Sepal.Length, Petal.Length, color = Species) ) + geom_smooth(aes(Sepal.Length, Petal.Length, color = Species))
+```
+
+<br>
+
+```{r, echo = FALSE, out.width = "100%"}
+p1 <- ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() + geom_smooth()
+p2 <- ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_point() + geom_smooth()
+p3 <- ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_point(color = "purple") + geom_smooth()
+p4 <- ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_point() + geom_smooth(color = "brown")
+p5 <- ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() + geom_smooth(aes(color = Species))
+p6 <- ggplot(iris) + geom_point(aes(Sepal.Length, Petal.Length, color = Species) ) + geom_smooth(aes(Sepal.Length, Petal.Length, color = Species))
+
+p1 + p2 + p3 + p4 + p5 + p6 + plot_layout(ncol = 2)
+```
+
+
+
+En la tercera expresión se especifica `color = Species` dentro de `aes()` en `ggplot()`, así que, de momento, todos los geoms del gráfico deberían diferenciar por especies de lirios usando el color, PERO, después se vuelve a usar el argumento `color` dentro de `geom_point()`, pero fíjate que no va dentro de de `aes()`, va fuera. Concretamente hacemos lo siguiente: `geom_point(color = "purple")`; es decir, para la capa de puntos, y solo para la capa de puntos que se crea con `geom_point()`, estamos asociando la estética color, no a una variable, sino a un color fijo. Sin embargo, para la otra capa del gráfico, la que resulta de usar `geom_smooth()` sigue siendo valido que la estética color está asociada a la variable Species. 
+
+
+Un detalle: imagina que en un gráfico en el que has fijado 3 estéticas dentro de `ggplot(aes())`. En principio las 3 estéticas afectarán a todos los `geom_xx()` que utilices en tu gráfico, pero si quisieras que, por ejemplo, la estética color no afectase a un geom concreto, podrías hacer lo siguiente: `geom_xx(aes(color = NULL))`.   
+
+
+Como puedes imaginar, aún tenemos que ver más elementos de `ggplot2`. Como mínimo los títulos y leyendas, los ejes, el tema, coordenadas, etc... vamos a ello!!
+
+<br>
+
+
+## 3. Elementos de un ggplot
+
+
+Ya hemos presentado los principales elementos de los gráficos hechos con `ggplot2`, los que tienen que ver con la representación de las variables. Pero es evidente que un gráfico tiene muchos más elementos, y lógicamente hay que conocerlos un poco  para poder ajustar los gráficos a nuestras necesidades y mejorar la calidad de nuestros gráficos. 
+
+Ejemplos de otros elementos son: títulos del gráfico y de los ejes, "theme" del gráfico, small multiples o faceting, anotaciones etc...
+
+En está sección iremos más rápido. Se presentarán solamente algunos ejemplos, conceptos y/o aclaraciones. Si necesitas profundizar más en estos elementos, puedes acudir a la [referencia oficial](https://ggplot2.tidyverse.org/reference/index.html#section-layer-geoms) de `ggplot2` o al [bokkdown de ggplot2](https://ggplot2-book.org/).
+
+
+Ya dijimos que los gráficos ggplot se componen de capas o layers. Para nosotros, hasta ahora, una capa estaba compuesta de 3 elementos:
+
+  - un conjunto de datos  
+  
+  - un conjunto de variables mapeadas con `aes()` a propiedades estéticas  
+  
+  - una geometría, con `geom_xx()` 
+  
+Es evidente que en todos los geoms no se pueden especificar todas las características estéticas. Por ejemplo si usas `geom_point` no podrás especificar la anchura o el tipo de las lineas, porque no estás usando lineas sino puntos. Para ver que estéticas admite cada geom tendrás que mirar la ayuda de cada geom. Al final de [este post](https://www.yihanwu.ca/post/geoms-and-aesthetic-parameters/) tienen un gráfico interactivo con el que se puede  ver fácilmente que características estéticas admite cada geom. Por ejemplo `geom_bar()`, que sirve para hacer gráficos de barras, no admite mappear variables al eje Y, ya que en el eje Y se visualizan/mapean las frecuencias absolutas o relativas de la variable que se representa en el eje X.
+
+<br>
+
+Esto es lo básico que hay que saber, pero en realidad, una capa necesita de dos elementos más: una **stat** (o transformación estadística) y una **posición**.  Estos dos últimos elementos son necesarios pero la verdad es que podríamos seguir haciendo gráficos con `ggplot2` sin conocerlos. ¿Por qué? Pues porque si en una capa no los especificamos, lo hace `ggplot2` por nosotros. Lo ha estado haciendo hasta ahora en todos los gráficos que llevamos hechos. Pero claro, saber como utilizar estos elementos nos dará más flexibilidad a la hora de hacer ggplots.
+
+
+Generalmente las capas se van añadiendo con la familia de funciones `geom_xx()`, **PERO** también se pueden añadir capas con otra familia de funciones `stat_xx()`. 
+
+
+Aparte de estos cinco elementos (datos, aes(), geom, stat y posición) los gráficos ggplot pueden tener más elementos. Veámoslos uno a uno.
+
+<br>
+
+### 3.1 Títulos del gráfico
+
+Es evidente que un gráfico para ser efectivo y mostrar su mensaje con claridad debe tener un título y/o subtítulo ilustrativo y debe mostrar información relevante sobre que variables se grafican los ejes X e Y. Este tipo de elementos pueden modificarse de varias maneras, pero nos centraremos en la función `labs()`. 
+
+Fíjate que con la función `labs()`, de labels, podemos cambiar los títulos del gráfico, de los ejes y también de las leyendas. 
+
+En los títulos (tanto del gráfico, como de los ejes y leyendas) también se pueden cambiar otras características; por ejemplo, cambiar el tamaño, la fuente o el color, pero eso será tarea de otra función de `ggplot2`: del grupo de funciones `theme_()`. Pero el tema o theme de los gráficos lo veremos en el siguiente apartado.
+
+
+Tomemos el siguiente gráfico como referencia y sobre él iremos añadiendo elementos:
+
+```{r}
+p <- ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_point()
+p
+```
+
+Con la función `labs()` podemos añadirle un título, subtitulo, pie de gráfico o *caption*. También podemos cambiar el título de los ejes X e Y, así como también el titulo de la leyenda para `color`, o para otras estéticas que utilicemos en el gráfico.
+
+Es suficiente con ver un ejemplo:
+
+
+```{r}
+p + labs(title = "Gráfico 1: Longitud del sépalo frente al pétalo",
+       subtitle = "(diferenciando por especie de lirio)",
+       caption = "Datos provenientes del Iris dataset",
+       x = "Longitud del sépalo",
+       y = "Longitud del pétalo",
+       color = "Especie de lirio")
+```
+
+
+Si quisieras eliminar completamente los **títulos**  del eje X podrías hacerlo en el anterior chunk fijando `x = NULL` dentro de la función `labs()`.
+
+
+En lugar de usar la función `labs()`, también podemos utilizar las funciones auxiliares `xlab()` e `ylab()`
+
+
+```{r, eval = FALSE}
+p + labs(color = NULL, x = NULL)  #- borra el título de la leyenda y del eje X
+p + xlab(NULL) + ylab(NULL)       #- elimina títulos de los ejes X e Y
+```
+
+
+```{r, echo = FALSE, out.width = "90%",  fig.asp = 3/9}
+p1 <- p + labs(color = NULL, x = NULL)  #- borra el título de la leyenda y del eje X
+p2 <- p + xlab(NULL) + ylab(NULL)       #- elimina títulos de los ejes X e Y
+
+p1 + p2 + plot_layout(ncol = 2)
+```
+
+
+
+
+### 3.2 Themes
+
+> Themes control the display of all non-data elements of the plot. You can override all settings with a complete theme like theme_bw(), or choose to tweak individual settings by using theme() and the element_ functions. Use theme_set() to modify the active theme, affecting all future plots.
+
+Para cambiar detalles de la apariencia del gráfico como el tamaño, fuentes y color de los títulos, pero también de los puntos, las lineas, el fondo del gráfico, la apariencia de las grid-lines, el lugar para las leyendas, etc... etc... contamos con las "funciones de tema"; todas ellas comienzan con `theme_()`
+
+En general con las funciones `theme_()` podemos cambiar/ajustar cualquier elemento del gráfico, con la excepción de la propia representación de los datos (ya sabemos que esto se hacen con las funciones `geom_()`). Estos elementos afectan a la apariencia y detalles del gráfico, pero no a la relación entre variables que se muestra realmente en el gráfico.
+
+
+Para empezar a entender que hacen las funciones relacionadas con el theme, señalar que `ggplot2` incorpora un conjunto de "temas" que podemos utilizar para cambiar la apariencia del gráfico a nuestro gusto. Puedes verlos todos [aquí](https://ggplot2.tidyverse.org/reference/ggtheme.html). El tema que usa por defecto `ggplot2` es `theme_gray()`. Veamos a los themes en acción:
+
+
+
+```{r, eval = FALSE}
+p + theme_gray()   #- tema por defecto
+p + theme_light()
+p + theme_dark()
+p + theme_classic()
+p + theme_minimal()
+p + theme_void()
+```
+
+
+```{r, echo = FALSE, out.width = "90%",  fig.asp = 5/9}
+p1 <- p + theme_gray()   #- tema por defecto
+p2 <- p + theme_light()
+p3 <- p + theme_dark()
+p4 <- p + theme_classic()
+p5 <- p + theme_minimal()
+p6 <- p + theme_void()
+
+p1 + p2 + p3 + p4 + p5 + p6 + plot_layout(ncol = 2)
+```
+
+
+
+El paquete de R [ggthemes](https://jrnold.github.io/ggthemes/reference/index.html) incorpora una amplia lista de temas adicionales, algunos de ellos tratan de replicar el estilo de corporaciones famosas como The Economist o Stata. En el tutorial no se ven bien los gráficos porque los he hecho pequeñitos, pero prueba a hacerlos tú mismo y verás que son good-looking. Veamos algunos:
+
+
+
+```{r, eval = FALSE}
+library(ggthemes)
+p + theme_economist()   
+p + theme_fivethirtyeight()
+p + theme_stata()
+p + theme_solarized()
+```
+
+
+
+```{r, echo = FALSE, out.width = "85%",  fig.asp = 5/9}
+library(ggthemes)
+p1 <- p + theme_economist() 
+p2 <- p + theme_fivethirtyeight()
+p3 <- p + theme_stata()  
+p4 <- p + theme_solarized()
+
+p1 +  p2 + plot_layout(ncol = 2)
+p3 +  p4 + plot_layout(ncol = 2)
+
+
+```
+
+
+
+
+También podemos definir un tema propio para que el gráfico se ajuste los más posible a nuestras preferencias.
+
+
+```{r, out.width = "50%",  fig.asp = 4/9}
+# define custom theme
+my_theme <- theme(axis.text.x = 
+                  element_text(colour = "grey20", size = 12, angle = 90, hjust = 0.5, vjust = 0.5) ,                   axis.text.y = element_text(colour = "grey20", size = 12) ,
+                  text = element_text(size = 16))
+p + my_theme
+```
+
+
+Se puede fijar el tema/theme de los gráficos con la función `theme_set()`. Por ejemplo:
+
+```{r, eval = FALSE}
+theme_set(theme_minimal())  #- un tema concreto
+theme_set(theme_minimal() + 
+    theme(axis.text.x=element_blank(), axis.ticks.x=element_blank())) #- un tema modificando algunas opciones, que ele eje x no muestre ticks ni escalas
+```
+
+Si quieres volver al theme por defecto:
+
+
+```{r, eval = FALSE}
+theme_set(theme_gray())
+```
+
+
+Ejemplos de algunos elementos cuya apariencia que se pueden cambiar con `theme()`
+
+```{r, eval = FALSE}
+p + theme(legend.position = "none")            #- que no aparezca leyenda
+p + theme(legend.position = "bottom")          #- leyenda abajo
+p + theme(legend.direction = "horizontal")     #- leyenda horizontal!!
+p + theme(legend.title = element_text(size = 22))     #- título de la leyenda a 22
+p + theme(legend.key.size = unit(2.4, "cm"))          #- tamaño de los cuadros de la leyenda
+
+
+p + theme(text = element_text(size = 20, face = "bold"))         #- cambiar el tamaño de todos los elementos de texto
+p + theme(text = element_text(face = "bold"))                    #- pone en negrita todos los elementos de texto
+
+p + theme(axis.text.x = element_text(colour = "pink", size = 12, angle = 90, hjust = 0.5, vjust = 0.5)) # apariencia de la escala del eje x
+
+p + theme(axis.title.y = element_text(size=25, angle = 45)) #- tamaño y angulo del texto del eje Y
+
+p + theme(plot.subtitle = element_text(hjust = 3))   #- posición horizontal del subtitulo (si lo tuviese)
+  
+p + theme(plot.caption = element_text(hjust = 3))    #- posición vertical del pie de gráfico (si lo tuviese)
+
+p + theme(panel.background = element_rect(fill = "green", colour = "pink", linetype = "longdash", size = 3.5))
+p + theme(panel.background = element_blank())
+p + theme(panel.background = NULL)
+
+
+p + theme(plot.background = element_rect(fill = "pink", colour = "purple", linetype = "dotted", size = 7))
+```
+
+
+Si quieres ver todos las características que controla y que por tanto puedes modificar con `theme()`, usa la ayuda de la función `theme()` o ejecuta en R `args(theme)`. Aunque casi mejor verlas en [esta infografía](https://henrywang.nl/ggplot2-theme-elements-demonstration/) de Henry Wang o en [este post](https://isabella-b.com/blog/ggplot2-theme-elements-reference/) de Isabella Benabaye con las opciones que suele cambiar ella.
+
+
+
+En general, si quieres cambiar algún elemento de un ggplot, has de hacer `theme(elemento = element_text())`. Si quieres eliminar por completo algún elemento del gráfico, por ejemplo las grid-lines del gráfico, harías `theme(panel.grid = element_blank())`.
+
+
+Evidentemente todo esto es imposible de aprender, sólo tienes que saber que cualquier elemento del gráfico se puede cambiar y tienes que saber buscar e interpretar la ayuda.
+
+#### Colores
+
+
+Se poco de colores, pero claro si quieres cambiar la apariencia de los gráficos, has de saber los colores de R, así que:
+
+- [Aquí](http://sape.inf.usi.ch/quick-reference/ggplot2/colour) tienes una guía para elegir color. Si solo quieres ver la lista de nombres de los colores en R ejecuta: `aa <- as.data.frame(colours())`
+
+- Si sabes el nombre del color que quieres, [aquí](https://pkg.garrickadenbuie.com/r-colors-css/),  podrás buscarlo y ver su color y su codificación en RGB y Hex.
+
+
+- También es interesante el paquete [paleteer](https://github.com/EmilHvitfeldt/paletteer) que agrupa un conjunto amplio de paletas de colores para usar en R. 
+
+<br>
+
+#### XKCD theme
+
+Por último, no sé si conocéis el [webcomic XKCD](https://xkcd.com/). Pues en R también hay un paquete y un theme para hacer gráficos al estilo XKCD. Es el [paquete xkcd](https://cran.r-project.org/web/packages/xkcd/index.html) cuyo autor es Emilio Torres-Manzanera de la Universidad de Oviedo. [Aquí](http://xkcd.r-forge.r-project.org/) podéis ver algunos gráficos hechos con este estilo en R. 
+
+Intenté hacer un gráfico con su theme, pero desafortunadamente no me salió; pero justo al día siguiente vi [este tweet](https://twitter.com/_Gil_Henriques/status/1166440262773567488?s=09) que hace algo parecido con datos de los Simpsons y [su código](https://github.com/GilHenriques/TidyTuesdays/blob/master/2019-08-27%20Simpsons%20guest%20stars/simpsons.R) sí me ha funcionado, además simula/construye el estilo XKCD desde cero. 
+
+
+
+```{r, echo = FALSE, fig.asp = 7/9}
+tweetrmd::tweet_embed("https://twitter.com/_Gil_Henriques/status/1166373844040335360", theme = "light", align = "center", maxwidth = 400)
+```
+
+
+
+Además, después vi que Evangelyne Reinolds hizo [esta maravilla](https://evamaerey.github.io/tidytuesday_walk_through/simpsons.html#1). Lo haremos en clase?! En [este post](https://blog.revolutionanalytics.com/2018/09/curve-fitting.html) puedes encontrar el código para reproducir una de las historias o viñetas de XKCD.
+ 
+
+<br>
+
+
+### 3.3 Small multiples o Facetting
+
+
+El sistema gráfico de `ggplot2` incorpora una técnica especial llamada "faceting" que permite dividir un gráfico en múltiples gráficos. Cada uno de esos múltiples gráficos se realiza sólo para las observaciones de una de los valores de una variable categórica (o factor) incluido en el conjunto de datos. Es más fácil hacerlo que explicarlo/escribirlo.
+
+Por ejemplo, en `iris` tenemos la variable `Species`, que es categórica. Lo que se hace con el "facetting" es dividir el dataset en grupos y hacer el mismo gráfico para cada uno de los grupos. Los grupos se van a definir en función de los valores de la variable Species. Recuerda que hay tres tipos o especies de lirios.
+
+Para hacer un "facetting graph" podemos usar las funciones `facet_wrap()` y `facet_grid()`. 
+
+Por ejemplo, con la función `facet_grid()` puedes elegir entre hacer los small multiples por filas o por columnas. Empecemos haciendo un facetting **por columnas**. Además, con `facet_grid()` se pueden usar varias sintaxis, pero la que aparece en la [cheatsheet actual de ggplot2](https://www.rstudio.com/resources/cheatsheets/) y, por tanto, la recomendada es las que ves en la segunda linea: 
+
+
+```{r, out.width = "100%", fig.asp = 4/9}
+#p + facet_grid( . ~ Species)                # old sintaxis
+p + facet_grid(cols = vars(Species))         # gráficos x columnas, separando por valores de 'Species'
+```
+
+
+Ahora por filas:
+
+
+```{r, out.width = "50%", fig.asp = 9/9}
+p + facet_grid(rows = vars(Species))         # gráficos x filas
+```
+
+
+También podemos utilizar la función **`facet_wrap()`**. Esta función reparte los small multiples en una rejilla con forma de matriz. 
+
+```{r, out.width = "90%", fig.asp = 4/9}
+p + facet_wrap(vars(Species), nrow = 2, ncol = 2)        # graf x filas y columnas
+```
+
+
+Si en el dataset hubiesen dos variables categóricas podríamos hacer que una de ellas sirviese para llenar las filas y la otra las columnas. 
+
+
+Como `iris` sólo tiene una variable categórica (Species) vamos a discretizar una de las variables continuas. Por ejemplo la anchura del pétalo, crearemos una nueva variable dividiendo las observaciones de `Petal.Width` en 2 categorías, por encima y por debajo de la media de su media. Además lo vamos  a hacer con R-base y con `dplyr::ntile()`. Seguro que hay mejores formas, [por ejemplo](https://www.rdocumentation.org/packages/arules/versions/1.6-3/topics/discretize)
+
+
+Con `dplyr::ntile()`
+
+```{r}
+iris <- iris %>% mutate(new_variable = ntile(Petal.Width, 2)) 
+```
+
+Con R-base y la función `cut()`:
+
+```{r}
+iris <- iris
+iris$new_variable <- cut(iris$Petal.Width, 
+                   breaks = c(-Inf, mean(iris$Petal.Width), Inf), 
+                   labels = c("debajo-media", "arriba-media"))
+```
+
+
+
+Ahora ya tenemos dos variable discreta y podemos hacer que `facet_grid()` utilice una variable para llenar filas y otra para columnas. Se puede especificar de dos maneras
+
+
+```{r, out.width = "90%", fig.asp = 4/9, eval = FALSE}
+ggplot(iris) + geom_point( aes(Sepal.Length, Petal.Length, color = Species)) +
+facet_grid(rows = vars(new_variable), cols = vars(Species))        # graf x filas y columnas
+```
+
+
+```{r, out.width = "90%", fig.asp = 4/9}
+ggplot(iris) + geom_point( aes(Sepal.Length, Petal.Length, color = Species)) +
+facet_grid(new_variable ~ Species)     
+```
+
+
+Como vemos, los lirios de la clase setosa siempre tiene el ancho de su pétalo por debajo de la media, y los virginica siempre están por encima de la media.
+
+
+#### Ejes de los small multiples
+
+
+Podemos ajustar las escalas de los ejes para que sean comunes para cada small multiple (la opción por defecto) o dejar que las escalas de cada gráfico varíen en función del rango de los datos representados:
+
+```{r, eval = FALSE}
+p + facet_grid(rows = vars(Species))    #- escalas comunes
+p + facet_grid(rows = vars(Species), scales = "free")   #- las escalas de cada small pueden variar
+p + facet_grid(rows = vars(Species), scales = "free_y") #- solo dejamos libre/variar la escala del eje y
+```
+
+
+Solo muestro el resultado de la segunda expresión:
+
+
+```{r, out.width = "90%", fig.asp = 4/9, echo = FALSE}
+p + facet_grid(rows = vars(Species), scales = "free")   #- las escalas de cada small pueden variar
+```
+
+
+**Un truquito:** el argumento `margin` en `ggplot2::facet_grid()` añade margenes a los small multiples facilitando la visualización. Además añade un nuevo small con todas las observaciones.
+
+
+
+```{r, echo = FALSE, fig.asp = 7/9}
+tweetrmd::tweet_embed("https://twitter.com/WeAreRLadies/status/1123109094422921216", theme = "light", align = "center", maxwidth = 400)
+```
+
+
+
+Puedes probarlo tú mismo corriendo lo siguiente:
+
+```{r, out.width = "90%", fig.asp = 4/9}
+p + facet_grid(rows = vars(Species),  margins = TRUE)   
+```
+
+
+Otro truco, esta vez avanzado: Un [gist](https://gist.github.com/padpadpadpad/dc1f4520e4f9530b2c70fed0e4a425e9) para poner labels a los smalls multiples.
+
+<br>
+
+
+### 3.4 Anotaciones
+
+> Annotations are a special type of layer that don’t inherit global settings from the plot. They are used to add fixed reference data to plots.
+
+Las anotaciones en los gráficos permiten resaltar algún fenómeno u observación  de interés, y son importantes a la hora de contar historias (storytelling) con los gráficos y visualizaciones. 
+
+En el entorno `ggplot` podemos hacer anotaciones en nuestro gráficos de varias maneras, por ejemplo con `annotate()`. Aunque conceptualmente, como señala Hadley, las anotaciones son metadatos, desde el punto de vista práctico se usan los mismas funciones o geoms para manipularlos.  
+
+
+También existen algunas funciones auxiliares en ggplot2 y en paquetes específicos para hacer anotaciones en gráficos ggplot. Por ejemplo, cuando se hacen anotaciones en un gráfico de puntos es fácil que las anotaciones caigan unas encima de otras, el paquete [ggrepel](https://buff.ly/2HXErxL) permite aliviar este problema.
+
+Utilicemos la función `annotate()`. Por ejemplo, el siguiente chunk hace algunas anotaciones sin mucho sentido pero fáciles de entender:
+
+
+```{r, echo = FALSE}
+p <- ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_point()
+```
+
+Por ejemplo, el siguiente chunk usa `annotate()` para hacer algunas anotaciones sin mucho sentido, pero fáciles de entender:
+
+```{r}
+p + annotate(geom = "text", x = 6, y = 2, label = "Una anotación", size = 5) +
+    annotate("rect", xmin = 6, xmax = 7,ymin = -Inf, ymax = Inf, alpha = 0.2, fill = "pink") + 
+    annotate("segment", x = 5, xend = 7, y = 6, yend = 8, colour = "blue") 
+```
+
+<br>
+
+#### Anotaciones de texto en las observaciones
+
+Agregar texto a un gráfico es una de las formas más comunes de anotación. Por ejemplo, para señalizar e identificar observaciones anómalas. Sin embargo, como señala Hadley, añadir texto no es fácil por la forma en la que R maneja las fuentes.
+
+La función principal para el etiquetado de gráficos es `geom_text()`. Por ejemplo:
+
+
+```{r, eval = TRUE, out.width = "60%"}
+p + geom_text(aes(label = Species))
+```
+
+También podíamos haber añadido el valor de la longitud del pétalo. 
+
+
+```{r, eval = TRUE, out.width = "60%"}
+p + geom_text(aes(label = Petal.Length))
+```
+
+
+
+Hemos añadido a cada observación un texto, proveniente de alguna de las variables de `iris`. Este gráfico no es muy útil, pero la técnica sí. Imagina que queremos marcar los lirios 45 y 140^[O marcar/anotar los lirios 2 lirios más grandes o el lirio mediano. ¿Lo hacéis?]. Podemos hacer lo siguiente:
+
+
+```{r, eval = TRUE, out.width = "60%"}
+#- seleccionamos los lirios más grandes de cada especie 
+iris_max <- iris %>% group_by(Species) %>% slice_max(Petal.Length, n = 1)
+
+p + 
+ geom_text(data = iris_max, aes(label = Species), color = "black", size = 3)
+```
+
+Podemos ajustar la posición y tamaño del texto, etc.. Por ejemplo, podemos cambiar la alineación de las anotaciones con con `hjust(“left”, “center”, “right”, “inward”, “outward”)` y `vjust (“bottom”, “middle”, “top”, “inward”, “outward”)`.
+
+<br>
+
+
+#### Lineas
+
+Podemos añadir lineas: 
+
+```{r, eval = FALSE}
+p + geom_vline(xintercept = 6)
+p + geom_hline(yintercept = 5, size = 1.7, colour = "purple", linetype = "dashed")
+p + geom_abline(intercept = 0.7, slope = 0.4, size = 1.9, colour = "steelblue")
+```
+
+<br>
+
+
+### 3.5 Cambiando los límites de los ejes
+
+  Si quieres modificar el recorrido de los ejes, los "límites" de los ejes, puedes usar `lims()`. Para los ejes X e Y hay dos funciones auxiliares: `xlim()` e `ylim()`. 
+
+
+```{r, out.width = "60%"}
+p + lims(color = c("setosa"), x = c(NA,6), y = c(1,8))
+```
+
+
+
+```{r, out.width = "60%"}
+p + xlim(c (4, 6)) + ylim(c(NA, 5)) 
+```
+
+Se puede hasta dar la vuelta a los ejes
+
+
+```{r, out.width = "60%"}
+p + xlim(c (7, 3)) + ylim(c(NA, 5)) 
+```
+
+
+Los límites o dominio del gráfico suelen obtenerse automáticamente de los datos, pero, otra vez according to Hadley, hay dos razones por las que podemos estar interesados en cambiar los límites del gráfico: 
+
+  1) centrarnos en una región especifica del gráfico 
+  
+  2) aumentar los límites para que varios gráficos ajusten sus escalas.   
+
+<br>
+
+Por ejemplo, si después de hacer un gráfico quieres centrarte sólo en una parte; es decir, hacer un zoom sobre una parte del gráfico, tenemos 2 alternativas:
+
+1. Borrar los puntos que caen fuera de los limites de lo que quieras que se visualice (si en una escala continua solo quieres usar un límite pon NA):
+
+
+```{r, eval = FALSE}
+p + xlim(c(4, 5)) + ylim(c(NA, 5)) #- cuidado, se pueden borrar observaciones
+```
+
+Con este enfoque tienes que tener cuidado, ya que  si por ejemplo después utilizar alguna transformación estadística como por ejemplo `geom_smooth()`, las observaciones eliminadas al ajustar los límites no entrarán en el cálculo estadístico. 
+
+
+
+```{r, eval = FALSE}
+p + geom_smooth(color = "purple")
+p + geom_smooth(color = "purple") + xlim(c(4, 5.7)) + ylim(c(1.5, 5))   # deletes points
+```
+
+
+```{r, echo = FALSE, fig.asp = 5/9, out.width = "90%"}
+p1 <- p + geom_smooth(color = "purple")
+p2 <- p + geom_smooth(color = "purple") + xlim(c(4, 5.7)) + ylim(c(1.5, 5))   # deletes points
+
+
+p1 + p2 + plot_layout(ncol = 2)
+```
+
+
+2. Cambiar los límites de los ejes X e Y haciendo un zoom en la región de interés pero sin eliminar puntos. Esto lo conseguimos con `coord_cartesian()`.
+
+```{r, eval = FALSE}
+p + geom_smooth(color = "purple")
+p + geom_smooth(color = "purple") + coord_cartesian(xlim = c(4, 5.7), ylim = c(1.5, 5))
+```
+
+
+
+
+```{r, echo = FALSE, fig.asp = 5/9, out.width = "90%"}
+p1 <- p + geom_smooth(color = "purple")
+p2 <- p + geom_smooth(color = "purple") + coord_cartesian(xlim = c(4, 5.7), ylim = c(1.5, 5))
+
+
+p1 + p2 + plot_layout(ncol = 2)
+```
+
+
+<br>
+
+
+### 3.6 Escalas
+
+> Scales control the details of how data values are translated to visual properties. Override the default scales to tweak details like the axis labels or legend keys, or to use a completely different translation from data to aesthetic. labs() and lims() are convenient helpers for the most common adjustments to the labels and limits.
+
+Las escalas permiten leer/interpretar un gráfico; permiten interpretar los elementos geométricos (por ejemplo en nuestro gráfico, los puntos) en función de los valores originales de las observaciones. Las escalas son un elemento más de los gráficos ggplot y se producen/controlan con la familia de funciones `scale_xx()`
+
+En `ggplot2` las escalas o guías se producen automáticamente, no vemos que hagamos nada, pero under the hood se están fijando con la familia de funciones `scale_xx()` que son las que controlan como se mapean los valores de las variables con las propiedades estéticas de nuestro gráfico (por ejemplo el eje X) de forma que podamos interpretar la posición de los distintos puntos mirando las escalas. Las escalas también construyen los elementos que permiten leer/interpretar los gráficos: los ejes y las leyendas.
+
+Como `ggplot2` hace el mapeo y genera las escalas y leyendas automáticamente, en la práctica podemos hacer gráficos sin saber como funcionan y, por tanto, sin saber manipular este elemento de un gráfico ggplot. Pero si aprendemos a manipular las escalas, esto nos dará más flexibilidad a la hora de utilizar `ggplot2`.
+
+En muchos tipos de datos es importante pararse a pensar cual es la mejor escala para representar las variables. Quizás sea conveniente cambiar la escala de un eje para distribuir mejor las observaciones en el espacio, o para interpretar mejor las variaciones entre observaciones; por ejemplo la escala logarítmica o en porcentajes son a veces más apropiadas que las escalas originales.
+
+
+En realidad, para cada par variable/estética representada en un gráfico ggplot es necesaria una escala, y tendría que fijarse con una de las funciones de la familia `scale_xx()`. Realmente cuando hacemos este gráfico, en el que asociamos 3 variables a 3 propiedades estéticas con `aes()`, se necesitaría especificar las escalas de las 3 variables:
+
+
+```{r}
+p <- ggplot(iris, aes(Sepal.Length, Petal.Length)) +  geom_point(aes (color = Species)) 
+```
+
+Bien, pero entonces ¿por qué no lo hacemos?, ¿por qué no especificamos las escalas? Pues porque lo hace `ggplot2` por nosotros. En realidad cuando ejecutamos la expresión anterior, realmente se está haciendo lo siguiente:
+
+
+```{r, eval = FALSE}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) +   geom_point(aes (color = Species)) +
+  scale_x_continuous() + 
+  scale_y_continuous() + 
+  scale_color_discrete()
+```
+
+Es decir, `ggplot2` asigna a cada variable una escala, a las variables continuas les asigna una escala continua y a las categóricas una escala discreta. PERO, si queremos, si lo consideramos apropiado podríamos cambiar la escala. Por ejemplo:
+
+
+```{r, eval = FALSE}
+p + scale_y_reverse() + scale_colour_grey()
+p + scale_x_sqrt() + scale_y_log10()
+p + scale_x_continuous(trans = "log")
+p + scale_color_brewer(palette = "Dark2")
+```
+
+Solo represento la primera transformación, en la que se da la vuelta a la escala del eje Y y el color, asociado a la variable Species, pasa a escala de grises:
+
+```{r, echo = FALSE, fig.asp = 5/9, out.width = "60%"}
+p + scale_y_reverse() + scale_colour_grey()
+```
+
+<br>
+
+#### Labels de los ejes
+
+También se pueden modificar lo que vemos en los escalas. Antes vamos a modificar los títulos de los ejes y leyendas.
+
+
+```{r, eval = TRUE}
+p <- p + labs(x = "Eje X", y = "Eje Y", color = "Leyenda\n para el color")
+```
+
+
+De momento la escala del eje X varia aproximadamente de 3 a 8. Los títulos de la escala del eje X sólo muestra los valores 5, 6, 7 y 8. Vamos a modificar "el texto", los números que se ven y que sirven de guía para la escala del eje X:
+
+```{r, eval = TRUE, out.width = "45%"}
+p + scale_x_continuous(breaks = seq(3, 10, 0.5), limits = c(3, 10)) 
+```
+
+
+En el eje Y se ven los números 2, 4 y 6. Cambiemos los labels de su escala (no del eje Y, sino de la escala del eje Y):
+
+
+```{r, eval = TRUE, out.width = "45%"}
+p + scale_y_continuous(breaks = seq(0, 12, 0.25),  label = scales::dollar) 
+```
+
+
+
+También se pueden modificar los de la leyenda para el color:
+
+
+```{r, eval = TRUE, out.width = "45%"}
+p + scale_color_manual(values = c("purple", "pink", "red2"), name = "Especies\n de lirios")
+```
+
+Si hubiese usado una variable discreta asociada  a la estética "shape", tendríamos que usar `scale_shape_discrete()`, si la variable asociada a shape fuese continua: `scale_shape_continuous()`
+
+¿Y si hubiésemos usado una variable continua para la estética "fill"? Pues `scale_fill_continuous()`
+
+<br>
+
+#### Familia de funciones de escala
+
+  • scale_*_continuous()  
+  • scale_*_discrete()  
+  • scale_*_ordinal()  
+  • scale_*_manual()  
+  • scale_{color/fill}_brewer()  
+  • scale_{color/fill}_distiller()  
+  • scale_{color/fill}_gradient()  
+
+
+<br>
+
+### 3.7 Stats (transformaciones estadísticas)
+
+
+Puede leerse en la web de `ggplot2`, concretamente [aquí](https://ggplot2.tidyverse.org/reference/) lo siguiente:
+
+> A layer combines data, aesthetic mapping, a geom (geometric object), a stat (statistical transformation), and a position adjustment. Typically, you will create layers using a geom_ function 
+
+PERO
+
+> A handful of layers are more easily specified with a stat_ function, drawing attention to the statistical transformation rather than the visual appearance. The computed variables can be mapped using stat().
+
+Algunos gráficos, como los gráficos de puntos, no requieren del uso de transformaciones estadísticas de las observaciones, pero otros gráficos como rectas o curvas de predicción o como los boxplots o diagramas de caja, sí que las necesitan ^[Por ejemplo, piensa que lo que se visualiza con `geom_smoth()` no son los datos originales sino, por ejemplo, la linea de regresión si usamos `geom_smoth(method = "lm")`]. Podemos usar transformaciones estadísticas en gráficos ggplot con la familia de funciones **`stat_xx()`**
+
+Por ejemplo, cuando se hace un diagrama de caja o boxplot, no se representan las observaciones originales, sino que se muestran 5 estadísticos resumen de la distribución de los datos; es decir, se utiliza una transformación estadística. Cuando usábamos `geom_smoth()` tampoco representábamos con él los datos originales, sino una transformación estadística de estos. Concretamente la transformación estadística que utiliza `geom_smoth()` es genéricamente un "smoother", calcula mediante una rolling-windows la media de y, condicionada a x.  
+
+Cada función `geom_xx()` que utilicemos, en realidad necesita de un stat_xx(), entonces ¿por qué nunca lo hemos usado/especificado nosotros? Con `ggplot2` la razón es casi siempre la misma: porque under the hood `ggplot2` hace muchas cosas por nosotros. En concreto, cada vez que usamos un `geom_xx()` en realidad `ggplot2` está fijando una transformación estadística por defecto por nosotros. Ggplot es un sistema muy completo, pero aún así, una vez lo entiendes, hacer gráficos con el es relativamente fácil y rápido porque muchas de sus opciones opciones no hace falta especificarlas directamente.
+
+
+Por ejemplo, ¿cual es la transformación estadística que se usa por defecto en geom_point()? Ninguna, bueno, en realidad usa  `stat = "identity"`, pero como lo especifica ggplot2 automáticamente, nosotros no nos damos cuenta.
+
+Cuando hacíamos este gráfico:
+
+```{r, eval = FALSE}
+ggplot(iris, aes(Petal.Length, Sepal.Length)) + geom_point() 
+```
+
+En realidad estábamos haciendo
+
+
+```{r, eval = FALSE}
+ggplot(iris, aes(Petal.Length, Sepal.Length)) + geom_point(stat = "identity")
+```
+
+¿Qué transformaciones estadísticas podemos hacer cuando usemos `geom_point()`? Por ejemplo, `geom_point(stat = "unique")` sólo representaría las observaciones únicas o NO repetidas. En este caso creo que iris no tiene observaciones repetidas, así si ejecutáis la instrucción de abajo se seguirán visualizando los 150 lirios.
+
+```{r, eval = FALSE}
+ggplot(iris, aes(Petal.Length, Sepal.Length)) + geom_point(stat = "unique") #- dejaría solo observaciones no repetidas
+```
+
+
+Podemos consultar las opciones por defecto completas de `geom_point()` [aquí](https://ggplot2.tidyverse.org/reference/geom_point.html)
+
+
+
+Cada `geom_xx()` tiene un default statistic, pero podemos cambiarlo y especificar otra stat para adaptarlo a nuestras necesidades. Por ejemplo, the default statistic for `geom_bar()` is `stat_bin()` pero podemos usar otras stat_xx. Otra vez parece un trabalenguas, pero cuando lo entiendes es relativamente sencillo. 
+
+Por ejemplo, en nuestro gráfico de puntos, podemos usar otras transformaciones estadísticas, una de las que más sentido tiene es calcular medias móviles con un método de alisado (smoother)
+
+
+
+```{r, eval = FALSE}
+p <- ggplot(iris, aes(Petal.Length, Sepal.Length, color = Species)) 
+
+p + geom_point(stat = "identity")
+
+p + geom_point(stat = "smooth", method = "auto")
+```
+
+
+Aunque en este caso es bastante más fácil hacerlo con:
+
+
+```{r, eval = FALSE}
+p + geom_point() + geom_smooth()
+p + geom_point() + stat_smooth()
+
+p + geom_point() + stat_smooth(method = "lm",   se = FALSE,  size = 1)
+p + geom_point() + geom_smooth(method = "lm",   se = FALSE,  size = 1)
+
+p + geom_point() + geom_smooth(method = "lm", col = "#C42126",  se = FALSE,  size = 1)
+```
+
+<br>
+
+Algunas transformaciones estadísticas útiles y en qué geoms están disponibles:
+
+    - stat_bin(): geom_bar(), geom_freqpoly(), geom_histogram()  
+    - stat_bin2d(): geom_bin2d()  
+    - stat_bindot(): geom_dotplot()  
+    - stat_binhex(): geom_hex()   
+    - stat_boxplot(): geom_boxplot()    
+    - stat_contour(): geom_contour()  
+    - stat_quantile(): geom_quantile()   
+    - stat_smooth(): geom_smooth()  
+    - stat_sum(): geom_count()   
+
+Es raro que tengamos que usar estas funciones `stats_xx()` directamente, pero si quieres ver que hacen exactamente conviene consultar la documentación para ver qué hace y cómo se aplica exactamente cada transformación estadística a los datos.
+
+Hay otras funciones `stat_xx()` que no se pueden utilizar con las funciones `geom_xx()`:
+
+    - stat_ecdf(): compute a empirical cumulative distribution plot.  
+    - stat_function(): compute y values from a function of x values.  
+    - stat_summary(): summarise y values at distinct x values.  
+    - stat_summary2d(), stat_summary_hex(): summarise binned values.  
+    - stat_qq(): perform calculations for a quantile-quantile plot.  
+    - stat_spoke(): convert angle and radius to position.  
+    - stat_unique(): remove duplicated rows.  
+
+<br>
+
+#### Algunos ejemplos
+
+Veamos algunos ejemplos útiles:
+
+1. En un diagrama de caja mostrar la media:
+ 
+Queremos que la media se represente como un punto, entonces usamos `geom_point()` pero no queremos representar los valores originales, sino la media, así que dentro de geom usamos la opción `stat = summary`
+ 
+```{r}
+ggplot(iris, aes(Species, Sepal.Length)) + 
+  geom_boxplot() + 
+  geom_point(stat = "summary", fun.y = "mean", colour = "red", size = 4)
+```
+
+Se conseguiría los mismo usando directamente la  función `stat_summary()` con la opción geom = "point". Sí, en `ggplot2` las cosas se pueden hacer de varias maneras!!
+
+
+```{r, eval = FALSE}
+ggplot(iris, aes(Species, Sepal.Length)) + 
+  geom_boxplot() + 
+  stat_summary(geom = "point", fun.y = "mean", colour = "red", size = 4)
+```
+
+2. **Otro ejemplo:** el default stat de geom_histogram es stat = "bin", mostrandonos el número de observaciones en cada bin. Si queremos que nos muestre frecuencias relatívas al grupo o bin más numeroso: 
+
+```{r, eval = FALSE}
+ggplot(iris, aes(Sepal.Length)) + geom_histogram() 
+
+ggplot(iris, aes(Sepal.Length)) + geom_histogram(aes(y = stat(count / max(count))))
+```
+
+```{r, echo = FALSE, out.width = "90%",  fig.asp = 5/9}
+p1 <- ggplot(iris, aes(Sepal.Length)) + geom_histogram() 
+p2 <- ggplot(iris, aes(Sepal.Length)) + geom_histogram(aes(y = stat(count / max(count))))
+p1 + p2  + plot_layout(ncol = 2)
+```
+
+
+
+<br>
+
+**Bonus:** Con `stat_function()` podemos dibujar curvas de densidad:
+
+```{r, eval = FALSE}
+df <- tibble(x = c(-20, 20))
+  
+ggplot(df, aes(x = x)) +
+stat_function(fun = dnorm, args = list(mean = 0, sd = 5), color = "black") +
+stat_function(fun = dnorm, args = list(mean = 0, sd = 1), color = "red") +
+stat_function(fun = dnorm, args = list(mean = 0, sd = 3), color = "blue")
+```
+
+
+<br>
+
+### 3.8 Position adjustments
+
+
+> All layers have a position adjustment that resolves overlapping geoms. Override the default by using the position argument to the geom_ or stat_ function.
+
+
+Los ajustes de posición afectan a la posición de los elementos de una capa. Los gráficos en los que más se utilizan los ajustes de posición son los gráficos de barras. Su posición por defecto es position = "stack". Se pueden cambiar con el argumento geom_bar(position = "xxxx")` , aunque si usas las funciones `position_xx()` tienes más flexibilidad:
+
+```{r, eval = FALSE}
+ggplot(iris , aes(Species)) + geom_bar()
+ggplot(mtcars, aes(cyl)) +  geom_bar()
+```
+
+
+```{r, echo = FALSE, out.width = "90%",  fig.asp = 5/9}
+p1 <- ggplot(iris , aes(Species)) + geom_bar()  #- tema por defecto
+p2 <- ggplot(mtcars, aes(cyl)) +  geom_bar()
+
+p1 + p2  + plot_layout(ncol = 2)
+```
+
+Para poder visualizar gráficos de barras con 2 variables,tenemos que usar otro dataset: `mtcars`
+
+```{r, eval = FALSE}
+ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar() #- pos
+ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar(position = "fill")
+ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar(position = "dodge")
+ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar(position = position_dodge2(preserve = "single"))
+```
+
+
+```{r, echo = FALSE, out.width = "100%",  fig.asp = 5/9}
+p1 <- ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar() #- pos
+p2 <- ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar(position = "fill")
+p3 <- ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar(position = "dodge")
+p4 <- ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar(position = position_dodge(preserve = "single"))
+
+p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
+```
+
+<br>
+
+Por ejemplo, podemos modificar la posición por defecto de nuestro gráfico de puntos con el iris dataset usando dos enfoques:
+
+```{r, eval = FALSE}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() + geom_point(position = "jitter", color = "pink") 
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() + geom_jitter( color = "pink") 
+```
+
+
+
+```{r, echo = FALSE}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() + geom_point(position = "jitter", color = "pink") 
+```
+
+`geom_jitter()`, o alternativamente `geom_point(position = "jitter")` cambia la posición original de los datos añadiendo un poco de ruido, haciendo que se desplacen un poco. Esta técnica se usa muchos cuando hay muchos datos similares (overplotting).
+
+
+<br>
+
+### 3.9 Coordenadas
+
+> The coordinate system determines how the x and y aesthetics combine to position elements in the plot. The default coordinate system is Cartesian (coord_cartesian()), which can be tweaked with coord_map(), coord_fixed(), coord_flip(), and coord_trans(), or completely replaced with coord_polar()
+
+
+Por ejemplo: `coord_fixed()`. En nuestro gráfico, tanto la longitud del pétalo como del sépalo se miden en las mismas unidades, así que su ratio implícito es 1 a 1. Cambiemos el ratio de las coordenadas con `coord_fixed()`
+
+```{r, eval = FALSE}
+p <- ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() 
+
+p + coord_fixed(ratio = 1/3)
+p + coord_fixed(ratio = 3/1)
+```
+
+
+
+```{r, echo = FALSE, out.width = "100%",  fig.asp = 5/9}
+p1 <- ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() 
+p2 <- p1 + coord_fixed(ratio = 1/3)
+p3 <- p1 + coord_fixed(ratio = 3/1)
+
+p2 + p3 + plot_layout(nrow = 1)
+#https://www.statworx.com/de/blog/coordinate-systems-in-ggplot2-easily-overlooked-and-rather-underrated/
+```
+
+
+
+
+<br>
+
+
+## 4. Combinando gráficos
+
+
+La técnica del faceting es una fantástica herramienta para dividir un gráfico en varios, en principio en función de una variable categórica, si queremos usar una variable continua primero habría que discretizarla. **PERO**, a veces lo que interesa es crear una figura compuesta de varios gráficos diferentes. Esto no es un elemento más de ggplot2 es una operación que hacemos sobre un grupo de varios gráficos.
+
+
+Podemos hacerlo con varios paquetes:
+
+- con el paquete `gridExtra` y su función `grid.arrange()`
+
+```{r, eval = TRUE, out.width = "80%"}
+library(gridExtra)
+p1 <- ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_point()
+p2 <- ggplot(iris)+ aes(Species, Sepal.Length) + geom_boxplot()
+
+grid.arrange(p1, p2, ncol = 2, widths = c(6.5, 3.5))
+```
+
+Además de los argumentos ncol, nrow y widths, con  `gridExtra` se pueden hacer composiciones [más complejas](https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html)
+
+
+- con el paquete [`patchwork`](https://github.com/thomasp85/patchwork) 
+
+
+
+```{r, eval = TRUE, out.width = "80%"}
+library(patchwork)
+p1 + p2 + plot_layout(ncol = 2)
+```
+
+- con el paquete [`cowplot`](https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html). Este paquete también se puede utilizar para hacer anotaciones o para incorporar imágenes a nuestros gráficos
+
+
+```{r}
+library(cowplot)
+ggdraw(p1) + draw_image(here::here("./imagenes/Captura.JPG"), 
+               x = 1, y = 1, hjust = 1, vjust = 1, width = 0.33, height = 0.42)
+```
+
+
+<br>
+
+
+## 5. Exportando gráficos
+
+La mayoría de las veces, cuando creamos un gráfico lo vemos inmediatamente, pero también podemos asignarle un nombre y manipularlo más adelante. 
+
+```{r, eval = FALSE}
+p <- ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point()
+p + geom_line()
+```
+
+
+Una vez que tienes el gráfico guardado como un objeto en el R environment puedes hacer varias cosas con él:
+
+1. verlo en la pantalla con `print()` o llamándolo con "su nombre".
+
+2. guardarlo en un fichero en diferentes formatos. Piensa que estamos guardando el gráfico, la imagen, la representación del gráfico, no el objeto R.
+
+    - Podemos usar la "Export Tab" en el Plot Pane de Rstudio. Lo grabará en baja resolución.  También podemos cambiar las dimensiones (anchura y altura) del gráfico. Si vamos a utilizar el gráfico en Word es conveniente guardar el gráfico como Metafile.
+    
+    - Como alternativa podemos usar la función `ggsave()` que, ademas, nos permite cambiar el tamaño y la resolución del gráfico con los argumentos width, height y dpi. Nota: Los parámetros width and height también determinan el tamaño de la fuente del gráfico guardado.
+
+    
+
+```{r, eval = FALSE}
+ggsave("./graf_out/my_grafico_chulo.png", p, width = 15, height = 10)
+ggsave("filename.png", plot = my_plot, width = 8, height = 6, units = "in", dpi = "retina")
+
+# Tb funciona para figuras compuestas de varios gráficos
+grafico_combinado <- grid.arrange(p1, p2, ncol = 2, widths = c(6, 4))
+ggsave("fig_output/my_combo_plot.png", grafico_combinado, width = 10, dpi = 300)
+```
+
+
+- Finalmente, podemos guardar una copia completa del gráfico, no de su representación visual, sino del objeto R con `saveRDS()`, para luego leerlo con `readRDS()`. Aunque, ya que nos ponemos, es mejor guardar el script que genera el objeto. Sólo tendría sentido si  fuese muy costoso, por ejemplo en términos de tiempo, reproducir el gráfico.
+
+```{r, eval = FALSE}
+saveRDS(p, "plot.rds")
+my_valioso_grafico <- readRDS("plot.rds")
+```
+
+
+<br>
+
+--------------------------------------------------------
+
+## 6. Tipos de gráficos
+
+En está sección presentaremos algunos ejemplos de algunos de los gráficos más utilizados en el análisis de datos. Puedes ver listados más completos en:
+
+  - [R-graph gallery](https://www.r-graph-gallery.com/): Impresionante!!
+
+
+  - [Top 50 ggplot2 Visualizations (With Full R Code), de r-statistics.co](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html): más básico pero muy didáctico.
+
+  
+  - [Extensiones ggplot2](http://www.ggplot2-exts.org/gallery/): Impresionante!!
+
+  - [R-graph gallery - ggplot2 package](http://r-graph-gallery.com/ggplot2-package.html): otra vez, impresionante!!
+
+
+<br>
+
+### 6.1 Histogramas
+
+Se utilizan para mostrar la **distribución de UNA variable continua**, por ejemplo la longitud del sépalo (Sepal.Length).
+
+Para hacer histogramas en ggplot2 se utiliza `geom_histogram` y, a veces, `geom_freqpoly()`. Los dos geoms trabajan de la misma manera, dividen la variable x en intervalos y cuentan las observaciones en cada intervalo, para mostrarlas en el eje Y. La diferencia entre ellos es que `geom_histogram` utiliza barras para mostrar el número de observaciones o frecuencia absoluta, mientras que  `geom_freqpoly()` usa lineas. 
+
+```{r}
+ggplot(iris, aes(Sepal.Length)) + geom_histogram() 
+```
+
+Como ves, lo que hace un histograma es dividir el eje X en intervalos o "bins" y mostrar en el eje Y el número de observaciones de x que caen en cada "bin". Además, ggplot2 nos avisa de que por defecto se divide el eje X en 30 intervalos, pero que podemos cambiarlo con `bins = my_n_de_bins`. 
+
+
+```{r, eval = FALSE}
+p <- ggplot(iris, aes(Sepal.Length))
+p + geom_histogram(bins = 40) + xlab("40 intervalos")
+p + geom_histogram(bins = 4) + xlab("Sólo 4 intervalos")
+```
+
+
+```{r, echo = FALSE, out.width = "95%"}
+p <- ggplot(iris, aes(Sepal.Length))
+p1 <- p + geom_histogram(bins = 40) + xlab("40 intervalos")
+p2 <- p + geom_histogram(bins = 4) + xlab("Sólo 4 intervalos")
+p1 + p2 + plot_layout(ncol = 2)
+```
+
+
+Otra opción interesante es elegir la anchura del intervalo con la opción `binwidth`.
+
+```{r, eval = FALSE}
+p <- ggplot(iris, aes(Sepal.Length))
+p + geom_histogram(binwidth = 0.1) + xlab("He elegido la anchura = 0.1")
+p + geom_histogram(binwidth = 1.1) + xlab("Esta vez la anchura = 1.1")
+```
+
+
+```{r, echo = FALSE, out.width = "95%"}
+p <- ggplot(iris, aes(Sepal.Length))
+p1 <- p + geom_histogram(binwidth = 0.1) + xlab("He elegido la anchura = 0.1")
+p2 <- p + geom_histogram(binwidth = 1.1) + xlab("Esta vez la anchura = 1.1")
+p1 + p2 + plot_layout(ncol = 2)
+```
+
+
+Si en el eje Y queremos frecuencias relativas o porcentajes en lugar de counts, podemos hacerlo con:
+
+```{r}
+ggplot(iris, aes(Sepal.Length)) + 
+  geom_histogram(aes(y = stat(count) / sum(count)), bins = 10) +
+  scale_y_continuous(labels = scales::percent)
+```
+
+
+Se puede mejorar bastante la apariencia del histograma jugando con los colores y opciones:
+
+```{r}
+ggplot(iris, aes(Sepal.Length)) + geom_histogram(bins = 10, color = "black", fill = "tomato")
+```
+
+
+
+Si asociamos/mapeamos la variable Species a alguna estética, por ejemplo a la estética "fill" o relleno de las barras con `aes(fill = Species)`, se visualizará qué parte de cada intervalo pertenece a cada clase de lirio.
+
+
+
+```{r}
+ggplot(iris, aes(Sepal.Length)) + geom_histogram(bins = 10, aes(fill = Species), color = "black")
+```
+
+
+Evidentemente, también podemos visualizar como cambia la distribución de la anchura del sépalo entre los 3 tipos de lirios si hacemos un small multiple:
+
+
+```{r}
+p <- ggplot(iris, aes(Sepal.Length, fill = Species)) + geom_histogram(bins = 10, color = "black")
+p + facet_grid(cols = vars(Species))
+```
+
+Para mejorar la visualización podemos poner en el fondo el histograma para todos los datos. Lo aprendí [aquí](https://drsimonj.svbtle.com/plotting-background-data-for-groups-with-ggplot2), aunque ahora mismo hay un paquete para implementar esta técnica, es el paquete [`gghighlight`](https://yutannihilation.github.io/gghighlight/index.html).
+
+
+```{r}
+iris_backgroung <- iris %>% select(-Species)
+ggplot(iris, aes(x = Sepal.Length)) +
+  geom_histogram(data = iris_backgroung, fill = "grey", bins = 15) +
+  geom_histogram(aes(fill = Species), bins = 15) +
+  facet_grid(cols = vars(Species))
+```
+
+<br>
+
+#### geom_density()
+
+Una alternativa a los histogramas son los gráficos de densidad con `geom_density()`. Pero, según Hadley: 
+
+>they are harder to interpret since the underlying computations are more complex. They also make assumptions that are not true for all data, namely that the underlying distribution is continuous, unbounded, and smooth.
+
+Como dice Hadley, `geom_density()` estima la función de densidad, por lo que la estimación depende de una serie de paramétros como `adjust`. Hacemos uso de `xlim(3, 9)` para expandir loslímites del eje X.
+
+
+```{r, out.width = "85%"}
+ggplot(iris, aes(Sepal.Length)) + 
+  geom_density(color = "red",   size = 1.2) +  
+  geom_density(color = "blue",  size = 1.2, adjust = 3) +
+  geom_density(color = "black", size = 1.2, adjust = 0.5) +  xlim(2, 10)
+```
+
+<br>
+
+Podemos asociar la variable Species a la estética fill con `aes(fill = Species)` para obtener una estimación de la densidad para cada tipo de lirio.
+
+
+```{r}
+ggplot(iris, aes(Sepal.Length, fill = Species)) + geom_density(position = "stack", alpha = 0.5)
+```
+
+<br>
+
+Hay muchas otras posibilidades. Por ejemplo:
+
+```{r, eval = FALSE}
+ggplot(iris, aes(Sepal.Length, fill = Species)) + geom_density(position = "fill", alpha = 0.5) #- position = "fill"
+
+ggplot(iris, aes(Sepal.Length, stat(count), fill = Species)) + geom_density(position = "stack", alpha = 0.5) #- stat(count)
+```
+
+
+Muchas veces se suelen hacer los histogramas superponiendo la f. de densidad normal o una estimación de la densidad de x con `geom_density()` o con `geom_line(stat="density")`. Para que el gráfico se vea mejor, ajustaremos el eje X con ` xlim()`:
+
+
+```{r}
+#- calculamos media y desviación tipica de Sepal.Length para luego usarlas para construir la curva normal
+media <- mean(iris$Sepal.Length, na.rm = TRUE)     #- media de la longitud del sépalo
+desviacion <- sd(iris$Sepal.Length, na.rm = TRUE)  #- desviación 
+
+#- hacemos el histograma
+p <- ggplot(iris, aes(Sepal.Length)) +
+      geom_histogram(aes(y=..density..),  color="black", fill = "steelblue", alpha = 0.2)
+
+#- le añadimos la densiidad estimada y la normal
+p + geom_density( color="purple", size = 1) +
+    stat_function(fun = dnorm, colour = "red", size = 1, args = list(mean = media, sd = desviacion))  + 
+    xlim(c(min(iris$Sepal.Length)-1, 9))
+
+```
+
+
+Si necesitas saber más cosas sobre los histogramas puedes acudir [aquí](https://edav.info/histo.html) o [aquí](http://t-redactyl.io/blog/2016/02/creating-plots-in-r-using-ggplot2-part-7-histograms.html).
+
+
+
+#### Joy Division plots
+
+Hace poco apareció el paquete [ggridges](https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html) y se pusieron de moda estos tipos de gráficos:
+
+
+
+```{r}
+library(ggridges)
+ggplot(iris, aes(x = Sepal.Length, y = Species)) + geom_density_ridges(aes(fill = Species), alpha = 0.5)
+```
+
+Como se parecen a la [mítica portada](https://codigoespagueti.com/noticias/ciencia/historia-secreta-unknown-pleasures/) del primer disco de Joy Division, algunos los conocen como Joy Division plots. Abajo os pongo un ejemplo sacado de la [vignette del paquete ggridges](https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html).
+
+
+```{r}
+library(viridis)
+ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Month`, fill = ..x..)) +
+  geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
+  scale_fill_viridis(name = "Temp. [F]", option = "C") +
+  labs(title = 'Temperatures in Lincoln NE in 2016')
+```
+
+
+<br>
+
+### 6.2 Scatter plot
+
+Scatter plot, gráfico de puntos o gráfico X-Y. Se utiliza para mostrar la **relación entre DOS variables continuas**. Lo tenemos más que visto, ya que es el tipo de gráfico que hemos utilizado durante todo el tutorial. 
+
+```{r}
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + 
+     geom_point() +
+     labs(title = "Gráfico 1: Longitud del sépalo frente al pétalo",
+       subtitle = "(diferenciando por especie de lirio)",
+       caption = "Datos provenientes del Iris dataset",
+       x = "Longitud del sépalo",
+       y = "Longitud del pétalo",
+       color = "Especie de lirio")
+```
+
+
+
+#### Overplotting
+
+Los gráficos de puntos se usan habitualmente para mostrar la relación entre dos variables continuas. En conjuntos de datos con muchas observaciones pueden tener un problema de "overplotting". Esta situación ocurre cuando unos puntos se  dibujan encima de otros, de forma que no se aprecia bien la relación entre las variables
+
+Hay varias formas de tratar este problema. Veámoslo con un ejemplo sacado de la web de ggplot2:
+
+```{r, eval = FALSE}
+set.seed(1234)
+df <- data.frame(x = rnorm(2000), y = rnorm(2000))   #- creamos un conjuto de datos con 2000 observaciones y 2 v.
+
+p <- ggplot(df, aes(x, y)) + xlab(NULL) + ylab(NULL)
+
+p + geom_point()
+p + geom_point(shape = 1) # Hollow circles
+p + geom_point(shape = ".") # Pixel sized
+
+#- For larger datasets with more overplotting, you can use alpha blending (transparency) t
+p + geom_point(alpha = 1 / 10)
+```
+
+
+```{r, echo = FALSE, out.width = "85%"}
+set.seed(1234)
+df <- data.frame(x = rnorm(2000), y = rnorm(2000))   #- creamos un conjuto de datos con 2000 observaciones y 2 v.
+
+p <- ggplot(df, aes(x, y)) + xlab(NULL) + ylab(NULL)
+
+p1 <- p + geom_point()
+p2 <- p + geom_point(shape = 1) # Hollow circles
+p3 <- p + geom_point(shape = ".") # Pixel sized
+
+#- For larger datasets with more overplotting, you can use alpha blending (transparency) t
+p4 <- p + geom_point(alpha = 1 / 10)
+
+p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
+```
+
+
+<br>
+
+
+De forma alternativa, podemos lidiar con el overplotting utilizando otro enfoque que consiste en pensar en el overplotting como un problema de densidad en 2 dimensiones y utilizar un hex-plot. En un hex-plot se representan regiones (generalmente hexagonales) coloreadas en función del número de observaciones que caen en cada región, de forma que es equivalente a un histograma pero en 2d.
+
+```{r, eval = FALSE}
+p + geom_bin2d()
+p + geom_bin2d(bins = 10)
+p + geom_hex()
+p + geom_hex() + scale_fill_gradient2(low = "#132B43", high = "#56B1F7")  
+```
+
+
+```{r, echo = FALSE, out.width = "95%"}
+p1 <- p + geom_bin2d()
+p2 <- p + geom_bin2d(bins = 10)
+p3 <- p + geom_hex()
+p4 <- p + geom_hex() + scale_fill_gradient2(low = "#132B43", high = "#56B1F7")  
+p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
+```
+
+
+
+ 
+
+En [este post](https://cur.at/nuhYkL0?m=email&sid=9IprTCt) utilizan hex-plots para mostrar las zonas desde donde tiran a canasta los jugadores NBA. En [este otro post](https://rcrastinate.rbind.io/post/there-is-a-game-i-play-analyzing-metacritic-scores-for-video-games/) utilizan una combinación de `geom_point(alpha = .2, pch = 15) + geom_density_2d()` para analizar las puntuaciones de videojuegos. Además hace un uso avanzado de las escalas, al menos para mi, para que el gráfico sea fácil de visualizar.
+
+Acaba de aparecer un nuevo geom: [`geom_pointdensity()`](https://github.com/LKremer/ggpointdensity). Como dicen en su repo de Github: "A cross between a scatter plot and a 2D density plot".
+
+
+```{r}
+#devtools::install_github("LKremer/ggpointdensity")
+library(viridis)
+library(ggpointdensity)
+p +  geom_pointdensity(adjust = 7) +
+  scale_color_viridis()
+
+```
+
+
+Si quieres saber más cosas sobre cómo hacer scatterplots con `ggplot2` puedes hacerlo por ejemplo, [aquí](http://www.cookbook-r.com/Graphs/Scatterplots_(ggplot2)/) o [aquí](https://michaeltoth.me/a-detailed-guide-to-the-ggplot-scatter-plot-in-r.html).
+
+<br>
+
+### 6.3 Boxplot (gráficos de caja)
+
+Para visualizar una variable cuantitativa se suelen usar los histogramas, pero si lo que quieres es visualizar como varían los valores de una variable continua en función de los valores de una variable categórica (Species) se suelen usan boxplots o diagramas de caja. Son útiles para comparar diferentes grupos y para identificar outliers.
+
+
+Para hacer un boxplot o diagrama de caja se utiliza `geom_boxplot()`. El gráfico muestra 5 estadísticos: la mediana con una linea gruesa, el primer y tercer cuartil de los datos con los limites de la caja y el máximo y el mínimo (los limites de la linea vertical). Adicionalmente, si existen outliers, estos también se representarán.
+
+
+```{r}
+ggplot(iris, aes(x = Species,  y = Sepal.Length)) + geom_boxplot() 
+```
+
+Se pueden cambiar algunas opciones del gráfico
+
+```{r}
+p <- ggplot(iris, aes(x = Species,  y = Sepal.Length)) 
+p + geom_boxplot(aes(fill = Species), outlier.colour = "purple")
+```
+
+
+A veces, para mejorar la visualización, conviene rotar los ejes. Podemos hacerlo con `coord_flip()`
+
+```{r}
+p <- ggplot(iris, aes(x = Species,  y = Sepal.Length)) + geom_boxplot(aes(fill = Species)) 
+p + coord_flip()
+```
+
+
+Para mejorar la visualización podemos incluir las observaciones originales con `geom_point()`, pero habría mucho overplotting, así que mejor con `geom_jitter()`
+
+
+```{r}
+p + geom_jitter(width = 0.15, alpha = 1/4, color = "tomato")
+```
+
+Podemos añadir con `stats()` algún estadístico más con `stats_xx()`, por ejemplo la media con `stats_summary`:
+
+
+```{r}
+p + stat_summary(fun.y = "mean", geom = "point", color = "purple", size = 2.5)
+```
+
+Los boxplots resumen la distribución de una variable cuantitativa con sólo cinco números, proporcionando un resumen útil de los datos, pero ocultan la forma de la distribución; por ejemplo, si la distribución fuese bimodal, no lo apreciaríamos. Además, aunque usemos `geom_jitter()` para superponer los valores originales, a veces  es difícil a simple vista inferir la distribución de estos. Por ello hay varias técnicas/geoms útiles que ayudan a resolver el problema, por ejemplo `geom_violin()`. Una alternativa al boxplot son los gráficos de violín donde se estima y muestra la forma de la distribución de las observaciones:
+
+```{r, eval = FALSE}
+p <- ggplot(iris, aes(x = Species,  y = Sepal.Length)) 
+p + geom_violin(aes(fill = Species), alpha = 0.6)
+p + geom_violin(aes(fill = Species), alpha = 0.6) + geom_jitter(width = 0.15, alpha = 1/4)
+```
+
+
+```{r, echo = FALSE, out.width = "80%"}
+p <- ggplot(iris, aes(x = Species,  y = Sepal.Length)) 
+p1 <- p + geom_violin(aes(fill = Species), alpha = 0.6)
+p2 <- p + geom_violin(aes(fill = Species), alpha = 0.6) + geom_jitter(width = 0.15, alpha = 1/4)
+p1 + p2 + plot_layout(ncol = 2)
+```
+
+<br>
+
+En el ejemplo que hemos usado hemos tenido suerte y los tres grupos estaban ordenados, pero otras veces no tendremos tanta suerte, por ejemplo si en lugar de graficar la longitud de sépalo queremos visualizar la anchura (Sepal.Width):
+
+```{r}
+ggplot(iris, aes(x = Species,  y = Sepal.Width)) + geom_boxplot()
+```
+
+¿Cómo ordenamos los grupos? Por ejemplo podemos ordenarlos de menor a mayor en función de su anchura media del sépalo. Para ello usamos `stats::reorder()`
+
+
+```{r}
+ggplot(iris, aes(x = reorder(Species, Sepal.Width, mean),  y = Sepal.Width)) + geom_boxplot() +
+  xlab("De menor a mayor anchura del sépalo")
+```
+
+
+
+
+
+  
+### 6.4 Gráficos de barras
+
+Los gráficos de barras se utilizan para representar una variable categórica, como por ejemplo Species, o variables cuantitativas discretas. Se representan barras verticales proporcionales a los valores de la variable en cada categoría o valor. Para crear gráficos de barras con ggplot2 se usa `geom_bar()`.
+
+Para hacer nuestro primer gráfico de barras no vamos a utilizar `iris` porque en la única variable categórica (Species) resulta que hay 50 lirios en cada tipo de especie. Usaremos el data.frame `mpg` del paquete ggplot2 que contiene 234 observaciones sobre distintos modelos de coches y sus características. Algunos de los ejemplos están sacados de la [web de ggplot2](https://ggplot2.tidyverse.org/reference/geom_bar.html).
+
+```{r, eval = FALSE}
+p <- ggplot(mpg, aes(class))
+p + geom_bar()
+p + geom_bar(fill = "steelblue") + coord_flip()
+```
+
+
+```{r, echo = FALSE, out.width = "95%", fig.asp = 6/9}
+p <- ggplot(mpg, aes(class))
+p1 <- p + geom_bar()
+p2 <- p + geom_bar(fill = "steelblue") + coord_flip()
+p1 + p2 + plot_layout(ncol = 2)
+```
+
+
+Como vemos, la variable `class` es categórica, concretamente tiene 7 grupos o categorías de coches. Las barras verticales son proporcionales al número de vehículos en cada categoría. Con `coord_flip()` las categorías pasan a representarse en el eje Y, haciendo que, generalmente, se visualicen mejor los nombres de las categorías.
+
+
+
+<br>
+
+Si en lugar de tener una tabla de datos, tenemos ya una **tabla de frecuencias**, tendremos que especificar en `aes()` que la variable con las frecuencias se mapee/asocie al eje Y: `aes(x = variable, y = frecuencias)`. Además tendrás que usar `geom_bar(stat = "identity")` o directamente usar `geom_col()` que ya usa por defecto stat_identity(). Veámoslo con un ejemplo:
+
+
+```{r}
+df <- mpg %>% group_by(class) %>% count
+p <- ggplot(df, aes(x = class, y = n))
+p + geom_bar(stat = "identity",  fill = "steelblue") 
+# p + geom_col(fill = "steelblue")                          #- hace exactamente el mismo plot
+```
+
+<br>
+
+#### Distintas posiciones para las barras
+
+Para esta subsección utilizaremos el data.frame `mtcars`
+
+```{r, eval = FALSE}
+ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar() #- pos
+ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar(position = "fill")
+ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar(position = "dodge")
+ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar(position = position_dodge2(preserve = "single"))
+```
+
+
+```{r, echo = FALSE, out.width = "100%",  fig.asp = 5/9}
+p1 <- ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar() #- pos
+p2 <- ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar(position = "fill")
+p3 <- ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar(position = "dodge")
+p4 <- ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar(position = position_dodge(preserve = "single"))
+
+p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
+```
+
+
+<br>
+
+#### Reordenando las categorías
+
+A veces es importante reordenar las barras para mejorar la visualización. Para ello tendremos que usar **factores**. Por ejemplo, volviendo al `mpg` dataset: 
+
+
+```{r}
+df <- mpg
+df <- df %>% mutate(class = forcats::as_factor(class)) #- convertimos la v. class a factor con la f. as_factor()
+df <- df %>% mutate(class = forcats::fct_infreq(class)) #- fct_infreq() los niveles del factor según su frecuencia de mayor a menor
+p <- ggplot(df, aes(fct_rev(class))) #- fct_rev() ordena los levels de menor a mayor
+p + geom_bar(fill = "steelblue") + coord_flip()
+```
+
+<br>
+
+Si queremos que en las barras se visualice el número de observaciones o frecuencia absoluta de cada categoría:
+
+
+```{r}
+p + geom_bar(fill = "steelblue") + coord_flip() +
+    geom_text(stat='count', aes(label = ..count.. ), hjust = -0.15, size = 3.25) 
+```
+
+
+
+<br>
+
+#### Porcentajes en lugar de counts
+ 
+Si queremos que las barras representen porcentajes en lugar de numero de casos en cada categoría:
+
+
+```{r}
+p <- ggplot(df, aes(fct_rev(class))) #- fct_rev() ordena los levels de menor a mayor
+p + geom_bar(aes( y = (..count..)/sum(..count..)), fill = "steelblue")  + coord_flip()
+```
+
+
+En realidad esto mismo se pude hacer de varias formas. En [este post](https://sebastiansauer.github.io/percentage_plot_ggplot2_V2/) nos muestran 5 formas de hacerlo.
+
+
+<br>
+ Si quieres saber más sobre como hacer gráficos de barras con ggplot2, puedes hacerlo [aquí](
+http://www.sthda.com/english/wiki/ggplot2-barplots-quick-start-guide-r-software-and-data-visualization
+) o [aquí](https://www.r-graph-gallery.com/48-grouped-barplot-with-ggplot2.html).
+
+
+<br>
+
+
+### 6.5 Gráficos de lineas
+
+Los gráficos de lineas se usan principalmente para mostrar la evolución de variables en el tiempo. Generalmente la variable que se muestra en el eje X es el tiempo. En Economía estos gráficos puede que sean los más usados y habitualmente nos referimos a ellos como gráficos temporales.
+
+
+Podemos simular gráficos de tiempo con `geom_line()` y `geom_path()`. Estos 2 geoms grafican lineas entre dos observaciones de una variable. Por ejemplo:
+
+
+```{r}
+ggplot(economics, aes(date, uempmed)) + geom_line()
+```
+
+
+Empecemos usando el conjunto de datos `gapminder` para mostrar las observaciones de la variable lifeExp para España:
+
+```{r}
+library(gapminder)
+gapminder %>% filter(country == "Spain") %>% 
+ggplot(aes(x = year, y = lifeExp)) + geom_line() + geom_point()
+```
+
+
+Visualicemos ahora 4 series de tiempo, la esperanza de vida en cuatro países europeos. Para poder distinguir las lineas de cada país podemos asociar la variable country a la característica estética color: `aes(color = country)`
+
+```{r}
+gapminder %>% filter(country %in% c("Spain", "France", "Norway", "Belgium")) %>% 
+ggplot(aes(x = year, y = lifeExp, color = country)) + geom_line() + geom_point()
+```
+
+Una tontería pero que puede ser de utilidad para saber cuanta diferencia hay al final del plot. Lo aprendí [aquí](https://drsimonj.svbtle.com/label-line-ends-in-time-series-with-ggplot2)
+
+
+```{r}
+df <- gapminder %>% filter(country %in% c("Spain", "France", "Norway", "Belgium")) 
+lifeExp_ends <- df %>% group_by(country) %>% top_n(1, year) %>% pull(lifeExp) #- vector con los valores últimos de lifeExp
+ggplot(df, aes(x = year, y = lifeExp, color = country)) + geom_line() + 
+     scale_y_continuous(sec.axis = sec_axis(~ ., breaks = lifeExp_ends)) +   #- sec_axis() especifica un eje secundario
+     scale_x_continuous(expand = c(0, 0))
+``` 
+
+<br>
+
+El siguiente ejemplo está sacado de [este libro](https://edav.info/timeseriesbasic.html) aún en construcción. Utiliza el paquete [tidyquant](https://github.com/business-science/tidyquant) para descargar las cotizaciones de las 4 principales empresas tecnológicas, las GAFA. `tidyquant` tiene muchas funciones interesantes, puedes verlas corriendo `tq_transmute_fun_options()`.
+
+```{r}
+library(tidyquant)
+stocks <- c("GOOGL","AMZN","FB","AAPL") #- seleccionamos a las GAFAs
+df <- tq_get(stocks, from = as.Date("2013-01-01"), to = as.Date("2013-12-31"))
+
+ggplot(df, aes(date, y = close, color = fct_reorder2(symbol, date, close))) +
+  geom_line() + xlab("") + ylab("") +
+  theme(legend.title = element_blank())
+```
+
+Reescalamos para que las series comiencen todas en 100
+
+```{r}
+df <- df %>% group_by(symbol) %>% mutate(rescaled_close = 100*close / close[1])
+
+ggplot(df, aes(date, y = rescaled_close, color = fct_reorder2(symbol, date, rescaled_close))) +
+  geom_line() + xlab("") + ylab("") +
+  theme(legend.title = element_blank())
+```
+
+<br>
+
+Otro paquete muy útil para analizar y descargar datos financieros es [`quantmod`](http://www.quantmod.com/). El ejemplo siguiente lo he sacado de [este fantastico libro](https://smac-group.github.io/ds/data.html#example-apple-stock-price).
+
+
+```{r}
+library(quantmod)
+today <- Sys.Date()
+three_months_ago <- seq(today, length = 2, by = "-3 months")[2]
+getSymbols("AAPL", from = three_months_ago, to = today)
+candleChart(AAPL, theme = 'white', type = 'candles')
+```
+
+<br>
+
+Si quieres saber más sobre gráficos de lineas puedes ir [aquí](https://michaeltoth.me/a-detailed-guide-to-plotting-line-graphs-in-r-using-ggplot-geom_line.html).
+
+
+##### Un poco sobre datos temporales
+
+Para trabajar con datos temporales, R tiene distintos paquetes y estructuras, pero para manipular fechas y  datos temporales en el tidyverse tenemos el paquete [`lubridate`](https://lubridate.tidyverse.org/reference/lubridate-package.html). Para una introducción a fechas y tiempo en R [aquí](https://dereksonderegger.github.io/570L/14-dates-and-times.html).
+
+
+En general, para realizar análisis estadísticos en R con series de tiempo se necesita que los datos estén en matrices, pero nosotros en el curso estamos trabajando con el tidyverse, y la la estructura de datos usada son los dataframes o tibbles, esto era un problema, pero recientemente, el paquete [`tsibble`](https://tsibble.tidyverts.org/) ha extendido el tidyverse y las tibbles a los datos temporales, creando una nueva estructura de datos: las "tsibbles". 
+
+Apoyándose en esta nueva estructura de datos, las "tsibbles", el paquete [`feast`](http://feasts.tidyverts.org/) proporciona las herramientas y funciones necesarias para trabajar con series temporales en un entorno tidy. `feast` es un acrónimo de Feature Extraction And Statistics for Time Series. Para una introducción a `feast` puedes ir [aquí](https://blog.mitchelloharawild.com/blog/feasts/) o [aquí](https://robjhyndman.com/hyndsight/feasts/). 
+
+Asimismo, el paquete [`fable`](http://fable.tidyverts.org/) también utiliza "tsibbles" y proporciona  herramientas para la predicción de series temporales, incluyendo modelos ARIMA en el entorno tidyverse. Para una introducción a `fable` puedes ir [aquí](https://blog.mitchelloharawild.com/blog/fable/).
+
+[Aquí](https://resources.rstudio.com/rstudio-conf-2019/melt-the-clock-tidy-time-series-analysis) puedes ver una conferencia en la que se explica las principales ideas de esta nueva forma de trabajar con series temporales en el tidyverse 
+
+<br>
+
+
+## 7. Más detalles/cosas
+
+
+### 7.1 geom_smooth()
+
+Ya hemos usado `geom_smooth()`. Un argumento importante de `geom_smooth()` es `method` con el que se selecciona el método  con el que se obtiene la smooth curve. El método por defecto es `method = "loess"`. Puedes controlar el nivel de smoothing con el parametro "span", que va de 0  to 1 (mayor suavizado).
+
+Otras opciones para geom_smooth():
+
+- method = "lm" fits a linear model, giving the line of best fit. 
+
+- method = "rlm" works like lm(), but uses a robust fitting algorithm so that outliers don’t affect the fit as much. It’s part of the MASS package, so remember to load that first. 
+
+- stat_smooth(se = FALSE) , indica si se representan intervalos de confianza para la linea suavizada.
+
+Además de los métodos implementados, podemos elegir nuestro propio método, ya sea usando el argumento "formula" o definiendo nuestro propio método de alisado como nos cuentan [aquí](https://eliocamp.github.io/codigo-r/2018/06/tu-propio-geom-smooth/) 
+
+
+```{r}
+p <- ggplot(iris, aes(Sepal.Length, Petal.Length)) + 
+     geom_point() 
+p + geom_smooth(method = "lm", formula = y ~ poly(x,4))
+```
+
+
+Podemos, obviamente, comparar dos métodos de alisado. Para poner nombre a los diferentes métodos se puede hacer lo siguiente: 
+
+```{r}
+library(tidyverse)
+p <- ggplot(iris, aes(Sepal.Length, Petal.Length)) + 
+     geom_point()
+p + geom_smooth(aes(color = "loess") , method = "loess", se = FALSE) + 
+    geom_smooth(aes(color = "lm")    , method = "lm"   , se = FALSE)
+```
+
+
+<br>
+
+### 7.2 Áreas bajo la curva
+
+Para un profesor de estadística/econometría es importante saber hacer gráficos como estos:
+
+library(tidyverse)
+ggplot(xx, aes(x)) +
+    geom_function(fun = function(x) {x**3} ,  colour = "red")
+
+ggplot(xx, aes(x)) +
+    geom_function(fun = ~ .x**3 ,  colour = "red")
+
+
+
+```{r, eval = FALSE}
+xx <- data.frame(x = c(-2, 2))
+
+ggplot(xx, aes(x)) + geom_function(fun = function(x) {x**3} ,  colour = "red")
+
+ggplot(xx, aes(x)) + geom_function(fun = ~ .x**3 ,  colour = "red")
+
+ggplot(xx, aes(x)) + stat_function(fun = function(x) { x**3 }, geom = "line")
+```
+
+
+```{r, echo = FALSE, out.width = "45%"}
+xx <- data.frame(x = c(-2, 2))
+ggplot(xx, aes(x)) + geom_function(fun = function(x) {x**3} ,  colour = "red")
+```
+
+```{r, eval = TRUE, out.width = "45%"}
+ggplot(xx, aes(x)) + geom_function(fun = dnorm)  
+```
+
+```{r, eval = TRUE, out.width = "45%"}
+ggplot(xx, aes(x = x))+
+  geom_function(fun = dnorm, xlim = c(-4, 0)) +
+  stat_function(fun = dnorm, geom = "area", fill = "steelblue", xlim = c(0, 4)) +
+  xlim(-5, 5)
+```
+
+Lo aprendí [aquí](https://christianburkhart.de/blog/area_under_the_curve/).
+
+Inspirado por Fran Morillas, otro ejemplo:
+
+```{r, , out.width = "50%"}
+nn <- 300 ; esperanza <- 10; sd <- 6
+datos <- data.frame(normal = rnorm(nn, esperanza, sd))
+
+ggplot(datos, aes(normal)) +
+    geom_histogram(aes(y = after_stat(density)), bins = 30) +
+    geom_density(color = "blue") +
+    geom_function(fun = dnorm, args = list(esperanza, sd), colour = "red")
+```
+
+
+Aunque, la verdad, hoy en dia hay paquetes en R para todo. Por ejemplo el paquete [`nhstplot`](https://cran.r-project.org/web/packages/nhstplot/vignettes/nhstplot.html)
+
+
+```{r, out.width = "50%"}
+library(nhstplot)
+plotttest(t = 1.96, df = 1000 , tails = "one")
+```
+
+
+<br>
+
+
+### 7.3 Labelling las observaciones con ggrepel
+
+El gráfico de abajo se basa en [este post](https://juliasilge.com/blog/lubridate-london-stage/) de Julia Silge. Utiliza el paquete [`ggrepel](https://github.com/slowkow/ggrepel) para poder ver a quien pertenece la observación en un gráfico de puntos.
+
+```{r}
+library(ggrepel)
+df <- gapminder::gapminder %>% filter(year == "2007")  %>% filter(continent == "Europe")
+ggplot(df, aes(gdpPercap, lifeExp, label = country)) + geom_point() +
+     labs(title = "Gráfico 1: Esperanza de vida frente a PIB per cápita" ,
+       caption = "Datos provenientes de gapminder",
+       y = "lifeExp",
+       x = "gdpPercap") + geom_smooth() +
+        geom_label_repel() 
+```
+
+
+
+<br>
+
+### 7.4 `GGally` package
+
+Hay muchos paquetes que proporcionan formas rápidas de hacer gráficos como por ejemplo este del paquete [`GGally`](https://ggobi.github.io/ggally/index.html):
+
+```{r}
+library(GGally)
+ggpairs(iris)
+ggpairs(iris %>% select(1:4) %>% na.omit(), progress = FALSE, lower = list(combo = wrap("facethist", bins=6)))
+```
+
+<br>
+
+
+### 7.5 Un poco más de anotaciones 
+
+Para que un gráfico sea efectivo y nos haga ver algún hecho o característica de los datos, muchas veces es preciso hacer anotaciones en el gráfico para señalar o resaltar ciertos aspectos de este. En esta subsección presento algún ejemplo de uso de las anotaciones en gráficos ggplot.
+
+
+- En primer lugar un ejemplo de Hadley. Hadley nos dice que no hay nada novedoso excepto el uso de -Inf and Inf como posiciones para referirse a los límites del gráfico, the top and bottom (or left and right) limits of the plot.
+
+```{r}
+presidential <- subset(presidential, start > economics$date[1])
+
+p <- ggplot(economics) +  geom_line(aes(date, unemploy)) + 
+  scale_fill_manual(values = c("blue", "red")) +
+  xlab("date") + 
+  ylab("unemployment")
+
+#- comienzan las anotaciones  
+p + geom_rect(aes(xmin = start, xmax = end, fill = party), 
+              ymin = -Inf, ymax = Inf, alpha = 0.2, data = presidential) + 
+    geom_vline(aes(xintercept = as.numeric(start)), 
+               data = presidential, colour = "grey50", alpha = 0.5) + 
+    geom_text(aes(x = start, y = 2500, label = name), 
+               data = presidential, size = 3, vjust = 0, hjust = 0, nudge_x = 50) 
+```
+
+
+Una forma común de anotación consiste en marcar o subrayar un conjunto de puntos. Por ejemplo marcar los coches de la marca Subaru en el siguiente gráfico. Se puede hacer de la siguiente manera: 
+
+
+```{r}
+p <- ggplot(mpg, aes(displ, hwy)) +
+  geom_point(data = filter(mpg, manufacturer == "subaru"), colour = "orange", size = 3) +
+  geom_point() 
+p
+```
+
+
+Como ves, lo que se ha hecho es superponer una capa con solo las observaciones de Subaru y graficarlas con un punto más grande de lo habitual y con un color llamativo. El problema es que se ve que sean las observaciones de Subaru. Esto se puede resolver de varias maneras usando annotate():
+
+
+```{r}
+p + annotate(geom = "point", x = 5.5, y = 40, colour = "orange", size = 3) + 
+    annotate(geom = "point", x = 5.5, y = 40) + 
+    annotate(geom = "text", x = 5.6, y = 40, label = "subaru", hjust = "left")
+```
+
+O de esta otra forma:
+
+```{r}
+p + annotate(geom = "curve", x = 4, y = 35, xend = 2.65, yend = 27, 
+              curvature = .3, arrow = arrow(length = unit(2, "mm"))) +
+   annotate(geom = "text", x = 4.1, y = 35, label = "subaru", hjust = "left")
+```
+
+
+El paquete [`ggforce`](https://ggforce.data-imaginist.com/) es una extensión a ggplot2 que puede servir para muchas cosas, entre ellas hacer anotaciones o marcas en gráficos ggplot. Por ejemplo:
+
+```{r}
+ggplot(iris, aes(Sepal.Length, Petal.Length)) +
+  geom_point(aes(color = Species)) + 
+  ggforce::geom_mark_ellipse(aes(label = Species, group = Species))
+```
+
+
+Con `ggforce` podemos hasta simular un zoom:
+
+
+```{r}
+ggplot(iris, aes(Petal.Length, Petal.Width, colour = Species)) +
+  geom_point() +
+  ggforce::facet_zoom(x = Species == "versicolor")
+```
+
+<br>
+
+El paquete/extensión `ggforce` es pretty awesome. En [este post](https://rviews.rstudio.com/2019/09/19/intro-to-ggforce) puede verlo en acción haciendo mapas.
+
+<br>
+
+Otro enfoque para hacer anotaciones, bueno, en realidad centrase en un grupo de observaciones es utilizar el paquete [`gghighlight`](https://github.com/yutannihilation/gghighlight):
+
+
+```{r}
+df <- gapminder::gapminder %>% filter(continent == "Europe")
+ggplot(df, aes(year, lifeExp, group = country)) + 
+  geom_line() + 
+  geom_point() + 
+  gghighlight::gghighlight(country %in% c("Spain", "Portugal"))
+```
+
+
+```{r}
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = as.factor(Species))) +
+  geom_point() + 
+  gghighlight::gghighlight() + 
+  facet_wrap(vars(Species))
+```
+
+
+
+
+
+<br>
+
+
+## 8. Asistentes para ggplot2
+
+Ahora mismo existen 2 asistentes para crear gráficos ggplot a través de interfaces gráficas: [`ggThemeAssist`](https://github.com/calligross/ggthemeassist) y [`esquisse`](https://dreamrs.github.io/esquisse/index.html) 
+
+- El paquete [`ggThemeAssist`](https://github.com/calligross/ggthemeassist) facilita mediante un adding de RStudio la edición de los detalles de un gráfico; es decir, puedes comenzar haciendo un gráfico básico en RStudio, para después abrir la interfaz de `ggThemeAssist` para modificar con el asistente visual todos los elementos estéticos de gráfico como títulos, leyendas, colores etc... etc...
+
+  Para ello, primero has de instalar el paquete con `install.packages("ggThemeAssist")`, después cargarlo con `library(ggThemeAssist)`. Una vez has cargado el paquete en memoria has de seleccionar con el cursor el código que genera el ggplot que quieres modificar/tunear. Una vez tienes marcado con el ratón el código del gráfico, has de seguir, en RStudio, esta ruta de menús: `Tools > Addings > Browse Addings ...`, para seleccionar finalmente el adding llamado "ggplot Theme Asistant".
+
+  Se abrirá un interfaz donde podrás modificar la mayoría de elementos del gráfico. Cuando hayas dejado el gráfico a tu gusto pinchas en `DONE` y te devolverá el código que reproduce el gráfico tal y como lo elegiste en el interfaz.
+
+  Podéis ver un ejemplo en <https://github.com/calligross/ggthemeassist>
+
+
+<br>
+
+- El paquete [`esquisse`](https://dreamrs.github.io/esquisse/index.html) permite crear gráficos ggplot desde cero con una interfaz gráfica.
+
+  Para usarlo tienes que instalarlo con `install.packages("esquisse")` para luego abrirlo siguiendo esta ruta de menús en RStudio: `Tools > Addings > Browse Addings ...` para elegir el adding con nombre: "esquisse - ggplot builder".
+
+
+
+```{r, echo = FALSE, fig.asp = 7/9}
+tweetrmd::tweet_embed("https://twitter.com/WeAreRLadies/status/1139591763432222723", theme = "light", align = "center", maxwidth = 400)
+```
+
+
+<br>
+
+## 9. Gráficos interactivos
+
+Los gráficos interactivos, como su nombre indica, permite al usuario interactuar con el gráfico, abriéndose posibilidades como centrarse en parte del gráfico (zooming), highlighting, o mostrar información adicional al pinchar en algún elemento del gráfico, etc ...
+
+En general, JavaScript (JS) es el lenguaje utilizado para hacer gráficos interactivos con librerías como D3, Chart, Plotly, Vis Highcharts, ...
+
+Recientemente, el paquete de R [`htmlwidgets`](http://www.htmlwidgets.org/) ha facilitado el uso de las librerías de JS en R. Actualmente, paquetes de R, como leaflet, DT, dygraphs, networkD3 y muchos otros, utilizan el framework propuesto por htmlwidgets para hacer disponibles los gráficos interactivos de JS en R.
+
+
+Para daros cuenta de lo fácil que es hacer un gráfico interactivo con R usaremos el paquete [`plotly`](https://plot.ly/r/) que hace posible usar la librería plotly.js en R. Con `plotly` se pueden hacer muchos tipos de gráficos, pero por ejemplo, permite con una sola linea convertir un gráfico ggplot en interactivo:
+
+```{r, eval = FALSE}
+library(plotly)
+p <- ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) +  geom_point() + geom_smooth()
+ggplotly(p)
+```
+
+[Aquí](https://plotly-r.com/preface.html) puedes encontraar un bookdown sobre plotly.
+
+
+```{r, eval = FALSE}
+p1 <- p + facet_grid(cols = vars(Species)) 
+ggplotly(p1)
+```
+
+
+```{r, eval = FALSE}
+p <- ggplot(mpg, aes(class)) +  geom_bar(fill = "steelblue") + coord_flip()
+ggplotly(p)
+```
+
+
+[Aquí](https://www.r-graph-gallery.com/interactive-charts.html) puedes ver un galería de ejemplos de gráficos interactivos hechos con R. [Aquí](https://moderndata.plot.ly/interactive-r-visualizations-with-d3-ggplot2-rstudio/) un post, ya de 2015, para iniciarse un poco en estos temas. 
+
+
+Hay muchos paquetes que permiten hacer gráficos interactivos en R, por ejemplo [`leaflet`](http://rstudio.github.io/leaflet/), que permite hacer mapas interactivos muy fácilmente.
+
+
+
+```{r, eval = FALSE}
+library(leaflet)
+m <- leaflet()
+m <- addTiles(m)
+m <- addMarkers(m, lng = 174.768, lat =-36.852, popup = "The birthplace of R")
+m
+```
+
+
+Todos estos paquetes^[En el momento de escribir estas notas eran 107 paquetes] que permiten hacer gráficos interactivos a través de `htmlwidgets` se pueden consultar en: <http://gallery.htmlwidgets.org/>. Dos paquetes que no están en la gallery: [`Apexcharts`](https://cran.r-project.org/web/packages/apexcharter/vignettes/starting-with-apexcharts.html) y [`TSplotly`](https://cran.r-project.org/web/packages/TSplotly/vignettes/TSplotly.html).
+
+
+En [Interactive web-based data visualization with R, plotly, and shiny](https://plotly-r.com/) explican más detalladamente como hacer gráficos interactivos en R. Tendré que releer su sección [Saving and embedding HTML](https://plotly-r.com/saving.html) para mostrar en el tutorial alguno de los gráficos dinámicos que he hecho, pero ahora tengo prisa, la próxima clase es pronto y empezamos sí o sí ggplot2.
+
+Hadley también está escribiendo un bookdown sobre Shiny: [Mastering Shiny](https://mastering-shiny.org/). En palabras de Hadley: Shiny is a framework for creating web applications using R code. Para ver que significa esto puedes ver la siguiente [galería con ejemplos de aplicaciones shiny](https://shiny.rstudio.com/gallery/).
+
+
+### gganimate 
+
+[`gganimate`](https://gganimate.com/) es un paquete que no hace gráficos dinámicos, pero permite animar gráficos mediante la creación creación de secuencias de gráficos. Mejor que explicarlo visita su sección de ejemplos en su wiki: <https://github.com/thomasp85/gganimate/wiki>. Por ejemplo [este ejemplo](https://github.com/thomasp85/gganimate/wiki/Tracking-of-hurricanes-and-typhoons)  o  [este ejemplo](https://github.com/thomasp85/gganimate/wiki/World-Cup-Goal-Animation) de jurgol. En [este post](https://www.datanovia.com/en/blog/gganimate-how-to-create-plots-with-beautiful-animation-in-r/) explican como usarlo.
+
+
+Un ejemplo con los datos de `gapminder`
+
+```{r, eval = FALSE}
+library(tidyverse)
+library(gapminder)
+library(gganimate)
+gapmider_europe <- gapminder %>% filter(continent == "Europe")
+ggplot(gapmider_europe, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
+  geom_point(alpha = 0.7, show.legend = FALSE) +
+  scale_colour_manual(values = country_colors) +
+  scale_size(range = c(2, 12)) +
+  scale_x_log10() +
+  facet_wrap(~continent) +
+  # Here comes the gganimate specific bits
+  labs(title = 'Year: {frame_time}', x = 'GDP per capita', y = 'life expectancy') +
+  transition_time(year) +
+  ease_aes('linear') 
+```
+
+[Aquí](https://gist.github.com/thomasp85/05169ad44ddcc8ed56da6ff7bf7fbe36) tienes un ejemplo para hacerlo para los cinco continentes. 
+
+<br>
+
+
+
+## Biblio/ejemplos/recursos
+
+
+Son recursos que he visto o utilizado mientras escribía esta notas, y no quiero olvidarlos:
+
+- [Bookdown oficial sobre ggplot2](https://ggplot2-book.org/)
+
+- [Webinar de Thomas L. Pedersen sobre ggplot2](https://www.youtube.com/watch?v=h29g21z0a68&feature=youtu.be)
+
+- [Data Visualization with R de R. Cabacoff](https://rkabacoff.github.io/datavis/index.html).
+
+- [Cédric Scherer](https://github.com/Z3tt/TidyTuesday): una serie de visualizaciones increíbles asociadas al proyecto tidy Tuesday.
+
+- [data-to-viz](https://www.data-to-viz.com/): una plantilla que te puede ayudar a decidir qué gráfico usar.
+
+
+- [r-statistics.co]( http://r-statistics.co/ggplot2-Tutorial-With-R.html): tutorial `ggplot2`.
+
+
+- [A ggplot2 Tutorial for Beautiful Plotting in R](https://cedricscherer.netlify.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/): tutorial `ggplot2`.
+
+- [The Evolution of a ggplot (Ep. 1)](https://cedricscherer.netlify.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/). Un post muy didáctico donde se va transformando un gráfico hasta hacerlo muy chulo.
+
+
+- [EDAV info](https://edav.info/box.html). Bookdown aún en construcción con buenos ejemplos.
+
+
+- [Tom’s Cookbook for Better Viz](https://jthomasmock.github.io/nfl_plotting_cookbook/#license). Un buen tutorial con consejos y demás sobre gráficos ggplot. Por ejemplo mira los "Useful code chunks".
+
+
+- [ggplot2 Quick Reference: geom](http://sape.inf.usi.ch/quick-reference/ggplot2/geom). Una cheatsheet para ver los geoms_xx() disponibles
+
+- [Emi Tanaka - 1](https://emitanaka.org/workshopUTokyo2018/day1-session02-datavis.html#1). Son unas tranparencias de Emi Tanaka donde hace un repaso fantástico a la ggplot2 grammar. Emi Tanaka es lo mejor para conocer la verdad sobre ggplot2 en poco tiempo; por ejemplo la slide #6.
+
+- [Data Visualization in the Tidyverse](https://alison.netlify.com/uo-tidy-bakeoff/#1). Otras fantásticas transparencias sobre ggplot2, esta vez de Alison Hill.
+
+
+- [Preguntas sobre ggplot2 en Stackoverflow](https://stackoverflow.com/questions/tagged/ggplot2). Seguros que encuentras tu pregunta y alguien la ha respondido!!
+
+
+- [Data Visualization with ggplot2](https://cengel.github.io/R-data-viz/data-visualization-with-ggplot2.html). Un bookdown sobre ggplot2. No lo he leído pero tiene buena pinta para iniciarse con ggplot.
+
+
+- [practicalgg](https://wilkelab.org/practicalgg/). Un paquete con ejemplos de 6 visualizaciones explicadas paso a paso.
+
+
+- [viz-pub](https://buff.ly/2nzMZPX). Un repo de Github con gráficos y visualizaciones, obviamente con el código.
+
+
+
+- [The ggplot flipbook](https://evamaerey.github.io/ggplot_flipbook/ggplot_flipbook_xaringan.html#1). Otras transparencias sobre ggplot2, de Gina Reynolds.
+
+
+- [Artistic coding for the useR](https://www.williamrchase.com/post/artistic-coding-for-the-user-12-months-of-art-june/). Un post de Will Chase para introducirse en el mundo de hacer aRte con R. 
+
+
+- [You can replicate almost any plot with R](https://simplystatistics.org/2019/08/28/you-can-replicate-almost-any-plot-with-ggplot2/). Impresionante post de Rafael Irizarry donde replica con R 5 visualizaciones.
+
+- [Data, movies and ggplot2](http://smarterpoland.pl/index.php/2018/12/data-movies-and-ggplot2/). Unos posters increíbles hechos con R.
+
+- La revista [**Buzzfedd**](https://www.buzzfeednews.com/) mantiene una serie de [repos en Github](https://github.com/BuzzFeedNews/) con el código y datos para replicar sus análisis. En concreto, en [este repo](https://github.com/BuzzFeedNews/everything) hay un listado de análisis. Como ejemplo, [este gráfico](https://twitter.com/paldhous/status/1190022664808783872/photo/1), aparece en [este artículo](https://www.buzzfeednews.com/article/lamvo/social-sentinel-school-officials-shootings-flag-social-media), y el código para replicarlos está [aquí](https://buzzfeednews.github.io/2019-10-social-sentinel/).
+
+
+Por último 3 repos de Github asociados al proyecto [Tidytuesday](https://github.com/rfordatascience/tidytuesday). Absolutamente impresionantes!!!
+
+
+- <https://github.com/gkaramanis/tidytuesday/tree/master/week-38>
+
+- <https://github.com/spren9er/tidytuesday>
+
+- <https://github.com/othomantegazza/code-tidytuesday>
+
+
+
+## Mas biblio
+
+- [A Grammar of Graphics for Python](https://plotnine.readthedocs.io/en/stable/index.html). `Plotnine` is an implementation of a grammar of graphics in Python, it is based on `ggplot2`. 
+
+- [Python Plotting for Exploratory Data Analysis](https://pythonplot.com/). Un recorrido por los sistemas gráficos de Phyton.
+
+- [ggplot2tor](https://ggplot2tutor.com/). Un sitio web con buenos tutoriales sobre ejemplos de gráficos ggplot. Van mejorando el gráfico poco a poco. Por ejemplo [este tutorial sobre powerlifting](https://ggplot2tutor.com/powerlifting/squats/)
+
+- Un [ejemplo de dotplot](https://ikashnitsky.github.io/2019/dotplot/) Ilya Kashnitsky de  Aquí está el [gist](https://gist.github.com/ikashnitsky/2f3e2b2af6f50911bb775bbce6eb0fb8).
+
+
+- [R Graphics Cookbook](https://r-graphics.org/)
+
+------------------
+
+```{r, eval = FALSE, echo = FALSE}
+#- nuevas cosas de ggplot2
+p <- ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_line()
+aa <- ggplot_build(p) #- funcion nueva
+
+#- garficos upset y venn: https://www.littlemissdata.com/blog/set-analysis
+#- https://dqn.website/post/interactive-mekko-charts-in-r/
+
+```
+

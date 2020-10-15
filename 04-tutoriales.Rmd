@@ -35,5 +35,6 @@ Todas los tutoriales están hechos con R; de hecho, una de las cosas que has de 
 
 - [`Tutorial 05: Data munging`](./tutoriales/tt_05_data-munging.html){target="_blank"}. 
 
+- [`Tutorial 06: Ggplot2`](./tutoriales/tt_06_ggplot2.html){target="_blank"}. 
 
 <br><br>
