@@ -1,0 +1,256 @@
+---
+title: "Gráficos con ggplot2. <br>(C): Tipos de gráficos"
+subtitle: "-- Slides 06 (C) --"  
+author: 
+  - "Pedro J. Pérez"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [xaringan-themer.css, styles_pjp_2.css]
+    nature:
+      highlightStyle: github  #- solarized-light
+      highlightLines: true
+      highlightSpans: true
+      countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+options(htmltools.dir.version = FALSE)
+xaringanExtra::use_clipboard()   #- https://pkg.garrickadenbuie.com/xaringanExtra/#/clipboard
+xaringanExtra::use_fit_screen()  #- Alt/Option+ F —
+xaringanExtra::use_tile_view()   #- para  ver todas las slides juntas (press O)
+xaringanExtra::use_tachyons()    #- es para las cajitas verdes de texto
+xaringanExtra::use_extra_styles(hover_code_line = TRUE, mute_unhighlighted_code = FALSE)
+xaringanExtra::use_panelset()    #- https://pkg.garrickadenbuie.com/xaringanExtra/#/panelset
+library(tidyverse)
+```
+
+
+```{r chunk-setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, message = FALSE, warning = FALSE,
+                      #results = "hold",
+                      cache = FALSE, cache.path = "/caches/", comment = "#>",
+                      #fig.width = 7, #fig.height= 7,
+                      #out.width = 7, out.height = 7,
+                      collapse = TRUE,  fig.show = "hold", fig.retina = 4,
+                      fig.asp = 7/9, out.width = "95%", fig.align = "center")
+options(scipen = 999) #- para quitar la notación científica
+#- para mejorar los gráficos, bueno en realidad para que se vean igual en distintos SO
+#- https://www.jumpingrivers.com/blog/r-knitr-markdown-png-pdf-graphics/
+knitr::opts_chunk$set(dev = "png", dev.args = list(type = "cairo-png"))
+```
+
+```{r xaringan-themer, include = FALSE, warning = FALSE}
+library(xaringanthemer)
+style_mono_light(base_color = "#1c5253", colors = c(red = "#f34213", purple = "#3e2f5b", orange = "#ff8811", green = "#136f63", white = "#FFFFFF", base = "#1c5253", grey = "#A9A9A9"))
+```
+
+```{r, include = FALSE}
+library(flipbookr)
+```
+
+```{css, include = FALSE}
+.remark-code{line-height: 1.5; font-size: 80%}
+@media print {
+  .has-continuation {
+    display: block;
+  }
+```
+
+
+class: inverse, center, middle
+background-image: url(imagenes/ss_06_img_01_ggplot2-hex.png)
+background-position: 95% 5%
+background-size: 10%
+
+## 6. Distintos tipos de gráficos
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>
+
+##### Mientrás entendiamos el funcionamiento de ggplot2 nos centramos en un sólo tipo de gráfico: los gráficos de puntos.
+
+##### Ahora veremos distintos tipos de gráficos: histogramas, scatter plots, gráficos de cajas, de barras, de lineas etc... etc...
+
+
+
+---
+
+### Galerías con ejemplos
+
+En estas slides presentaremos ejemplos de algunos de los gráficos más utilizados en el análisis de datos. Puedes ver listados más completos en:
+
+
+  - [[R-graph gallery]](https://www.r-graph-gallery.com/): Impresionante!!
+
+
+  - [[Top 50 ggplot2 Visualizations (With Full R Code)]](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html):de r-statistics.co, más básico pero muy didáctico.
+
+  
+  - [[Extensiones ggplot2]](http://www.ggplot2-exts.org/gallery/): Impresionante!!
+
+  - [[R-graph gallery - ggplot2 package]](http://r-graph-gallery.com/ggplot2-package.html): otra vez, impresionante!!
+
+<br>
+
+Evidentemente, **el tipo de grafico se ha de elegir en función de la información que se quiere mostrar**. [[Aquí]](https://coolinfographics.com/dataviz-guides) puedes encontrar ayuda para elegir el tipo de grafico. Por ejemplo: 
+
+[[The Data Visualisation Catalogue]](https://datavizcatalogue.com/), [[The chart chooser]](https://extremepresentation.com/design/7-charts/), [[The Chart Chooser Dissected]](https://blog.qlik.com/third-pillar-of-mapping-data-to-visualizations-usage), [[The Chart Chooser: Interactive Version]](http://labs.juiceanalytics.com/chartchooser/index.html), etc ...
+
+
+---
+class: inverse, center, middle
+background-image: url(imagenes/ss_06_img_01_ggplot2-hex.png)
+background-position: 95% 5%
+background-size: 7%
+
+### 6.1 Histogramas
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>
+
+##### Se utilizan para mostrar la distribución de UNA variable continua, por ejemplo la longitud del sépalo (Sepal.Length).
+
+<br>
+
+```{r, echo = FALSE, eval = TRUE, out.width = "45%", fig.asp = 3/5}
+ggplot(iris, aes(Sepal.Length)) + geom_histogram() 
+```
+
+---
+```{r grafico-15, include = FALSE, fig.retina = 4}
+ggplot(iris, aes(Sepal.Length)) +
+geom_histogram(bins = 60) + labs(title = "60 intervalos (o bins)") +
+geom_histogram(bins = 40) + labs(title = "40 intervalos") +
+geom_histogram(binwidth = 0.5) + labs(title = "En lugar de elegir el nº de intervalos, \n se puede elegir la anchura del intervalo: \n binwidth =  0.5") +
+geom_histogram(binwidth = 0.5, 
+               color = "black", 
+               fill = "tomato") + labs(title = "binwidth =  0.5, color = black, fill = tomato") +
+geom_histogram(binwidth = 0.5, 
+               aes(fill = Species), 
+               color = "black") + labs(title = "binwidth =  0.5, color = black, aes(fill = Species)") +
+facet_grid(cols = vars(Species))
+```
+
+`r chunk_reveal(chunk_name = "grafico-15", title = "##### 6.1 Histogramas con geom_histogram()")`
+
+
+---
+##### 6.1 geom_density() y Joy Division plots
+
+
+```{r, eval = FALSE}
+ggplot(iris, aes(Sepal.Length, fill = Species)) + geom_density(position = "stack", alpha = 0.5) 
+ggplot(iris, aes(x = Sepal.Length, y = Species)) + 
+      ggridges::geom_density_ridges(aes(fill = Species), alpha = 0.5)
+
+```
+
+
+```{r, echo = FALSE, eval = TRUE,  out.width = "85%", fig.asp = 2.5/5, fig.retina = 4}
+library(patchwork)
+p1 <- ggplot(iris, aes(Sepal.Length, fill = Species)) + 
+      geom_density(position = "stack", alpha = 0.5) 
+p2 <- ggplot(iris, aes(x = Sepal.Length, y = Species)) + 
+      ggridges::geom_density_ridges(aes(fill = Species), alpha = 0.5)
+p1 + p2
+```
+
+
+---
+```{r grafico-16, include = FALSE, fig.retina = 4}
+ggplot(iris, aes(x = Species,  y = Sepal.Length)) +
+geom_boxplot() +
+geom_boxplot(aes(fill = Species), 
+             outlier.colour = "purple") +
+geom_jitter(width = 0.15, alpha = 1/4, color = "tomato") +
+stat_summary(fun = "mean", geom = "point", color = "purple", size = 2.5) +
+geom_violin(aes(fill = Species), alpha = 0.6) +
+coord_flip() 
+```
+
+`r chunk_reveal(chunk_name = "grafico-16", title = "##### 6.3 Gráficos de caja (Boxplots)")`
+
+---
+```{r grafico-17, include = FALSE, fig.retina = 4}
+ggplot(mpg, aes(class)) +
+geom_bar() +
+geom_bar(fill = "steelblue") + 
+coord_flip()
+```
+
+`r chunk_reveal(chunk_name = "grafico-17", title = "##### 6.4 Gráficos de barra (Boxplots)")`
+
+
+---
+##### 6.4 Gráficos de barra (Boxplots): distintas posiciones para las barras
+
+Para esta subsección utilizaremos el data.frame `mtcars`
+
+```{r, eval = FALSE}
+p <- ggplot(mtcars, aes(factor(cyl), fill = factor(vs)))
+p + geom_bar() 
+p + geom_bar(position = "fill")
+p + geom_bar(position = "dodge")
+p + geom_bar(position = position_dodge2(preserve = "single"))
+```
+
+
+```{r, echo = FALSE, eval = TRUE,  out.width = "98%", fig.asp = 2.3/5, fig.retina = 4}
+p1 <- ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar() #- pos
+p2 <- ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar(position = "fill")
+p3 <- ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar(position = "dodge")
+p4 <- ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) + geom_bar(position = position_dodge(preserve = "single"))
+
+p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
+```
+
+
+---
+class: inverse, center, middle
+
+## 9. Gráficos interactivos
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>
+
+
+Permiten al usuario interactuar con el gráfico, abriéndose posibilidades como: zooming, highlight, o mostrar información adicional al pinchar en algún elemento del gráfico, etc …
+
+---
+### 6. Gráficos interactivos
+
+- Los gráficos interactivos permiten al usuario interactuar con el gráfico.
+
+- En general, JavaScript (JS) es el lenguaje utilizado para hacer gráficos interactivos con librerías como D3, Chart, Plotly, Vis Highcharts, …
+
+- Recientemente, el paquete de R htmlwidgets ha facilitado el uso de las librerías de JS en R. 
+
+- Actualmente, paquetes de R, como leaflet, DT, dygraphs, networkD3 y muchos otros, utilizan el framework propuesto por htmlwidgets para hacer disponibles los gráficos interactivos de JS en R. [[Aquí]](http://gallery.htmlwidgets.org/) puede ver los pkgs que usar htmlwidgets
+
+- [[Aquí]](https://www.r-graph-gallery.com/interactive-charts.html) puedes ver una galería con ejemplos.
+
+---
+### 6. Gráficos interactivos (**plotly**)
+
+- Un bookdown sobre plotly: <https://plotly-r.com/preface.html>
+
+```{r}
+library(plotly)
+p <- ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) +  geom_point() + geom_smooth()
+ggplotly(p)
+```
+
+
+
+---
+### 6. Gráficos interactivos (**plotly**)
+
+
+```{r}
+p1 <- p + facet_grid(cols = vars(Species)) 
+ggplotly(p1)
+```
+
+
+

@@ -1,0 +1,3004 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Gráficos con ggplot2.  (B): Más elementos</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Pedro J. Pérez" />
+    <meta name="date" content="2020-10-13" />
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="styles_pjp_2.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Gráficos con ggplot2. <br>(B): Más elementos
+## – Slides 06 (B) –
+### Pedro J. Pérez
+### 2020-10-13
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class: inverse, center, middle
+background-image: url(imagenes/ss_06_img_01_ggplot2-hex.png)
+background-position: 95% 5%
+background-size: 10%
+
+## Más elementos de *ggplot2*
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+##### Como puedes imaginar, aún tenemos que ver más elementos de ggplot2: los títulos y leyendas, los ejes, el tema, coordenadas, etc… vamos a ello!!
+
+---
+#### Más elementos de un ggplot()
+
+- Ya hemos presentado los principales elementos de los gráficos hechos con ggplot2, pero es evidente que **un gráfico tiene más elementos**.
+
+- Lógicamente, **hay que conocerlos un poco** para poder ajustar los gráficos a nuestras necesidades y mejorar su calidad. 
+
+--
+
+&lt;br&gt;
+
+--------------------
+
+Veremos algo de los siguientes elementos:
+
+- Títulos del gráfico 
+- Themes  
+- Small multiples (o Facetting)
+- Anotaciones  
+- Ejes  
+- Escalas  
+- Stats (transformaciones estadísticas)  
+- Position adjustments  
+- Coordenadas  
+
+---
+class: inverse, center, middle
+background-image: url(imagenes/ss_06_img_01_ggplot2-hex.png)
+background-position: 95% 5%
+background-size: 8%
+
+## 3.1 Títulos del gráfico
+
+&lt;br&gt;
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+##### Un gráfico para ser efectivo y mostrar su mensaje con claridad debe tener un título y/o subtítulo ilustrativos y mostrar información relevante sobre las variables que se grafican 
+
+&lt;br&gt;
+
+##### Este tipo de elementos pueden modificarse de varias maneras, pero nos centraremos en la función *labs()*
+
+---
+##### Añadiendo títulos, leyenda, etc ...a un ggplot
+
+
+```r
+p &lt;- ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + 
+        geom_point()
+p
+```
+
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-3-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+
+count: false
+ 
+##### Añadiendo títulos, leyenda, etc ...a un ggplot
+.panel1-grafico-01-auto[
+
+```r
+*p 
+```
+]
+ 
+.panel2-grafico-01-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-01_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Añadiendo títulos, leyenda, etc ...a un ggplot
+.panel1-grafico-01-auto[
+
+```r
+p +
+*labs(title = "Gráfico 1: Longitud del sépalo frente al pétalo")
+```
+]
+ 
+.panel2-grafico-01-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-01_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Añadiendo títulos, leyenda, etc ...a un ggplot
+.panel1-grafico-01-auto[
+
+```r
+p +
+labs(title = "Gráfico 1: Longitud del sépalo frente al pétalo") +
+*labs(subtitle = "(diferenciando por especie de lirio)")
+```
+]
+ 
+.panel2-grafico-01-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-01_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Añadiendo títulos, leyenda, etc ...a un ggplot
+.panel1-grafico-01-auto[
+
+```r
+p +
+labs(title = "Gráfico 1: Longitud del sépalo frente al pétalo") +
+labs(subtitle = "(diferenciando por especie de lirio)") +
+*labs(caption = "Datos provenientes del Iris dataset")
+```
+]
+ 
+.panel2-grafico-01-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-01_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Añadiendo títulos, leyenda, etc ...a un ggplot
+.panel1-grafico-01-auto[
+
+```r
+p +
+labs(title = "Gráfico 1: Longitud del sépalo frente al pétalo") +
+labs(subtitle = "(diferenciando por especie de lirio)") +
+labs(caption = "Datos provenientes del Iris dataset") +
+*labs(x = "Longitud del sépalo")
+```
+]
+ 
+.panel2-grafico-01-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-01_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Añadiendo títulos, leyenda, etc ...a un ggplot
+.panel1-grafico-01-auto[
+
+```r
+p +
+labs(title = "Gráfico 1: Longitud del sépalo frente al pétalo") +
+labs(subtitle = "(diferenciando por especie de lirio)") +
+labs(caption = "Datos provenientes del Iris dataset") +
+labs(x = "Longitud del sépalo") +
+*labs(y = "Longitud del pétalo")
+```
+]
+ 
+.panel2-grafico-01-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-01_auto_06_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Añadiendo títulos, leyenda, etc ...a un ggplot
+.panel1-grafico-01-auto[
+
+```r
+p +
+labs(title = "Gráfico 1: Longitud del sépalo frente al pétalo") +
+labs(subtitle = "(diferenciando por especie de lirio)") +
+labs(caption = "Datos provenientes del Iris dataset") +
+labs(x = "Longitud del sépalo") +
+labs(y = "Longitud del pétalo") +
+*labs(color = "Especie de lirio")
+```
+]
+ 
+.panel2-grafico-01-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-01_auto_07_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Añadiendo títulos, leyenda, etc ...a un ggplot
+.panel1-grafico-01-auto[
+
+```r
+p +
+labs(title = "Gráfico 1: Longitud del sépalo frente al pétalo") +
+labs(subtitle = "(diferenciando por especie de lirio)") +
+labs(caption = "Datos provenientes del Iris dataset") +
+labs(x = "Longitud del sépalo") +
+labs(y = "Longitud del pétalo") +
+labs(color = "Especie de lirio") +
+*labs(tag = "Plot 1")
+```
+]
+ 
+.panel2-grafico-01-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-01_auto_08_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;style&gt;
+.panel1-grafico-01-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-grafico-01-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-grafico-01-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+--
+
+El chunk no se suele escribir de esa forma, sino así:
+
+
+
+```r
+p &lt;- p +
+labs(title = "Gráfico 1: Longitud del sépalo frente al pétalo",
+    subtitle = "(diferenciando por especie de lirio)",
+    caption = "Datos provenientes del Iris dataset",
+    x = "Longitud del sépalo",
+    y = "Longitud del pétalo",
+    color = "Especie de lirio",
+    tag = "Plot 1")
+```
+
+---
+
+
+
+
+count: false
+ 
+##### A veces interesa eliminar elementos de los labels/títulos
+.panel1-grafico-02-auto[
+
+```r
+*p 
+```
+]
+ 
+.panel2-grafico-02-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### A veces interesa eliminar elementos de los labels/títulos
+.panel1-grafico-02-auto[
+
+```r
+p +
+*labs(color = NULL)   #- borra el título de la leyenda
+```
+]
+ 
+.panel2-grafico-02-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### A veces interesa eliminar elementos de los labels/títulos
+.panel1-grafico-02-auto[
+
+```r
+p +
+labs(color = NULL) +  #- borra el título de la leyenda
+*labs(x = NULL)   #- borra el tulo del eje X
+```
+]
+ 
+.panel2-grafico-02-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### A veces interesa eliminar elementos de los labels/títulos
+.panel1-grafico-02-auto[
+
+```r
+p +
+labs(color = NULL) +  #- borra el título de la leyenda
+labs(x = NULL) +  #- borra el tulo del eje X
+*labs(subtitle = NULL)
+```
+]
+ 
+.panel2-grafico-02-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### A veces interesa eliminar elementos de los labels/títulos
+.panel1-grafico-02-auto[
+
+```r
+p +
+labs(color = NULL) +  #- borra el título de la leyenda
+labs(x = NULL) +  #- borra el tulo del eje X
+labs(subtitle = NULL) +
+*labs(caption = NULL)
+```
+]
+ 
+.panel2-grafico-02-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### A veces interesa eliminar elementos de los labels/títulos
+.panel1-grafico-02-auto[
+
+```r
+p +
+labs(color = NULL) +  #- borra el título de la leyenda
+labs(x = NULL) +  #- borra el tulo del eje X
+labs(subtitle = NULL) +
+labs(caption = NULL) +
+*labs(title = NULL)
+```
+]
+ 
+.panel2-grafico-02-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_06_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### A veces interesa eliminar elementos de los labels/títulos
+.panel1-grafico-02-auto[
+
+```r
+p +
+labs(color = NULL) +  #- borra el título de la leyenda
+labs(x = NULL) +  #- borra el tulo del eje X
+labs(subtitle = NULL) +
+labs(caption = NULL) +
+labs(title = NULL) +
+*labs(y = NULL)    #- borra el tulo del eje Y
+```
+]
+ 
+.panel2-grafico-02-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_07_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### A veces interesa eliminar elementos de los labels/títulos
+.panel1-grafico-02-auto[
+
+```r
+p +
+labs(color = NULL) +  #- borra el título de la leyenda
+labs(x = NULL) +  #- borra el tulo del eje X
+labs(subtitle = NULL) +
+labs(caption = NULL) +
+labs(title = NULL) +
+labs(y = NULL)  +  #- borra el tulo del eje Y
+*labs(tag = NULL)
+```
+]
+ 
+.panel2-grafico-02-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_08_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### A veces interesa eliminar elementos de los labels/títulos
+.panel1-grafico-02-auto[
+
+```r
+p +
+labs(color = NULL) +  #- borra el título de la leyenda
+labs(x = NULL) +  #- borra el tulo del eje X
+labs(subtitle = NULL) +
+labs(caption = NULL) +
+labs(title = NULL) +
+labs(y = NULL)  +  #- borra el tulo del eje Y
+labs(tag = NULL)
+
+```
+]
+ 
+.panel2-grafico-02-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_09_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;style&gt;
+.panel1-grafico-02-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-grafico-02-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-grafico-02-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+-- 
+
+&lt;br&gt;
+
+-------------------------------
+ - Para los labels de los ejes X e Y es muy frecuente usar: .bg-white[xlab(NULL)] y .bg-white[ylab(NULL)]
+
+
+--
+
+--------------------------
+
+- Queda la leyenda. La leyenda no es un elemento de los labels/título, sino del .bg-orange[theme]. Se puede eliminar con: .bg-orange[theme(legend.position = "none")]
+
+---
+class: inverse, center, middle
+background-image: url(imagenes/ss_06_img_01_ggplot2-hex.png)
+background-position: 95% 5%
+background-size: 8%
+
+### 3.2 Theme: cambiando la apariencia del gráfico
+
+&lt;br&gt;
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+##### Themes control the display of all non-data elements of the plot. You can override all settings with a complete theme like *theme_bw()*, or choose to tweak individual settings by using *theme()*
+
+
+---
+#### Theme: cambiando la apariencia del gráfico
+
+- Podemos cambiar los detalles de la apariencia del gráfico; por jemplo, el tamaño, *fuente* y color de los títulos, pero también de los puntos, las lineas, el fondo del gráfico, la apariencia de las grid-lines, el lugar para las leyendas, etc … etc …. Para hacerlo hay que usar las “funciones de tema”. Todas ellas comienzan con **theme_()**
+
+- En general con las funciones theme_() podemos cambiar/ajustar cualquier elemento del gráfico, con la excepción de la propia representación de los datos (ya sabemos que esto se hacen con las funciones geom_()). Estos elementos **afectan a la apariencia y detalles del gráfico, pero no a la relación entre variables que se muestra realmente en el gráfico**.
+
+---
+
+
+
+count: false
+ 
+##### Themes/Temas predefinidos
+.panel1-grafico-03-auto[
+
+```r
+*p 
+```
+]
+ 
+.panel2-grafico-03-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-03_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Themes/Temas predefinidos
+.panel1-grafico-03-auto[
+
+```r
+p +
+*theme_gray()    #- tema por defecto
+```
+]
+ 
+.panel2-grafico-03-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-03_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Themes/Temas predefinidos
+.panel1-grafico-03-auto[
+
+```r
+p +
+theme_gray()  +  #- tema por defecto
+*theme_light()
+```
+]
+ 
+.panel2-grafico-03-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-03_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Themes/Temas predefinidos
+.panel1-grafico-03-auto[
+
+```r
+p +
+theme_gray()  +  #- tema por defecto
+theme_light() +
+*theme_dark()
+```
+]
+ 
+.panel2-grafico-03-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-03_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Themes/Temas predefinidos
+.panel1-grafico-03-auto[
+
+```r
+p +
+theme_gray()  +  #- tema por defecto
+theme_light() +
+theme_dark() +
+*theme_classic()
+```
+]
+ 
+.panel2-grafico-03-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-03_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Themes/Temas predefinidos
+.panel1-grafico-03-auto[
+
+```r
+p +
+theme_gray()  +  #- tema por defecto
+theme_light() +
+theme_dark() +
+theme_classic() +
+*theme_minimal()
+```
+]
+ 
+.panel2-grafico-03-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-03_auto_06_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Themes/Temas predefinidos
+.panel1-grafico-03-auto[
+
+```r
+p +
+theme_gray()  +  #- tema por defecto
+theme_light() +
+theme_dark() +
+theme_classic() +
+theme_minimal() +
+*theme_void()
+```
+]
+ 
+.panel2-grafico-03-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-03_auto_07_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;style&gt;
+.panel1-grafico-03-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-grafico-03-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-grafico-03-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+count: false
+ 
+##### En el pkg ggthmes hay muchos themes
+.panel1-grafico-04-auto[
+
+```r
+*library(ggthemes)
+```
+]
+ 
+.panel2-grafico-04-auto[
+
+]
+
+---
+count: false
+ 
+##### En el pkg ggthmes hay muchos themes
+.panel1-grafico-04-auto[
+
+```r
+library(ggthemes)
+*p 
+```
+]
+ 
+.panel2-grafico-04-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-04_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### En el pkg ggthmes hay muchos themes
+.panel1-grafico-04-auto[
+
+```r
+library(ggthemes)
+p +
+*theme_economist()
+```
+]
+ 
+.panel2-grafico-04-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-04_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### En el pkg ggthmes hay muchos themes
+.panel1-grafico-04-auto[
+
+```r
+library(ggthemes)
+p +
+theme_economist() +
+*theme_fivethirtyeight()
+```
+]
+ 
+.panel2-grafico-04-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-04_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### En el pkg ggthmes hay muchos themes
+.panel1-grafico-04-auto[
+
+```r
+library(ggthemes)
+p +
+theme_economist() +
+theme_fivethirtyeight() +
+*theme_stata()
+```
+]
+ 
+.panel2-grafico-04-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-04_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### En el pkg ggthmes hay muchos themes
+.panel1-grafico-04-auto[
+
+```r
+library(ggthemes)
+p +
+theme_economist() +
+theme_fivethirtyeight() +
+theme_stata() +
+*theme_solarized()
+```
+]
+ 
+.panel2-grafico-04-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-04_auto_06_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### En el pkg ggthmes hay muchos themes
+.panel1-grafico-04-auto[
+
+```r
+library(ggthemes)
+p +
+theme_economist() +
+theme_fivethirtyeight() +
+theme_stata() +
+theme_solarized() +
+*theme_excel()
+```
+]
+ 
+.panel2-grafico-04-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-04_auto_07_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;style&gt;
+.panel1-grafico-04-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-grafico-04-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-grafico-04-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+--
+ Si te interesa el tema de los themes. [[Aquí]](https://github.com/jrnold/ggthemes) tienes el repo de ggthemes y [[aquí]](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/) puedes ver más ejemplos de themes.
+
+---
+#### Puedo definir mi propio theme? Sí, absolutely.
+
+
+```r
+my_theme &lt;- theme(
+ axis.text.x = element_text(colour = "grey20", size = 12, angle = 78, hjust = 0.5, vjust = 0.5) ,   axis.text.y = element_text(colour = "pink", size = 12) ,
+ text = element_text(size = 16))
+p + my_theme
+```
+
+--
+
+&lt;br&gt;
+
+---------------
+
+##### Podemos fijar el theme (para los siguientes gráficos)
+
+
+```r
+#-podemos fijar un theme concreto
+theme_set(theme_minimal())  
+
+# podemos fijar un theme y variar algún elemento (p.ej: eje X sin ticks ni escalas)
+theme_set(theme_minimal() + theme(axis.text.x = element_blank())
+          
+# si queremos volver al default theme
+theme_set(theme_gray())
+```
+
+---
+##### Ejemplos de elementos cuya apariencia podemos cambiar con theme()
+
+- En realidad se puede cambiar todo. Puedes mirar la ayuda con : .bg-white[help(theme)] o con  .bg-white[args(theme)]
+
+--
+
+- Algunos ejemplos
+
+
+```r
+p + theme(legend.position = "none")    #- que no aparezca leyenda
+p + theme(legend.position = "bottom")  #- leyenda abajo
+p + theme(legend.direction = "horizontal") #- leyenda horizontal!!
+p + theme(legend.title = element_text(size = 22)) #- título de la leyenda a 22
+p + theme(legend.key.size = unit(2.4, "cm"))   #- tamaño de los cuadros de la leyenda
+p + theme(text = element_text(size = 20, face = "bold"))  #- cambiar tamaño de todos los elementos de texto
+p + theme(text = element_text(face = "bold")) #- pone en negrita todos los elementos de texto
+p + theme(axis.text.x = element_text(colour = "pink", size = 12, angle = 90, hjust = 0.5, vjust = 0.5)) # apariencia de la escala del eje x
+p + theme(axis.title.y = element_text(size=25, angle = 45)) #- tamaño y angulo del texto del eje Y
+p + theme(plot.subtitle = element_text(hjust = 3)) #- posición horizontal del subtitulo (si lo tuviese)
+p + theme(plot.caption = element_text(hjust = 3)) #- posición vertical del pie de gráfico (si lo tuviese)
+p + theme(panel.background = element_rect(fill = "green", colour = "pink", linetype = "longdash", size = 3.5))
+p + theme(panel.background = element_blank())
+p + theme(panel.background = NULL)
+p + theme(plot.background = element_rect(fill = "pink", colour = "purple", linetype = "dotted", size = 7))
+```
+
+---
+#### ¿Cómo se llaman todos los elementos del gráfico?
+
+
+
+```r
+knitr::include_url("https://henrywang.nl/ggplot2-theme-elements-demonstration/")
+```
+
+&lt;iframe src="https://henrywang.nl/ggplot2-theme-elements-demonstration/" width="95%" height="400px"&gt;&lt;/iframe&gt;
+
+
+---
+#### Colores ( 🖥 🎨 )
+
+Se poquito de colores, pero claro, si quieres cambiar la apariencia de los gráficos, has de saber los colores de R, así que:
+
+- [[Aquí]](http://sape.inf.usi.ch/quick-reference/ggplot2/colour) tienes una guía para elegir color. Si solo quieres ver la lista de nombres de los colores en R ejecuta: .bg-white[aa &lt;- as.data.frame(colours())]
+
+- Si sabes el nombre del color que quieres, [[aquí]](https://pkg.garrickadenbuie.com/r-colors-css/),  podrás buscarlo y ver su color y su codificación en RGB y Hex.
+
+- También es interesante el [[paquete paleteer]](https://github.com/EmilHvitfeldt/paletteer) que agrupa un conjunto amplio de paletas de colores para usar en R. 
+
+
+---
+class: inverse, center, middle
+background-image: url(imagenes/ss_06_img_01_ggplot2-hex.png)
+background-position: 95% 5%
+background-size: 8%
+
+## 3.3 Small multiples (o facetting)
+
+&lt;br&gt;
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+##### El sistema gráfico de ggplot2 incorpora una técnica especial llamada “faceting” que permite dividir un gráfico en múltiples gráficos. 
+&lt;br&gt;
+
+##### Cada uno de esos múltiples gráficos se realiza sólo para las observaciones de una de los valores de una variable categórica (o factor) incluido en el conjunto de datos. Es más fácil hacerlo que explicarlo/escribirlo.
+
+---
+#### Small multiples (o facetting)
+
+- Veámoslo en acción con el conjunto de datos *iris*. En *iris*, hay una variable: *Species* que es un factor, es una variable categórica.
+
+
+```r
+p &lt;- ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + 
+     geom_point()
+p
+```
+
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-9-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+count: false
+ 
+##### Small multiples con facet_grid()
+.panel1-grafico-05-auto[
+
+```r
+*p 
+```
+]
+ 
+.panel2-grafico-05-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-05_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Small multiples con facet_grid()
+.panel1-grafico-05-auto[
+
+```r
+p +
+*facet_grid(
+*cols = vars(Species))   # gráficos x columnas
+```
+]
+ 
+.panel2-grafico-05-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-05_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Small multiples con facet_grid()
+.panel1-grafico-05-auto[
+
+```r
+p +
+facet_grid(
+cols = vars(Species)) +  # gráficos x columnas
+*facet_grid(
+*rows = vars(Species))   # gráficos x filas
+```
+]
+ 
+.panel2-grafico-05-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-05_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Small multiples con facet_grid()
+.panel1-grafico-05-auto[
+
+```r
+p +
+facet_grid(
+cols = vars(Species)) +  # gráficos x columnas
+facet_grid(
+rows = vars(Species)) +  # gráficos x filas
+*facet_wrap(
+*vars(Species), nrow = 2, ncol = 2)  # filas y columnas
+```
+]
+ 
+.panel2-grafico-05-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-05_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;style&gt;
+.panel1-grafico-05-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-grafico-05-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-grafico-05-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+--
+La forma habitual de escribir ese código es: 
+
+
+```r
+p + facet_grid(cols = vars(Species))   # gráficos x columnas
+  
+p + facet_grid(rows = vars(Species))   # gráficos x filas
+
+p + facet_wrap(vars(Species), nrow = 2, ncol = 2) # graf x filas y columnas
+```
+
+
+---
+#### Small multiples con 2 variables categóricas
+
+- *Iris* sólo tiene un factor, así que vamos a discretizar una variable del dataset:
+
+
+```r
+iris_2 &lt;- iris %&gt;% mutate(Petal_2 = ntile(Petal.Width, 2)) 
+```
+
+--
+
+
+```r
+iris_2  %&gt;% ggplot() + 
+geom_point(aes(Sepal.Length, Petal.Length, color = Species)) +
+*facet_grid(rows = vars(Petal_2), cols = vars(Species))
+```
+
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-12-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+#### Ejes de los small multiples (!!)
+
+- Por defecto las escalas de los ejes de los small multiple son comunes, pero podemos cambiarlo:
+
+
+
+```r
+p + facet_grid(rows = vars(Species))    #- escalas comunes
+
+p + facet_grid(rows = vars(Species), scales = "free")   #- las escalas de cada small pueden variar
+
+p + facet_grid(rows = vars(Species), scales = "free_y") #- solo dejamos libre/variar la escala del eje y
+```
+
+
+
+```r
+p + facet_grid(rows = vars(Species), scales = "free_y") #- solo dejamos libre/variar la escala del eje y
+```
+
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-14-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+class: inverse, center, middle
+background-image: url(imagenes/ss_06_img_01_ggplot2-hex.png)
+background-position: 95% 5%
+background-size: 10%
+
+## 3.4 Más elementos de *ggplot2*: Anotaciones (!!)
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+##### Annotations are a special type of layer that .orange[don’t] inherit global settings from the plot. They are used to add fixed reference data to plots
+
+---
+#### 3.4 Más elementos de *ggplot2*: Anotaciones (!!)
+
+- Las anotaciones permiten resaltar algún fenómeno o observación de interés y son importantes a la hora de contar historias (storytelling) con los gráficos y visualizaciones.
+
+- En el entorno `ggplot` podemos hacer anotaciones en nuestro gráficos de varias maneras: veremos un poco de 3:
+
+    - con la función `annotate()`. 
+    
+    - con `geom_text()`
+    
+    - con `geom_vline()` , `geom_hline()` y `geom_abline()`
+    
+    
+
+
+---
+
+
+count: false
+ 
+##### Anotaciones con annotate()
+.panel1-grafico-06-auto[
+
+```r
+*p 
+```
+]
+ 
+.panel2-grafico-06-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-06_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Anotaciones con annotate()
+.panel1-grafico-06-auto[
+
+```r
+p +
+*annotate(geom = "text",
+* x= 6,
+* y = 2,
+* label = "Una anotación",
+* size = 5)
+```
+]
+ 
+.panel2-grafico-06-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-06_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Anotaciones con annotate()
+.panel1-grafico-06-auto[
+
+```r
+p +
+annotate(geom = "text",
+  x= 6,
+  y = 2,
+  label = "Una anotación",
+  size = 5) +
+*annotate("rect",
+* xmin = 6,
+* xmax = 7,
+* ymin = -Inf,
+* ymax = Inf,
+* alpha = 0.2,
+* fill = "pink")
+```
+]
+ 
+.panel2-grafico-06-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-06_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Anotaciones con annotate()
+.panel1-grafico-06-auto[
+
+```r
+p +
+annotate(geom = "text",
+  x= 6,
+  y = 2,
+  label = "Una anotación",
+  size = 5) +
+annotate("rect",
+  xmin = 6,
+  xmax = 7,
+  ymin = -Inf,
+  ymax = Inf,
+  alpha = 0.2,
+  fill = "pink") +
+*annotate("segment",
+* x = 5,
+* xend = 7,
+* y = 6,
+* yend = 8,
+* colour = "blue")
+```
+]
+ 
+.panel2-grafico-06-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-06_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;style&gt;
+.panel1-grafico-06-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-grafico-06-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-grafico-06-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+--
+
+&lt;br&gt;
+
+
+```r
+p + annotate(geom = "text", x = 6, y = 2, label = "Una anotación", size = 5) +
+    annotate("rect", xmin = 6, xmax = 7,ymin = -Inf, ymax = Inf, alpha = 0.2, fill = "pink") + 
+    annotate("segment", x = 5, xend = 7, y = 6, yend = 8, colour = "blue") 
+```
+
+
+---
+
+
+count: false
+ 
+##### Anotaciones con geom_text()
+.panel1-grafico-07-auto[
+
+```r
+*p 
+```
+]
+ 
+.panel2-grafico-07-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-07_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Anotaciones con geom_text()
+.panel1-grafico-07-auto[
+
+```r
+p +
+*geom_text(aes(label = Petal.Length))
+```
+]
+ 
+.panel2-grafico-07-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-07_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Anotaciones con geom_text()
+.panel1-grafico-07-auto[
+
+```r
+p +
+geom_text(aes(label = Petal.Length)) +
+*geom_text(aes(label = Species))
+```
+]
+ 
+.panel2-grafico-07-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-07_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;style&gt;
+.panel1-grafico-07-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-grafico-07-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-grafico-07-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+&lt;br&gt;
+
+Así no parece muy útil, pero podemos mejorarlo ...
+
+
+
+```r
+iris_max &lt;- iris %&gt;% group_by(Species) %&gt;% 
+  slice_max(Petal.Length, n = 1)
+
+p + 
+ geom_text(data = iris_max, aes(label = Species), 
+           color = "black", size = 3)
+```
+
+
+---
+
+
+count: false
+ 
+##### Anotaciones con geom_xx_line()
+.panel1-grafico-08-auto[
+
+```r
+*p 
+```
+]
+ 
+.panel2-grafico-08-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-08_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Anotaciones con geom_xx_line()
+.panel1-grafico-08-auto[
+
+```r
+p +
+*geom_vline(xintercept = 6)
+```
+]
+ 
+.panel2-grafico-08-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-08_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Anotaciones con geom_xx_line()
+.panel1-grafico-08-auto[
+
+```r
+p +
+geom_vline(xintercept = 6) +
+*geom_hline(yintercept = 5,
+* size = 1.7,
+* colour = "purple",
+* linetype = "dashed")
+```
+]
+ 
+.panel2-grafico-08-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-08_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Anotaciones con geom_xx_line()
+.panel1-grafico-08-auto[
+
+```r
+p +
+geom_vline(xintercept = 6) +
+geom_hline(yintercept = 5,
+  size = 1.7,
+  colour = "purple",
+  linetype = "dashed") +
+*geom_abline(intercept = 0.7,
+* slope = 0.4,
+* size = 2,
+* colour = "steelblue")
+```
+]
+ 
+.panel2-grafico-08-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-08_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;style&gt;
+.panel1-grafico-08-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-grafico-08-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-grafico-08-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+&lt;br&gt;&lt;br&gt;
+
+
+```r
+p + geom_vline(xintercept = 6)
+p + geom_hline(yintercept = 5, size = 1.7, colour = "purple", linetype = "dashed")
+p + geom_abline(intercept = 0.7, slope = 0.4, size = 1.9, colour = "steelblue")
+```
+
+---
+class: inverse, center, middle
+background-image: url(imagenes/ss_06_img_01_ggplot2-hex.png)
+background-position: 95% 5%
+background-size: 10%
+
+## 3.5 Más elementos de ggplot2: límites de los ejes
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+##### Los límites del gráfico suelen obtenerse automáticamente pero a veces nos puede interesar cambiarlos
+
+---
+##### 3.5 Más elementos de ggplot2: límites de los ejes
+ 
+- Los límites o dominio del gráfico suelen obtenerse automáticamente de los datos, pero, otra vez according to Hadley, hay dos razones por las que podemos estar interesados en cambiar los límites del gráfico:
+
+    - centrarnos en una región especifica del gráfico
+
+    - aumentar los límites para que varios gráficos ajusten sus escalas.
+    
+- Si quieres modificar el recorrido de los ejes, los "límites" de los ejes, puedes usar `lims()`. Para los ejes X e Y hay dos funciones auxiliares: `xlim()` e `ylim()`. 
+
+- En realidad-realidad los límites de los ejes se controlan con **`scales_xx()`** pero lo dejamos para la siguiente sección.
+    
+---
+
+
+count: false
+ 
+##### Límites de los gráficos: lims()
+.panel1-grafico-09-auto[
+
+```r
+*#limites: x[4-8] y[1-7]  #limites: x[4-8] y[1-7]
+```
+]
+ 
+.panel2-grafico-09-auto[
+
+]
+
+---
+count: false
+ 
+##### Límites de los gráficos: lims()
+.panel1-grafico-09-auto[
+
+```r
+#limites: x[4-8] y[1-7]  #limites: x[4-8] y[1-7]
+*p 
+```
+]
+ 
+.panel2-grafico-09-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-09_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Límites de los gráficos: lims()
+.panel1-grafico-09-auto[
+
+```r
+#limites: x[4-8] y[1-7]  #limites: x[4-8] y[1-7]
+p +
+*lims(x = c(NA,6))
+```
+]
+ 
+.panel2-grafico-09-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-09_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Límites de los gráficos: lims()
+.panel1-grafico-09-auto[
+
+```r
+#limites: x[4-8] y[1-7]  #limites: x[4-8] y[1-7]
+p +
+lims(x = c(NA,6)) +
+*lims(y = c(1,8))
+```
+]
+ 
+.panel2-grafico-09-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-09_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Límites de los gráficos: lims()
+.panel1-grafico-09-auto[
+
+```r
+#limites: x[4-8] y[1-7]  #limites: x[4-8] y[1-7]
+p +
+lims(x = c(NA,6)) +
+lims(y = c(1,8)) +
+*lims(color = c("setosa"))
+```
+]
+ 
+.panel2-grafico-09-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-09_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Límites de los gráficos: lims()
+.panel1-grafico-09-auto[
+
+```r
+#limites: x[4-8] y[1-7]  #limites: x[4-8] y[1-7]
+p +
+lims(x = c(NA,6)) +
+lims(y = c(1,8)) +
+lims(color = c("setosa")) +
+*xlim(c(5, 6))
+```
+]
+ 
+.panel2-grafico-09-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-09_auto_06_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Límites de los gráficos: lims()
+.panel1-grafico-09-auto[
+
+```r
+#limites: x[4-8] y[1-7]  #limites: x[4-8] y[1-7]
+p +
+lims(x = c(NA,6)) +
+lims(y = c(1,8)) +
+lims(color = c("setosa")) +
+xlim(c(5, 6)) +
+*ylim(c(NA, 5))
+```
+]
+ 
+.panel2-grafico-09-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-09_auto_07_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Límites de los gráficos: lims()
+.panel1-grafico-09-auto[
+
+```r
+#limites: x[4-8] y[1-7]  #limites: x[4-8] y[1-7]
+p +
+lims(x = c(NA,6)) +
+lims(y = c(1,8)) +
+lims(color = c("setosa")) +
+xlim(c(5, 6)) +
+ylim(c(NA, 5)) +
+#- podemos dar la vuelta a los ejes
+*xlim(c (7, 3))
+```
+]
+ 
+.panel2-grafico-09-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-09_auto_08_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Límites de los gráficos: lims()
+.panel1-grafico-09-auto[
+
+```r
+#limites: x[4-8] y[1-7]  #limites: x[4-8] y[1-7]
+p +
+lims(x = c(NA,6)) +
+lims(y = c(1,8)) +
+lims(color = c("setosa")) +
+xlim(c(5, 6)) +
+ylim(c(NA, 5)) +
+#- podemos dar la vuelta a los ejes
+xlim(c (7, 3)) +
+*ylim(c(NA, 5))
+```
+]
+ 
+.panel2-grafico-09-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-09_auto_09_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;style&gt;
+.panel1-grafico-09-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-grafico-09-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-grafico-09-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+count: false
+ 
+##### Haciendo zoom en un gráfico
+.panel1-grafico-10-auto[
+
+```r
+*p 
+```
+]
+ 
+.panel2-grafico-10-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Haciendo zoom en un gráfico
+.panel1-grafico-10-auto[
+
+```r
+p +
+*xlim(c(4, 5))
+```
+]
+ 
+.panel2-grafico-10-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Haciendo zoom en un gráfico
+.panel1-grafico-10-auto[
+
+```r
+p +
+xlim(c(4, 5)) +
+*ylim(c(NA, 5))
+```
+]
+ 
+.panel2-grafico-10-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;style&gt;
+.panel1-grafico-10-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-grafico-10-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-grafico-10-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+##### Haciendo zoom: cuidado!!
+
+- Si cambias los limites de un gráfico para hacer un zoom, hay que tener cuidado ya que si por ejemplo después utilizar alguna transformación estadística como por ejemplo `geom_smooth()`, las observaciones eliminadas al ajustar los límites no entrarán en el cálculo estadístico.
+
+
+```r
+p + geom_smooth(color = "purple")
+p + geom_smooth(color = "purple") + xlim(c(4, 5.7)) + ylim(c(1.5, 5))   # deletes points
+```
+
+
+
+
+
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-20-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+--
+
+- Se puede solucionar con `coord_cartesian()`.
+
+---
+##### Haciendo zoom con coord_cartesian()
+
+
+```r
+p + geom_smooth(color = "purple")
+p + geom_smooth(color = "purple") + coord_cartesian(xlim = c(4, 5.7), ylim = c(1.5, 5))
+```
+
+
+
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-23-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+count: false
+ 
+#### Haciendo que el gráfico empiece en (0,0)
+.panel1-grafico-10a-auto[
+
+```r
+*ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species))
+```
+]
+ 
+.panel2-grafico-10a-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+#### Haciendo que el gráfico empiece en (0,0)
+.panel1-grafico-10a-auto[
+
+```r
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) +
+*geom_point()
+```
+]
+ 
+.panel2-grafico-10a-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+#### Haciendo que el gráfico empiece en (0,0)
+.panel1-grafico-10a-auto[
+
+```r
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) +
+geom_point() +
+*expand_limits(y = 0, x = 0)
+```
+]
+ 
+.panel2-grafico-10a-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+#### Haciendo que el gráfico empiece en (0,0)
+.panel1-grafico-10a-auto[
+
+```r
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) +
+geom_point() +
+expand_limits(y = 0, x = 0) +
+*scale_x_continuous(expand = c(0, 0))
+```
+]
+ 
+.panel2-grafico-10a-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+#### Haciendo que el gráfico empiece en (0,0)
+.panel1-grafico-10a-auto[
+
+```r
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) +
+geom_point() +
+expand_limits(y = 0, x = 0) +
+scale_x_continuous(expand = c(0, 0)) +
+*scale_y_continuous(expand = c(0, 0))
+```
+]
+ 
+.panel2-grafico-10a-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+#### Haciendo que el gráfico empiece en (0,0)
+.panel1-grafico-10a-auto[
+
+```r
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) +
+geom_point() +
+expand_limits(y = 0, x = 0) +
+scale_x_continuous(expand = c(0, 0)) +
+scale_y_continuous(expand = c(0, 0)) +
+*geom_vline(xintercept = 0)
+```
+]
+ 
+.panel2-grafico-10a-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_06_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+#### Haciendo que el gráfico empiece en (0,0)
+.panel1-grafico-10a-auto[
+
+```r
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) +
+geom_point() +
+expand_limits(y = 0, x = 0) +
+scale_x_continuous(expand = c(0, 0)) +
+scale_y_continuous(expand = c(0, 0)) +
+geom_vline(xintercept = 0) +
+*geom_hline(yintercept = 0)
+```
+]
+ 
+.panel2-grafico-10a-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_07_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;style&gt;
+.panel1-grafico-10a-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-grafico-10a-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-grafico-10a-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+&lt;br&gt;&lt;br&gt;
+
+Como nos cuentan [aquí](https://statmodeling.stat.columbia.edu/2020/05/07/make-andrew-happy-ggplot-trick-axis-at-zero/) hay razones para que el eje X de un gráfico empiece en y = 0.
+
+---
+class: inverse, center, middle
+background-image: url(imagenes/ss_06_img_01_ggplot2-hex.png)
+background-position: 95% 5%
+background-size: 10%
+
+## 3.6 Más elementos de *ggplot2*: Escalas (!!)
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+##### Las escalas permiten interpretar los elementos geométricos (por ejemplo los puntos) en función de los valores originales de las observaciones. *Scales control the details of how data values are translated to visual properties*.
+
+---
+##### 3.6 Más elementos de *ggplot2*: Escalas (!!)
+
+- Las escalas permiten leer/interpretar un gráfico. 
+
+- A veces es importante pararse a pensar cual es la mejor escala para representar las variables. Quizás sea conveniente cambiar la escala de un eje para distribuir mejor las observaciones en el espacio, o para interpretar mejor las variaciones entre observaciones; por ejemplo la escala logarítmica o en porcentajes son a veces más apropiadas que las escalas originales.
+
+- Las escalas en ggplot2 se crean/controlan con una familia de funciones: **`scales_xx()`**. Estas funciones también construyen los elementos que permiten leer/interpretar los gráficos: **los ejes y las leyendas**.
+
+
+- Como ggplot2 genera las escalas y leyendas automáticamente, en la práctica podemos hacer gráficos sin saber como funcionan las **`scales_xx()`**. PERO, en realidad, para cada par variable/estética representada en un gráfico ggplot es necesaria una escala, y tendría que fijarse con una de las funciones de la familia scale_xx()
+
+---
+##### 3.6 Más elementos de *ggplot2*: Escalas (!!)
+
+- ggplot2 genera las escalas automáticamente. CeCuando hacemos este gráfico:
+
+
+```r
+ggplot(iris, aes(Sepal.Length, Petal.Length)) +   geom_point(aes (color = Species)) 
+```
+
+- ... "en realidad" se está  haciendo:
+
+
+```r
+ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point(aes (color = Species)) +
+  scale_x_continuous() + 
+  scale_y_continuous() + 
+  scale_color_discrete()
+```
+
+---
+
+
+
+count: false
+ 
+##### Escalas: ejemplos (!!!)
+.panel1-grafico-11-auto[
+
+```r
+*p 
+```
+]
+ 
+.panel2-grafico-11-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Escalas: ejemplos (!!!)
+.panel1-grafico-11-auto[
+
+```r
+p +
+*scale_y_reverse()
+```
+]
+ 
+.panel2-grafico-11-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Escalas: ejemplos (!!!)
+.panel1-grafico-11-auto[
+
+```r
+p +
+scale_y_reverse() +
+*scale_y_continuous()
+```
+]
+ 
+.panel2-grafico-11-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Escalas: ejemplos (!!!)
+.panel1-grafico-11-auto[
+
+```r
+p +
+scale_y_reverse() +
+scale_y_continuous() +
+*scale_colour_grey()
+```
+]
+ 
+.panel2-grafico-11-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Escalas: ejemplos (!!!)
+.panel1-grafico-11-auto[
+
+```r
+p +
+scale_y_reverse() +
+scale_y_continuous() +
+scale_colour_grey() +
+*scale_color_brewer(palette = "Dark2")
+```
+]
+ 
+.panel2-grafico-11-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Escalas: ejemplos (!!!)
+.panel1-grafico-11-auto[
+
+```r
+p +
+scale_y_reverse() +
+scale_y_continuous() +
+scale_colour_grey() +
+scale_color_brewer(palette = "Dark2") +
+*scale_color_discrete()
+```
+]
+ 
+.panel2-grafico-11-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_06_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Escalas: ejemplos (!!!)
+.panel1-grafico-11-auto[
+
+```r
+p +
+scale_y_reverse() +
+scale_y_continuous() +
+scale_colour_grey() +
+scale_color_brewer(palette = "Dark2") +
+scale_color_discrete() +
+*scale_x_sqrt()
+```
+]
+ 
+.panel2-grafico-11-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_07_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Escalas: ejemplos (!!!)
+.panel1-grafico-11-auto[
+
+```r
+p +
+scale_y_reverse() +
+scale_y_continuous() +
+scale_colour_grey() +
+scale_color_brewer(palette = "Dark2") +
+scale_color_discrete() +
+scale_x_sqrt() +
+*scale_x_continuous(trans = "log")
+```
+]
+ 
+.panel2-grafico-11-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_08_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Escalas: ejemplos (!!!)
+.panel1-grafico-11-auto[
+
+```r
+p +
+scale_y_reverse() +
+scale_y_continuous() +
+scale_colour_grey() +
+scale_color_brewer(palette = "Dark2") +
+scale_color_discrete() +
+scale_x_sqrt() +
+scale_x_continuous(trans = "log") +
+*scale_y_log10()
+```
+]
+ 
+.panel2-grafico-11-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_09_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;style&gt;
+.panel1-grafico-11-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-grafico-11-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-grafico-11-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+count: false
+ 
+##### Escalas: más cosas (!!!)
+.panel1-grafico-12-auto[
+
+```r
+*p 
+```
+]
+ 
+.panel2-grafico-12-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-12_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Escalas: más cosas (!!!)
+.panel1-grafico-12-auto[
+
+```r
+p +
+*labs(x = "Eje X",
+*    y = "Eje Y",
+*    color = "Leyenda\n para el color")
+```
+]
+ 
+.panel2-grafico-12-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-12_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Escalas: más cosas (!!!)
+.panel1-grafico-12-auto[
+
+```r
+p +
+labs(x = "Eje X",
+     y = "Eje Y",
+     color = "Leyenda\n para el color") +
+*scale_x_continuous(
+*breaks = seq(3, 10, 0.5),
+*limits = c(3, 10))
+```
+]
+ 
+.panel2-grafico-12-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-12_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Escalas: más cosas (!!!)
+.panel1-grafico-12-auto[
+
+```r
+p +
+labs(x = "Eje X",
+     y = "Eje Y",
+     color = "Leyenda\n para el color") +
+scale_x_continuous(
+ breaks = seq(3, 10, 0.5),
+ limits = c(3, 10)) +
+*scale_y_continuous(
+*breaks = seq(0, 12, 0.25),
+*label = scales::dollar)
+```
+]
+ 
+.panel2-grafico-12-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-12_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Escalas: más cosas (!!!)
+.panel1-grafico-12-auto[
+
+```r
+p +
+labs(x = "Eje X",
+     y = "Eje Y",
+     color = "Leyenda\n para el color") +
+scale_x_continuous(
+ breaks = seq(3, 10, 0.5),
+ limits = c(3, 10)) +
+scale_y_continuous(
+ breaks = seq(0, 12, 0.25),
+ label = scales::dollar) +
+*scale_color_manual(
+*values = c("purple", "pink", "red2"),
+*name = "Especies\n de lirios")
+```
+]
+ 
+.panel2-grafico-12-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-12_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;style&gt;
+.panel1-grafico-12-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-grafico-12-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-grafico-12-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+&lt;br&gt;&lt;br&gt;
+
+---
+class: inverse, center, middle
+background-image: url(imagenes/ss_06_img_01_ggplot2-hex.png)
+background-position: 95% 5%
+background-size: 10%
+
+## 3.7 Más elementos de ggplot2: Stats(!!!!)
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+##### Algunos gráficos, como los de puntos, no requieren transformaciones estadísticas, pero otros gráficos como las curvas de predicción o los boxplots, sí que las necesitan.
+
+##### Podemos usar transformaciones estadísticas en gráficos ggplot con la familia de funciones stat_xx()
+
+---
+##### 3.7 Stats (transformaciones estadísticas)
+
+- Algunos gráficos, como los de puntos, no requieren transformaciones estadísticas: lo que se gráfica coincide con los valores de las observaciones. Ciertos gráficos, por ejemplo los boxplots, no se representan las variables originales, sino una transformación de estas.
+
+- Podemos usar transformaciones estadísticas en gráficos ggplot con la familia de funciones **`stat_xx()`**.
+
+- Cada `geom_xx()` que utilicemos, en realidad necesita de un `stat_xx()`, entonces ¿por qué nunca lo hemos usado nosotros? Con ggplot2 la razón es casi siempre la misma: porque under the hood ggplot2 hace muchas cosas por nosotros. En concreto, cada vez que usamos un `geom_xx()` ggplot2 está fijando una transformación estadística por defecto por nosotros.
+
+
+- Cuando hacíamos:
+
+
+```r
+ggplot(iris, aes(Petal.Length, Sepal.Length)) +
+```
+
+- En realidad, estamos haciendo:
+
+
+```r
+ggplot(iris, aes(Petal.Length, Sepal.Length)) + geom_point(stat = "identity")
+```
+
+---
+
+
+
+count: false
+ 
+##### Stats (transformaciones estadísticas) (!!!)
+.panel1-grafico-13-auto[
+
+```r
+*p 
+```
+]
+ 
+.panel2-grafico-13-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-13_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Stats (transformaciones estadísticas) (!!!)
+.panel1-grafico-13-auto[
+
+```r
+p +
+*geom_point(stat = "identity")
+```
+]
+ 
+.panel2-grafico-13-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-13_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Stats (transformaciones estadísticas) (!!!)
+.panel1-grafico-13-auto[
+
+```r
+p +
+geom_point(stat = "identity") +
+*geom_point(stat = "unique")
+```
+]
+ 
+.panel2-grafico-13-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-13_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Stats (transformaciones estadísticas) (!!!)
+.panel1-grafico-13-auto[
+
+```r
+p +
+geom_point(stat = "identity") +
+geom_point(stat = "unique") +
+*geom_point(stat = "smooth",
+*          method = "auto")
+```
+]
+ 
+.panel2-grafico-13-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-13_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Stats (transformaciones estadísticas) (!!!)
+.panel1-grafico-13-auto[
+
+```r
+p +
+geom_point(stat = "identity") +
+geom_point(stat = "unique") +
+geom_point(stat = "smooth",
+           method = "auto")
+
+```
+]
+ 
+.panel2-grafico-13-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-13_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;style&gt;
+.panel1-grafico-13-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-grafico-13-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-grafico-13-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+&lt;br&gt;&lt;br&gt;
+
+- Es raro que tengamos que usar `stats_xx()`
+
+---
+
+
+
+count: false
+ 
+##### Stats: un ejemplo (!!!)
+.panel1-grafico-14-auto[
+
+```r
+*ggplot(iris,
+*aes(Species, Sepal.Length))
+```
+]
+ 
+.panel2-grafico-14-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-14_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Stats: un ejemplo (!!!)
+.panel1-grafico-14-auto[
+
+```r
+ggplot(iris,
+ aes(Species, Sepal.Length)) +
+*geom_boxplot()
+```
+]
+ 
+.panel2-grafico-14-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-14_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+count: false
+ 
+##### Stats: un ejemplo (!!!)
+.panel1-grafico-14-auto[
+
+```r
+ggplot(iris,
+ aes(Species, Sepal.Length)) +
+geom_boxplot() +
+*geom_point(
+* stat = "summary",
+* fun.y = "mean",
+* colour = "red", size = 4)
+```
+]
+ 
+.panel2-grafico-14-auto[
+&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-14_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;style&gt;
+.panel1-grafico-14-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-grafico-14-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-grafico-14-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+&lt;br&gt;
+
+
+```r
+ggplot(iris, aes(Species, Sepal.Length)) + 
+  geom_boxplot() + 
+  geom_point(stat = "summary", fun.y = "mean", colour = "red", size = 4)
+```
+
+
+
+---
+##### 3.7 Stats: otro ejemplo (!!!)
+
+
+```r
+ggplot(iris, aes(Sepal.Length)) + geom_histogram() 
+
+ggplot(iris, aes(Sepal.Length)) + 
+   geom_histogram(aes(y = stat(count / max(count))))
+```
+
+
+
+
+
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-31-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: inverse, center, middle
+background-image: url(imagenes/ss_06_img_01_ggplot2-hex.png)
+background-position: 95% 5%
+background-size: 10%
+
+## 3.8 Más elementos: Position adjustments
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+##### All layers have a position adjustment that resolves overlapping geoms. Override the default by using the position argument to the geom_ or stat_ function.
+
+
+
+---
+#### 3.8 Position adjustments (un ejemplo)
+
+
+```r
+p &lt;- ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() 
+
+p  + geom_point(position = "jitter", color = "pink") 
+```
+
+
+
+También se puede usar `geom_jitter()`
+
+
+```r
+p + geom_jitter( color = "pink") 
+```
+
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-34-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+#### 3.8 Position adjustments (otro ejemplo)
+
+
+```r
+p &lt;- ggplot(mtcars, aes(factor(cyl), fill = factor(vs))) 
+p + geom_bar() 
+p + geom_bar(position = "fill")
+p + geom_bar(position = "dodge")
+p + geom_bar(position = position_dodge2(preserve = "single"))
+```
+
+
+
+
+
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-37-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: inverse, center, middle
+
+
+## 4. Combinando gráficos
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+
+##### A veces interesa crear una figura compuesta de varios gráficos diferentes. 
+
+##### Podemos usar varios paquetes: gridExtra, patchwork o cowplot
+
+
+---
+
+#### 4. Combinando gráficos
+
+- Podemos usar varios paquetes: [[gridExtra]](https://cran.r-project.org/web/packages/gridExtra/index.html), [[patchwork]](https://patchwork.data-imaginist.com/) o 
+[[cowplot]](https://wilkelab.org/cowplot/)
+
+- Un ejemplo con `patchwork`
+
+
+```r
+library(patchwork)
+p1 &lt;- ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_point() + theme(legend.position = "none")
+p2 &lt;- ggplot(iris)+ aes(Species, Sepal.Length) + geom_boxplot()
+p3 &lt;- ggplot(iris, aes(Sepal.Length, fill = Species)) + geom_density(position = "stack", alpha = 0.5)
+p1 + p2 / p3
+```
+
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-38-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+background-image: url(https://patchwork.data-imaginist.com/reference/figures/logo.png)
+background-position: 97% 2%
+background-size: 5%
+
+##### Un ejemplo con imágenes
+
+
+
+
+
+
+```r
+library(patchwork)
+img_twitter &lt;- magick::image_read('https://raw.githubusercontent.com/lgellis/MiscTutorial/master/Patchwork/twitter_post.png')
+img &lt;- magick::image_read("https://patchwork.data-imaginist.com/reference/figures/logo.png")
+p_twitter &lt;- ggplot() + ggpubr::background_image(img_twitter) + coord_fixed() 
+p_img &lt;- ggplot() + ggpubr::background_image(img) + coord_fixed()
+```
+
+
+```r
+p_twitter + ((p1 + plot_spacer()) / (p_img + p3))
+```
+
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-41-1.png" width="103%" style="display: block; margin: auto;" /&gt;
+
+---
+class: inverse, center, middle
+
+
+## 5. Exportando gráficos
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+
+##### A veces necesitaremos guardar el gráfico en un fichero.
+
+##### Piensa que estamos guardando la imagen, la representación del gráfico, no el objeto R.
+
+---
+#### 5. Exportando gráficos
+
+Si queremos guardar (la representación gráfica de) un gráfico en un archivo (.jpg, png, ...)
+
+- Podemos usar la “Export Tab” en el Plot Pane de Rstudio. Podemos cambiar las dimensiones (anchura y altura) del gráfico. 
+
+- Podemos usar la función `ggsave()`. Nos permite cambiar el tamaño y la resolución del gráfico.
+  
+  
+  ```r
+  ggsave("filename.png", plot = my_plot, width = 8, height = 6, units = "in", dpi = "retina")
+  ```
+
+--
+
+&lt;br&gt;
+
+--------------------------
+  
+Si queremos guardar una copia completa del gráfico, no de su representación visual, sino del objeto R, podemos hacerlo con  `saveRDS()`.
+
+  
+  ```r
+  saveRDS(my_plot, "my_plot.rds")
+  ```
+
+---
+class: inverse, center, middle
+
+
+## 8. Asistentes para ggplot2
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+
+##### Hay varios asistentes para crear o modificar gráficos ggplot a través de interfaces gráficas.
+
+##### Por ejemplo: ggThemeAssist, esquisse y ggannotate
+
+
+---
+#### 8. Asistentes para ggplot2
+
+Hay varios asistentes para crear o modificar gráficos ggplot a través de interfaces gráficas. Por ejemplo: [[ggThemeAssist]](https://github.com/calligross/ggthemeassist), [[esquisse]](https://dreamrs.github.io/esquisse/index.html) y [[ggannotate]](https://github.com/MattCowgill/ggannotate).
+
+--
+
+&lt;br&gt;
+
+- El paquete **ggThemeAssist** facilita, mediante un adding de RStudio, la edición de los detalles de un gráfico; es decir, puedes comenzar haciendo un gráfico básico en RStudio, para después usar `ggThemeAssist` para modificar los elementos estéticos de gráfico como títulos, leyendas, colores etc… etc…
+
+
+--
+
+&lt;br&gt;
+
+- El paquete **esquisse** permite crear gráficos ggplot desde cero con una interfaz gráfica.
+
+
+--
+
+&lt;br&gt;
+
+- El paquete **ggannotate** permite crear anotaciones en gráficos ggplot.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"highlightSpans": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
