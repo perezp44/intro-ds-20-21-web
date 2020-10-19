@@ -30,6 +30,22 @@ knitr::opts_chunk$set(echo = TRUE, eval = TRUE, message = FALSE, warning = FALSE
 options(scipen = 999) #- para quitar la notacion cientifica
 ```
 
+
+```{r, echo = FALSE}
+library(metathis)
+meta() %>% meta_description(
+    "Curso de introduccion a R"
+  ) %>% 
+  meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>% 
+  meta_viewport() %>% 
+  meta_social(
+    title = "Curso de introducción a R",
+    url = "https://perezp44.github.io/intro-ds-20-21-web/",
+    og_type = "course",
+    og_author = c("Pedro J. Pérez"))
+```
+
+
 <br><br>
 
 ### Programación y manejo de datos en la era del Big Data
