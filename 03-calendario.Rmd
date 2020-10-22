@@ -207,7 +207,7 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 ##### ¿Qué haremos en clase?
 
-- "Corregir" ... bueno en realidad ver algunos de los fallos que tuvisteis en la entrega_02. Se trata de no repetir errores y aprender de ellos.
+- "Corregir" ... bueno en realidad ver algunos de los fallos que tuvisteis en la `entrega_02` y en la `entrega_03`. Se trata de no repetir errores y aprender de ellos.
 
 - Meternos de lleno con el `tidyverse`, concretamente con su principal paquete `dplyr`. Necesito que os leáis el tutorial 05 y las slides 05, please!!!!!
 
