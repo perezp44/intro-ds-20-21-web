@@ -214,6 +214,33 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 - Espero, no sé si lo conseguiremos, pero espero empezar a hablar de ggplot2 y hacer nuestro primer super-gráfico.
   
 
+<br>
+
+-----------------------
+
+<br>
+
+## 6ª clase (30-oct)
+
+
+##### **`Homework`** (para hacer antes de ir a clase) 
+
+- Leer el e-mail que os he mandado a vuestro correo de la UV. Esta vez también hay entrega: la cuarta. Esfuérzate e intenta aprender con ella el funcionamiento/sintaxis de `dplyr`.
+
+- Repasa el [`Tutorial 05: Data munging`](./tutoriales/tt_05_data-munging.html){target="_blank"}. 
+
+- Intenta leer el principio del [`Tutorial 06: ggplot2`](./tutoriales/tt_06_ggplot2.html){target="_blank"}. 
+ 
+
+##### ¿Qué haremos en clase?
+
+- Corregir la `entrega_04`.
+
+- Acabar el tutorial 05. Espero que a mitad de clase, un poco antes.
+
+- Empezar con las ideas básicas de ggplot2 y está vez sí, hacer nuestro primer super-gráfico.
+  
+
 
 
   
