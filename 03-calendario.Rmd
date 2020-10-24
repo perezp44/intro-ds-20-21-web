@@ -227,7 +227,7 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 - Repasa el [`Tutorial 05: Data munging`](./tutoriales/tt_05_data-munging.html){target="_blank"}. 
 
-- Intenta leer el principio del [`Tutorial 06: ggplot2`](./tutoriales/tt_06_ggplot2.html){target="_blank"}.
+- Lee los 2 primeros apartados del [`Tutorial 06: ggplot2`](./tutoriales/tt_06_ggplot2.html){target="_blank"}.
 
 - Instalaros estos 2 paquetes: `robservable` y `wpp2019`. Los dos paquetes están en CRAN, así que podéis instalarlos con `install.packages("nombre_del_pkg")`. Acordaros de que, para evitar problemas, es mejor instalar los paquetes desde una sesión limpia de R.
  

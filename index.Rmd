@@ -34,7 +34,7 @@ options(scipen = 999) #- para quitar la notacion cientifica
 ```{r, echo = FALSE}
 library(metathis)
 meta() %>% meta_description(
-    "Curso de introduccion a R"
+    "Curso de introducción a R"
   ) %>% 
   meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>% 
   meta_viewport() %>% 
