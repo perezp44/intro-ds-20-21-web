@@ -8,7 +8,7 @@ navbar:
   right:
     - text: "Guía del curso"
       icon: fa-graduation-cap
-      href: 01-guia-del-curso.html  
+      href: 01-guia-del-curso.html
     - text: "Logística"
       icon: fa-laptop
       href: 02-logistica.html
@@ -24,13 +24,16 @@ navbar:
       icon: fa-code
       href: 06-ejemplos.html
     - text: "MáS"
-      icon: fa-download      
+      icon: fa-download
       href: 07-mas-cosas.html
-output_dir: "docs"    
+output_dir: "docs"
 output:
   html_document:
     theme: united
     highlight: textmate
-    include:
+    includes:
       after_body: footer.html
+      in_header: google-analytics.html
+---
+
     #css: styles.css

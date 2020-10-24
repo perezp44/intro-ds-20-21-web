@@ -7,8 +7,6 @@ output:
     highlight: monochrome 
     self_contained: yes
     number_sections: no
-    includes:
-       in_header: google-analytics.html
 ---
 
 
@@ -60,4 +58,4 @@ Todas las transparencias están hechas con R, de hecho, una de las cosas que has
 - [Slides-06(C): ggplot2 (distintos tipos de gráficos)](./slides/ss_06_ggplot2/ss_06_ggplot2_C.html){target="_blank"}.
 
 
-<br><br>
+<br><br><br>

@@ -8,9 +8,7 @@ output:
     number_sections: no
     toc: true
     toc_float: true
-    includes:
-       in_header: google-analytics.html
----
+ ---
 
 <br>
 
@@ -246,4 +244,4 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 
   
-  <br><br><br><br>
+  <br><br><br>

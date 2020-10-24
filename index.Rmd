@@ -8,8 +8,8 @@ output:
     highlight: monochrome 
     self_contained: yes
     number_sections: no
-    includes:
-       in_header: google-analytics.html
+    #includes:
+       #in_header: google-analytics.html
     #toc: true
     #toc_float: true
     #code_folding: show
@@ -76,3 +76,5 @@ En la web encontrarás información acerca del desarrollo del curso, así como l
 <br>
 
 -- Pedro J. Pérez
+
+<br><br>

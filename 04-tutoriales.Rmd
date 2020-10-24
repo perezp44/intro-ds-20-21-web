@@ -7,8 +7,6 @@ output:
     highlight: monochrome 
     self_contained: yes
     number_sections: no
-    includes:
-       in_header: google-analytics.html
 ---
 
 ```{r, echo = FALSE}
@@ -51,4 +49,4 @@ Todas los tutoriales están hechos con R; de hecho, una de las cosas que has de 
 
 - [`Tutorial 06: ggplot2`](./tutoriales/tt_06_ggplot2.html){target="_blank"}. 
 
-<br><br>
+<br><br><br>
