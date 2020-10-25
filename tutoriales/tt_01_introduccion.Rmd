@@ -1,8 +1,7 @@
 ---
-title: "Tema 1: Ciencia de datos y la era del Big Data (WIP)"
-author: "Pedro J. Pérez"
-date: "`r format(Sys.time(), '%d %B %Y')`"
-#date: "2020/03/05 (updated: `r Sys.Date()`)"
+title: "Tema 1: Ciencia de datos y la era del Big Data"
+author: "Pedro J. Pérez (pedro.j.perez@uv.es). Universitat de València"
+date: "Agosto de 2019 (actualizado el `r format(Sys.time(), '%d-%m-%Y')`)"
 output:
   html_document:
     css: !expr here::here("assets", "styles_pjp.css") #-https://stackoverflow.com/questions/56681879/how-to-use-here-for-paths-to-css-before-body-and-after-bod
@@ -15,6 +14,11 @@ output:
       smooth_scroll: true
     self_contained: true
     number_sections: false
+    includes:
+      after_body: !expr here::here("assets", "footer.html") 
+      in_header: 
+        - !expr here::here("assets", "google-analytics.html") 
+        - !expr here::here("assets", "favicon-sol.html")
     #code_folding: show
     df_print: kable
     code_download: true
@@ -46,10 +50,30 @@ options(scipen = 999) #- para quitar la notación científica
 options("yaml.eval.expr" = TRUE) #- https://github.com/viking/r-yaml/issues/47  (lo puse x el pb con el warning) En realidad creo que mejor sería ponerlo en RProfile
 ```
 
-
 ```{r klippy, echo = FALSE}
 klippy::klippy(position = c("top", "right")) #- remotes::install_github("rlesur/klippy")
 ```
+
+
+```{r, include = FALSE}
+options(htmltools.dir.version = FALSE)
+#knitr::opts_chunk$set(fig.retina = 3, warning = FALSE, message = FALSE, echo=FALSE, out.width = "85%")
+library(metathis)
+meta() %>% meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>% 
+  meta_social(
+    title = "Ciencia de datos y la era del Big Data",
+    description = paste(
+      "Se presentan conceptos e ideas como: Ciencia de datos, Big Data, Inteligencia Artificial, Machine Learning y Deep Learning.",
+      "Se muestra la necesidad de la programación en la ciencia de datos y la ciencia y análisis reproducibles.",
+      "Se destaca el papel del sofware libre en la ciencia y análisis reproducibles y el porqué de usar R durante el curso"),
+    url = "https://perezp44.github.io/intro-ds-20-21-web/tutoriales/tt_01_introduccion.html",
+    og_type = "website",
+    og_author = "Pedro J. Pérez"
+  )
+```
+
+
+
 
 -----------------
 

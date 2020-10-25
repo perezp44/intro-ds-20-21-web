@@ -1,11 +1,10 @@
 ---
-title: "Iniciación a R-base (WIP)"
-author: "Pedro J. Pérez"
-date: "`r format(Sys.time(), '%d %B %Y')`"
-#date: "2020/09/07 (updated: ``r format(Sys.time(), '%d %B %Y')`)"
+title: "Iniciación a R-base"
+author: "Pedro J. Pérez (pedro.j.perez@uv.es). Universitat de València"
+date: "Agosto de 2019 (actualizado el `r format(Sys.time(), '%d-%m-%Y')`)"
 output:
   html_document:
-    css: !expr here::here("assets", "styles_pjp.css") #-https://stackoverflow.com/questions/56681879/how-to-use-here-for-paths-to-css-before-body-and-after-bod
+    css: !expr here::here("assets", "styles_pjp.css")
     theme: paper
     highlight: textmate
     toc: true
@@ -15,12 +14,15 @@ output:
       smooth_scroll: true
     self_contained: true
     number_sections: false
-    #code_folding: show
+    includes:
+      after_body: !expr here::here("assets", "footer.html") 
+      in_header: 
+        - !expr here::here("assets", "google-analytics.html") 
+        - !expr here::here("assets", "favicon-sol.html")
     df_print: kable
     code_download: true
 editor_options:
   chunk_output_type: console
-#bibliography: "`r here::here('assets', 'biblio.bib')`"  #- joooder. single quotes https://community.rstudio.com/t/use-here-here-function-in-yaml-option/18667/9
 ---
 
 ```{r, include = FALSE}
@@ -46,10 +48,31 @@ options(scipen = 999) #- para quitar la notación científica
 options("yaml.eval.expr" = TRUE) #- https://github.com/viking/r-yaml/issues/47  (lo puse x el pb con el warning) En realidad creo que mejor sería ponerlo en RProfile
 ```
 
-
 ```{r klippy, echo = FALSE}
 klippy::klippy(position = c("top", "right")) #- remotes::install_github("rlesur/klippy")
 ```
+
+
+```{r, include = FALSE}
+options(htmltools.dir.version = FALSE)
+#knitr::opts_chunk$set(fig.retina = 3, warning = FALSE, message = FALSE, echo=FALSE, out.width = "85%")
+library(metathis)
+meta() %>% meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>% 
+  meta_social(
+    title = "Iniciación a R-base",
+    description = paste(
+      "El objetivo de este tutorial es proporcionar una introducción a R para personas que no han tenido contacto previo con el programa.",
+      "Se presentan conceptos básicos  como distintos tipos y estructuras de datos, asignación, funciones, operadores lógicos, subsetting etc… PERO, recuerda que en el curso vamos a enfatizar otra forma de trabajar con R, conocida como tidyverse"),
+    url = "https://perezp44.github.io/intro-ds-20-21-web/tutoriales/tt_03_R-base.html",
+    og_type = "website",
+    og_author = "Pedro J. Pérez"  )
+```
+
+
+El objetivo de este tema es proporcionar una introducción a R para personas que no han tenido contacto previo con el programa. Se presentan algunos de los rudimentos del lenguaje de programación R. Conocer en detalle el lenguaje R es complicado, hay muchas cosas, pero conociendo unas cuantas de ellas puede ser suficiente para hacer análisis de datos complejos.
+
+Se presentan conceptos básicos y, por tanto necesarios, como distintos tipos y estructuras de datos, asignación, funciones, operadores lógicos, subsetting etc… PERO, recuerda que en el curso vamos a enfatizar otra forma de trabajar con R.
+
 
 -----------------
 
@@ -618,7 +641,7 @@ Ya vale de funciones, pero hay algo que a algunos os rondará por la cabeza.
 
 Cuando hemos visto la ayuda de la función `sqrt()`, sólo tenía un argumento `x`, y este argumento tenía que ser, según la ayuda, un vector (o array^[Un array es muy similar a matrix, sólo que una matriz solo puede tener 2 dimensiones, filas y columnas, mientras que un array puede tener más de 2 dimensiones; es decir, las array son matrices mutidimensionales]) de números.
 
-**PERO** nosotros no introdujimos un vector en `sqrt()`, sino que introdujimos un sólo número. Sí, es cierto, introdujimos un sólo número, pero "R no entiende lo que es un escalar, para él un número aislado es un vector, para R el número 4 es un vector con un sólo elemento, el número 4.
+**PERO** nosotros no introdujimos un vector en `sqrt()`, sino que introdujimos un sólo número. Sí, es cierto, introdujimos un sólo número, pero R no entiende lo que es un escalar, para él un número aislado es un vector, para R el número 4 es un vector con un sólo elemento, el número 4.
 
 Fíjate que el valor que introduzcamos en `sqrt()` tiene que cumplir dos requisitos, ser un vector y que sus valores sean numéricos. Estas dos ideas hay que tenerlas claras para trabajar con R:
 

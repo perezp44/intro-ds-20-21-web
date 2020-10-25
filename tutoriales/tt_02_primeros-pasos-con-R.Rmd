@@ -1,11 +1,10 @@
 ---
-title: "R, RStudio y forma de trabajar (WIP)"
-author: "Pedro J. Pérez"
-date: "`r format(Sys.time(), '%d %B %Y')`"
-#date: "2020/03/05 (updated: `r Sys.Date()`)"
+title: "R, RStudio y forma de trabajar"
+author: "Pedro J. Pérez (pedro.j.perez@uv.es). Universitat de València"
+date: "Septiembre de 2019 (actualizado el `r format(Sys.time(), '%d-%m-%Y')`)"
 output:
   html_document:
-    css: !expr here::here("assets", "styles_pjp.css") #-https://stackoverflow.com/questions/56681879/how-to-use-here-for-paths-to-css-before-body-and-after-bod
+    css: !expr here::here("assets", "styles_pjp.css")
     theme: paper
     highlight: textmate 
     toc: true
@@ -15,12 +14,15 @@ output:
       smooth_scroll: true
     self_contained: true
     number_sections: false
-    #code_folding: show
+    includes:
+      after_body: !expr here::here("assets", "footer.html") 
+      in_header: 
+        - !expr here::here("assets", "google-analytics.html") 
+        - !expr here::here("assets", "favicon-sol.html")    
     df_print: kable
     code_download: true
 editor_options: 
   chunk_output_type: console
-#bibliography: "`r here::here('assets', 'biblio.bib')`"  #- joooder. single quotes https://community.rstudio.com/t/use-here-here-function-in-yaml-option/18667/9
 ---
 
 ```{r, include = FALSE}
@@ -46,11 +48,28 @@ options(scipen = 999) #- para quitar la notación científica
 options("yaml.eval.expr" = TRUE) #- https://github.com/viking/r-yaml/issues/47  (lo puse x el pb con el warning) En realidad creo que mejor sería ponerlo en RProfile
 ```
 
-
-
 ```{r klippy, echo = FALSE}
 klippy::klippy(position = c("top", "right")) #- remotes::install_github("rlesur/klippy")
 ```
+
+
+```{r, include = FALSE}
+options(htmltools.dir.version = FALSE)
+#knitr::opts_chunk$set(fig.retina = 3, warning = FALSE, message = FALSE, echo=FALSE, out.width = "85%")
+library(metathis)
+meta() %>% meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>% 
+  meta_social(
+    title = "R, RStudio y forma de trabajar",
+    description = paste(
+      "Primera introducción a R y RStudio. Se explica la forma que tendremos de trabajar con ellos (workflow) a través de Rprojects",
+      "Se muestra como dar ordenes a R con la consola, a traves de scripts o ficheros .R y a través de ficheros .Rmd; todo ello usando Rprojects."),
+    url = "https://perezp44.github.io/intro-ds-20-21-web/tutoriales/tt_02_primeros-pasos-con-R.html",
+    og_type = "website",
+    og_author = "Pedro J. Pérez"
+  )
+```
+
+
 
 -----------------
 

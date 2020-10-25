@@ -1,11 +1,10 @@
 ---
-title: "Visualización con ggplot2 (WIP)"
-author: "Pedro J. Pérez"
-date: "`r format(Sys.time(), '%d %B %Y')`"
-#date: "2020/03/05 (updated: `r Sys.Date()`)"
+title: "Visualización: gráficos con ggplot2"
+author: "Pedro J. Pérez (pedro.j.perez@uv.es). Universitat de València"
+date: "Octubre de 2019 (actualizado el `r format(Sys.time(), '%d-%m-%Y')`)"
 output:
   html_document:
-    css: !expr here::here("assets", "styles_pjp.css") #-https://stackoverflow.com/questions/56681879/how-to-use-here-for-paths-to-css-before-body-and-after-bod
+    css: !expr here::here("assets", "styles_pjp.css")
     theme: paper
     highlight: textmate 
     toc: true
@@ -15,7 +14,11 @@ output:
       smooth_scroll: true
     self_contained: true
     number_sections: false
-    #code_folding: show
+    includes:
+      after_body: !expr here::here("assets", "footer.html") 
+      in_header: 
+        - !expr here::here("assets", "google-analytics.html") 
+        - !expr here::here("assets", "favicon-sol.html")
     df_print: kable
     code_download: true
 editor_options: 
@@ -48,6 +51,24 @@ library(patchwork)
 
 ```{r klippy, echo = FALSE}
 klippy::klippy(position = c("top", "right")) #- remotes::install_github("rlesur/klippy")
+```
+
+
+```{r, include = FALSE}
+options(htmltools.dir.version = FALSE)
+#knitr::opts_chunk$set(fig.retina = 3, warning = FALSE, message = FALSE, echo=FALSE, out.width = "85%")
+library(metathis)
+meta() %>% meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>% 
+  meta_social(
+    title = "Visualización: gráficos con ggplot2",
+    description = paste(
+      "Se presentan conceptos e ideas básicas de visualización con el paquete ggplot2 de R. En primer lugar se presentan las ideas básicas para después exponer los distintos elementos o layers de los gráficos ggplot.",
+      "Se muestran distintos tipos de gráficos: histogramas, scattter plots, gráficos de densidad etc ...",
+      "Finalmente se muestra como combinar gráficos, asi como la realización de gráficos interactivos"),
+    url = "https://perezp44.github.io/intro-ds-20-21-web/tutoriales/tt_06_ggplot2.html",
+    og_type = "website",
+    og_author = "Pedro J. Pérez"
+  )
 ```
 
 
@@ -101,12 +122,7 @@ Otro ejemplo del making-of de un gráfico puedes verlo [aquí](https://twitter.c
 
 Otros dos libros sobre visualización con el código de los ejemplos hechos con `ggplot2`, [aquí](https://socviz.co/index.html#preface) y [aquí](https://socviz.co/lookatdata.html#lookatdata){target="_blank"}. Finalmente, algunos consejos de la [BBC](https://bbc.github.io/rcookbook/){target="_blank"} sobre visualización.
 
-Como también se aprende los errores, [aquí](https://medium.economist.com/mistakes-weve-drawn-a-few-8cdd8a42d368){target="_blank"} tienes un articulo de The Economist donde muestran errores que ellos mismos han cometido haciendo gráficos. Además pueden descargarse los datos.Otro ejemplo de gráfico un poquito tendencioso, esta vez del Washington Post:
-
-
-```{r, echo = FALSE, fig.asp = 7/9}
-tweetrmd::tweet_embed("https://twitter.com/andypressman/status/1122512664813604865", theme = "light", align = "center", maxwidth = 400)
-```
+Como también se aprende los errores, [aquí](https://medium.economist.com/mistakes-weve-drawn-a-few-8cdd8a42d368){target="_blank"} tienes un articulo de The Economist donde muestran errores que ellos mismos han cometido haciendo gráficos. Además pueden descargarse los datos.
 
 <br>
 
