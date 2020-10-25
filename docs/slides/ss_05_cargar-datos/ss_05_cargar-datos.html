@@ -1,40 +1,86 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Importar (y exportar) datos</title>
+    <title>Importar (y exportar) datos con R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Pedro J. Pérez" />
-    <meta name="date" content="2020-10-01" />
+    <meta name="author" content="2020, septiembre" />
+    <meta name="github-repo" content="perezp44/intro-ds-20-21-web"/>
+    <meta name="twitter:title" content="Importar (y exportar) datos con R"/>
+    <meta name="twitter:description" content="En este tutorial aprenderemos a, desde RStudio, importar y exportar datos en diferentes formatos, usando paquetes como readr, readxl y rio."/>
+    <meta name="twitter:url" content="https://perezp44.github.io/intro-ds-20-21-web/slides/ss_05_cargar-datos/ss_05_cargar-datos.html#1"/>
+    <meta name="twitter:card" content="summary"/>
+    <meta property="og:title" content="Importar (y exportar) datos con R"/>
+    <meta property="og:description" content="En este tutorial aprenderemos a, desde RStudio, importar y exportar datos en diferentes formatos, usando paquetes como readr, readxl y rio."/>
+    <meta property="og:url" content="https://perezp44.github.io/intro-ds-20-21-web/slides/ss_05_cargar-datos/ss_05_cargar-datos.html#1"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="article:author" content="Pedro J. Pérez"/>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
     <script src="libs/clipboard/clipboard.min.js"></script>
     <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
     <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
-    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
-    <script src="libs/tile-view/tile-view.js"></script>
-    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
     <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
+    <link href="libs/shareon/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain/shareagain.js"></script>
+    <link href="libs/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="https://perezp44.github.io/intro-ds-20-21-web/favicon-yo.ico" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-71846326-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-71846326-6');
+    </script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
-class: center, middle, inverse, title-slide
 
-# Importar (y exportar) datos
-## – Slides 05 –
-### Pedro J. Pérez
-### 2020-10-01
+
+
+
+
+
+
+
+
+
+
+class: inverse, center, middle
+# Importar (y exportar) datos con R
+##### (Slides 05 del curso Programación y manejo de datos con R)
+
+### Pedro J. Pérez  
+
+#### Universitat de València 
+#### 2020, septiembre 
+###### (actualizadas el 25-10-2020)
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+#### e-mail: [<i class="fas  fa-envelope "></i>](mailto:pedro.j.perez@uv.es)[pedro.j.perez@uv.es](mailto:pedro.j.perez@uv.es)
+
+#### Web del curso: [<i class="fas  fa-link "></i>](https://perezp44.github.io/intro-ds-20-21-web/) https://perezp44.github.io/intro-ds-20-21-web/  
+<style>.shareagain-bar {
+--shareagain-foreground: rgb(255, 255, 255);
+--shareagain-background: rgba(0, 0, 0, 0.5);
+--shareagain-facebook: none;
+--shareagain-pinterest: none;
+--shareagain-reddit: none;
+}</style>
+
 
 ---
-
-
-
-
-
-
-
 class: inverse, center, middle
 
 # Importación de datos
@@ -1042,7 +1088,6 @@ tabla_11 &lt;- body_table[[11]]
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,
-"highlightSpans": true,
 "countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {

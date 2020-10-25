@@ -1,42 +1,88 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>R- base: algunas ideas básicas</title>
+    <title>R-base: algunas ideas básicas</title>
     <meta charset="utf-8" />
     <meta name="author" content="Pedro J. Pérez" />
-    <meta name="date" content="2020-09-19" />
+    <meta name="date" content="2020-10-25" />
+    <meta name="github-repo" content="perezp44/intro-ds-20-21-web"/>
+    <meta name="twitter:title" content="R-base: primeras ideas básicas"/>
+    <meta name="twitter:description" content="El objetivo de esta clase es proporcionar una introducción a R para personas que no han tenido contacto previo con él. Se presentan conceptos básicos  como distintos tipos y estructuras de datos, asignación, funciones, operadores lógicos, subsetting etc… pero, recuerda que en el curso vamos a enfatizar otra forma de trabajar con R, conocida como tidyverse"/>
+    <meta name="twitter:url" content="https://perezp44.github.io/intro-ds-20-21-web/slides/ss_04_R-base-01/ss_04_R-base-01.html#1"/>
+    <meta name="twitter:card" content="summary"/>
+    <meta property="og:title" content="R-base: primeras ideas básicas"/>
+    <meta property="og:description" content="El objetivo de esta clase es proporcionar una introducción a R para personas que no han tenido contacto previo con él. Se presentan conceptos básicos  como distintos tipos y estructuras de datos, asignación, funciones, operadores lógicos, subsetting etc… pero, recuerda que en el curso vamos a enfatizar otra forma de trabajar con R, conocida como tidyverse"/>
+    <meta property="og:url" content="https://perezp44.github.io/intro-ds-20-21-web/slides/ss_04_R-base-01/ss_04_R-base-01.html#1"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="article:author" content="Pedro J. Pérez"/>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
     <script src="libs/clipboard/clipboard.min.js"></script>
     <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
     <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
-    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
-    <script src="libs/tile-view/tile-view.js"></script>
-    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
     <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
+    <link href="libs/shareon/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain/shareagain.js"></script>
+    <link href="libs/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
     <link href="libs/countdown/countdown.css" rel="stylesheet" />
     <script src="libs/countdown/countdown.js"></script>
+    <link rel="icon" type="image/x-icon" href="https://perezp44.github.io/intro-ds-20-21-web/favicon-yo.ico" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-71846326-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-71846326-6');
+    </script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
-class: center, middle, inverse, title-slide
 
-# R- base: algunas ideas básicas
-## – Slides 04 –
-### Pedro J. Pérez
-### 2020-09-19
+
+
+
+
+
+
+
+
+
+
+class: inverse, center, middle
+# R-base: algunas ideas básicas
+##### (Slides 04 del curso Programación y manejo de datos con R)
+
+### Pedro J. Pérez  
+
+#### Universitat de València 
+#### 2020, septiembre 
+###### (actualizadas el 25-10-2020)
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+#### e-mail: [<i class="fas  fa-envelope "></i>](mailto:pedro.j.perez@uv.es)[pedro.j.perez@uv.es](mailto:pedro.j.perez@uv.es)
+
+#### Web del curso: [<i class="fas  fa-link "></i>](https://perezp44.github.io/intro-ds-20-21-web/) https://perezp44.github.io/intro-ds-20-21-web/  
+<style>.shareagain-bar {
+--shareagain-foreground: rgb(255, 255, 255);
+--shareagain-background: rgba(0, 0, 0, 0.5);
+--shareagain-facebook: none;
+--shareagain-pinterest: none;
+--shareagain-reddit: none;
+}</style>
+
 
 ---
-
-
-
-
-
-
-
 class: inverse, center, middle
 
 # R-base (algunas ideas básicas)
@@ -933,7 +979,7 @@ A practical introduction](https://socviz.co/index.html#preface) de Kieran Healy.
 
 ------------------
 
-- En casa, podéis **ver [este video](https://psyteachr.github.io/msc-data-skills/func.html)**: en él nos cuentan que la estructura general de una función es:
+- En casa, podéis **ver [[este video]](https://www.youtube.com/watch?v=pXA350-o0v8)**: en él nos cuentan que la estructura general de una función es:
 
 
   
@@ -994,7 +1040,7 @@ Esta vez no hay solución.
 
 &lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
 
-<div class="countdown" id="timer_5f667166" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f95eb72" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">00</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">45</span></code>
 </div>
 
@@ -1021,7 +1067,7 @@ Venga, os doy una solución parcial. Solo tenéis que rellenar los 4 sitios dond
 
 &lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
 
-<div class="countdown" id="timer_5f66721e" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f95eb2d" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">00</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">45</span></code>
 </div>
 

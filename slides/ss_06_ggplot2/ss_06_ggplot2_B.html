@@ -4,45 +4,89 @@
     <title>Gráficos con ggplot2.  (B): Más elementos</title>
     <meta charset="utf-8" />
     <meta name="author" content="Pedro J. Pérez" />
-    <meta name="date" content="2020-10-13" />
+    <meta name="author" content="2020, septiembre" />
+    <meta name="github-repo" content="perezp44/intro-ds-20-21-web"/>
+    <meta name="twitter:title" content="Gráficos con ggplot2: más elementos"/>
+    <meta name="twitter:description" content="Una vez presentados los conceptos e ideas básicas de ggplot2, en esta clase se sentra en la comprensión de los distintos elementos o layers de los gráficos ggplot."/>
+    <meta name="twitter:url" content="https://perezp44.github.io/intro-ds-20-21-web/slides/ss_06_ggplot2/ss_06_ggplot2_B.html#1"/>
+    <meta name="twitter:card" content="summary"/>
+    <meta property="og:title" content="Gráficos con ggplot2: más elementos"/>
+    <meta property="og:description" content="Una vez presentados los conceptos e ideas básicas de ggplot2, en esta clase se sentra en la comprensión de los distintos elementos o layers de los gráficos ggplot."/>
+    <meta property="og:url" content="https://perezp44.github.io/intro-ds-20-21-web/slides/ss_06_ggplot2/ss_06_ggplot2_B.html#1"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="article:author" content="Pedro J. Pérez"/>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
     <script src="libs/clipboard/clipboard.min.js"></script>
     <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
     <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
-    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
-    <script src="libs/tile-view/tile-view.js"></script>
-    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
     <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
+    <link href="libs/shareon/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain/shareagain.js"></script>
+    <link href="libs/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="https://perezp44.github.io/intro-ds-20-21-web/favicon-yo.ico" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-71846326-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-71846326-6');
+    </script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
-    <link rel="stylesheet" href="styles_pjp_2.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
-class: center, middle, inverse, title-slide
 
-# Gráficos con ggplot2. <br>(B): Más elementos
-## – Slides 06 (B) –
-### Pedro J. Pérez
-### 2020-10-13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class: inverse, center, middle
+# Gráficos con ggplot2. &lt;br&gt;(B): Más elementos
+##### (Slides 06(B) del curso Programación y manejo de datos con R)
+
+### Pedro J. Pérez  
+
+#### Universitat de València 
+#### 2020, octubre 
+###### (actualizadas el 25-10-2020)
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+#### e-mail: [<i class="fas  fa-envelope "></i>](mailto:pedro.j.perez@uv.es)[pedro.j.perez@uv.es](mailto:pedro.j.perez@uv.es)
+
+#### Web del curso: [<i class="fas  fa-link "></i>](https://perezp44.github.io/intro-ds-20-21-web/) https://perezp44.github.io/intro-ds-20-21-web/  
+<style>.shareagain-bar {
+--shareagain-foreground: rgb(255, 255, 255);
+--shareagain-background: rgba(0, 0, 0, 0.5);
+--shareagain-facebook: none;
+--shareagain-pinterest: none;
+--shareagain-reddit: none;
+}</style>
+
 
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class: inverse, center, middle
 background-image: url(imagenes/ss_06_img_01_ggplot2-hex.png)
 background-position: 95% 5%
@@ -107,7 +151,7 @@ p &lt;- ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) +
 p
 ```
 
-&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-3-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-4-1.png" width="65%" /&gt;
 
 ---
 
@@ -124,7 +168,7 @@ count: false
 ]
  
 .panel2-grafico-01-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-01_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-01_auto_01_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -140,7 +184,7 @@ p +
 ]
  
 .panel2-grafico-01-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-01_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-01_auto_02_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -157,7 +201,7 @@ labs(title = "Gráfico 1: Longitud del sépalo frente al pétalo") +
 ]
  
 .panel2-grafico-01-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-01_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-01_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -175,7 +219,7 @@ labs(subtitle = "(diferenciando por especie de lirio)") +
 ]
  
 .panel2-grafico-01-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-01_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-01_auto_04_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -194,7 +238,7 @@ labs(caption = "Datos provenientes del Iris dataset") +
 ]
  
 .panel2-grafico-01-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-01_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-01_auto_05_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -214,7 +258,7 @@ labs(x = "Longitud del sépalo") +
 ]
  
 .panel2-grafico-01-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-01_auto_06_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-01_auto_06_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -235,7 +279,7 @@ labs(y = "Longitud del pétalo") +
 ]
  
 .panel2-grafico-01-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-01_auto_07_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-01_auto_07_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -257,7 +301,7 @@ labs(color = "Especie de lirio") +
 ]
  
 .panel2-grafico-01-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-01_auto_08_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-01_auto_08_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -322,7 +366,7 @@ count: false
 ]
  
 .panel2-grafico-02-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-02_auto_01_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -338,7 +382,7 @@ p +
 ]
  
 .panel2-grafico-02-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-02_auto_02_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -355,7 +399,7 @@ labs(color = NULL) +  #- borra el título de la leyenda
 ]
  
 .panel2-grafico-02-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-02_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -373,7 +417,7 @@ labs(x = NULL) +  #- borra el tulo del eje X
 ]
  
 .panel2-grafico-02-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-02_auto_04_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -392,7 +436,7 @@ labs(subtitle = NULL) +
 ]
  
 .panel2-grafico-02-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-02_auto_05_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -412,7 +456,7 @@ labs(caption = NULL) +
 ]
  
 .panel2-grafico-02-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_06_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-02_auto_06_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -433,7 +477,7 @@ labs(title = NULL) +
 ]
  
 .panel2-grafico-02-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_07_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-02_auto_07_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -455,7 +499,7 @@ labs(y = NULL)  +  #- borra el tulo del eje Y
 ]
  
 .panel2-grafico-02-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_08_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-02_auto_08_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -473,12 +517,11 @@ labs(caption = NULL) +
 labs(title = NULL) +
 labs(y = NULL)  +  #- borra el tulo del eje Y
 labs(tag = NULL)
-
 ```
 ]
  
 .panel2-grafico-02-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-02_auto_09_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-02_auto_09_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -561,7 +604,7 @@ count: false
 ]
  
 .panel2-grafico-03-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-03_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-03_auto_01_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -577,7 +620,7 @@ p +
 ]
  
 .panel2-grafico-03-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-03_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-03_auto_02_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -594,7 +637,7 @@ theme_gray()  +  #- tema por defecto
 ]
  
 .panel2-grafico-03-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-03_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-03_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -612,7 +655,7 @@ theme_light() +
 ]
  
 .panel2-grafico-03-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-03_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-03_auto_04_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -631,7 +674,7 @@ theme_dark() +
 ]
  
 .panel2-grafico-03-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-03_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-03_auto_05_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -651,7 +694,7 @@ theme_classic() +
 ]
  
 .panel2-grafico-03-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-03_auto_06_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-03_auto_06_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -672,7 +715,7 @@ theme_minimal() +
 ]
  
 .panel2-grafico-03-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-03_auto_07_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-03_auto_07_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -734,7 +777,7 @@ library(ggthemes)
 ]
  
 .panel2-grafico-04-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-04_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-04_auto_02_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -751,7 +794,7 @@ p +
 ]
  
 .panel2-grafico-04-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-04_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-04_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -769,7 +812,7 @@ theme_economist() +
 ]
  
 .panel2-grafico-04-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-04_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-04_auto_04_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -788,7 +831,7 @@ theme_fivethirtyeight() +
 ]
  
 .panel2-grafico-04-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-04_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-04_auto_05_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -808,7 +851,7 @@ theme_stata() +
 ]
  
 .panel2-grafico-04-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-04_auto_06_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-04_auto_06_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -829,7 +872,7 @@ theme_solarized() +
 ]
  
 .panel2-grafico-04-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-04_auto_07_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-04_auto_07_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -932,7 +975,7 @@ p + theme(plot.background = element_rect(fill = "pink", colour = "purple", linet
 knitr::include_url("https://henrywang.nl/ggplot2-theme-elements-demonstration/")
 ```
 
-&lt;iframe src="https://henrywang.nl/ggplot2-theme-elements-demonstration/" width="95%" height="400px"&gt;&lt;/iframe&gt;
+&lt;iframe src="https://henrywang.nl/ggplot2-theme-elements-demonstration/" width="100%" height="400px"&gt;&lt;/iframe&gt;
 
 
 ---
@@ -945,7 +988,6 @@ Se poquito de colores, pero claro, si quieres cambiar la apariencia de los gráf
 - Si sabes el nombre del color que quieres, [[aquí]](https://pkg.garrickadenbuie.com/r-colors-css/),  podrás buscarlo y ver su color y su codificación en RGB y Hex.
 
 - También es interesante el [[paquete paleteer]](https://github.com/EmilHvitfeldt/paletteer) que agrupa un conjunto amplio de paletas de colores para usar en R. 
-
 
 ---
 class: inverse, center, middle
@@ -976,7 +1018,7 @@ p &lt;- ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) +
 p
 ```
 
-&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-9-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-10-1.png" width="50%" /&gt;
 
 ---
 
@@ -992,7 +1034,7 @@ count: false
 ]
  
 .panel2-grafico-05-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-05_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-05_auto_01_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1009,7 +1051,7 @@ p +
 ]
  
 .panel2-grafico-05-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-05_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-05_auto_02_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1028,7 +1070,7 @@ cols = vars(Species)) +  # gráficos x columnas
 ]
  
 .panel2-grafico-05-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-05_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-05_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1049,7 +1091,7 @@ rows = vars(Species)) +  # gráficos x filas
 ]
  
 .panel2-grafico-05-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-05_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-05_auto_04_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -1114,7 +1156,7 @@ geom_point(aes(Sepal.Length, Petal.Length, color = Species)) +
 *facet_grid(rows = vars(Petal_2), cols = vars(Species))
 ```
 
-&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-12-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-13-1.png" width="95%" /&gt;
 
 ---
 #### Ejes de los small multiples (!!)
@@ -1137,7 +1179,7 @@ p + facet_grid(rows = vars(Species), scales = "free_y") #- solo dejamos libre/va
 p + facet_grid(rows = vars(Species), scales = "free_y") #- solo dejamos libre/variar la escala del eje y
 ```
 
-&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-14-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-15-1.png" width="95%" /&gt;
 
 ---
 class: inverse, center, middle
@@ -1181,7 +1223,7 @@ count: false
 ]
  
 .panel2-grafico-06-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-06_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-06_auto_01_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1201,7 +1243,7 @@ p +
 ]
  
 .panel2-grafico-06-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-06_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-06_auto_02_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1228,7 +1270,7 @@ annotate(geom = "text",
 ]
  
 .panel2-grafico-06-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-06_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-06_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1261,7 +1303,7 @@ annotate("rect",
 ]
  
 .panel2-grafico-06-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-06_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-06_auto_04_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -1319,7 +1361,7 @@ count: false
 ]
  
 .panel2-grafico-07-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-07_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-07_auto_01_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1335,7 +1377,7 @@ p +
 ]
  
 .panel2-grafico-07-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-07_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-07_auto_02_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1352,7 +1394,7 @@ geom_text(aes(label = Petal.Length)) +
 ]
  
 .panel2-grafico-07-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-07_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-07_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -1414,7 +1456,7 @@ count: false
 ]
  
 .panel2-grafico-08-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-08_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-08_auto_01_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1430,7 +1472,7 @@ p +
 ]
  
 .panel2-grafico-08-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-08_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-08_auto_02_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1450,7 +1492,7 @@ geom_vline(xintercept = 6) +
 ]
  
 .panel2-grafico-08-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-08_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-08_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1474,7 +1516,7 @@ geom_hline(yintercept = 5,
 ]
  
 .panel2-grafico-08-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-08_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-08_auto_04_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -1571,7 +1613,7 @@ count: false
 ]
  
 .panel2-grafico-09-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-09_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-09_auto_02_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1588,7 +1630,12 @@ p +
 ]
  
 .panel2-grafico-09-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-09_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Warning: Removed 61 rows containing missing values (geom_point).
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-09_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1606,7 +1653,12 @@ lims(x = c(NA,6)) +
 ]
  
 .panel2-grafico-09-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-09_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Warning: Removed 61 rows containing missing values (geom_point).
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-09_auto_04_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1625,7 +1677,12 @@ lims(y = c(1,8)) +
 ]
  
 .panel2-grafico-09-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-09_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Warning: Removed 61 rows containing missing values (geom_point).
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-09_auto_05_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1645,7 +1702,17 @@ lims(color = c("setosa")) +
 ]
  
 .panel2-grafico-09-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-09_auto_06_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Scale for 'x' is already present. Adding another scale for 'x', which will
+## replace the existing scale.
+```
+
+```
+## Warning: Removed 83 rows containing missing values (geom_point).
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-09_auto_06_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1666,7 +1733,22 @@ xlim(c(5, 6)) +
 ]
  
 .panel2-grafico-09-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-09_auto_07_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Scale for 'x' is already present. Adding another scale for 'x', which will
+## replace the existing scale.
+```
+
+```
+## Scale for 'y' is already present. Adding another scale for 'y', which will
+## replace the existing scale.
+```
+
+```
+## Warning: Removed 88 rows containing missing values (geom_point).
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-09_auto_07_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1689,7 +1771,27 @@ ylim(c(NA, 5)) +
 ]
  
 .panel2-grafico-09-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-09_auto_08_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Scale for 'x' is already present. Adding another scale for 'x', which will
+## replace the existing scale.
+```
+
+```
+## Scale for 'y' is already present. Adding another scale for 'y', which will
+## replace the existing scale.
+```
+
+```
+## Scale for 'x' is already present. Adding another scale for 'x', which will
+## replace the existing scale.
+```
+
+```
+## Warning: Removed 42 rows containing missing values (geom_point).
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-09_auto_08_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1713,7 +1815,32 @@ xlim(c (7, 3)) +
 ]
  
 .panel2-grafico-09-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-09_auto_09_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Scale for 'x' is already present. Adding another scale for 'x', which will
+## replace the existing scale.
+```
+
+```
+## Scale for 'y' is already present. Adding another scale for 'y', which will
+## replace the existing scale.
+```
+
+```
+## Scale for 'x' is already present. Adding another scale for 'x', which will
+## replace the existing scale.
+```
+
+```
+## Scale for 'y' is already present. Adding another scale for 'y', which will
+## replace the existing scale.
+```
+
+```
+## Warning: Removed 42 rows containing missing values (geom_point).
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-09_auto_09_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -1759,7 +1886,7 @@ count: false
 ]
  
 .panel2-grafico-10-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-10_auto_01_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1775,7 +1902,12 @@ p +
 ]
  
 .panel2-grafico-10-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Warning: Removed 118 rows containing missing values (geom_point).
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-10_auto_02_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1792,7 +1924,12 @@ xlim(c(4, 5)) +
 ]
  
 .panel2-grafico-10-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Warning: Removed 118 rows containing missing values (geom_point).
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-10_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -1839,7 +1976,21 @@ p + geom_smooth(color = "purple") + xlim(c(4, 5.7)) + ylim(c(1.5, 5))   # delete
 
 
 
-&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-20-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+```
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+```
+
+```
+## Warning: Removed 100 rows containing non-finite values (stat_smooth).
+```
+
+```
+## Warning: Removed 100 rows containing missing values (geom_point).
+```
+
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-21-1.png" width="85%" /&gt;
 
 --
 
@@ -1856,7 +2007,13 @@ p + geom_smooth(color = "purple") + coord_cartesian(xlim = c(4, 5.7), ylim = c(1
 
 
 
-&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-23-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+```
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+```
+
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-24-1.png" width="85%" /&gt;
 
 ---
 
@@ -1872,7 +2029,7 @@ count: false
 ]
  
 .panel2-grafico-10a-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_01_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1888,7 +2045,7 @@ ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) +
 ]
  
 .panel2-grafico-10a-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_02_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1905,7 +2062,7 @@ geom_point() +
 ]
  
 .panel2-grafico-10a-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1923,7 +2080,7 @@ expand_limits(y = 0, x = 0) +
 ]
  
 .panel2-grafico-10a-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_04_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1942,7 +2099,7 @@ scale_x_continuous(expand = c(0, 0)) +
 ]
  
 .panel2-grafico-10a-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_05_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1962,7 +2119,7 @@ scale_y_continuous(expand = c(0, 0)) +
 ]
  
 .panel2-grafico-10a-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_06_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_06_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1983,7 +2140,7 @@ geom_vline(xintercept = 0) +
 ]
  
 .panel2-grafico-10a-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_07_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-10a_auto_07_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -2047,7 +2204,7 @@ background-size: 10%
 ---
 ##### 3.6 Más elementos de *ggplot2*: Escalas (!!)
 
-- ggplot2 genera las escalas automáticamente. CeCuando hacemos este gráfico:
+- ggplot2 genera las escalas automáticamente. Cuando hacemos este gráfico:
 
 
 ```r
@@ -2079,7 +2236,7 @@ count: false
 ]
  
 .panel2-grafico-11-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-11_auto_01_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2095,7 +2252,7 @@ p +
 ]
  
 .panel2-grafico-11-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-11_auto_02_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2112,7 +2269,13 @@ scale_y_reverse() +
 ]
  
 .panel2-grafico-11-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Scale for 'y' is already present. Adding another scale for 'y', which will
+## replace the existing scale.
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-11_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2130,7 +2293,13 @@ scale_y_continuous() +
 ]
  
 .panel2-grafico-11-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Scale for 'y' is already present. Adding another scale for 'y', which will
+## replace the existing scale.
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-11_auto_04_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2149,7 +2318,18 @@ scale_colour_grey() +
 ]
  
 .panel2-grafico-11-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Scale for 'y' is already present. Adding another scale for 'y', which will
+## replace the existing scale.
+```
+
+```
+## Scale for 'colour' is already present. Adding another scale for 'colour',
+## which will replace the existing scale.
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-11_auto_05_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2169,7 +2349,20 @@ scale_color_brewer(palette = "Dark2") +
 ]
  
 .panel2-grafico-11-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_06_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Scale for 'y' is already present. Adding another scale for 'y', which will
+## replace the existing scale.
+```
+
+```
+## Scale for 'colour' is already present. Adding another scale for 'colour',
+## which will replace the existing scale.
+## Scale for 'colour' is already present. Adding another scale for 'colour',
+## which will replace the existing scale.
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-11_auto_06_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2190,7 +2383,20 @@ scale_color_discrete() +
 ]
  
 .panel2-grafico-11-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_07_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Scale for 'y' is already present. Adding another scale for 'y', which will
+## replace the existing scale.
+```
+
+```
+## Scale for 'colour' is already present. Adding another scale for 'colour',
+## which will replace the existing scale.
+## Scale for 'colour' is already present. Adding another scale for 'colour',
+## which will replace the existing scale.
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-11_auto_07_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2212,7 +2418,25 @@ scale_x_sqrt() +
 ]
  
 .panel2-grafico-11-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_08_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Scale for 'y' is already present. Adding another scale for 'y', which will
+## replace the existing scale.
+```
+
+```
+## Scale for 'colour' is already present. Adding another scale for 'colour',
+## which will replace the existing scale.
+## Scale for 'colour' is already present. Adding another scale for 'colour',
+## which will replace the existing scale.
+```
+
+```
+## Scale for 'x' is already present. Adding another scale for 'x', which will
+## replace the existing scale.
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-11_auto_08_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2235,7 +2459,30 @@ scale_x_continuous(trans = "log") +
 ]
  
 .panel2-grafico-11-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-11_auto_09_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Scale for 'y' is already present. Adding another scale for 'y', which will
+## replace the existing scale.
+```
+
+```
+## Scale for 'colour' is already present. Adding another scale for 'colour',
+## which will replace the existing scale.
+## Scale for 'colour' is already present. Adding another scale for 'colour',
+## which will replace the existing scale.
+```
+
+```
+## Scale for 'x' is already present. Adding another scale for 'x', which will
+## replace the existing scale.
+```
+
+```
+## Scale for 'y' is already present. Adding another scale for 'y', which will
+## replace the existing scale.
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-11_auto_09_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -2282,7 +2529,7 @@ count: false
 ]
  
 .panel2-grafico-12-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-12_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-12_auto_01_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2300,7 +2547,7 @@ p +
 ]
  
 .panel2-grafico-12-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-12_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-12_auto_02_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2321,7 +2568,7 @@ labs(x = "Eje X",
 ]
  
 .panel2-grafico-12-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-12_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-12_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2345,7 +2592,7 @@ scale_x_continuous(
 ]
  
 .panel2-grafico-12-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-12_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-12_auto_04_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2372,7 +2619,7 @@ scale_y_continuous(
 ]
  
 .panel2-grafico-12-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-12_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-12_auto_05_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -2460,7 +2707,7 @@ count: false
 ]
  
 .panel2-grafico-13-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-13_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-13_auto_01_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2476,7 +2723,7 @@ p +
 ]
  
 .panel2-grafico-13-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-13_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-13_auto_02_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2493,7 +2740,7 @@ geom_point(stat = "identity") +
 ]
  
 .panel2-grafico-13-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-13_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-13_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2512,7 +2759,12 @@ geom_point(stat = "unique") +
 ]
  
 .panel2-grafico-13-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-13_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-13_auto_04_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2527,12 +2779,16 @@ geom_point(stat = "identity") +
 geom_point(stat = "unique") +
 geom_point(stat = "smooth",
            method = "auto")
-
 ```
 ]
  
 .panel2-grafico-13-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-13_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-13_auto_05_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -2585,7 +2841,7 @@ count: false
 ]
  
 .panel2-grafico-14-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-14_auto_01_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-14_auto_01_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2602,7 +2858,7 @@ ggplot(iris,
 ]
  
 .panel2-grafico-14-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-14_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_B_files/figure-html/grafico-14_auto_02_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2623,7 +2879,16 @@ geom_boxplot() +
 ]
  
 .panel2-grafico-14-auto[
-&lt;img src="ss_06_ggplot2_B_files/figure-html/grafico-14_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+```
+## Warning: Ignoring unknown parameters: fun.y
+```
+
+```
+## No summary function supplied, defaulting to `mean_se()`
+```
+
+![](ss_06_ggplot2_B_files/figure-html/grafico-14_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -2681,7 +2946,13 @@ ggplot(iris, aes(Sepal.Length)) +
 
 
 
-&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-31-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-32-1.png" width="85%" /&gt;
 
 
 ---
@@ -2717,7 +2988,7 @@ También se puede usar `geom_jitter()`
 p + geom_jitter( color = "pink") 
 ```
 
-&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-34-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-35-1.png" width="60%" /&gt;
 
 ---
 #### 3.8 Position adjustments (otro ejemplo)
@@ -2735,7 +3006,7 @@ p + geom_bar(position = position_dodge2(preserve = "single"))
 
 
 
-&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-37-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-38-1.png" width="100%" /&gt;
 
 
 ---
@@ -2770,7 +3041,7 @@ p3 &lt;- ggplot(iris, aes(Sepal.Length, fill = Species)) + geom_density(position
 p1 + p2 / p3
 ```
 
-&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-38-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-39-1.png" width="100%" /&gt;
 
 
 ---
@@ -2798,7 +3069,7 @@ p_img &lt;- ggplot() + ggpubr::background_image(img) + coord_fixed()
 p_twitter + ((p1 + plot_spacer()) / (p_img + p3))
 ```
 
-&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-41-1.png" width="103%" style="display: block; margin: auto;" /&gt;
+&lt;img src="ss_06_ggplot2_B_files/figure-html/unnamed-chunk-42-1.png" width="103%" /&gt;
 
 ---
 class: inverse, center, middle
@@ -2884,7 +3155,6 @@ Hay varios asistentes para crear o modificar gráficos ggplot a través de inter
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,
-"highlightSpans": true,
 "countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {

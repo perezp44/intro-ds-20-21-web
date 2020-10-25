@@ -3,52 +3,61 @@ title: "Gráficos con ggplot2. <br>(A): Primeras ideas"
 subtitle: "-- Slides 06 (A) --"  
 author: 
   - "Pedro J. Pérez"
-date: '`r Sys.Date()`'
+  - "2020, septiembre"
+date: "(actualizadas en `r Sys.Date()`)"
 output:
   xaringan::moon_reader:
+    seal: false   #- puedes tunear la primera página de las slides    
     lib_dir: libs
     css: xaringan-themer.css
     nature:
-      highlightStyle: github  #- solarized-light
+      highlightStyle: github   #- solarized-light
       highlightLines: true
-      highlightSpans: true
       countIncrementalSlides: false
+    includes:
+      in_header: 
+        - !expr here::here("assets", "favicon-yo.html") 
+        - !expr here::here("assets", "google-analytics.html") 
+#      in_header: ["favicon-yo.html", "google-analytics.html"]
 ---
 
 
-```{r setup, include = FALSE}
+```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
-xaringanExtra::use_clipboard()   #- https://pkg.garrickadenbuie.com/xaringanExtra/#/clipboard
-xaringanExtra::use_fit_screen()  #- Alt/Option+ F —
-xaringanExtra::use_tile_view()   #- para  ver todas las slides juntas (press O)
-xaringanExtra::use_tachyons()    #- es para las cajitas verdes de texto
-xaringanExtra::use_extra_styles(hover_code_line = TRUE, mute_unhighlighted_code = FALSE)
-xaringanExtra::use_panelset()    #- https://pkg.garrickadenbuie.com/xaringanExtra/#/panelset
-library(tidyverse)
+library(metathis)
+meta() %>% meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>% 
+  meta_social(title = "Gráficos con ggplot2: Primeras ideas",
+    description = paste("Se presentan conceptos e ideas básicas sobre visualización con el paquete ggplot2 de R.", "En primer lugar se presentan las ideas básicas, para después exponer los distintos elementos o layers de los gráficos ggplot."),
+  url = "https://perezp44.github.io/intro-ds-20-21-web/slides/ss_06_ggplot2/ss_06_ggplot2_A.html#1",
+  og_type = "website",
+  og_author = "Pedro J. Pérez")
 ```
 
 
-```{r chunk-setup, include = FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = TRUE, message = FALSE, warning = FALSE,
-                      #results = "hold",
-                      cache = FALSE, cache.path = "/caches/", comment = "#>",
-                      #fig.width = 7, #fig.height= 7,
-                      #out.width = 7, out.height = 7,
-                      collapse = TRUE,  fig.show = "hold",
-                      fig.asp = 7/9, out.width = "95%", fig.align = "center")
-options(scipen = 999) #- para quitar la notación científica
-#- para mejorar los gráficos, bueno en realidad para que se vean igual en distintos SO
-#- https://www.jumpingrivers.com/blog/r-knitr-markdown-png-pdf-graphics/
-knitr::opts_chunk$set(dev = "png", dev.args = list(type = "cairo-png"))
+```{r xaringan-extra, include = FALSE}
+#options(htmltools.dir.version = FALSE) #- lo pongo en setup
+xaringanExtra::use_xaringan_extra(c("tile_view", "logo", "tachyons"))
+xaringanExtra::use_clipboard()
+xaringanExtra::use_fit_screen()
+xaringanExtra::use_tile_view()
+xaringanExtra::use_tachyons()
+xaringanExtra::use_extra_styles(hover_code_line = TRUE, mute_unhighlighted_code = FALSE)
+xaringanExtra::use_panelset()
+xaringanExtra::use_share_again()
 ```
 
 ```{r xaringan-themer, include = FALSE, warning = FALSE}
 library(xaringanthemer)
-style_mono_light(base_color = "#1c5253", colors = c(red = "#f34213", purple = "#3e2f5b", orange = "#ff8811", green = "#136f63", white = "#FFFFFF", base = "#1c5253", grey = "#A9A9A9"))
+style_mono_light(base_color = "#1c5253", 
+                 colors = c(red = "#f34213", purple = "#3e2f5b", orange = "#ff8811", green = "#136f63", white = "#FFFFFF", base = "#1c5253"),
+                   link_color = "steelblue")
 ```
+
+
 
 ```{r, include = FALSE}
 library(flipbookr)
+library(tidyverse)
 ```
 
 ```{css, include = FALSE}
@@ -59,6 +68,27 @@ library(flipbookr)
   }
 ```
 
+
+class: inverse, center, middle
+# Gráficos con ggplot2. <br>(A): Primeras ideas
+##### (Slides 06(A) del curso Programación y manejo de datos con R)
+
+### Pedro J. Pérez  
+
+#### Universitat de València 
+#### 2020, octubre 
+###### (actualizadas el `r format(Sys.time(), '%d-%m-%Y')`)
+
+<br><br><br>
+#### e-mail: [`r icon::fa("envelope")`](mailto:pedro.j.perez@uv.es)[pedro.j.perez@uv.es](mailto:pedro.j.perez@uv.es)
+
+#### Web del curso: [`r icon::fa("link")`](https://perezp44.github.io/intro-ds-20-21-web/) https://perezp44.github.io/intro-ds-20-21-web/  
+```{r echo = FALSE}
+xaringanExtra::style_share_again(share_buttons = c("twitter", "linkedin", "pocket") )
+```
+
+
+---
 class: inverse, center, middle
 background-image: url(imagenes/ss_06_img_01_ggplot2-hex.png)
 background-position: 95% 5%

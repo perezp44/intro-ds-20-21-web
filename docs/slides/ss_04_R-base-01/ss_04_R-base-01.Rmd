@@ -1,35 +1,82 @@
 ---
-title: "R- base: algunas ideas básicas"
+title: "R-base: algunas ideas básicas"
 subtitle: "-- Slides 04 --"  
 author: 
   - "Pedro J. Pérez"
 date: '`r Sys.Date()`'
 output:
   xaringan::moon_reader:
+    seal: false   #- puedes tunear la primera página de las slides    
     lib_dir: libs
     css: xaringan-themer.css
     nature:
       highlightStyle: github   #- solarized-light
       highlightLines: true
       countIncrementalSlides: false
+    includes:
+      in_header: 
+        - !expr here::here("assets", "favicon-yo.html") 
+        - !expr here::here("assets", "google-analytics.html") 
+#      in_header: ["favicon-yo.html", "google-analytics.html"]
 ---
 
-```{r setup, include = FALSE}
+
+```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
+#knitr::opts_chunk$set(fig.retina = 3, warning = FALSE, message = FALSE, echo=FALSE, out.width = "85%")
+library(metathis)
+meta() %>% meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>% 
+  meta_social(
+    title = "R-base: primeras ideas básicas",
+    description = paste(
+      "El objetivo de esta clase es proporcionar una introducción a R para personas que no han tenido contacto previo con él.",
+      "Se presentan conceptos básicos  como distintos tipos y estructuras de datos, asignación, funciones, operadores lógicos, subsetting etc… pero, recuerda que en el curso vamos a enfatizar otra forma de trabajar con R, conocida como tidyverse"),
+    url = "https://perezp44.github.io/intro-ds-20-21-web/slides/ss_04_R-base-01/ss_04_R-base-01.html#1",
+    og_type = "website",
+    og_author = "Pedro J. Pérez"  )
+```
+
+
+
+```{r xaringan-extra, include = FALSE}
+#options(htmltools.dir.version = FALSE) #- lo pongo en setup
+xaringanExtra::use_xaringan_extra(c("tile_view", "logo", "tachyons"))
 xaringanExtra::use_clipboard()
 xaringanExtra::use_fit_screen()
 xaringanExtra::use_tile_view()
 xaringanExtra::use_tachyons()
 xaringanExtra::use_extra_styles(hover_code_line = TRUE, mute_unhighlighted_code = FALSE)
 xaringanExtra::use_panelset()
+xaringanExtra::use_share_again()
 ```
 
 ```{r xaringan-themer, include = FALSE, warning = FALSE}
 library(xaringanthemer)
-style_mono_light(base_color = "#1c5253", colors = c(red = "#f34213", purple = "#3e2f5b", orange = "#ff8811", green = "#136f63", white = "#FFFFFF", base = "#1c5253"))
+style_mono_light(base_color = "#1c5253", 
+                 colors = c(red = "#f34213", purple = "#3e2f5b", orange = "#ff8811", green = "#136f63", white = "#FFFFFF", base = "#1c5253"),
+                   link_color = "steelblue")
+```
+
+class: inverse, center, middle
+# R-base: algunas ideas básicas
+##### (Slides 04 del curso Programación y manejo de datos con R)
+
+### Pedro J. Pérez  
+
+#### Universitat de València 
+#### 2020, septiembre 
+###### (actualizadas el `r format(Sys.time(), '%d-%m-%Y')`)
+
+<br><br><br>
+#### e-mail: [`r icon::fa("envelope")`](mailto:pedro.j.perez@uv.es)[pedro.j.perez@uv.es](mailto:pedro.j.perez@uv.es)
+
+#### Web del curso: [`r icon::fa("link")`](https://perezp44.github.io/intro-ds-20-21-web/) https://perezp44.github.io/intro-ds-20-21-web/  
+```{r echo = FALSE}
+xaringanExtra::style_share_again(share_buttons = c("twitter", "linkedin", "pocket") )
 ```
 
 
+---
 class: inverse, center, middle
 
 # R-base (algunas ideas básicas)
@@ -886,7 +933,7 @@ A practical introduction](https://socviz.co/index.html#preface) de Kieran Healy.
 
 ------------------
 
-- En casa, podéis **ver [este video](https://psyteachr.github.io/msc-data-skills/func.html)**: en él nos cuentan que la estructura general de una función es:
+- En casa, podéis **ver [[este video]](https://www.youtube.com/watch?v=pXA350-o0v8)**: en él nos cuentan que la estructura general de una función es:
 
 
   ```{r, eval = FALSE}

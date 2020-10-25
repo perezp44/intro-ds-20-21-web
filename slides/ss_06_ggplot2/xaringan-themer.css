@@ -45,7 +45,7 @@
   --text-color: #13393A;
   --header-color: #1c5253;
   --background-color: #E8EDED;
-  --link-color: #1c5253;
+  --link-color: steelblue;
   --text-bold-color: #1c5253;
   --code-highlight-color: rgba(255,255,0,0.5);
   --inverse-text-color: #E8EDED;
@@ -64,7 +64,6 @@
   --green: #136f63;
   --white: #FFFFFF;
   --base: #1c5253;
-  --grey: #A9A9A9;
 }
 
 html {
@@ -293,11 +292,5 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
 }
 .bg-base {
   background-color: var(--base);
-}
-.grey {
-  color: var(--grey);
-}
-.bg-grey {
-  background-color: var(--grey);
 }
 

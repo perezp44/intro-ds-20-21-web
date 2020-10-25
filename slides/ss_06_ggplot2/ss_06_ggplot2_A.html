@@ -4,45 +4,89 @@
     <title>Gráficos con ggplot2.  (A): Primeras ideas</title>
     <meta charset="utf-8" />
     <meta name="author" content="Pedro J. Pérez" />
-    <meta name="date" content="2020-10-08" />
+    <meta name="author" content="2020, septiembre" />
+    <meta name="github-repo" content="perezp44/intro-ds-20-21-web"/>
+    <meta name="twitter:title" content="Gráficos con ggplot2: Primeras ideas"/>
+    <meta name="twitter:description" content="Se presentan conceptos e ideas básicas sobre visualización con el paquete ggplot2 de R. En primer lugar se presentan las ideas básicas, para después exponer los distintos elementos o layers de los gráficos ggplot."/>
+    <meta name="twitter:url" content="https://perezp44.github.io/intro-ds-20-21-web/slides/ss_06_ggplot2/ss_06_ggplot2_A.html#1"/>
+    <meta name="twitter:card" content="summary"/>
+    <meta property="og:title" content="Gráficos con ggplot2: Primeras ideas"/>
+    <meta property="og:description" content="Se presentan conceptos e ideas básicas sobre visualización con el paquete ggplot2 de R. En primer lugar se presentan las ideas básicas, para después exponer los distintos elementos o layers de los gráficos ggplot."/>
+    <meta property="og:url" content="https://perezp44.github.io/intro-ds-20-21-web/slides/ss_06_ggplot2/ss_06_ggplot2_A.html#1"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="article:author" content="Pedro J. Pérez"/>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
     <script src="libs/clipboard/clipboard.min.js"></script>
     <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
     <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
-    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
-    <script src="libs/tile-view/tile-view.js"></script>
-    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
     <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
+    <link href="libs/shareon/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain/shareagain.js"></script>
     <link href="libs/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="https://perezp44.github.io/intro-ds-20-21-web/favicon-yo.ico" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-71846326-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-71846326-6');
+    </script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
-class: center, middle, inverse, title-slide
 
-# Gráficos con ggplot2. <br>(A): Primeras ideas
-## – Slides 06 (A) –
-### Pedro J. Pérez
-### 2020-10-08
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class: inverse, center, middle
+# Gráficos con ggplot2. &lt;br&gt;(A): Primeras ideas
+##### (Slides 06(A) del curso Programación y manejo de datos con R)
+
+### Pedro J. Pérez  
+
+#### Universitat de València 
+#### 2020, octubre 
+###### (actualizadas el 25-10-2020)
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+#### e-mail: [<i class="fas  fa-envelope "></i>](mailto:pedro.j.perez@uv.es)[pedro.j.perez@uv.es](mailto:pedro.j.perez@uv.es)
+
+#### Web del curso: [<i class="fas  fa-link "></i>](https://perezp44.github.io/intro-ds-20-21-web/) https://perezp44.github.io/intro-ds-20-21-web/  
+<style>.shareagain-bar {
+--shareagain-foreground: rgb(255, 255, 255);
+--shareagain-background: rgba(0, 0, 0, 0.5);
+--shareagain-facebook: none;
+--shareagain-pinterest: none;
+--shareagain-reddit: none;
+}</style>
+
 
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class: inverse, center, middle
 background-image: url(imagenes/ss_06_img_01_ggplot2-hex.png)
 background-position: 95% 5%
@@ -99,7 +143,7 @@ background-size: 5%
 
 
 .pull-left[
-&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-4-1.png" width="99%" style="display: block; margin: auto;" /&gt;
+&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-5-1.png" width="99%" /&gt;
 ]
 
 --
@@ -140,7 +184,7 @@ ggplot(iris, aes(x = Sepal.Length,
     geom_point()
 ```
 
-&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-5-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-6-1.png" width="60%" /&gt;
 
 --
 ##### Forma más común de escribirlo
@@ -169,157 +213,157 @@ count: false
 .panel2-grafico-00-auto[
 
 ```
-#&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-#&gt; 1            5.1         3.5          1.4         0.2     setosa
-#&gt; 2            4.9         3.0          1.4         0.2     setosa
-#&gt; 3            4.7         3.2          1.3         0.2     setosa
-#&gt; 4            4.6         3.1          1.5         0.2     setosa
-#&gt; 5            5.0         3.6          1.4         0.2     setosa
-#&gt; 6            5.4         3.9          1.7         0.4     setosa
-#&gt; 7            4.6         3.4          1.4         0.3     setosa
-#&gt; 8            5.0         3.4          1.5         0.2     setosa
-#&gt; 9            4.4         2.9          1.4         0.2     setosa
-#&gt; 10           4.9         3.1          1.5         0.1     setosa
-#&gt; 11           5.4         3.7          1.5         0.2     setosa
-#&gt; 12           4.8         3.4          1.6         0.2     setosa
-#&gt; 13           4.8         3.0          1.4         0.1     setosa
-#&gt; 14           4.3         3.0          1.1         0.1     setosa
-#&gt; 15           5.8         4.0          1.2         0.2     setosa
-#&gt; 16           5.7         4.4          1.5         0.4     setosa
-#&gt; 17           5.4         3.9          1.3         0.4     setosa
-#&gt; 18           5.1         3.5          1.4         0.3     setosa
-#&gt; 19           5.7         3.8          1.7         0.3     setosa
-#&gt; 20           5.1         3.8          1.5         0.3     setosa
-#&gt; 21           5.4         3.4          1.7         0.2     setosa
-#&gt; 22           5.1         3.7          1.5         0.4     setosa
-#&gt; 23           4.6         3.6          1.0         0.2     setosa
-#&gt; 24           5.1         3.3          1.7         0.5     setosa
-#&gt; 25           4.8         3.4          1.9         0.2     setosa
-#&gt; 26           5.0         3.0          1.6         0.2     setosa
-#&gt; 27           5.0         3.4          1.6         0.4     setosa
-#&gt; 28           5.2         3.5          1.5         0.2     setosa
-#&gt; 29           5.2         3.4          1.4         0.2     setosa
-#&gt; 30           4.7         3.2          1.6         0.2     setosa
-#&gt; 31           4.8         3.1          1.6         0.2     setosa
-#&gt; 32           5.4         3.4          1.5         0.4     setosa
-#&gt; 33           5.2         4.1          1.5         0.1     setosa
-#&gt; 34           5.5         4.2          1.4         0.2     setosa
-#&gt; 35           4.9         3.1          1.5         0.2     setosa
-#&gt; 36           5.0         3.2          1.2         0.2     setosa
-#&gt; 37           5.5         3.5          1.3         0.2     setosa
-#&gt; 38           4.9         3.6          1.4         0.1     setosa
-#&gt; 39           4.4         3.0          1.3         0.2     setosa
-#&gt; 40           5.1         3.4          1.5         0.2     setosa
-#&gt; 41           5.0         3.5          1.3         0.3     setosa
-#&gt; 42           4.5         2.3          1.3         0.3     setosa
-#&gt; 43           4.4         3.2          1.3         0.2     setosa
-#&gt; 44           5.0         3.5          1.6         0.6     setosa
-#&gt; 45           5.1         3.8          1.9         0.4     setosa
-#&gt; 46           4.8         3.0          1.4         0.3     setosa
-#&gt; 47           5.1         3.8          1.6         0.2     setosa
-#&gt; 48           4.6         3.2          1.4         0.2     setosa
-#&gt; 49           5.3         3.7          1.5         0.2     setosa
-#&gt; 50           5.0         3.3          1.4         0.2     setosa
-#&gt; 51           7.0         3.2          4.7         1.4 versicolor
-#&gt; 52           6.4         3.2          4.5         1.5 versicolor
-#&gt; 53           6.9         3.1          4.9         1.5 versicolor
-#&gt; 54           5.5         2.3          4.0         1.3 versicolor
-#&gt; 55           6.5         2.8          4.6         1.5 versicolor
-#&gt; 56           5.7         2.8          4.5         1.3 versicolor
-#&gt; 57           6.3         3.3          4.7         1.6 versicolor
-#&gt; 58           4.9         2.4          3.3         1.0 versicolor
-#&gt; 59           6.6         2.9          4.6         1.3 versicolor
-#&gt; 60           5.2         2.7          3.9         1.4 versicolor
-#&gt; 61           5.0         2.0          3.5         1.0 versicolor
-#&gt; 62           5.9         3.0          4.2         1.5 versicolor
-#&gt; 63           6.0         2.2          4.0         1.0 versicolor
-#&gt; 64           6.1         2.9          4.7         1.4 versicolor
-#&gt; 65           5.6         2.9          3.6         1.3 versicolor
-#&gt; 66           6.7         3.1          4.4         1.4 versicolor
-#&gt; 67           5.6         3.0          4.5         1.5 versicolor
-#&gt; 68           5.8         2.7          4.1         1.0 versicolor
-#&gt; 69           6.2         2.2          4.5         1.5 versicolor
-#&gt; 70           5.6         2.5          3.9         1.1 versicolor
-#&gt; 71           5.9         3.2          4.8         1.8 versicolor
-#&gt; 72           6.1         2.8          4.0         1.3 versicolor
-#&gt; 73           6.3         2.5          4.9         1.5 versicolor
-#&gt; 74           6.1         2.8          4.7         1.2 versicolor
-#&gt; 75           6.4         2.9          4.3         1.3 versicolor
-#&gt; 76           6.6         3.0          4.4         1.4 versicolor
-#&gt; 77           6.8         2.8          4.8         1.4 versicolor
-#&gt; 78           6.7         3.0          5.0         1.7 versicolor
-#&gt; 79           6.0         2.9          4.5         1.5 versicolor
-#&gt; 80           5.7         2.6          3.5         1.0 versicolor
-#&gt; 81           5.5         2.4          3.8         1.1 versicolor
-#&gt; 82           5.5         2.4          3.7         1.0 versicolor
-#&gt; 83           5.8         2.7          3.9         1.2 versicolor
-#&gt; 84           6.0         2.7          5.1         1.6 versicolor
-#&gt; 85           5.4         3.0          4.5         1.5 versicolor
-#&gt; 86           6.0         3.4          4.5         1.6 versicolor
-#&gt; 87           6.7         3.1          4.7         1.5 versicolor
-#&gt; 88           6.3         2.3          4.4         1.3 versicolor
-#&gt; 89           5.6         3.0          4.1         1.3 versicolor
-#&gt; 90           5.5         2.5          4.0         1.3 versicolor
-#&gt; 91           5.5         2.6          4.4         1.2 versicolor
-#&gt; 92           6.1         3.0          4.6         1.4 versicolor
-#&gt; 93           5.8         2.6          4.0         1.2 versicolor
-#&gt; 94           5.0         2.3          3.3         1.0 versicolor
-#&gt; 95           5.6         2.7          4.2         1.3 versicolor
-#&gt; 96           5.7         3.0          4.2         1.2 versicolor
-#&gt; 97           5.7         2.9          4.2         1.3 versicolor
-#&gt; 98           6.2         2.9          4.3         1.3 versicolor
-#&gt; 99           5.1         2.5          3.0         1.1 versicolor
-#&gt; 100          5.7         2.8          4.1         1.3 versicolor
-#&gt; 101          6.3         3.3          6.0         2.5  virginica
-#&gt; 102          5.8         2.7          5.1         1.9  virginica
-#&gt; 103          7.1         3.0          5.9         2.1  virginica
-#&gt; 104          6.3         2.9          5.6         1.8  virginica
-#&gt; 105          6.5         3.0          5.8         2.2  virginica
-#&gt; 106          7.6         3.0          6.6         2.1  virginica
-#&gt; 107          4.9         2.5          4.5         1.7  virginica
-#&gt; 108          7.3         2.9          6.3         1.8  virginica
-#&gt; 109          6.7         2.5          5.8         1.8  virginica
-#&gt; 110          7.2         3.6          6.1         2.5  virginica
-#&gt; 111          6.5         3.2          5.1         2.0  virginica
-#&gt; 112          6.4         2.7          5.3         1.9  virginica
-#&gt; 113          6.8         3.0          5.5         2.1  virginica
-#&gt; 114          5.7         2.5          5.0         2.0  virginica
-#&gt; 115          5.8         2.8          5.1         2.4  virginica
-#&gt; 116          6.4         3.2          5.3         2.3  virginica
-#&gt; 117          6.5         3.0          5.5         1.8  virginica
-#&gt; 118          7.7         3.8          6.7         2.2  virginica
-#&gt; 119          7.7         2.6          6.9         2.3  virginica
-#&gt; 120          6.0         2.2          5.0         1.5  virginica
-#&gt; 121          6.9         3.2          5.7         2.3  virginica
-#&gt; 122          5.6         2.8          4.9         2.0  virginica
-#&gt; 123          7.7         2.8          6.7         2.0  virginica
-#&gt; 124          6.3         2.7          4.9         1.8  virginica
-#&gt; 125          6.7         3.3          5.7         2.1  virginica
-#&gt; 126          7.2         3.2          6.0         1.8  virginica
-#&gt; 127          6.2         2.8          4.8         1.8  virginica
-#&gt; 128          6.1         3.0          4.9         1.8  virginica
-#&gt; 129          6.4         2.8          5.6         2.1  virginica
-#&gt; 130          7.2         3.0          5.8         1.6  virginica
-#&gt; 131          7.4         2.8          6.1         1.9  virginica
-#&gt; 132          7.9         3.8          6.4         2.0  virginica
-#&gt; 133          6.4         2.8          5.6         2.2  virginica
-#&gt; 134          6.3         2.8          5.1         1.5  virginica
-#&gt; 135          6.1         2.6          5.6         1.4  virginica
-#&gt; 136          7.7         3.0          6.1         2.3  virginica
-#&gt; 137          6.3         3.4          5.6         2.4  virginica
-#&gt; 138          6.4         3.1          5.5         1.8  virginica
-#&gt; 139          6.0         3.0          4.8         1.8  virginica
-#&gt; 140          6.9         3.1          5.4         2.1  virginica
-#&gt; 141          6.7         3.1          5.6         2.4  virginica
-#&gt; 142          6.9         3.1          5.1         2.3  virginica
-#&gt; 143          5.8         2.7          5.1         1.9  virginica
-#&gt; 144          6.8         3.2          5.9         2.3  virginica
-#&gt; 145          6.7         3.3          5.7         2.5  virginica
-#&gt; 146          6.7         3.0          5.2         2.3  virginica
-#&gt; 147          6.3         2.5          5.0         1.9  virginica
-#&gt; 148          6.5         3.0          5.2         2.0  virginica
-#&gt; 149          6.2         3.4          5.4         2.3  virginica
-#&gt; 150          5.9         3.0          5.1         1.8  virginica
+##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 1            5.1         3.5          1.4         0.2     setosa
+## 2            4.9         3.0          1.4         0.2     setosa
+## 3            4.7         3.2          1.3         0.2     setosa
+## 4            4.6         3.1          1.5         0.2     setosa
+## 5            5.0         3.6          1.4         0.2     setosa
+## 6            5.4         3.9          1.7         0.4     setosa
+## 7            4.6         3.4          1.4         0.3     setosa
+## 8            5.0         3.4          1.5         0.2     setosa
+## 9            4.4         2.9          1.4         0.2     setosa
+## 10           4.9         3.1          1.5         0.1     setosa
+## 11           5.4         3.7          1.5         0.2     setosa
+## 12           4.8         3.4          1.6         0.2     setosa
+## 13           4.8         3.0          1.4         0.1     setosa
+## 14           4.3         3.0          1.1         0.1     setosa
+## 15           5.8         4.0          1.2         0.2     setosa
+## 16           5.7         4.4          1.5         0.4     setosa
+## 17           5.4         3.9          1.3         0.4     setosa
+## 18           5.1         3.5          1.4         0.3     setosa
+## 19           5.7         3.8          1.7         0.3     setosa
+## 20           5.1         3.8          1.5         0.3     setosa
+## 21           5.4         3.4          1.7         0.2     setosa
+## 22           5.1         3.7          1.5         0.4     setosa
+## 23           4.6         3.6          1.0         0.2     setosa
+## 24           5.1         3.3          1.7         0.5     setosa
+## 25           4.8         3.4          1.9         0.2     setosa
+## 26           5.0         3.0          1.6         0.2     setosa
+## 27           5.0         3.4          1.6         0.4     setosa
+## 28           5.2         3.5          1.5         0.2     setosa
+## 29           5.2         3.4          1.4         0.2     setosa
+## 30           4.7         3.2          1.6         0.2     setosa
+## 31           4.8         3.1          1.6         0.2     setosa
+## 32           5.4         3.4          1.5         0.4     setosa
+## 33           5.2         4.1          1.5         0.1     setosa
+## 34           5.5         4.2          1.4         0.2     setosa
+## 35           4.9         3.1          1.5         0.2     setosa
+## 36           5.0         3.2          1.2         0.2     setosa
+## 37           5.5         3.5          1.3         0.2     setosa
+## 38           4.9         3.6          1.4         0.1     setosa
+## 39           4.4         3.0          1.3         0.2     setosa
+## 40           5.1         3.4          1.5         0.2     setosa
+## 41           5.0         3.5          1.3         0.3     setosa
+## 42           4.5         2.3          1.3         0.3     setosa
+## 43           4.4         3.2          1.3         0.2     setosa
+## 44           5.0         3.5          1.6         0.6     setosa
+## 45           5.1         3.8          1.9         0.4     setosa
+## 46           4.8         3.0          1.4         0.3     setosa
+## 47           5.1         3.8          1.6         0.2     setosa
+## 48           4.6         3.2          1.4         0.2     setosa
+## 49           5.3         3.7          1.5         0.2     setosa
+## 50           5.0         3.3          1.4         0.2     setosa
+## 51           7.0         3.2          4.7         1.4 versicolor
+## 52           6.4         3.2          4.5         1.5 versicolor
+## 53           6.9         3.1          4.9         1.5 versicolor
+## 54           5.5         2.3          4.0         1.3 versicolor
+## 55           6.5         2.8          4.6         1.5 versicolor
+## 56           5.7         2.8          4.5         1.3 versicolor
+## 57           6.3         3.3          4.7         1.6 versicolor
+## 58           4.9         2.4          3.3         1.0 versicolor
+## 59           6.6         2.9          4.6         1.3 versicolor
+## 60           5.2         2.7          3.9         1.4 versicolor
+## 61           5.0         2.0          3.5         1.0 versicolor
+## 62           5.9         3.0          4.2         1.5 versicolor
+## 63           6.0         2.2          4.0         1.0 versicolor
+## 64           6.1         2.9          4.7         1.4 versicolor
+## 65           5.6         2.9          3.6         1.3 versicolor
+## 66           6.7         3.1          4.4         1.4 versicolor
+## 67           5.6         3.0          4.5         1.5 versicolor
+## 68           5.8         2.7          4.1         1.0 versicolor
+## 69           6.2         2.2          4.5         1.5 versicolor
+## 70           5.6         2.5          3.9         1.1 versicolor
+## 71           5.9         3.2          4.8         1.8 versicolor
+## 72           6.1         2.8          4.0         1.3 versicolor
+## 73           6.3         2.5          4.9         1.5 versicolor
+## 74           6.1         2.8          4.7         1.2 versicolor
+## 75           6.4         2.9          4.3         1.3 versicolor
+## 76           6.6         3.0          4.4         1.4 versicolor
+## 77           6.8         2.8          4.8         1.4 versicolor
+## 78           6.7         3.0          5.0         1.7 versicolor
+## 79           6.0         2.9          4.5         1.5 versicolor
+## 80           5.7         2.6          3.5         1.0 versicolor
+## 81           5.5         2.4          3.8         1.1 versicolor
+## 82           5.5         2.4          3.7         1.0 versicolor
+## 83           5.8         2.7          3.9         1.2 versicolor
+## 84           6.0         2.7          5.1         1.6 versicolor
+## 85           5.4         3.0          4.5         1.5 versicolor
+## 86           6.0         3.4          4.5         1.6 versicolor
+## 87           6.7         3.1          4.7         1.5 versicolor
+## 88           6.3         2.3          4.4         1.3 versicolor
+## 89           5.6         3.0          4.1         1.3 versicolor
+## 90           5.5         2.5          4.0         1.3 versicolor
+## 91           5.5         2.6          4.4         1.2 versicolor
+## 92           6.1         3.0          4.6         1.4 versicolor
+## 93           5.8         2.6          4.0         1.2 versicolor
+## 94           5.0         2.3          3.3         1.0 versicolor
+## 95           5.6         2.7          4.2         1.3 versicolor
+## 96           5.7         3.0          4.2         1.2 versicolor
+## 97           5.7         2.9          4.2         1.3 versicolor
+## 98           6.2         2.9          4.3         1.3 versicolor
+## 99           5.1         2.5          3.0         1.1 versicolor
+## 100          5.7         2.8          4.1         1.3 versicolor
+## 101          6.3         3.3          6.0         2.5  virginica
+## 102          5.8         2.7          5.1         1.9  virginica
+## 103          7.1         3.0          5.9         2.1  virginica
+## 104          6.3         2.9          5.6         1.8  virginica
+## 105          6.5         3.0          5.8         2.2  virginica
+## 106          7.6         3.0          6.6         2.1  virginica
+## 107          4.9         2.5          4.5         1.7  virginica
+## 108          7.3         2.9          6.3         1.8  virginica
+## 109          6.7         2.5          5.8         1.8  virginica
+## 110          7.2         3.6          6.1         2.5  virginica
+## 111          6.5         3.2          5.1         2.0  virginica
+## 112          6.4         2.7          5.3         1.9  virginica
+## 113          6.8         3.0          5.5         2.1  virginica
+## 114          5.7         2.5          5.0         2.0  virginica
+## 115          5.8         2.8          5.1         2.4  virginica
+## 116          6.4         3.2          5.3         2.3  virginica
+## 117          6.5         3.0          5.5         1.8  virginica
+## 118          7.7         3.8          6.7         2.2  virginica
+## 119          7.7         2.6          6.9         2.3  virginica
+## 120          6.0         2.2          5.0         1.5  virginica
+## 121          6.9         3.2          5.7         2.3  virginica
+## 122          5.6         2.8          4.9         2.0  virginica
+## 123          7.7         2.8          6.7         2.0  virginica
+## 124          6.3         2.7          4.9         1.8  virginica
+## 125          6.7         3.3          5.7         2.1  virginica
+## 126          7.2         3.2          6.0         1.8  virginica
+## 127          6.2         2.8          4.8         1.8  virginica
+## 128          6.1         3.0          4.9         1.8  virginica
+## 129          6.4         2.8          5.6         2.1  virginica
+## 130          7.2         3.0          5.8         1.6  virginica
+## 131          7.4         2.8          6.1         1.9  virginica
+## 132          7.9         3.8          6.4         2.0  virginica
+## 133          6.4         2.8          5.6         2.2  virginica
+## 134          6.3         2.8          5.1         1.5  virginica
+## 135          6.1         2.6          5.6         1.4  virginica
+## 136          7.7         3.0          6.1         2.3  virginica
+## 137          6.3         3.4          5.6         2.4  virginica
+## 138          6.4         3.1          5.5         1.8  virginica
+## 139          6.0         3.0          4.8         1.8  virginica
+## 140          6.9         3.1          5.4         2.1  virginica
+## 141          6.7         3.1          5.6         2.4  virginica
+## 142          6.9         3.1          5.1         2.3  virginica
+## 143          5.8         2.7          5.1         1.9  virginica
+## 144          6.8         3.2          5.9         2.3  virginica
+## 145          6.7         3.3          5.7         2.5  virginica
+## 146          6.7         3.0          5.2         2.3  virginica
+## 147          6.3         2.5          5.0         1.9  virginica
+## 148          6.5         3.0          5.2         2.0  virginica
+## 149          6.2         3.4          5.4         2.3  virginica
+## 150          5.9         3.0          5.1         1.8  virginica
 ```
 ]
 
@@ -336,7 +380,7 @@ iris %&gt;%
 ]
  
 .panel2-grafico-00-auto[
-&lt;img src="ss_06_ggplot2_A_files/figure-html/grafico-00_auto_02_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_A_files/figure-html/grafico-00_auto_02_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -353,7 +397,7 @@ ggplot() +
 ]
  
 .panel2-grafico-00-auto[
-&lt;img src="ss_06_ggplot2_A_files/figure-html/grafico-00_auto_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_A_files/figure-html/grafico-00_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -371,7 +415,7 @@ ggplot() +
 ]
  
 .panel2-grafico-00-auto[
-&lt;img src="ss_06_ggplot2_A_files/figure-html/grafico-00_auto_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_A_files/figure-html/grafico-00_auto_04_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -390,7 +434,7 @@ ggplot() +
 ]
  
 .panel2-grafico-00-auto[
-&lt;img src="ss_06_ggplot2_A_files/figure-html/grafico-00_auto_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_A_files/figure-html/grafico-00_auto_05_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -410,7 +454,7 @@ ggplot() +
 ]
  
 .panel2-grafico-00-auto[
-&lt;img src="ss_06_ggplot2_A_files/figure-html/grafico-00_auto_06_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+![](ss_06_ggplot2_A_files/figure-html/grafico-00_auto_06_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -517,7 +561,7 @@ ggplot() + geom_point(data = iris, aes(Sepal.Length, Petal.Length))
 
 --
 
-&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-10-1.png" width="66%" style="display: block; margin: auto;" /&gt;
+&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-11-1.png" width="66%" /&gt;
 
 ---
 
@@ -572,7 +616,14 @@ ggplot(iris, aes(Sepal.Length, Petal.Length)) +
 
 
 
-&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+```
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+```
+
+&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-16-1.png" width="100%" /&gt;
 
 ---
 
@@ -583,22 +634,41 @@ ggplot(iris, aes(Sepal.Length, Petal.Length)) +
 ```r
 ggplot(iris) + geom_point(aes(Sepal.Length, Petal.Length)) + 
     geom_smooth(aes(color = Species))
-#&gt; Error: stat_smooth requires the following missing aesthetics: x and y
+```
 
+```
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+```
+
+```
+## Error: stat_smooth requires the following missing aesthetics: x and y
+```
+
+```r
 ggplot() + geom_point(data = iris, aes(Sepal.Length, Petal.Length)) + 
     geom_line(aes(Sepal.Length, Petal.Length))
-#&gt; Error in FUN(X[[i]], ...): objeto 'Sepal.Length' no encontrado
+```
 
+```
+## Error in FUN(X[[i]], ...): objeto 'Sepal.Length' no encontrado
+```
+
+```r
 ggplot(aes(Sepal.Length, Petal.Length)) + geom_point(data = iris) + 
     geom_line()
-#&gt; Error: `data` must be a data frame, or other object coercible by `fortify()`, not an S3 object with class uneval
-#&gt; Did you accidentally pass `aes()` to the `data` argument?
+```
 
+```
+## Error: `data` must be a data frame, or other object coercible by `fortify()`, not an S3 object with class uneval
+## Did you accidentally pass `aes()` to the `data` argument?
+```
+
+```r
 ggplot() + geom_point(data = iris, aes(Sepal.Length, Petal.Length)) + 
     geom_line()
 ```
 
-&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-16-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-17-1.png" width="55%" /&gt;
 
 ---
 ##### Un ejemplo un poco marciano
@@ -617,7 +687,12 @@ ggplot(iris, aes(Sepal.Length, Petal.Length)) +
 
 --
 
-&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+```
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+```
+
+&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-19-1.png" width="70%" /&gt;
 
 ---
 ###### Otro ejemplo/tarea más: 
@@ -641,7 +716,11 @@ ggplot(iris, aes(Sepal.Length, Petal.Length)) + geom_point() +
     geom_smooth(data = iris2, aes(Sepal.Length, Petal.Length) )
 ```
 
-&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+```
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+```
+
+&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-20-1.png" width="70%" /&gt;
 ]
 .panel[.panel-name[Solución 2]
 
@@ -655,7 +734,11 @@ ggplot(iris, aes(Sepal.Length, Petal.Length)) +
   geom_smooth(data = iris_solo_2_clases,aes(Sepal.Length, Petal.Length, color = Species_2) )
 ```
 
-&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+```
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+```
+
+&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-21-1.png" width="70%" /&gt;
 
 ]
 .panel[.panel-name[Solución 3 (good)]
@@ -668,7 +751,11 @@ ggplot(iris_solo_2_clases, aes(Sepal.Length, Petal.Length, color = Species_2)) +
   geom_point() + geom_smooth()
 ```
 
-&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+```
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+```
+
+&lt;img src="ss_06_ggplot2_A_files/figure-html/unnamed-chunk-22-1.png" width="70%" /&gt;
 ]
 ]
 
@@ -748,7 +835,6 @@ Veremos algo de los siguientes elementos:
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,
-"highlightSpans": true,
 "countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
