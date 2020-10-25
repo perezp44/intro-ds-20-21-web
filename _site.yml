@@ -33,7 +33,7 @@ output:
     highlight: textmate
     includes:
       after_body: footer.html
-      in_header: google-analytics.html
+      in_header: ["google-analytics.html", "favicon.html"]
 ---
 
     #css: styles.css
