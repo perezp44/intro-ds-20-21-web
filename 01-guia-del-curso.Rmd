@@ -27,6 +27,7 @@ meta() %>% meta_description(
     og_author = c("Pedro J. Pérez"))
 ```
 
+<!-- This comment will not de displayed in any format-->
 
 <br>
 

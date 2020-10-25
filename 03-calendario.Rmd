@@ -146,8 +146,6 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 - Empezar a importar/exportar datos. Para ello usaremos las [Slides-05: Importar y exportar datos](./slides/ss_05_cargar-datos/ss_05_cargar-datos.html){target="_blank"}.
   
   
-  
- 
 <br>
 
 -----------------------
@@ -183,8 +181,6 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
     - Empezar a manipular datos à la tidyverse. Presentaremos ideas/conceptos como "the pipe" y "tidy data" y empezaremos a usar 2 paquetes del tidyverse: `tidyr` y `dplyr`, el principal paquete para manipular datos. Para ello usaremos las [Slides-05(bis): Data munging](./slides/ss_05_data-munging/ss_05_data-munging.html){target="_blank"}.
   
   
-  
-
 <br>
 
 -----------------------
@@ -240,7 +236,6 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 - Empezar con las ideas básicas de ggplot2 y está vez sí, hacer nuestro primer super-gráfico.
   
-
 
 
   
