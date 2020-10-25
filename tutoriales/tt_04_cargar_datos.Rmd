@@ -67,9 +67,9 @@ meta() %>% meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>%
   )
 ```
 
-
-
 -----------------
+
+<br>
 
 # 1. Intro
 

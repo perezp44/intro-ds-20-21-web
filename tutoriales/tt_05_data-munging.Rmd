@@ -82,8 +82,10 @@ library("readxl")
 library("gapminder")
 ```
 
----------------------------------------
 
+-----------------
+
+<br>
 
 # 1. Introducción
 

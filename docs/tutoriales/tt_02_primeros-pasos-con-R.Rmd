@@ -69,9 +69,9 @@ meta() %>% meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>%
   )
 ```
 
-
-
 -----------------
+
+<br>
 
 El objetivo de esta sección es proporcionar una breve primera introducción a R y RStudio para personas que no han tenido contacto previo con estos programas y explicitar la forma que tendremos de interactuar con ellos; es decir, la forma de trabajar con ellos (*workflow*).
 

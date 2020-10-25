@@ -81,12 +81,9 @@ meta() %>% meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>%
   )
 ```
 
-
-
-
-
 -----------------
 
+<br>
 
 ## 0. Intenciones y Disclaimer
 

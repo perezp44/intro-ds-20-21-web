@@ -69,12 +69,9 @@ meta() %>% meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>%
 ```
 
 
-El objetivo de este tema es proporcionar una introducción a R para personas que no han tenido contacto previo con el programa. Se presentan algunos de los rudimentos del lenguaje de programación R. Conocer en detalle el lenguaje R es complicado, hay muchas cosas, pero conociendo unas cuantas de ellas puede ser suficiente para hacer análisis de datos complejos.
-
-Se presentan conceptos básicos y, por tanto necesarios, como distintos tipos y estructuras de datos, asignación, funciones, operadores lógicos, subsetting etc… PERO, recuerda que en el curso vamos a enfatizar otra forma de trabajar con R.
-
-
 -----------------
+
+<br>
 
 
 El objetivo de este tema es proporcionar una introducción a R para personas que no han tenido contacto previo con el programa. Se presentan algunos de los rudimentos del lenguaje de programación R. Conocer en detalle el lenguaje R es complicado, hay muchas cosas, pero conociendo unas cuantas de ellas puede ser suficiente para hacer análisis de datos complejos.

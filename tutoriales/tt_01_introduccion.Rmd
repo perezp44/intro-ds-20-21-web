@@ -73,11 +73,9 @@ meta() %>% meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>%
 ```
 
 
-
-
 -----------------
 
-
+<br>
 
 El objetivo principal del curso es aprender un poco, todo lo que podamos, sobre una nueva disciplina: Ciencia de datos o Data Science. En concreto, nos centraremos en aprender a manejar y analizar datos utilizando una herramienta profesional como R.  En el tema 2 hablaremos y utilizaremos intensivamente R, de momento nos sobra con señalar que R es un programa informático, más bien un entorno, con el que hacer análisis de datos (o ciencia de datos), pero R también es un lenguaje de programación. Lo veremos!! 
 
