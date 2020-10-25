@@ -1,7 +1,7 @@
 ---
 title: "Prefacio (WIP)"
 author: "Pedro J. Pérez"
-date: "`r format(Sys.time(), '%d %B %Y')`"
+date: "Septiembre de 2019 (actualizado el `r format(Sys.time(), '%d-%m-%Y')`)"
 #date: "2020/03/05 (updated: `r Sys.Date()`)"
 output:
   html_document:
@@ -15,6 +15,11 @@ output:
       smooth_scroll: true
     self_contained: true
     number_sections: false
+    includes:
+      after_body: !expr here::here("assets", "footer.html") 
+      in_header: 
+        - !expr here::here("assets", "google-analytics.html") 
+        - !expr here::here("assets", "favicon-pancrudo.html") 
     #code_folding: show
     df_print: kable
     code_download: true
