@@ -8,7 +8,7 @@ output:
     number_sections: no
     toc: true
     toc_float: true
- ---
+---
 
 <br>
 
