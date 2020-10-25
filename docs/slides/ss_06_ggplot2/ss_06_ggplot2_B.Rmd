@@ -54,6 +54,20 @@ style_mono_light(base_color = "#1c5253",
 ```
 
 
+```{r chunk-setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, message = FALSE, warning = FALSE,
+                      #results = "hold",
+                      cache = FALSE, cache.path = "/caches/", comment = "#>",
+                      #fig.width = 7, #fig.height= 7,
+                      #out.width = 7, out.height = 7,
+                      collapse = TRUE,  fig.show = "hold", fig.retina = 4,
+                      fig.asp = 7/9, out.width = "95%", fig.align = "center")
+options(scipen = 999) #- para quitar la notación científica
+#- para mejorar los gráficos, bueno en realidad para que se vean igual en distintos SO
+#- https://www.jumpingrivers.com/blog/r-knitr-markdown-png-pdf-graphics/
+knitr::opts_chunk$set(dev = "png", dev.args = list(type = "cairo-png"))
+```
+
 
 ```{r, include = FALSE}
 library(flipbookr)
