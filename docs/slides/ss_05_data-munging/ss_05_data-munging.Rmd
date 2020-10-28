@@ -62,6 +62,24 @@ style_mono_light(base_color = "#1c5253",
                    link_color = "steelblue")
 ```
 
+
+```{r chunk-setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, message = FALSE, warning = FALSE,
+                      #results = "hold",
+                      cache = FALSE, cache.path = "/caches/", comment = "#>",
+                      #fig.width = 7, #fig.height= 7,
+                      #out.width = 7, out.height = 7,
+                      collapse = TRUE,  fig.show = "hold", fig.retina = 4,
+                      fig.asp = 7/9, out.width = "95%", fig.align = "center")
+options(scipen = 999) #- para quitar la notación científica
+#- para mejorar los gráficos, bueno en realidad para que se vean igual en distintos SO
+#- https://www.jumpingrivers.com/blog/r-knitr-markdown-png-pdf-graphics/
+knitr::opts_chunk$set(dev = "png", dev.args = list(type = "cairo-png"))
+```
+
+
+
+
 class: inverse, center, middle
 # Data wrangling: manejo de datos con R, the tidyverse way
 ##### (Slides 05(bis) del curso Programación y manejo de datos con R)
@@ -668,13 +686,13 @@ aa <- gapminder %>% filter(lifeExp < 29)
 #- filas con valores de "lifeExp" entre [29, 32]
 aa <- gapminder %>% filter(lifeExp >=  29 , lifeExp <= 32)   
 aa <- gapminder %>% filter(lifeExp >=  29 &  lifeExp <= 32)  
-aa <- gapminder %>% filter(`between`(lifeExp, 29, 32))       
+aa <- gapminder %>% filter(between(lifeExp, 29, 32))       
 
 #- observaciones de países de África con lifeExp > 32
 aa <- gapminder %>% filter(lifeExp > 72 &  continent == "Africa") 
 
 #- observaciones de países de África o Asia con lifeExp > 32
-aa <- gapminder %>% filter(lifeExp > 72 &  continent `%in%` c("Africa", "Asia") )  
+aa <- gapminder %>% filter(lifeExp > 72 &  continent %in% c("Africa", "Asia") )  
 aa <- gapminder %>% filter(lifeExp > 72 & (continent == "Africa" | continent == "Asia") )  
 ```
 
@@ -694,7 +712,7 @@ aa <- gapminder %>% slice(c(10:15))
 
 #- selecciona las observaciones de la 12 a 13 Y de la 44 a 46, Y las 4 últimas
 aa <- gapminder %>% 
-     slice( c(12:14, 44:46, n()-4:n()) ) #- AQUI hay un `error`, tenéis que arreglarlo. 
+     slice( c(12:14, 44:46, n()-4:n()) ) #- AQUI hay un error, tenéis que arreglarlo. 
 
 #- Pista: igual os ayuda crear una columna con el índice de rows y repetir el cálculo
 aa <- gapminder %>% mutate(index = 1:n())
@@ -718,7 +736,7 @@ aa <- gapminder %>% slice_max(lifeExp, n = 3)
 aa <- gapminder %>% slice_min(pop, n = 4)
 
 #- observaciones en el primer decil en cuanto a esperanza de vida, 10% con menor esperanza de vida
-aa <- gapminder %>% slice_min(lifeExp, `prop` = 0.1)
+aa <- gapminder %>% slice_min(lifeExp, prop = 0.1)
 
 #- 1% de observaciones con mayor población. Imagino que estarán China e India
 aa <- gapminder %>% slice_max(pop, prop = 0.01)
@@ -733,7 +751,7 @@ A veces se necesita obtener una muestra aleatoria de los datos: por ejemplo con 
 
 ```{r, eval = FALSE}
 #- selecciona (aleatoriamente) 100 filas de los datos
-aa <- gapminder %>% `slice_sample`(n = 100)
+aa <- gapminder %>% slice_sample(n = 100)
 
 #- selecciona (aleatoriamente) un 5% de los datos
 aa <- gapminder %>% slice_sample(prop = 0.05)
@@ -753,7 +771,7 @@ background-size: 6%
 aa <- gapminder %>% arrange(lifeExp)
 
 #- ordena las filas de MAYOR a menor según los valores de la v. lifeExp
-aa <- gapminder %>% arrange(`desc`(lifeExp))  
+aa <- gapminder %>% arrange(desc(lifeExp))  
 
 #- ordena las filas de MENOR a mayor según los valores de la v. lifeExp. 
 #- Si hay empates se resuelve con la variable "pop"
@@ -790,7 +808,7 @@ names(aa) <- names(aa) %>% tolower
 ```{r, eval = FALSE}
 aa <- gapminder
 
-aa %>% `rename_with`(toupper)
+aa %>% rename_with(toupper)
 
 rename_with(aa, toupper, starts_with("Life") | contains("countr"))
 
@@ -831,14 +849,14 @@ aa <- gapminder %>% select(1:3, 5)
 aa <- gapminder %>% select(-year)
 
 #- Para eliminar varias variables
-aa <- gapminder %>% select(-`c`(year, lifeExp))
+aa <- gapminder %>% select(-c(year, lifeExp))
 ```
 
 ##### eliminar variables por posición
 
 
 ```{r, echo = TRUE, eval = FALSE}
-aa <- gapminder %>% select(-`c`(1:3, 5))
+aa <- gapminder %>% select(-c(1:3, 5))
 ```
 
 
@@ -865,7 +883,7 @@ background-size: 6%
 ```{r, echo = TRUE, eval = FALSE}
 aa <- gapminder %>% select(is.numeric)        #- funciona, pero ...
 
-aa <- gapminder %>% select(`where`(is.numeric)) #- es "preferible" esta segunda expresión
+aa <- gapminder %>% select(where(is.numeric)) #- es "preferible" esta segunda expresión
 ```
 
 --
@@ -876,7 +894,7 @@ aa <- gapminder %>% select(`where`(is.numeric)) #- es "preferible" esta segunda 
 
 
 ```{r, echo = TRUE, eval = FALSE}
-aa <- gapminder %>% select(`!`where(is.numeric)) 
+aa <- gapminder %>% select(!where(is.numeric)) 
 ```
 
 
@@ -904,7 +922,7 @@ Imagina que quieres que la última columna pase a ser la primera (manías!!). Po
 
 ```{r, echo = TRUE, eval = FALSE}
 #- "gdpPercap" que es la última columna pasa a ser la primera
-aa <- gapminder %>% select(gdpPercap, `everything()`)
+aa <- gapminder %>% select(gdpPercap, everything())
 ```
 
 --
@@ -917,7 +935,7 @@ aa <- gapminder %>% select(gdpPercap, `everything()`)
 #### 4.C.2  `relocate() ` otra función para reordenar las variables de un df
 
 ```{r, echo = TRUE, eval = FALSE}
-aa <- gapminder %>% dplyr::`relocate`(country, .after = lifeExp)
+aa <- gapminder %>% dplyr::relocate(country, .after = lifeExp)
 
 aa <- gapminder %>% dplyr::relocate(country, .before = lifeExp)
 ```
@@ -965,9 +983,9 @@ background-size: 6%
 aa <- gapminder %>% summarise(media = mean(lifeExp))  
 aa <- gapminder %>% summarise(desviacion_tipica = sd(lifeExp))  
 aa <- gapminder %>% summarise(max(pop))  
-aa <- gapminder %>% summarise(NN = `n()`)  
+aa <- gapminder %>% summarise(NN = n())  
 
-aa <- gapminder %>% `count`()      #- más adelante veremos la utilidad de count()
+aa <- gapminder %>% count()      #- más adelante veremos la utilidad de count()
 ```
 
 --
@@ -978,7 +996,7 @@ aa <- gapminder %>% `count`()      #- más adelante veremos la utilidad de count
 
 ```{r, echo = TRUE, eval = FALSE}
 #- retornará 2 valores: las medias de "lifeExp" y "gdpPercap"
-aa <- gapminder %>% summarise(mean(`lifeExp`), mean(`gdpPercap`))  
+aa <- gapminder %>% summarise(mean(lifeExp), mean(gdpPercap))  
 ```
 
 
@@ -990,7 +1008,7 @@ aa <- gapminder %>% summarise(mean(`lifeExp`), mean(`gdpPercap`))
 
 ```{r, echo = TRUE, eval = FALSE}
 #- retornará 2 valores: la media y sd de la v. "lifeExp"
-aa <- gapminder %>% summarise(`mean`(lifeExp), `sd`(lifeExp))
+aa <- gapminder %>% summarise(mean(lifeExp), sd(lifeExp))
 ```
 
 
@@ -1008,10 +1026,10 @@ Usar `across()` permitirá calcular estadísticos de todas las variables, o de s
 
 ```{r, echo = TRUE, eval = FALSE}
 #- media de cada una de las 6 variables. Devuelve 2 warnings porque las 2 primeras son textuales. No se puede calcular la media de continent y country
-gapminder %>% summarise(`across`(everything(), mean) ) 
+gapminder %>% summarise(across(everything(), mean) ) 
 
 #- calculamos la media de tercera a la sexta variable
-gapminder %>% summarise(`across`(3:6, mean) ) 
+gapminder %>% summarise(across(3:6, mean) ) 
 ```
 
 <br>
@@ -1019,10 +1037,10 @@ gapminder %>% summarise(`across`(3:6, mean) )
 O sea, `across()` permite seleccionar variables para hacer summaries. Dentro de `across()` se puede utilizar `where()` para aplicar criterios lógicos para seleccionar variables: 
 
 ```{r, echo = TRUE, eval = FALSE}
-gapminder %>% summarise(across(`where`(is.numeric), mean)) 
+gapminder %>% summarise(across(where(is.numeric), mean)) 
 
 #- con los nombres de los argumentos (más largo pero conviene verlo de vez en cuando)
-gapminder %>% summarise(across(.cols = `where`(is.numeric), .fns = mean)) 
+gapminder %>% summarise(across(.cols = where(is.numeric), .fns = mean)) 
 ```
 
 
@@ -1038,7 +1056,7 @@ background-size: 6%
 
 ```{r, echo = TRUE, eval = FALSE}
 #- calculamos la media y desviación típica de las columnas 3 a 6.
-gapminder %>% summarise(across(3:6, `list`(media = mean, desv = sd)))
+gapminder %>% summarise(across(3:6, list(media = mean, desv = sd)))
 
 #- lo mismo, pero explicitando los nombres de los argumentos
 gapminder %>% summarise(across(.cols = 3:6, .fns = list(media = mean, desv = sd) ))
@@ -1057,7 +1075,7 @@ background-size: 6%
 
 En análisis de datos muchas operaciones  queremos calcularlas para distintos grupos (p. ej. mujer/hombre,  ...). `group_by()` permite hacerlo.
 
-`group_by()`coge un df y lo convierte en un **"df agrupado"**. En ese nuevo "df agrupado", las operaciones que hagamos, se harán por separado para cada uno de los grupos que hayamos definido. Ahora lo vemos.
+`group_by()` coge un df y lo convierte en un **"df agrupado"**. En ese nuevo "df agrupado", las operaciones que hagamos, se harán por separado para cada uno de los grupos que hayamos definido. Ahora lo vemos.
 
 --
 
@@ -1103,7 +1121,7 @@ aa <- gapminder %>% group_by(country) %>%
 #- y el número de países en cada continente (NN_countries)
 aa <- gapminder %>% group_by(continent) %>%  
           summarize(NN = n(), 
-                    NN_countries = `n_distinct`(country)) 
+                    NN_countries = n_distinct(country)) 
 aa
 ```
 
@@ -1121,7 +1139,7 @@ background-size: 6%
 ```{r, echo = TRUE, eval = TRUE}
 aa <- gapminder %>% group_by(continent) %>%  
           summarize(NN = n(), 
-                    NN_countries = `length`(`unique`(country)) )
+                    NN_countries = length(unique(country)) )
 aa
 ```
 
@@ -1176,7 +1194,7 @@ gapminder %>% filter(year == "1952") %>%
 
 ```{r, eval = FALSE}
 
-gapminder %>% filter(year `%in%` c(1952, 2007)) %>%  
+gapminder %>% filter(year %in% c(1952, 2007)) %>%  
              group_by(continent, year) %>%  
              summarize(mean(lifeExp), mean(gdpPercap)) 
 ```
@@ -1297,7 +1315,7 @@ aa <- gapminder %>%
 
 #- pero ahora usamos pivot_wider()
 aa %>% pivot_wider(names_from = year, values_from = media) %>% 
-     mutate(dif_l = `2007` - `1952`) %>% 
+     mutate(dif_l = 2007 - 1952) %>% 
      arrange(desc(dif_l))
 ```
 
@@ -1319,8 +1337,8 @@ aa <- gapminder %>%
   select(continent, year, lifeExp) %>% 
   summarise(mean_life = mean(lifeExp)) %>% 
   arrange(year) %>% 
-  mutate(incre_mean_life_0 = mean_life - `first`(mean_life)) %>% 
-  mutate(incre_mean_life_t = mean_life - `lag`(mean_life)) %>% 
+  mutate(incre_mean_life_0 = mean_life - first(mean_life)) %>% 
+  mutate(incre_mean_life_t = mean_life - lag(mean_life)) %>% 
   arrange(continent)
 
 #- por ejemplo veamos el resultado para Europe
@@ -1356,7 +1374,7 @@ En palabras de Jennyfer Bryan:
 #- variación de lifeExp en Spain año a año (bueno lustro a lustro)
 gapminder %>% group_by(country) %>% 
   select(country, year, lifeExp) %>% 
-  mutate(lifeExp_gain_cada_lustro = lifeExp - `lag`(lifeExp)) %>% 
+  mutate(lifeExp_gain_cada_lustro = lifeExp - lag(lifeExp)) %>% 
   filter(country == "Spain" )
 ```
 
@@ -1372,11 +1390,11 @@ gapminder %>% group_by(country) %>%
   
 #- Al final para hacerlo (como había pensado) me han hecho falta 2 lineas, 
 #- porque la primera observación de "lifeExp_gain_cada_lustro" es un NA 
-#- y eso hacía que la función `cumsum()` no funcionase.
+#- y eso hacía que la función cumsum() no funcionase.
   
 mutate(lifeExp_gain_cada_lustro2 = 
  `ifelse`(is.na(lifeExp_gain_cada_lustro), 0, lifeExp_gain_cada_lustro)) %>% 
-mutate(lifeExp_gain_acumulado = `cumsum`(lifeExp_gain_cada_lustro2)) %>%   
+mutate(lifeExp_gain_acumulado = cumsum(lifeExp_gain_cada_lustro2)) %>%   
 filter(country == "Spain")
 ```
 ]
@@ -1411,7 +1429,7 @@ aa <- gapminder %>%
   filter(continent == "Asia") %>%
   select(year, country, lifeExp) %>%
   group_by(year) %>%
-  `slice_max`(n = 3, lifeExp) %>% 
+  slice_max(n = 3, lifeExp) %>% 
   arrange(year) 
 ```
 
@@ -1425,7 +1443,7 @@ aa <- gapminder %>%
   group_by(continent, year)  %>%
   mutate(media_lifeExp = mean(lifeExp)) %>% 
   mutate(media_gdpPercap = mean(gdpPercap)) %>% 
-  mutate(GOOD_or_BAD = `case_when`( 
+  mutate(GOOD_or_BAD = case_when( 
     lifeExp > mean(lifeExp) & gdpPercap > mean(gdpPercap)  ~ "good",
     lifeExp < mean(lifeExp) & gdpPercap < mean(gdpPercap)  ~ "bad" ,
     lifeExp < mean(lifeExp) | gdpPercap < mean(gdpPercap)  ~ "medium"
@@ -1457,7 +1475,7 @@ df_1 <- iris[ , 1:2]  ; df_2 <- iris[ , 3:5]
 
 df_1 <- iris %>% select(1:2)  ; df_2 <- iris %>% select(3:5) 
 
-df_3 <- `bind_cols`(df_1, df_2)
+df_3 <- bind_cols(df_1, df_2)
 
 identical(iris, df_3)
 ```
@@ -1474,7 +1492,7 @@ df_1 <- iris[1:75, ]  ; df_2 <- iris[76:150, ]
 
 df_1 <- iris %>% slice(1:75)  ; df_2 <- iris %>% slice(76:150) 
 
-df_3 <- `bind_rows`(df_1, df_2)
+df_3 <- bind_rows(df_1, df_2)
 
 identical(iris, df_3)
 ```

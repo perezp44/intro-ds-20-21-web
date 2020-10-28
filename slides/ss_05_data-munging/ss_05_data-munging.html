@@ -68,6 +68,12 @@
 
 
 
+
+
+
+
+
+
 class: inverse, center, middle
 # Data wrangling: manejo de datos con R, the tidyverse way
 ##### (Slides 05(bis) del curso Programación y manejo de datos con R)
@@ -76,7 +82,7 @@ class: inverse, center, middle
 
 #### Universitat de València 
 #### 2020, septiembre 
-###### (actualizadas el 25-10-2020)
+###### (actualizadas el 28-10-2020)
 
 &lt;br&gt;&lt;br&gt;&lt;br&gt;
 #### e-mail: [<i class="fas  fa-envelope "></i>](mailto:pedro.j.perez@uv.es)[pedro.j.perez@uv.es](mailto:pedro.j.perez@uv.es)
@@ -151,7 +157,7 @@ Conjunto de paquetes que trabajan en armonía y que permiten una nueva forma de 
 
 
 
-&lt;iframe src="https://www.tidyverse.org/" width="100%" height="400px"&gt;&lt;/iframe&gt;
+&lt;iframe src="https://www.tidyverse.org/" width="95%" height="400px"&gt;&lt;/iframe&gt;
 
 ---
 background-image: url(imagenes/ss_05_img_03_tidyverse-hex.png)
@@ -380,8 +386,8 @@ data_1 &lt;- data.frame(
 DT::datatable(data_1)
 ```
 
-<div id="htmlwidget-f767e427199b401d3ab8" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f767e427199b401d3ab8">{"x":{"filter":"none","data":[["1","2","3"],["2014","2015","2016"],[100,500,200],[400,600,250],[200,700,900]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>year<\/th>\n      <th>Pedro<\/th>\n      <th>Carla<\/th>\n      <th>María<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1dd1f03c905190aa2813" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1dd1f03c905190aa2813">{"x":{"filter":"none","data":[["1","2","3"],["2014","2015","2016"],[100,500,200],[400,600,250],[200,700,900]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>year<\/th>\n      <th>Pedro<\/th>\n      <th>Carla<\/th>\n      <th>María<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 ]
 ]
 
@@ -431,7 +437,7 @@ gt::gt(data_3)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xhehzaymtu .gt_table {
+#rqqrqkitoq .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -456,7 +462,7 @@ gt::gt(data_3)
   border-left-color: #D3D3D3;
 }
 
-#xhehzaymtu .gt_heading {
+#rqqrqkitoq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -468,7 +474,7 @@ gt::gt(data_3)
   border-right-color: #D3D3D3;
 }
 
-#xhehzaymtu .gt_title {
+#rqqrqkitoq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -478,7 +484,7 @@ gt::gt(data_3)
   border-bottom-width: 0;
 }
 
-#xhehzaymtu .gt_subtitle {
+#rqqrqkitoq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -488,13 +494,13 @@ gt::gt(data_3)
   border-top-width: 0;
 }
 
-#xhehzaymtu .gt_bottom_border {
+#rqqrqkitoq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xhehzaymtu .gt_col_headings {
+#rqqrqkitoq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -509,7 +515,7 @@ gt::gt(data_3)
   border-right-color: #D3D3D3;
 }
 
-#xhehzaymtu .gt_col_heading {
+#rqqrqkitoq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -529,7 +535,7 @@ gt::gt(data_3)
   overflow-x: hidden;
 }
 
-#xhehzaymtu .gt_column_spanner_outer {
+#rqqrqkitoq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -541,15 +547,15 @@ gt::gt(data_3)
   padding-right: 4px;
 }
 
-#xhehzaymtu .gt_column_spanner_outer:first-child {
+#rqqrqkitoq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xhehzaymtu .gt_column_spanner_outer:last-child {
+#rqqrqkitoq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xhehzaymtu .gt_column_spanner {
+#rqqrqkitoq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -561,7 +567,7 @@ gt::gt(data_3)
   width: 100%;
 }
 
-#xhehzaymtu .gt_group_heading {
+#rqqrqkitoq .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -583,7 +589,7 @@ gt::gt(data_3)
   vertical-align: middle;
 }
 
-#xhehzaymtu .gt_empty_group_heading {
+#rqqrqkitoq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -598,15 +604,15 @@ gt::gt(data_3)
   vertical-align: middle;
 }
 
-#xhehzaymtu .gt_from_md > :first-child {
+#rqqrqkitoq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xhehzaymtu .gt_from_md > :last-child {
+#rqqrqkitoq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xhehzaymtu .gt_row {
+#rqqrqkitoq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -625,7 +631,7 @@ gt::gt(data_3)
   overflow-x: hidden;
 }
 
-#xhehzaymtu .gt_stub {
+#rqqrqkitoq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -637,7 +643,7 @@ gt::gt(data_3)
   padding-left: 12px;
 }
 
-#xhehzaymtu .gt_summary_row {
+#rqqrqkitoq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -647,7 +653,7 @@ gt::gt(data_3)
   padding-right: 5px;
 }
 
-#xhehzaymtu .gt_first_summary_row {
+#rqqrqkitoq .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -657,7 +663,7 @@ gt::gt(data_3)
   border-top-color: #D3D3D3;
 }
 
-#xhehzaymtu .gt_grand_summary_row {
+#rqqrqkitoq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -667,7 +673,7 @@ gt::gt(data_3)
   padding-right: 5px;
 }
 
-#xhehzaymtu .gt_first_grand_summary_row {
+#rqqrqkitoq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -677,11 +683,11 @@ gt::gt(data_3)
   border-top-color: #D3D3D3;
 }
 
-#xhehzaymtu .gt_striped {
+#rqqrqkitoq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xhehzaymtu .gt_table_body {
+#rqqrqkitoq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -690,7 +696,7 @@ gt::gt(data_3)
   border-bottom-color: #D3D3D3;
 }
 
-#xhehzaymtu .gt_footnotes {
+#rqqrqkitoq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -704,13 +710,13 @@ gt::gt(data_3)
   border-right-color: #D3D3D3;
 }
 
-#xhehzaymtu .gt_footnote {
+#rqqrqkitoq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#xhehzaymtu .gt_sourcenotes {
+#rqqrqkitoq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -724,46 +730,46 @@ gt::gt(data_3)
   border-right-color: #D3D3D3;
 }
 
-#xhehzaymtu .gt_sourcenote {
+#rqqrqkitoq .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#xhehzaymtu .gt_left {
+#rqqrqkitoq .gt_left {
   text-align: left;
 }
 
-#xhehzaymtu .gt_center {
+#rqqrqkitoq .gt_center {
   text-align: center;
 }
 
-#xhehzaymtu .gt_right {
+#rqqrqkitoq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xhehzaymtu .gt_font_normal {
+#rqqrqkitoq .gt_font_normal {
   font-weight: normal;
 }
 
-#xhehzaymtu .gt_font_bold {
+#rqqrqkitoq .gt_font_bold {
   font-weight: bold;
 }
 
-#xhehzaymtu .gt_font_italic {
+#rqqrqkitoq .gt_font_italic {
   font-style: italic;
 }
 
-#xhehzaymtu .gt_super {
+#rqqrqkitoq .gt_super {
   font-size: 65%;
 }
 
-#xhehzaymtu .gt_footnote_marks {
+#rqqrqkitoq .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="xhehzaymtu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="rqqrqkitoq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -871,10 +877,12 @@ data_wide &lt;- data_2
 
 
 ```r
+
 #- la función pivot_longer() transforma los datos de formato ancho(wide) a formato largo(long)
 
 data_long &lt;- data_wide %&gt;% 
              tidyr::pivot_longer(cols = 2:4, names_to = "periodo")
+
 ```
 ]
 ]
@@ -901,6 +909,7 @@ La tarea consiste en convertir `df_long` a formato ANCHO.
 
 
 ```r
+
 data_wide2 &lt;- data_long %&gt;% 
               tidyr::pivot_wider(names_from = periodo, 
                                  values_from = value)
@@ -930,7 +939,7 @@ background-size: 6%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ghthtlgyex .gt_table {
+#elvawdvmrk .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -955,7 +964,7 @@ background-size: 6%
   border-left-color: #D3D3D3;
 }
 
-#ghthtlgyex .gt_heading {
+#elvawdvmrk .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -967,7 +976,7 @@ background-size: 6%
   border-right-color: #D3D3D3;
 }
 
-#ghthtlgyex .gt_title {
+#elvawdvmrk .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -977,7 +986,7 @@ background-size: 6%
   border-bottom-width: 0;
 }
 
-#ghthtlgyex .gt_subtitle {
+#elvawdvmrk .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -987,13 +996,13 @@ background-size: 6%
   border-top-width: 0;
 }
 
-#ghthtlgyex .gt_bottom_border {
+#elvawdvmrk .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ghthtlgyex .gt_col_headings {
+#elvawdvmrk .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1008,7 +1017,7 @@ background-size: 6%
   border-right-color: #D3D3D3;
 }
 
-#ghthtlgyex .gt_col_heading {
+#elvawdvmrk .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1028,7 +1037,7 @@ background-size: 6%
   overflow-x: hidden;
 }
 
-#ghthtlgyex .gt_column_spanner_outer {
+#elvawdvmrk .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1040,15 +1049,15 @@ background-size: 6%
   padding-right: 4px;
 }
 
-#ghthtlgyex .gt_column_spanner_outer:first-child {
+#elvawdvmrk .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ghthtlgyex .gt_column_spanner_outer:last-child {
+#elvawdvmrk .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ghthtlgyex .gt_column_spanner {
+#elvawdvmrk .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1060,7 +1069,7 @@ background-size: 6%
   width: 100%;
 }
 
-#ghthtlgyex .gt_group_heading {
+#elvawdvmrk .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1082,7 +1091,7 @@ background-size: 6%
   vertical-align: middle;
 }
 
-#ghthtlgyex .gt_empty_group_heading {
+#elvawdvmrk .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1097,15 +1106,15 @@ background-size: 6%
   vertical-align: middle;
 }
 
-#ghthtlgyex .gt_from_md > :first-child {
+#elvawdvmrk .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ghthtlgyex .gt_from_md > :last-child {
+#elvawdvmrk .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ghthtlgyex .gt_row {
+#elvawdvmrk .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1124,7 +1133,7 @@ background-size: 6%
   overflow-x: hidden;
 }
 
-#ghthtlgyex .gt_stub {
+#elvawdvmrk .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1136,7 +1145,7 @@ background-size: 6%
   padding-left: 12px;
 }
 
-#ghthtlgyex .gt_summary_row {
+#elvawdvmrk .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1146,7 +1155,7 @@ background-size: 6%
   padding-right: 5px;
 }
 
-#ghthtlgyex .gt_first_summary_row {
+#elvawdvmrk .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1156,7 +1165,7 @@ background-size: 6%
   border-top-color: #D3D3D3;
 }
 
-#ghthtlgyex .gt_grand_summary_row {
+#elvawdvmrk .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1166,7 +1175,7 @@ background-size: 6%
   padding-right: 5px;
 }
 
-#ghthtlgyex .gt_first_grand_summary_row {
+#elvawdvmrk .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1176,11 +1185,11 @@ background-size: 6%
   border-top-color: #D3D3D3;
 }
 
-#ghthtlgyex .gt_striped {
+#elvawdvmrk .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ghthtlgyex .gt_table_body {
+#elvawdvmrk .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1189,7 +1198,7 @@ background-size: 6%
   border-bottom-color: #D3D3D3;
 }
 
-#ghthtlgyex .gt_footnotes {
+#elvawdvmrk .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1203,13 +1212,13 @@ background-size: 6%
   border-right-color: #D3D3D3;
 }
 
-#ghthtlgyex .gt_footnote {
+#elvawdvmrk .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#ghthtlgyex .gt_sourcenotes {
+#elvawdvmrk .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1223,46 +1232,46 @@ background-size: 6%
   border-right-color: #D3D3D3;
 }
 
-#ghthtlgyex .gt_sourcenote {
+#elvawdvmrk .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#ghthtlgyex .gt_left {
+#elvawdvmrk .gt_left {
   text-align: left;
 }
 
-#ghthtlgyex .gt_center {
+#elvawdvmrk .gt_center {
   text-align: center;
 }
 
-#ghthtlgyex .gt_right {
+#elvawdvmrk .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ghthtlgyex .gt_font_normal {
+#elvawdvmrk .gt_font_normal {
   font-weight: normal;
 }
 
-#ghthtlgyex .gt_font_bold {
+#elvawdvmrk .gt_font_bold {
   font-weight: bold;
 }
 
-#ghthtlgyex .gt_font_italic {
+#elvawdvmrk .gt_font_italic {
   font-style: italic;
 }
 
-#ghthtlgyex .gt_super {
+#elvawdvmrk .gt_super {
   font-size: 65%;
 }
 
-#ghthtlgyex .gt_footnote_marks {
+#elvawdvmrk .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="ghthtlgyex" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="elvawdvmrk" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -1312,7 +1321,7 @@ gt::gt(df_a)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#dctmdjsdvh .gt_table {
+#bbkusufplr .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1337,7 +1346,7 @@ gt::gt(df_a)
   border-left-color: #D3D3D3;
 }
 
-#dctmdjsdvh .gt_heading {
+#bbkusufplr .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1349,7 +1358,7 @@ gt::gt(df_a)
   border-right-color: #D3D3D3;
 }
 
-#dctmdjsdvh .gt_title {
+#bbkusufplr .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1359,7 +1368,7 @@ gt::gt(df_a)
   border-bottom-width: 0;
 }
 
-#dctmdjsdvh .gt_subtitle {
+#bbkusufplr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1369,13 +1378,13 @@ gt::gt(df_a)
   border-top-width: 0;
 }
 
-#dctmdjsdvh .gt_bottom_border {
+#bbkusufplr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dctmdjsdvh .gt_col_headings {
+#bbkusufplr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1390,7 +1399,7 @@ gt::gt(df_a)
   border-right-color: #D3D3D3;
 }
 
-#dctmdjsdvh .gt_col_heading {
+#bbkusufplr .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1410,7 +1419,7 @@ gt::gt(df_a)
   overflow-x: hidden;
 }
 
-#dctmdjsdvh .gt_column_spanner_outer {
+#bbkusufplr .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1422,15 +1431,15 @@ gt::gt(df_a)
   padding-right: 4px;
 }
 
-#dctmdjsdvh .gt_column_spanner_outer:first-child {
+#bbkusufplr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dctmdjsdvh .gt_column_spanner_outer:last-child {
+#bbkusufplr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dctmdjsdvh .gt_column_spanner {
+#bbkusufplr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1442,7 +1451,7 @@ gt::gt(df_a)
   width: 100%;
 }
 
-#dctmdjsdvh .gt_group_heading {
+#bbkusufplr .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1464,7 +1473,7 @@ gt::gt(df_a)
   vertical-align: middle;
 }
 
-#dctmdjsdvh .gt_empty_group_heading {
+#bbkusufplr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1479,15 +1488,15 @@ gt::gt(df_a)
   vertical-align: middle;
 }
 
-#dctmdjsdvh .gt_from_md > :first-child {
+#bbkusufplr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dctmdjsdvh .gt_from_md > :last-child {
+#bbkusufplr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dctmdjsdvh .gt_row {
+#bbkusufplr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1506,7 +1515,7 @@ gt::gt(df_a)
   overflow-x: hidden;
 }
 
-#dctmdjsdvh .gt_stub {
+#bbkusufplr .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1518,7 +1527,7 @@ gt::gt(df_a)
   padding-left: 12px;
 }
 
-#dctmdjsdvh .gt_summary_row {
+#bbkusufplr .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1528,7 +1537,7 @@ gt::gt(df_a)
   padding-right: 5px;
 }
 
-#dctmdjsdvh .gt_first_summary_row {
+#bbkusufplr .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1538,7 +1547,7 @@ gt::gt(df_a)
   border-top-color: #D3D3D3;
 }
 
-#dctmdjsdvh .gt_grand_summary_row {
+#bbkusufplr .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1548,7 +1557,7 @@ gt::gt(df_a)
   padding-right: 5px;
 }
 
-#dctmdjsdvh .gt_first_grand_summary_row {
+#bbkusufplr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1558,11 +1567,11 @@ gt::gt(df_a)
   border-top-color: #D3D3D3;
 }
 
-#dctmdjsdvh .gt_striped {
+#bbkusufplr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dctmdjsdvh .gt_table_body {
+#bbkusufplr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1571,7 +1580,7 @@ gt::gt(df_a)
   border-bottom-color: #D3D3D3;
 }
 
-#dctmdjsdvh .gt_footnotes {
+#bbkusufplr .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1585,13 +1594,13 @@ gt::gt(df_a)
   border-right-color: #D3D3D3;
 }
 
-#dctmdjsdvh .gt_footnote {
+#bbkusufplr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#dctmdjsdvh .gt_sourcenotes {
+#bbkusufplr .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1605,46 +1614,46 @@ gt::gt(df_a)
   border-right-color: #D3D3D3;
 }
 
-#dctmdjsdvh .gt_sourcenote {
+#bbkusufplr .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#dctmdjsdvh .gt_left {
+#bbkusufplr .gt_left {
   text-align: left;
 }
 
-#dctmdjsdvh .gt_center {
+#bbkusufplr .gt_center {
   text-align: center;
 }
 
-#dctmdjsdvh .gt_right {
+#bbkusufplr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dctmdjsdvh .gt_font_normal {
+#bbkusufplr .gt_font_normal {
   font-weight: normal;
 }
 
-#dctmdjsdvh .gt_font_bold {
+#bbkusufplr .gt_font_bold {
   font-weight: bold;
 }
 
-#dctmdjsdvh .gt_font_italic {
+#bbkusufplr .gt_font_italic {
   font-style: italic;
 }
 
-#dctmdjsdvh .gt_super {
+#bbkusufplr .gt_super {
   font-size: 65%;
 }
 
-#dctmdjsdvh .gt_footnote_marks {
+#bbkusufplr .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="dctmdjsdvh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="bbkusufplr" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -1696,7 +1705,7 @@ gt::gt(df_b)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ckemnzlset .gt_table {
+#ubyuczkyad .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1721,7 +1730,7 @@ gt::gt(df_b)
   border-left-color: #D3D3D3;
 }
 
-#ckemnzlset .gt_heading {
+#ubyuczkyad .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1733,7 +1742,7 @@ gt::gt(df_b)
   border-right-color: #D3D3D3;
 }
 
-#ckemnzlset .gt_title {
+#ubyuczkyad .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1743,7 +1752,7 @@ gt::gt(df_b)
   border-bottom-width: 0;
 }
 
-#ckemnzlset .gt_subtitle {
+#ubyuczkyad .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1753,13 +1762,13 @@ gt::gt(df_b)
   border-top-width: 0;
 }
 
-#ckemnzlset .gt_bottom_border {
+#ubyuczkyad .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ckemnzlset .gt_col_headings {
+#ubyuczkyad .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1774,7 +1783,7 @@ gt::gt(df_b)
   border-right-color: #D3D3D3;
 }
 
-#ckemnzlset .gt_col_heading {
+#ubyuczkyad .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1794,7 +1803,7 @@ gt::gt(df_b)
   overflow-x: hidden;
 }
 
-#ckemnzlset .gt_column_spanner_outer {
+#ubyuczkyad .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1806,15 +1815,15 @@ gt::gt(df_b)
   padding-right: 4px;
 }
 
-#ckemnzlset .gt_column_spanner_outer:first-child {
+#ubyuczkyad .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ckemnzlset .gt_column_spanner_outer:last-child {
+#ubyuczkyad .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ckemnzlset .gt_column_spanner {
+#ubyuczkyad .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1826,7 +1835,7 @@ gt::gt(df_b)
   width: 100%;
 }
 
-#ckemnzlset .gt_group_heading {
+#ubyuczkyad .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1848,7 +1857,7 @@ gt::gt(df_b)
   vertical-align: middle;
 }
 
-#ckemnzlset .gt_empty_group_heading {
+#ubyuczkyad .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1863,15 +1872,15 @@ gt::gt(df_b)
   vertical-align: middle;
 }
 
-#ckemnzlset .gt_from_md > :first-child {
+#ubyuczkyad .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ckemnzlset .gt_from_md > :last-child {
+#ubyuczkyad .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ckemnzlset .gt_row {
+#ubyuczkyad .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1890,7 +1899,7 @@ gt::gt(df_b)
   overflow-x: hidden;
 }
 
-#ckemnzlset .gt_stub {
+#ubyuczkyad .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1902,7 +1911,7 @@ gt::gt(df_b)
   padding-left: 12px;
 }
 
-#ckemnzlset .gt_summary_row {
+#ubyuczkyad .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1912,7 +1921,7 @@ gt::gt(df_b)
   padding-right: 5px;
 }
 
-#ckemnzlset .gt_first_summary_row {
+#ubyuczkyad .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1922,7 +1931,7 @@ gt::gt(df_b)
   border-top-color: #D3D3D3;
 }
 
-#ckemnzlset .gt_grand_summary_row {
+#ubyuczkyad .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1932,7 +1941,7 @@ gt::gt(df_b)
   padding-right: 5px;
 }
 
-#ckemnzlset .gt_first_grand_summary_row {
+#ubyuczkyad .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1942,11 +1951,11 @@ gt::gt(df_b)
   border-top-color: #D3D3D3;
 }
 
-#ckemnzlset .gt_striped {
+#ubyuczkyad .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ckemnzlset .gt_table_body {
+#ubyuczkyad .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1955,7 +1964,7 @@ gt::gt(df_b)
   border-bottom-color: #D3D3D3;
 }
 
-#ckemnzlset .gt_footnotes {
+#ubyuczkyad .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1969,13 +1978,13 @@ gt::gt(df_b)
   border-right-color: #D3D3D3;
 }
 
-#ckemnzlset .gt_footnote {
+#ubyuczkyad .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#ckemnzlset .gt_sourcenotes {
+#ubyuczkyad .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1989,46 +1998,46 @@ gt::gt(df_b)
   border-right-color: #D3D3D3;
 }
 
-#ckemnzlset .gt_sourcenote {
+#ubyuczkyad .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#ckemnzlset .gt_left {
+#ubyuczkyad .gt_left {
   text-align: left;
 }
 
-#ckemnzlset .gt_center {
+#ubyuczkyad .gt_center {
   text-align: center;
 }
 
-#ckemnzlset .gt_right {
+#ubyuczkyad .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ckemnzlset .gt_font_normal {
+#ubyuczkyad .gt_font_normal {
   font-weight: normal;
 }
 
-#ckemnzlset .gt_font_bold {
+#ubyuczkyad .gt_font_bold {
   font-weight: bold;
 }
 
-#ckemnzlset .gt_font_italic {
+#ubyuczkyad .gt_font_italic {
   font-style: italic;
 }
 
-#ckemnzlset .gt_super {
+#ubyuczkyad .gt_super {
   font-size: 65%;
 }
 
-#ckemnzlset .gt_footnote_marks {
+#ubyuczkyad .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="ckemnzlset" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="ubyuczkyad" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -2169,13 +2178,13 @@ aa &lt;- gapminder %&gt;% filter(lifeExp &lt; 29)
 #- filas con valores de "lifeExp" entre [29, 32]
 aa &lt;- gapminder %&gt;% filter(lifeExp &gt;=  29 , lifeExp &lt;= 32)   
 aa &lt;- gapminder %&gt;% filter(lifeExp &gt;=  29 &amp;  lifeExp &lt;= 32)  
-aa &lt;- gapminder %&gt;% filter(`between`(lifeExp, 29, 32))       
+aa &lt;- gapminder %&gt;% filter(between(lifeExp, 29, 32))       
 
 #- observaciones de países de África con lifeExp &gt; 32
 aa &lt;- gapminder %&gt;% filter(lifeExp &gt; 72 &amp;  continent == "Africa") 
 
 #- observaciones de países de África o Asia con lifeExp &gt; 32
-aa &lt;- gapminder %&gt;% filter(lifeExp &gt; 72 &amp;  continent `%in%` c("Africa", "Asia") )  
+aa &lt;- gapminder %&gt;% filter(lifeExp &gt; 72 &amp;  continent %in% c("Africa", "Asia") )  
 aa &lt;- gapminder %&gt;% filter(lifeExp &gt; 72 &amp; (continent == "Africa" | continent == "Asia") )  
 ```
 
@@ -2196,7 +2205,7 @@ aa &lt;- gapminder %&gt;% slice(c(10:15))
 
 #- selecciona las observaciones de la 12 a 13 Y de la 44 a 46, Y las 4 últimas
 aa &lt;- gapminder %&gt;% 
-     slice( c(12:14, 44:46, n()-4:n()) ) #- AQUI hay un `error`, tenéis que arreglarlo. 
+     slice( c(12:14, 44:46, n()-4:n()) ) #- AQUI hay un error, tenéis que arreglarlo. 
 
 #- Pista: igual os ayuda crear una columna con el índice de rows y repetir el cálculo
 aa &lt;- gapminder %&gt;% mutate(index = 1:n())
@@ -2221,7 +2230,7 @@ aa &lt;- gapminder %&gt;% slice_max(lifeExp, n = 3)
 aa &lt;- gapminder %&gt;% slice_min(pop, n = 4)
 
 #- observaciones en el primer decil en cuanto a esperanza de vida, 10% con menor esperanza de vida
-aa &lt;- gapminder %&gt;% slice_min(lifeExp, `prop` = 0.1)
+aa &lt;- gapminder %&gt;% slice_min(lifeExp, prop = 0.1)
 
 #- 1% de observaciones con mayor población. Imagino que estarán China e India
 aa &lt;- gapminder %&gt;% slice_max(pop, prop = 0.01)
@@ -2237,7 +2246,7 @@ A veces se necesita obtener una muestra aleatoria de los datos: por ejemplo con 
 
 ```r
 #- selecciona (aleatoriamente) 100 filas de los datos
-aa &lt;- gapminder %&gt;% `slice_sample`(n = 100)
+aa &lt;- gapminder %&gt;% slice_sample(n = 100)
 
 #- selecciona (aleatoriamente) un 5% de los datos
 aa &lt;- gapminder %&gt;% slice_sample(prop = 0.05)
@@ -2258,7 +2267,7 @@ background-size: 6%
 aa &lt;- gapminder %&gt;% arrange(lifeExp)
 
 #- ordena las filas de MAYOR a menor según los valores de la v. lifeExp
-aa &lt;- gapminder %&gt;% arrange(`desc`(lifeExp))  
+aa &lt;- gapminder %&gt;% arrange(desc(lifeExp))  
 
 #- ordena las filas de MENOR a mayor según los valores de la v. lifeExp. 
 #- Si hay empates se resuelve con la variable "pop"
@@ -2298,7 +2307,7 @@ names(aa) &lt;- names(aa) %&gt;% tolower
 ```r
 aa &lt;- gapminder
 
-aa %&gt;% `rename_with`(toupper)
+aa %&gt;% rename_with(toupper)
 
 rename_with(aa, toupper, starts_with("Life") | contains("countr"))
 
@@ -2342,7 +2351,7 @@ aa &lt;- gapminder %&gt;% select(1:3, 5)
 aa &lt;- gapminder %&gt;% select(-year)
 
 #- Para eliminar varias variables
-aa &lt;- gapminder %&gt;% select(-`c`(year, lifeExp))
+aa &lt;- gapminder %&gt;% select(-c(year, lifeExp))
 ```
 
 ##### eliminar variables por posición
@@ -2350,7 +2359,7 @@ aa &lt;- gapminder %&gt;% select(-`c`(year, lifeExp))
 
 
 ```r
-aa &lt;- gapminder %&gt;% select(-`c`(1:3, 5))
+aa &lt;- gapminder %&gt;% select(-c(1:3, 5))
 ```
 
 
@@ -2378,7 +2387,7 @@ background-size: 6%
 ```r
 aa &lt;- gapminder %&gt;% select(is.numeric)        #- funciona, pero ...
 
-aa &lt;- gapminder %&gt;% select(`where`(is.numeric)) #- es "preferible" esta segunda expresión
+aa &lt;- gapminder %&gt;% select(where(is.numeric)) #- es "preferible" esta segunda expresión
 ```
 
 --
@@ -2390,7 +2399,7 @@ aa &lt;- gapminder %&gt;% select(`where`(is.numeric)) #- es "preferible" esta se
 
 
 ```r
-aa &lt;- gapminder %&gt;% select(`!`where(is.numeric)) 
+aa &lt;- gapminder %&gt;% select(!where(is.numeric)) 
 ```
 
 
@@ -2420,7 +2429,7 @@ Imagina que quieres que la última columna pase a ser la primera (manías!!). Po
 
 ```r
 #- "gdpPercap" que es la última columna pasa a ser la primera
-aa &lt;- gapminder %&gt;% select(gdpPercap, `everything()`)
+aa &lt;- gapminder %&gt;% select(gdpPercap, everything())
 ```
 
 --
@@ -2434,7 +2443,7 @@ aa &lt;- gapminder %&gt;% select(gdpPercap, `everything()`)
 
 
 ```r
-aa &lt;- gapminder %&gt;% dplyr::`relocate`(country, .after = lifeExp)
+aa &lt;- gapminder %&gt;% dplyr::relocate(country, .after = lifeExp)
 
 aa &lt;- gapminder %&gt;% dplyr::relocate(country, .before = lifeExp)
 ```
@@ -2485,9 +2494,9 @@ background-size: 6%
 aa &lt;- gapminder %&gt;% summarise(media = mean(lifeExp))  
 aa &lt;- gapminder %&gt;% summarise(desviacion_tipica = sd(lifeExp))  
 aa &lt;- gapminder %&gt;% summarise(max(pop))  
-aa &lt;- gapminder %&gt;% summarise(NN = `n()`)  
+aa &lt;- gapminder %&gt;% summarise(NN = n())  
 
-aa &lt;- gapminder %&gt;% `count`()      #- más adelante veremos la utilidad de count()
+aa &lt;- gapminder %&gt;% count()      #- más adelante veremos la utilidad de count()
 ```
 
 --
@@ -2499,7 +2508,7 @@ aa &lt;- gapminder %&gt;% `count`()      #- más adelante veremos la utilidad de
 
 ```r
 #- retornará 2 valores: las medias de "lifeExp" y "gdpPercap"
-aa &lt;- gapminder %&gt;% summarise(mean(`lifeExp`), mean(`gdpPercap`))  
+aa &lt;- gapminder %&gt;% summarise(mean(lifeExp), mean(gdpPercap))  
 ```
 
 
@@ -2512,7 +2521,7 @@ aa &lt;- gapminder %&gt;% summarise(mean(`lifeExp`), mean(`gdpPercap`))
 
 ```r
 #- retornará 2 valores: la media y sd de la v. "lifeExp"
-aa &lt;- gapminder %&gt;% summarise(`mean`(lifeExp), `sd`(lifeExp))
+aa &lt;- gapminder %&gt;% summarise(mean(lifeExp), sd(lifeExp))
 ```
 
 
@@ -2531,10 +2540,10 @@ Usar `across()` permitirá calcular estadísticos de todas las variables, o de s
 
 ```r
 #- media de cada una de las 6 variables. Devuelve 2 warnings porque las 2 primeras son textuales. No se puede calcular la media de continent y country
-gapminder %&gt;% summarise(`across`(everything(), mean) ) 
+gapminder %&gt;% summarise(across(everything(), mean) ) 
 
 #- calculamos la media de tercera a la sexta variable
-gapminder %&gt;% summarise(`across`(3:6, mean) ) 
+gapminder %&gt;% summarise(across(3:6, mean) ) 
 ```
 
 &lt;br&gt;
@@ -2543,10 +2552,10 @@ O sea, `across()` permite seleccionar variables para hacer summaries. Dentro de 
 
 
 ```r
-gapminder %&gt;% summarise(across(`where`(is.numeric), mean)) 
+gapminder %&gt;% summarise(across(where(is.numeric), mean)) 
 
 #- con los nombres de los argumentos (más largo pero conviene verlo de vez en cuando)
-gapminder %&gt;% summarise(across(.cols = `where`(is.numeric), .fns = mean)) 
+gapminder %&gt;% summarise(across(.cols = where(is.numeric), .fns = mean)) 
 ```
 
 
@@ -2563,7 +2572,7 @@ background-size: 6%
 
 ```r
 #- calculamos la media y desviación típica de las columnas 3 a 6.
-gapminder %&gt;% summarise(across(3:6, `list`(media = mean, desv = sd)))
+gapminder %&gt;% summarise(across(3:6, list(media = mean, desv = sd)))
 
 #- lo mismo, pero explicitando los nombres de los argumentos
 gapminder %&gt;% summarise(across(.cols = 3:6, .fns = list(media = mean, desv = sd) ))
@@ -2582,7 +2591,7 @@ background-size: 6%
 
 En análisis de datos muchas operaciones  queremos calcularlas para distintos grupos (p. ej. mujer/hombre,  ...). `group_by()` permite hacerlo.
 
-`group_by()`coge un df y lo convierte en un **"df agrupado"**. En ese nuevo "df agrupado", las operaciones que hagamos, se harán por separado para cada uno de los grupos que hayamos definido. Ahora lo vemos.
+`group_by()` coge un df y lo convierte en un **"df agrupado"**. En ese nuevo "df agrupado", las operaciones que hagamos, se harán por separado para cada uno de los grupos que hayamos definido. Ahora lo vemos.
 
 --
 
@@ -2594,25 +2603,15 @@ En análisis de datos muchas operaciones  queremos calcularlas para distintos gr
 #- es decir, nos retornará un df con una fila por cada continente
 
 aa &lt;- gapminder %&gt;% group_by(continent) %&gt;% summarise(NN = n()) 
-```
-
-```
-## `summarise()` ungrouping output (override with `.groups` argument)
-```
-
-```r
 aa
-```
-
-```
-## # A tibble: 5 x 2
-##   continent    NN
-##   &lt;fct&gt;     &lt;int&gt;
-## 1 Africa      624
-## 2 Americas    300
-## 3 Asia        396
-## 4 Europe      360
-## 5 Oceania      24
+#&gt; # A tibble: 5 x 2
+#&gt;   continent    NN
+#&gt;   &lt;fct&gt;     &lt;int&gt;
+#&gt; 1 Africa      624
+#&gt; 2 Americas    300
+#&gt; 3 Asia        396
+#&gt; 4 Europe      360
+#&gt; 5 Oceania      24
 ```
 
 
@@ -2649,26 +2648,16 @@ aa &lt;- gapminder %&gt;% group_by(country) %&gt;%
 #- y el número de países en cada continente (NN_countries)
 aa &lt;- gapminder %&gt;% group_by(continent) %&gt;%  
           summarize(NN = n(), 
-                    NN_countries = `n_distinct`(country)) 
-```
-
-```
-## `summarise()` ungrouping output (override with `.groups` argument)
-```
-
-```r
+                    NN_countries = n_distinct(country)) 
 aa
-```
-
-```
-## # A tibble: 5 x 3
-##   continent    NN NN_countries
-##   &lt;fct&gt;     &lt;int&gt;        &lt;int&gt;
-## 1 Africa      624           52
-## 2 Americas    300           25
-## 3 Asia        396           33
-## 4 Europe      360           30
-## 5 Oceania      24            2
+#&gt; # A tibble: 5 x 3
+#&gt;   continent    NN NN_countries
+#&gt;   &lt;fct&gt;     &lt;int&gt;        &lt;int&gt;
+#&gt; 1 Africa      624           52
+#&gt; 2 Americas    300           25
+#&gt; 3 Asia        396           33
+#&gt; 4 Europe      360           30
+#&gt; 5 Oceania      24            2
 ```
 
 
@@ -2686,26 +2675,16 @@ background-size: 6%
 ```r
 aa &lt;- gapminder %&gt;% group_by(continent) %&gt;%  
           summarize(NN = n(), 
-                    NN_countries = `length`(`unique`(country)) )
-```
-
-```
-## `summarise()` ungrouping output (override with `.groups` argument)
-```
-
-```r
+                    NN_countries = length(unique(country)) )
 aa
-```
-
-```
-## # A tibble: 5 x 3
-##   continent    NN NN_countries
-##   &lt;fct&gt;     &lt;int&gt;        &lt;int&gt;
-## 1 Africa      624           52
-## 2 Americas    300           25
-## 3 Asia        396           33
-## 4 Europe      360           30
-## 5 Oceania      24            2
+#&gt; # A tibble: 5 x 3
+#&gt;   continent    NN NN_countries
+#&gt;   &lt;fct&gt;     &lt;int&gt;        &lt;int&gt;
+#&gt; 1 Africa      624           52
+#&gt; 2 Americas    300           25
+#&gt; 3 Asia        396           33
+#&gt; 4 Europe      360           30
+#&gt; 5 Oceania      24            2
 ```
 
 ---
@@ -2736,21 +2715,14 @@ Primero algo sencillo para calentar: hay que calcular **la esperanza de vida med
 
 gapminder %&gt;% group_by(continent) %&gt;%  
               summarize(mean(lifeExp)) 
-```
-
-```
-## `summarise()` ungrouping output (override with `.groups` argument)
-```
-
-```
-## # A tibble: 5 x 2
-##   continent `mean(lifeExp)`
-##   &lt;fct&gt;               &lt;dbl&gt;
-## 1 Africa               48.9
-## 2 Americas             64.7
-## 3 Asia                 60.1
-## 4 Europe               71.9
-## 5 Oceania              74.3
+#&gt; # A tibble: 5 x 2
+#&gt;   continent `mean(lifeExp)`
+#&gt;   &lt;fct&gt;               &lt;dbl&gt;
+#&gt; 1 Africa               48.9
+#&gt; 2 Americas             64.7
+#&gt; 3 Asia                 60.1
+#&gt; 4 Europe               71.9
+#&gt; 5 Oceania              74.3
 ```
 
 ]
@@ -2776,7 +2748,8 @@ gapminder %&gt;% filter(year == "1952") %&gt;%
 
 
 ```r
-gapminder %&gt;% filter(year `%in%` c(1952, 2007)) %&gt;%  
+
+gapminder %&gt;% filter(year %in% c(1952, 2007)) %&gt;%  
              group_by(continent, year) %&gt;%  
              summarize(mean(lifeExp), mean(gdpPercap)) 
 ```
@@ -2792,27 +2765,20 @@ gapminder %&gt;% filter(year `%in%` c(1952, 2007)) %&gt;%
 gapminder %&gt;% filter(year %in% c(1952, 2007)) %&gt;%  
              group_by(continent, year) %&gt;%  
              summarize(mean(lifeExp), mean(gdpPercap)) 
-```
-
-```
-## `summarise()` regrouping output by 'continent' (override with `.groups` argument)
-```
-
-```
-## # A tibble: 10 x 4
-## # Groups:   continent [5]
-##    continent  year `mean(lifeExp)` `mean(gdpPercap)`
-##    &lt;fct&gt;     &lt;int&gt;           &lt;dbl&gt;             &lt;dbl&gt;
-##  1 Africa     1952            39.1             1253.
-##  2 Africa     2007            54.8             3089.
-##  3 Americas   1952            53.3             4079.
-##  4 Americas   2007            73.6            11003.
-##  5 Asia       1952            46.3             5195.
-##  6 Asia       2007            70.7            12473.
-##  7 Europe     1952            64.4             5661.
-##  8 Europe     2007            77.6            25054.
-##  9 Oceania    1952            69.3            10298.
-## 10 Oceania    2007            80.7            29810.
+#&gt; # A tibble: 10 x 4
+#&gt; # Groups:   continent [5]
+#&gt;    continent  year `mean(lifeExp)` `mean(gdpPercap)`
+#&gt;    &lt;fct&gt;     &lt;int&gt;           &lt;dbl&gt;             &lt;dbl&gt;
+#&gt;  1 Africa     1952            39.1             1253.
+#&gt;  2 Africa     2007            54.8             3089.
+#&gt;  3 Americas   1952            53.3             4079.
+#&gt;  4 Americas   2007            73.6            11003.
+#&gt;  5 Asia       1952            46.3             5195.
+#&gt;  6 Asia       2007            70.7            12473.
+#&gt;  7 Europe     1952            64.4             5661.
+#&gt;  8 Europe     2007            77.6            25054.
+#&gt;  9 Oceania    1952            69.3            10298.
+#&gt; 10 Oceania    2007            80.7            29810.
 ```
 ]
 ]
@@ -2874,26 +2840,19 @@ gapminder %&gt;%
   filter(year %in% c(1952, 2007)) %&gt;%  
   group_by(continent, year) %&gt;% 
   summarize(media = mean(lifeExp)) %&gt;% ungroup()
-```
-
-```
-## `summarise()` regrouping output by 'continent' (override with `.groups` argument)
-```
-
-```
-## # A tibble: 10 x 3
-##    continent  year media
-##    &lt;fct&gt;     &lt;int&gt; &lt;dbl&gt;
-##  1 Africa     1952  39.1
-##  2 Africa     2007  54.8
-##  3 Americas   1952  53.3
-##  4 Americas   2007  73.6
-##  5 Asia       1952  46.3
-##  6 Asia       2007  70.7
-##  7 Europe     1952  64.4
-##  8 Europe     2007  77.6
-##  9 Oceania    1952  69.3
-## 10 Oceania    2007  80.7
+#&gt; # A tibble: 10 x 3
+#&gt;    continent  year media
+#&gt;    &lt;fct&gt;     &lt;int&gt; &lt;dbl&gt;
+#&gt;  1 Africa     1952  39.1
+#&gt;  2 Africa     2007  54.8
+#&gt;  3 Americas   1952  53.3
+#&gt;  4 Americas   2007  73.6
+#&gt;  5 Asia       1952  46.3
+#&gt;  6 Asia       2007  70.7
+#&gt;  7 Europe     1952  64.4
+#&gt;  8 Europe     2007  77.6
+#&gt;  9 Oceania    1952  69.3
+#&gt; 10 Oceania    2007  80.7
 ```
 ]
 
@@ -2904,36 +2863,21 @@ gapminder %&gt;%
 aa &lt;- gapminder %&gt;% filter(year %in% c(1952, 2007)) %&gt;%  
   group_by(continent, year) %&gt;% 
   summarize(media = mean(lifeExp)) %&gt;% ungroup()
-```
 
-```
-## `summarise()` regrouping output by 'continent' (override with `.groups` argument)
-```
-
-```r
 aa1 &lt;- aa %&gt;% group_by(continent) %&gt;% 
   summarise(min_l = min(media), max_l = max(media)) %&gt;% 
   mutate(dif = max_l-min_l) %&gt;% 
   arrange(desc(dif))
-```
 
-```
-## `summarise()` ungrouping output (override with `.groups` argument)
-```
-
-```r
 aa1
-```
-
-```
-## # A tibble: 5 x 4
-##   continent min_l max_l   dif
-##   &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 Asia       46.3  70.7  24.4
-## 2 Americas   53.3  73.6  20.3
-## 3 Africa     39.1  54.8  15.7
-## 4 Europe     64.4  77.6  13.2
-## 5 Oceania    69.3  80.7  11.5
+#&gt; # A tibble: 5 x 4
+#&gt;   continent min_l max_l   dif
+#&gt;   &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1 Asia       46.3  70.7  24.4
+#&gt; 2 Americas   53.3  73.6  20.3
+#&gt; 3 Africa     39.1  54.8  15.7
+#&gt; 4 Europe     64.4  77.6  13.2
+#&gt; 5 Oceania    69.3  80.7  11.5
 ```
 
 ]
@@ -2944,13 +2888,7 @@ aa1
 aa &lt;- gapminder %&gt;% filter(year %in% c(1952, 2007)) %&gt;%  
          group_by(continent, year) %&gt;% 
          summarize(media = mean(lifeExp)) %&gt;% ungroup() 
-```
 
-```
-## `summarise()` regrouping output by 'continent' (override with `.groups` argument)
-```
-
-```r
 #- usamos lag()
 aa1 &lt;- aa %&gt;% group_by(continent) %&gt;% 
               arrange(year) %&gt;%
@@ -2958,18 +2896,15 @@ aa1 &lt;- aa %&gt;% group_by(continent) %&gt;%
 
 #- mostramos los resultados
 aa1 %&gt;% filter(year == 2007) %&gt;% arrange(desc(variac_l))
-```
-
-```
-## # A tibble: 5 x 4
-## # Groups:   continent [5]
-##   continent  year media variac_l
-##   &lt;fct&gt;     &lt;int&gt; &lt;dbl&gt;    &lt;dbl&gt;
-## 1 Asia       2007  70.7     24.4
-## 2 Americas   2007  73.6     20.3
-## 3 Africa     2007  54.8     15.7
-## 4 Europe     2007  77.6     13.2
-## 5 Oceania    2007  80.7     11.5
+#&gt; # A tibble: 5 x 4
+#&gt; # Groups:   continent [5]
+#&gt;   continent  year media variac_l
+#&gt;   &lt;fct&gt;     &lt;int&gt; &lt;dbl&gt;    &lt;dbl&gt;
+#&gt; 1 Asia       2007  70.7     24.4
+#&gt; 2 Americas   2007  73.6     20.3
+#&gt; 3 Africa     2007  54.8     15.7
+#&gt; 4 Europe     2007  77.6     13.2
+#&gt; 5 Oceania    2007  80.7     11.5
 ```
 ]
 
@@ -2981,28 +2916,19 @@ aa &lt;- gapminder %&gt;%
   filter(year %in% c(1952, 2007)) %&gt;%  
   group_by(continent, year) %&gt;% 
   summarize(media = mean(lifeExp)) %&gt;% ungroup()
-```
 
-```
-## `summarise()` regrouping output by 'continent' (override with `.groups` argument)
-```
-
-```r
 #- pero ahora usamos pivot_wider()
 aa %&gt;% pivot_wider(names_from = year, values_from = media) %&gt;% 
-     mutate(dif_l = `2007` - `1952`) %&gt;% 
+     mutate(dif_l = 2007 - 1952) %&gt;% 
      arrange(desc(dif_l))
-```
-
-```
-## # A tibble: 5 x 4
-##   continent `1952` `2007` dif_l
-##   &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-## 1 Asia        46.3   70.7  24.4
-## 2 Americas    53.3   73.6  20.3
-## 3 Africa      39.1   54.8  15.7
-## 4 Europe      64.4   77.6  13.2
-## 5 Oceania     69.3   80.7  11.5
+#&gt; # A tibble: 5 x 4
+#&gt;   continent `1952` `2007` dif_l
+#&gt;   &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1 Africa      39.1   54.8    55
+#&gt; 2 Americas    53.3   73.6    55
+#&gt; 3 Asia        46.3   70.7    55
+#&gt; 4 Europe      64.4   77.6    55
+#&gt; 5 Oceania     69.3   80.7    55
 ```
 
 ]
@@ -3024,8 +2950,8 @@ aa &lt;- gapminder %&gt;%
   select(continent, year, lifeExp) %&gt;% 
   summarise(mean_life = mean(lifeExp)) %&gt;% 
   arrange(year) %&gt;% 
-  mutate(incre_mean_life_0 = mean_life - `first`(mean_life)) %&gt;% 
-  mutate(incre_mean_life_t = mean_life - `lag`(mean_life)) %&gt;% 
+  mutate(incre_mean_life_0 = mean_life - first(mean_life)) %&gt;% 
+  mutate(incre_mean_life_t = mean_life - lag(mean_life)) %&gt;% 
   arrange(continent)
 
 #- por ejemplo veamos el resultado para Europe
@@ -3062,27 +2988,24 @@ En palabras de Jennyfer Bryan:
 #- variación de lifeExp en Spain año a año (bueno lustro a lustro)
 gapminder %&gt;% group_by(country) %&gt;% 
   select(country, year, lifeExp) %&gt;% 
-  mutate(lifeExp_gain_cada_lustro = lifeExp - `lag`(lifeExp)) %&gt;% 
+  mutate(lifeExp_gain_cada_lustro = lifeExp - lag(lifeExp)) %&gt;% 
   filter(country == "Spain" )
-```
-
-```
-## # A tibble: 12 x 4
-## # Groups:   country [1]
-##    country  year lifeExp lifeExp_gain_cada_lustro
-##    &lt;fct&gt;   &lt;int&gt;   &lt;dbl&gt;                    &lt;dbl&gt;
-##  1 Spain    1952    64.9                   NA    
-##  2 Spain    1957    66.7                    1.72 
-##  3 Spain    1962    69.7                    3.03 
-##  4 Spain    1967    71.4                    1.75 
-##  5 Spain    1972    73.1                    1.62 
-##  6 Spain    1977    74.4                    1.33 
-##  7 Spain    1982    76.3                    1.91 
-##  8 Spain    1987    76.9                    0.6  
-##  9 Spain    1992    77.6                    0.670
-## 10 Spain    1997    78.8                    1.2  
-## 11 Spain    2002    79.8                    1.01 
-## 12 Spain    2007    80.9                    1.16
+#&gt; # A tibble: 12 x 4
+#&gt; # Groups:   country [1]
+#&gt;    country  year lifeExp lifeExp_gain_cada_lustro
+#&gt;    &lt;fct&gt;   &lt;int&gt;   &lt;dbl&gt;                    &lt;dbl&gt;
+#&gt;  1 Spain    1952    64.9                   NA    
+#&gt;  2 Spain    1957    66.7                    1.72 
+#&gt;  3 Spain    1962    69.7                    3.03 
+#&gt;  4 Spain    1967    71.4                    1.75 
+#&gt;  5 Spain    1972    73.1                    1.62 
+#&gt;  6 Spain    1977    74.4                    1.33 
+#&gt;  7 Spain    1982    76.3                    1.91 
+#&gt;  8 Spain    1987    76.9                    0.6  
+#&gt;  9 Spain    1992    77.6                    0.670
+#&gt; 10 Spain    1997    78.8                    1.2  
+#&gt; 11 Spain    2002    79.8                    1.01 
+#&gt; 12 Spain    2007    80.9                    1.16
 ```
 
 ]
@@ -3098,11 +3021,11 @@ gapminder %&gt;% group_by(country) %&gt;%
   
 #- Al final para hacerlo (como había pensado) me han hecho falta 2 lineas, 
 #- porque la primera observación de "lifeExp_gain_cada_lustro" es un NA 
-#- y eso hacía que la función `cumsum()` no funcionase.
+#- y eso hacía que la función cumsum() no funcionase.
   
 mutate(lifeExp_gain_cada_lustro2 = 
  `ifelse`(is.na(lifeExp_gain_cada_lustro), 0, lifeExp_gain_cada_lustro)) %&gt;% 
-mutate(lifeExp_gain_acumulado = `cumsum`(lifeExp_gain_cada_lustro2)) %&gt;%   
+mutate(lifeExp_gain_acumulado = cumsum(lifeExp_gain_cada_lustro2)) %&gt;%   
 filter(country == "Spain")
 ```
 ]
@@ -3116,25 +3039,22 @@ gapminder %&gt;% group_by(country) %&gt;%
   select(country, year, lifeExp) %&gt;% 
   mutate(lifeExp_gain_acumulada = lifeExp - lifeExp[1])  %&gt;% 
   filter(country == "Spain")
-```
-
-```
-## # A tibble: 12 x 4
-## # Groups:   country [1]
-##    country  year lifeExp lifeExp_gain_acumulada
-##    &lt;fct&gt;   &lt;int&gt;   &lt;dbl&gt;                  &lt;dbl&gt;
-##  1 Spain    1952    64.9                   0   
-##  2 Spain    1957    66.7                   1.72
-##  3 Spain    1962    69.7                   4.75
-##  4 Spain    1967    71.4                   6.5 
-##  5 Spain    1972    73.1                   8.12
-##  6 Spain    1977    74.4                   9.45
-##  7 Spain    1982    76.3                  11.4 
-##  8 Spain    1987    76.9                  12.0 
-##  9 Spain    1992    77.6                  12.6 
-## 10 Spain    1997    78.8                  13.8 
-## 11 Spain    2002    79.8                  14.8 
-## 12 Spain    2007    80.9                  16.0
+#&gt; # A tibble: 12 x 4
+#&gt; # Groups:   country [1]
+#&gt;    country  year lifeExp lifeExp_gain_acumulada
+#&gt;    &lt;fct&gt;   &lt;int&gt;   &lt;dbl&gt;                  &lt;dbl&gt;
+#&gt;  1 Spain    1952    64.9                   0   
+#&gt;  2 Spain    1957    66.7                   1.72
+#&gt;  3 Spain    1962    69.7                   4.75
+#&gt;  4 Spain    1967    71.4                   6.5 
+#&gt;  5 Spain    1972    73.1                   8.12
+#&gt;  6 Spain    1977    74.4                   9.45
+#&gt;  7 Spain    1982    76.3                  11.4 
+#&gt;  8 Spain    1987    76.9                  12.0 
+#&gt;  9 Spain    1992    77.6                  12.6 
+#&gt; 10 Spain    1997    78.8                  13.8 
+#&gt; 11 Spain    2002    79.8                  14.8 
+#&gt; 12 Spain    2007    80.9                  16.0
 ```
 
 ]
@@ -3158,7 +3078,7 @@ aa &lt;- gapminder %&gt;%
   filter(continent == "Asia") %&gt;%
   select(year, country, lifeExp) %&gt;%
   group_by(year) %&gt;%
-  `slice_max`(n = 3, lifeExp) %&gt;% 
+  slice_max(n = 3, lifeExp) %&gt;% 
   arrange(year) 
 ```
 
@@ -3173,7 +3093,7 @@ aa &lt;- gapminder %&gt;%
   group_by(continent, year)  %&gt;%
   mutate(media_lifeExp = mean(lifeExp)) %&gt;% 
   mutate(media_gdpPercap = mean(gdpPercap)) %&gt;% 
-  mutate(GOOD_or_BAD = `case_when`( 
+  mutate(GOOD_or_BAD = case_when( 
     lifeExp &gt; mean(lifeExp) &amp; gdpPercap &gt; mean(gdpPercap)  ~ "good",
     lifeExp &lt; mean(lifeExp) &amp; gdpPercap &lt; mean(gdpPercap)  ~ "bad" ,
     lifeExp &lt; mean(lifeExp) | gdpPercap &lt; mean(gdpPercap)  ~ "medium"
@@ -3206,7 +3126,7 @@ df_1 &lt;- iris[ , 1:2]  ; df_2 &lt;- iris[ , 3:5]
 
 df_1 &lt;- iris %&gt;% select(1:2)  ; df_2 &lt;- iris %&gt;% select(3:5) 
 
-df_3 &lt;- `bind_cols`(df_1, df_2)
+df_3 &lt;- bind_cols(df_1, df_2)
 
 identical(iris, df_3)
 ```
@@ -3224,7 +3144,7 @@ df_1 &lt;- iris[1:75, ]  ; df_2 &lt;- iris[76:150, ]
 
 df_1 &lt;- iris %&gt;% slice(1:75)  ; df_2 &lt;- iris %&gt;% slice(76:150) 
 
-df_3 &lt;- `bind_rows`(df_1, df_2)
+df_3 &lt;- bind_rows(df_1, df_2)
 
 identical(iris, df_3)
 ```
