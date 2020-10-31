@@ -119,7 +119,7 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 <br>
 
-## 3ª clase (2-oct)
+## 3ª clase (02-oct)
 
 
 ##### **`Homework`** (para hacer antes de ir a clase) 
@@ -236,6 +236,41 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 - Empezar con las ideas básicas de ggplot2 y está vez sí, hacer nuestro primer super-gráfico.
   
+
+
+<br>
+
+-----------------------
+
+<br>
+
+## 6ª clase (06-nov)
+
+
+##### **`Homework`** (para hacer antes de ir a clase) 
+
+- Leer el e-mail que os he mandado a vuestro correo de la UV. Esta vez es muy escueto, pero en él os he mandado la entrega_05_casa. Se trata de prácticar un poco más manejo de datos con tidyverse
+
+- Lee todo lo que puedas del [`Tutorial 06: ggplot2`](./tutoriales/tt_06_ggplot2.html){target="_blank"}.
+
+- Pégale un vistazo a las  [`Slides-06(B): ggplot2 (más elementos)`](./slides/ss_06_ggplot2/ss_06_ggplot2_B.html){target="_blank"}.
+
+
+- Instalaros estos 3 paquetes: [ggThemeAssist](https://github.com/calligross/ggthemeassist), [esquisse](https://dreamrs.github.io/esquisse/index.html) y [ggannotate](https://github.com/MattCowgill/ggannotate).   
+    Los dos  primeros paquetes están en CRAN, así que podéis instalarlos con `install.packages("nombre_del_pkg")`. Igual ya los tenéis instalados. Podéis probarlo con `library()`.   
+    El tercer paquete no está en CRAN, podéis instalarlo con `remotes::install_github("mattcowgill/ggannotate")`.    
+    Acordaros de que, para evitar problemas, siempre es mejor instalar los paquetes desde una sesión limpia de R. 
+ 
+
+##### ¿Qué haremos en clase?
+
+- Corregir la `entrega_05`. Está vez sí la corregiremos.
+
+- Seguir con ggplot2: recordar las ideas básicas e introducir más elementos de los gráficos ggplot: [`Slides-06(B): ggplot2 (más elementos)`](./slides/ss_06_ggplot2/ss_06_ggplot2_B.html){target="_blank"}.
+
+- Posiblemente, veremos si llegamos, ver distintos tipos de gráficos: [Slides-06(C): ggplot2 (distintos tipos de gráficos)](./slides/ss_06_ggplot2/ss_06_ggplot2_C.html){target="_blank"}.
+
+
 
 
   
