@@ -298,3 +298,4 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 - Empezar con **Rmarkdown**. Veremos las ideas básicas para poder hacer informes reproducibles con Rmarkdown y os proporcionaré unas plantillas que puedan serviros para vuestros trabajos.
 
 <br><br><br>
+
