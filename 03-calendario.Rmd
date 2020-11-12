@@ -289,9 +289,6 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 - Bueno, en realidad también tenéis que pensar en los trabajos: el individual y el de equipo.
 
-  
-  <br><br><br>
-
 ##### ¿Qué haremos en clase?
 
 - Continuar con el tutorial 06, concretamente, ver algunas ideas y herramientas relacionadas con la visualización y `ggplot2`.
@@ -299,3 +296,5 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 - Sabéis que tenemos que hacer una prueba en clase. Será sencilla y rápida (espero).
 
 - Empezar con **Rmarkdown**. Veremos las ideas básicas para poder hacer informes reproducibles con Rmarkdown y os proporcionaré unas plantillas que puedan serviros para vuestros trabajos.
+
+<br><br><br>
