@@ -33,7 +33,7 @@ meta() %>% meta_description(
 
 -------------------
 
-En esta sección voy a contaros un poco la filosofía/enfoque del curso; principalmente cómo será la forma de trabajar en clase y en casa^[Tenéis también que tener claro que lo que voy a escribir aquí puede estar sujeto a cambios, ¿qué porqué pueden haber haber cambios? pues por muchas razones, una de ellas es evolución de la pandemia, otra es que aún no os conozco.]. También diré algo sobre la evaluación. 
+En esta sección voy a contaros un poco la filosofía/enfoque del curso; principalmente cómo será la forma de trabajar en clase y en casa^[Tenéis también que tener claro que lo que voy a escribir aquí puede estar sujeto a cambios, ¿qué porqué pueden haber cambios? pues por muchas razones, una de ellas es evolución de la pandemia, otra es que aún no os conozco.]. También diré algo sobre la evaluación. 
 
 <br>
 
