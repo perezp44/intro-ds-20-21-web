@@ -1,0 +1,695 @@
+---
+title: "Documentos reproducibles con **Rmarkdown**"
+author: "Pedro J. Pérez (pedro.j.perez@uv.es). Universitat de València"
+date: "Abril de 2017 (actualizado el `r format(Sys.time(), '%d-%m-%Y')`)"
+output:
+  html_document:
+    css: !expr here::here("assets", "styles_pjp.css")
+    theme: paper
+    highlight: textmate 
+    toc: true
+    toc_depth: 3 
+    toc_float: 
+      collapsed: true
+      smooth_scroll: true
+    self_contained: true
+    number_sections: false
+    includes:
+      after_body: !expr here::here("assets", "footer.html") 
+      in_header: 
+        - !expr here::here("assets", "google-analytics.html") 
+        - !expr here::here("assets", "favicon-sol.html")
+    df_print: kable
+    code_download: true
+editor_options: 
+  chunk_output_type: console
+bibliography: "`r here::here('assets', 'biblio.bib')`"  #- joooder. single quotes https://community.rstudio.com/t/use-here-here-function-in-yaml-option/18667/9
+---
+
+```{r chunk_setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, message = FALSE, warning = FALSE, 
+                      cache = FALSE, cache.path = "/caches/", comment = "#>",
+                      #fig.width = 7, fig.height= 7,   
+                      #out.width = 7, out.height = 7,
+                      collapse = TRUE,  fig.show = "hold",
+                      fig.asp = 7/9, out.width = "60%", fig.align = "center")
+```
+
+```{r options_setup, echo = F}
+options(scipen = 999) #- para quitar la notacion cientifica
+```
+
+```{r, echo = FALSE}
+library(knitr)
+library(here)
+library(tidyverse)
+#devtools::install_github("thomasp85/patchwork")
+library(patchwork)
+```
+
+```{r klippy, echo = FALSE}
+klippy::klippy(position = c("top", "right")) #- remotes::install_github("rlesur/klippy")
+```
+
+
+```{r, include = FALSE}
+options(htmltools.dir.version = FALSE)
+#knitr::opts_chunk$set(fig.retina = 3, warning = FALSE, message = FALSE, echo=FALSE, out.width = "85%")
+library(metathis)
+meta() %>% meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>% 
+  meta_social(
+    title = "Documentos reproducibles con Rmarkdown",
+    description = paste(
+      "Introducción a la generación de documentos reproducibles con Rmarkdown"),
+    url = "https://perezp44.github.io/intro-ds-20-21-web/tutoriales/tt_07_Rmarkdown.html",
+    og_type = "website",
+    og_author = "Pedro J. Pérez"
+  )
+```
+
+-------------
+
+<br>
+
+# 1. Introducción
+
+El proceso habitual para hacer un informe (o unas transparencias) en el que aparezcan gráficos o tablas resumen de algún análisis estadístico consiste en :
+
+  1. Escribir el texto en un programa (Word, Powerpoint, Prezi, etc.) 
+  2. Realizar los cálculos estadísticos y gráficos en otro programa (R, Stata, Eviews, etc.) 
+  3. Pegar los gráficos y tablas en el documento de texto. 
+  
+Este proceso tiene ciertas desventajas: dificulta la investigación reproducible y puede ser tedioso de rehacer si por ejemplo cambian ligeramente los datos, etc.
+
+<br>
+
+**En R es posible realizar todo el informe**, tanto la escritura del texto como la realización de los cálculos y gráficos, **en un único documento**. Hay varias formas de hacerlo, pero nos centraremos en los documentos RMarkdown (.Rmd). 
+
+
+Los **documentos RMarkdown (.Rmd)** facilitan mucho la realización de informes y transparencias ya que permiten combinar texto, código y resultados de la evaluación del código en un único documento. Si por ejemplo cambian los datos sólo habría que cambiar la ruta a los nuevos datos y el informe (gráficos, tablas etc...) se volvería a generar automáticamente con los nuevos datos.
+
+
+La razón para hacer los análisis reproducibles no sólo es cumplir con los estándares científicos, que también, sino también hay un interés personal para el analista. Para entenderlo puedes ver el siguiente [video de 1’44’’](https://www.youtube.com/watch?v=s3JldKoA0zw&feature=youtu.be) que muestra una de las principales ventajas de usar documentos `.Rmd`.
+
+
+Hace poco David Keyes pregunto en Twitter a la comunidad R cuales eran los principales beneficios de usar ficheros .Rmd para tus investigaciones/informes:
+
+
+```{r, echo = FALSE, fig.asp = 7/9}
+tweetrmd::tweet_embed("https://twitter.com/dgkeyes/status/1101554699566641152", theme = "light", align = "center", dnt = TRUE, maxwidth = 400)
+```
+
+
+Con las respuestas al tweet, David elaboró [este post](https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/).
+
+
+<br>
+
+Ya hemos trabajado con algunos **documentos Rmarkdown** (`.Rmd`); de hecho, todos los tutoriales del curso (incluido éste que estás viendo) se han elaborado usando ficheros .Rmd. Los tutoriales se escriben en ficheros RMarkdown, pero estos ficheros .Rmd se convierten a html, que suele ser el formato final en el que se muestran los tutoriales. En RStudio el proceso de conversión de .Rmd a .html consiste simplemente en pinchar un botón; además, simplemente cambiando una linea podemos convertir los documentos .Rmd a una gran variedad de formatos: html, pdf, word, ioslides, beamer, etc...
+
+Si quieres ver algunos ejemplos de la gran variedad de formatos a los que puedes transformar un documento .Rmd ve a la siguiente [galería](http://rmarkdown.rstudio.com/gallery.html). Para iniciarte en el universo Rmarkdown puedes consultar [`R Markdown: The Definitive Guide`](https://bookdown.org/yihui/rmarkdown/).
+
+<br>
+
+
+#### Proceso para convertir los .Rmd a otro(s) formatos [OPCIONAL]
+
+Como trabajamos con RStudio, en la práctica, procesar los ficheros .Rmd consistirá solamente en pinchar en el icono `Knit`^[En realidad, under the hood estaremos usando la función `rmarkdown::render()`]. Muy fácil!!
+
+No es necesario, pero quizá os interese saber cómo se procesan realmente los ficheros .Rmd para acabar convirtiéndose en html, pdf, etc.
+
+La respuesta es que se ocupa de ello el paquete [`rmarkdown`](https://github.com/rstudio/rmarkdown) que llama otro paquete de R, [`knitr`](https://yihui.name/knitr/) y a un programa llamado [`pandoc`](https://es.wikipedia.org/wiki/Pandoc). Si quieres más detalles puedesir [aquí](https://stackoverflow.com/questions/40563479/relationship-between-r-markdown-knitr-pandoc-and-bookdown)
+
+**En palabras:** knitr se ocupa de ejecutar todos los trozos con código R que haya en el fichero .Rmd, después de ejecutar el código, pegará los resultados de la evaluación del código (gráficos, tablas etc...) junto con el texto en un documento intermedio (con extensión .md), para después transferir, con la ayuda del paquete `rmarkdown`, este documento .md a `pandoc` que se encargará de traducirlo al formato elegido (html, pdf, ...)^[Si te interesa saber un poco más de este proceso puedes ir [aquí]( https://stackoverflow.com/questions/40563479/relationship-between-r-markdown-knitr-pandoc-and-bookdown)]. Knitr sabe diferenciar el texto del código R porque éste se señaliza con unas marcas.
+
+
+**Visualmente:**
+
+```{r echo = FALSE, comment = "",  out.width = '45%', fig.align = 'center'}
+knitr::include_graphics( here::here("imagenes", "tt_07_img_01_RMarkdownFlow.png") )
+```
+
+<br>
+
+-------------------------
+
+
+# 2 Creando .Rmd's en RStudio
+
+
+En la práctica, RStudio facilita mucho la creación de documentos Rmarkdown. Para generar un documento .Rmd basta con seguir la siguiente ruta de menús: `File > New File > R Markdown ...`
+
+```{r echo = FALSE, comment = "",  out.width = '45%'}
+knitr::include_graphics(here::here("imagenes", "tt_07_img_02_crear-rmarkdown-1.png") )
+```
+
+Se abrirá una ventana que nos solicitará un título y un autor para nuestro .Rmd, así como el formato de salida. 
+
+```{r image_grobs, fig.show = "hold", echo = FALSE, out.width = "50%", fig.align = "default"}
+#- graficos side to side en Rmarkdown: https://community.rstudio.com/t/how-to-stack-two-images-horizontally-in-r-markdown/18941/12
+
+
+knitr::include_graphics(here::here("imagenes", "tt_07_img_03_crear-rmarkdown-2.png"))
+
+knitr::include_graphics(here::here("imagenes", "tt_07_img_04_crear-rmarkdown-3.png"))
+
+```
+
+
+Cuando aceptemos nos generará un documento/plantilla para nuestro .Rmd. Si queremos procesarlo o "knitearlo" tendremos que hacer click en el icono **`Knit`**
+
+
+```{r image_grobs_2, fig.show = "hold", echo = FALSE, out.width = "50%", fig.align = "default"}
+
+knitr::include_graphics(here::here("imagenes", "tt_07_img_05_crear-rmarkdown-4.png"))
+
+knitr::include_graphics(here::here("imagenes", "tt_07_img_06_crear-rmarkdown-5.png"))
+```
+
+
+
+
+<br>
+
+------------------------
+
+# 3. ¿Qué son los documentos .Rmd?
+
+Son simplemente ficheros de texto (se pueden escribir en cualquier editor de texto, por ejemplo Notepad); PERO **facilitan mucho la tarea de generar informes o transparencias** con contenido estadístico, ya que permiten mezclar en un mismo documento texto y código R. 
+
+El código R (así como los resultados de la evaluación del código) se mostrarán automáticamente (gracias a `knitr`) en el documento final; de esta forma, se facilita mucho la realización de informes y transparencias ya que evita el tener que ir copiando los resultados (tablas, gráficos etc...) en el informe.
+
+<br>
+
+Veamos un **ejemplo** con un documento Rmarkdown muy sencillo:
+
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText(here::here("./imagenes/rmarkdown_ejemplos/ejemplo_1.Rmd")))
+```
+
+<br>
+
+Como veis, los documentos Rmarkdown tienen 3 partes o elementos: 
+
+  - encabezamiento
+  - trozos de código R
+  - texto
+
+Luego hablaremos de ellas. Antes veamos como quedaría el documento .Rmd tras ser procesado por knitr ("kniteado"). Tras pasar por knitr y pandoc se generará un documento .html que se verá así:
+
+
+```{r echo = FALSE, comment = "",  out.width = '85%', fig.align = 'center'}
+knitr::include_graphics(here::here("imagenes", "rmarkdown_ejemplos", "imagenes", "ejemplo_1_imagen.PNG") )
+```
+
+
+Como veis, el chunk con código R `summary(iris)` se ha ejecutado y se ha mostrado tanto el código como el resultado de su evaluación en unas cajas de texto.
+
+<br>
+
+------------------------------------
+
+# 4. Partes de los ficheros .Rmd
+
+Los documentos Rmarkdown tienen 3 partes o elementos:
+
+  - Encabezamiento o YAML header 
+  - Trozos de código R(chunks)
+  - Texto (escrito en markdown)
+
+  
+Veámoslas una a una.
+
+<br>
+
+-------------------
+  
+## Encabezamiento (YAML header)
+
+<br>
+
+Abajo tenéis un ejemplo sencillo de un YAML header:
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText(here::here("./imagenes/rmarkdown_ejemplos/ejemplo_yaml_0.Rmd")))
+```
+<br>
+
+Como podéis imaginar, el encabezamiento se coloca **al principio del documento y comienza y acaba con una marca de 3 guiones**: **`---`**
+
+En el encabezamiento se introducen elementos básicos del documento como el título, el autor, fecha, y el formato de salida del documento. En el ejemplo hemos elegido como formato de salida `html`; si preferimos pdf, habría que sustituir `output: html_document` por `output: pdf_document`
+
+<br>
+
+El YAML header puede incluir otros elementos para personalizar un poco más el documento final o output. Abajo tenéis un ejemplo más complejo de un YAML header. Es el que utilizo para hacer los tutoriales del curso.
+
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText(here::here("./imagenes/rmarkdown_ejemplos/ejemplo_yaml_1.Rmd")))
+```
+
+En [este post](https://scienceloft.com/technical/useful-yaml-options-for-generating-html-reports-in-r/) y en [esta vignette](https://ymlthis.r-lib.org/articles/yaml-fieldguide.html) del paquete `ymlthis` tienes más opciones/posibilidades a especificar en el YAML.
+
+<br>
+
+
+
+-------------------------------
+
+## Chunks (o código R)
+
+<br>
+
+Los trozos de código R o chunks permiten hacer análisis estadísticos y mostrar los resultados en el documento final.
+
+Para que knitr distinga las instrucciones de R del texto normal **tenemos que poner las instrucciones de R dentro de unas marcas** o identificadores: ` ```{r} ` al principio y ` ``` ` al final. 
+
+Por ejemplo:
+
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText(here::here("./imagenes/rmarkdown_ejemplos/chunks/chunk_1")))
+```
+
+
+Knitr interpreta ese trozo de texto como instrucciones de R porque van dentro de las marcas, y hará que R las ejecute y muestre los resultados en el documento final.
+
+<br>
+
+Los chunks pueden tienen diversas opciones que permiten una mayor flexibilidad en como se muestra el código y los resultados en el documento final. Las opciones más usadas son:
+
+  - echo
+  - eval
+
+<br>
+
+Por ejemplo, si introducimos este texto en nuestro fichero .Rmd:
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText(here::here("./imagenes/rmarkdown_ejemplos/chunks/chunk_2")))
+```
+
+En este caso, se mostrará el chunk(`echo = TRUE`) y también se evaluará (`eval = TRUE`) y, por tanto, se mostrarán los resultados en el documento final. Se verá algo como:
+
+
+```{r, echo = TRUE, eval = TRUE}
+summary(iris)
+```
+
+
+<br>
+
+
+Mientras que si en el .Rmd escribimos lo siguiente:
+
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText(here::here("./imagenes/rmarkdown_ejemplos/chunks/chunk_3")))
+```
+
+Se mostrará el código (`echo = TRUE`), pero no se evaluará (`eval = FALSE`) y ,por lo tanto, no se mostrarán los resultados en el documento final.
+
+
+<br>
+
+Si en el .Rmd escribimos lo siguiente:
+
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText(here::here("./imagenes/rmarkdown_ejemplos/chunks/chunk_4")))
+```
+
+NO se mostrará el código (`echo = FALSE`), pero SI se evaluará (`eval = FALSE`) y ,por lo tanto, SI se mostrarán los resultados en el documento final.
+
+<br>
+
+Si en el .Rmd escribimos lo siguiente:
+
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText(here::here("./imagenes/rmarkdown_ejemplos/chunks/chunk_5")))
+```
+
+NO se mostrará el código (`echo = FALSE`),  SI se evaluará (`eval = FALSE`), PERO como `results = "hide"` NO se mostrarán los resultados en documento final.
+
+
+<br>
+
+Hay más opciones sobre los chunks que nos permiten una mayor flexibilidad sobre como mostrar los resultados y el código; pero si quieres ver todas las opciones tendrás que ir a la [página web de knitr](https://yihui.name/knitr/options/) o al [cheat sheet sobre Rmarkdown](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf). 
+
+Una opción útil es `include = FALSE`; en este caso, el chunk se ejecutará, pero ni se mostrará en el documento final ni se mostrarán los resultados de la ejecución del código. Esta opción es muy útil para los chunks que se utilizan para hacer el "setup". 
+
+Generalmente los documentos .Rmd tienen un primer chunk (chunk de setup) donde se fijan opciones globales para los chunks, fijra opciones globales, incluso se puede utilizar para cargar paquetes básicos como el `tidyverse`. Por ejemplo este suele ser el primer chunk en mis documentos .RMd:
+
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText(here::here("./imagenes/rmarkdown_ejemplos/chunks/chunk_6")))
+```
+
+
+
+
+<br>
+
+-------------------------
+
+
+## El texto (en Rmarkdown)
+
+<br>
+
+La parte principal de un informe suele ser texto (narratives). En un fichero .Rmd, todo lo que no sea encabezamiento o chunks será interpretado por knit como texto y lo mostrará tal cual; es decir, como texto.
+
+Aquí podríamos acabar nuestro tutoría sobre como escribir texto en un fichero .Rmd; pero generalmente en un texto queremos resaltar ciertas palabras con negrita, o ponerlas en cursiva, o poner un titulo de sección y de sub-secciones. Todo esto lo tendremos que hacer utilizando **Markdown**. Markdown es un lenguaje de marcas ligero y muy sencillo de aprender (lo básico se aprende en unos 10 minutos) pero muy utilizado. Es posible que alguno de vosotros haya utilizado una variante de Markdown al escribir en negrita en Whatsapp.
+
+
+
+El texto de un documento .Rmd es "simplemente" texto PERO está escrito en **Markdown**.  Ahora lo veremos, pero antes vamos a ver un poco más sobre qué es Markdown.
+
+<br>
+
+#### ¿Qué es Markdown? [OPCIONAL]
+
+Mardown es un lenguaje de marcado ligero ideado en 2004 por Jhon Grueber y [Aaron Swartz](https://es.wikipedia.org/wiki/Aaron_Swartz). Hay diversas variantes de Markdown, [aquí](https://blog.codinghorror.com/standard-markdown-is-now-common-markdown/) peuedes leer sobre un intento de estandarización.
+
+
+Podemos pensar que Markdown es un método de escritura^[Markdown es un lenguaje de marcado que permite la aplicación de formato a un texto empleando una serie de marcas o caracteres especiales]: evidentemente sirve para escribir. La ventaja de escribir en Markdown es que es un lenguaje muy fácil de aprender y que como está basado en un formato de texto plano, es y será compatible con la mayoría de plataformas.
+
+La mayoría de vosotros escribís en Word. Es muy fácil escribir en Word pero un archivo word solo es posible leerlo en el programa WORD de Microsoft. Si intentas abrir un documento .doc en Notepad, éste será completamente ilegible; sin embargo, la mayoría de plataformas y servicios web saben interpretar y mostrar correctamente un documento escrito en Markdown. 
+
+Lo que escribas en Rmarkdown se mostrará tal cual en el documento final, pero lo más habitual es que quieras dar un poco de formato el texto: negritas, cursivas, listas, enlaces de internet, etc...
+
+Todos estos formatos (negrita, ...) se introducen en rmarkdown con marcas; por ejemplo si quieres que una palabra se resalte en negritas tienes que escribirla enmarcada en `**`: **`**esto se mostraría en negrita**`**
+
+
+
+Para aprender las principales reglas de Rmarkdown podéis usar un [editor on-line de Markdown](https://vuejs.org/v2/examples/) y probar a escribir algo.
+
+
+
+
+En este otro [tutorial  de Markdown](https://www.markdowntutorial.com/), se puede leer lo siguiente:
+
+> Markdown is a way to write content for the web. It’s written in what nerds like to call “plaintext”, which is exactly the sort of text you’re used to writing and seeing. Plaintext is just the regular alphabet, with a few familiar symbols. Unlike cumbersome word processing applications, text written in Markdown can be easily shared between computers, mobile phones, and people. It’s quickly becoming the writing standard for academics, scientists, writers, and many more. Websites like GitHub and reddit use Markdown to style their comments.
+
+
+##### Aquí tienes algunas reglas de Markdown
+
+```{r echo = FALSE, comment = "",  out.width = '110%', fig.align = 'center'}
+knitr::include_graphics(here::here("imagenes", "rmarkdown_ejemplos", "imagenes", "imagen_ejemplo_markdown.PNG") )
+```
+
+
+<br>
+
+# 5. Más cosas de RMarkdown
+
+En la página web de Markdown, concretamente [aquí](https://daringfireball.net/projects/markdown/syntax#html) nos avisan de lo siguiente:
+
+> Markdown is not a replacement for HTML, or even close to it. Its syntax is very small, corresponding only to a very small subset of HTML tags ... The idea for Markdown is to make it easy to read, write, and edit prose. HTML is a publishing format; Markdown is a writing format. Markdown was not designed to solve everything.
+
+A pesar de que, como nos avisó Jhon Grueber, el desarrollador de Markdown, Markdown no está diseñado para resolver todas las necesidades de un escritor/científico, en Rmarkdown se pueden introducir también elementos como:
+
+### Ecuaciones
+
+Se pueden introducir formulas matemáticas escritas en Látex. Para formulas en linea se usa la marca `$` y para formulas independientes se usa `$$`.
+
+- Para fórmulas en linea (o dentro del texto) se utiliza la marca `$` al principio y final de la formula. Por ejemplo `$\sum_{i=1}^n X_i$` se mistaría así: $\sum_{i=1}^n X_i$. Ves, la formula está dentro del texto, en una linea del texto.
+  
+ 
+- Para presentar una ecuación independiente (en una linea independiente), se usa la marca `$$` al principio y final de la formula. Si escribes  `$$E = mc^{2}$$`, se mostrará en una linea independiente tal que así:
+  
+  
+$$E = mc^{2}$$
+
+¿Que pasa, que no sabes escribir formulas o ecuaciones en Latex? Yo tampoco mucho, pero puedes utilizar un programa como [Lyx](https://www.lyx.org/), o mucho más fácil, puedes utilizar algún editor online de Latex, por ejemplo: [este](http://www.sciweavers.org/free-online-latex-equation-editor) o [este](https://www.latex4technics.com/). En [este libro](https://dereksonderegger.github.io/570L/16-rmarkdown-tricks.html) tienen algunos ejemplos de ecuaciones en Latex.
+
+
+Recientemente, el paquete [`equatiomatic`](https://github.com/datalorax/equatiomatic) permite obtener fácilmente la ecuación de un modelo:
+
+
+```{r, results = "asis"}
+# remotes::install_github("datalorax/equatiomatic")
+library(equatiomatic)
+
+# Fit a simple model
+mod1 <- lm(mpg ~ cyl + disp, mtcars)
+
+# Give the results to extract_eq
+extract_eq(mod1)
+
+```
+
+
+También de un modelo estimado:
+
+
+```{r, results = "asis"}
+extract_eq(mod1, use_coefs = TRUE)
+```
+
+
+
+
+
+<br>
+
+### Imágenes
+
+Para mostrar una imagen basta con poner: 
+
+  ```
+  ![Una imagen chula](./imagenes/img1.jpeg) 
+  ```
+  
+Aunque yo prefiero hacerlo así:
+  
+
+    ```{r eval = TRUE, echo = TRUE}`r ''`
+    knitr::include_graphics(here::here("imagenes", "rmarkdown_ejemplos", "imagenes", "fucking_ages_image.jpeg")  )
+    ```
+
+
+```{r echo = FALSE, out.width = "55%", eval = TRUE, fig.cap = 'Una imagén chula'}
+knitr::include_graphics(here::here("imagenes", "rmarkdown_ejemplos", "imagenes", "fucking_ages_image.jpeg"))
+```
+
+
+
+
+### Hyperlinks
+
+
+Para poner hyperlinks se puede escribir lo siguiente: `<http://www.wikipedia.es>` y se mostrará así: <http://www.wikipedia.es>
+
+Pero es mejor ponerlo así: `[enlace a la Wikipedia](http://www.wikipedia.es)` y se mostrará así: [enlace a la Wikipedia](http://www.wikipedia.es){target="_blank"}.
+
+Si quieres que el enlace se abra en el navegador en una página nueva has de añadir `{target="_blank"}`
+
+
+### Notas al pie de página
+
+Para poner notas al pie has de poner `[^1]` y luego al final del documento poner `[^1]: esto es una nota al pie.`, y se verá esto: [^1] 
+
+[^1]: esto es una nota al pie.
+
+O alternativamente poner, en el sitio del texto donde quieras insertar una nota al pie, esta marca: `^[el texto que quiero que se lea en la nota al pie]` y se mostrará como una nota al pie.
+
+
+### Tablas
+
+Habrá un tutorial especifico para tablas, pero para mostrar una tabla, lo más básico y sencillo es utilizar la función `knitr::kable()`:
+
+````
+```{r}`r ''`   
+knitr::kable(summary(iris))    
+```    
+````
+
+```{r, echo = FALSE}
+#- How to write the code to show how to write the code?! "Just Quickly: How to show verbatim inline R code" by @nj_tierney   https://buff.ly/312XMnj
+#- @nj_tierney: This morning @xieyihui showed me the wonders of how to verbatim write an inline code chunk using `knitr::inline_expr()`, so I wrote a short blog post about it:  https://www.njtierney.com/post/2019/07/10/jq-verbatim-inline-r/
+
+# verbatim code: @nj_tierney: After a nice suggestion from @grrrck re @xieyihui 's way to generate verbatim code chunks (https://yihui.name/en/2017/11/knitr-verbatim-code-chunk/) I thought, how cool would it be to type `verbatim = TRUE` instead? If folks want to chime in, here is an rstudio community post: https://community.rstudio.com/t/question-feature-request-code-chunk-option-verbatim-true/33521
+
+
+knitr::kable(summary(iris))    
+```
+
+
+<br>
+
+# 6.  Aún más cosas
+
+Hay más cosas, como referencias bibliográficas, pero ya será para el segundo curso de R o lo tendrás que aprender por tu cuenta en [`R Markdown: The Definitive Guide`](https://bookdown.org/yihui/rmarkdown/).
+
+A pesar de que Markdown permite formatear el texto, en ciertos sentidos es limitado; pero si quieres aún más flexibilidad en el output, tendrás que aprender html y mejor html+CSS.
+
+<br>
+
+**Algunos ejemplos:**
+
+1. Si quieres introducir un párrafo en otro color tendrás que hacerlo en html, tendrás que escribir: `<FONT COLOR="Red">Esto se mostrará en ROJO!!</FONT>`
+
+    <FONT COLOR="Red">Esto se mostrará en ROJO!!</FONT>
+
+<br>
+
+
+2. si quieres centrar un párrafo, tendrás que escribir: `<CENTER>Este párrafo irá centrado</CENTER>`
+
+<CENTER>Este párrafo irá centrado</CENTER>
+
+<br>
+
+
+3. Puedes insertar en tu documento (sólo si el output es html) una página web completa, para ello has de escribir: `<iframe src="http://www.eldiario.es/" height="400" width="800"></iframe>`
+
+<br>
+
+
+<iframe src="http://www.eldiario.es/" height="400" width="800"></iframe>
+ 
+ <br>
+ 
+ <br>
+ 
+
+4. Un vídeo. Has de escribir: `<iframe width="560" height="315" src="https://www.youtube.com/embed/ACv9zaBa1A4" frameborder="0" allowfullscreen></iframe>
+`
+ 
+<br>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ACv9zaBa1A4" frameborder="0" allowfullscreen></iframe>
+
+<br>
+
+Aunque también hay un paquete, al menos, que facilita la inserción de videos en documentos .Rmd: es el paquete [`vembedr`](https://ijlyttle.github.io/vembedr/articles/vembedr.html).
+
+<br>
+
+----------------------------
+
+<br>
+
+
+## Aún más cosas (II)
+
+
+- El paquete  [`demoR`](https://github.com/kbodwin/demoR) ayuda a presentar el código R en documentos Rmd. Por ejemplo, permite marcar/highligt algunas partes de una sentencia o código R. Para aprender puedes ir a la [viñeta](https://web.calpoly.edu/~kbodwin/demoR/articles/demoR.html) del paquete. Por ejemplo, en el próximo chunk voy a marcar en amarillo el operador pipe ` %>%`
+
+
+```{r, echo = FALSE, result = "hide"}
+#devtools::install_github("kbodwin/demoR")
+library(demoR)
+demo_code('
+aa <- iris %>% group_by(Species) %>% summarize(mean(Sepal.Length))
+') %>%  hlt_fixed("%>%")
+```
+
+
+```{r, echo = FALSE}
+library(icon) #- remotes::install_github("ropenscilabs/icon")
+```
+
+- Podemos [usar iconos](https://ropensci.org/technotes/2018/05/15/icon/) en nuestros Rmds. Por ejemplo: `r fa_rocket(colour = "#1FA67A")` + `r fa_r_project(colour = "#384CB7")` = `r fa_heart(colour = "red")`
+
+
+- Podemos usar cajas de colores para resaltar un trozo de texto por ejemplo para poner conclusiones. Esto lo aprendí [aquí](https://holtzy.github.io/Pimp-my-rmd/#figures_caption). En este [otro post](https://desiree.rbind.io/post/2019/making-tip-boxes-with-bookdown-and-rmarkdown/) nos enseñan a hacer esos cuadros realmente bonitos.
+
+<style>
+div.blue {background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
+**Conclusiones:**  
+- This is my first conclusion
+- This is my second conclusion
+</div>
+
+- si queremos que los chunks puedan copiarse en el portapapeles, podemos usar el paquete [`klippy`](https://rlesur.github.io/klippy/index.html)
+
+```{r klippy1, echo = TRUE, eval = FALSE}
+klippy::klippy()  #- remotes::install_github("rlesur/klippy")
+```
+
+
+
+<br>
+
+----------------------------
+
+<br>
+
+# 7. Investigación reproducible y Rmd
+
+
+Hemos hablado muy poco de investigación reproducible pero, es evidente que usar documentos `.Rmd` y trabajar con `Rprojects` facilita la investigación reproducible. No la garantiza del todo, para ello habría que ver/usar más herramientas (docker, packrat, github, ...). No lo vamos a hacer, pero al menos señalar dos prácticas que facilitan que tus análisis se acerquen a ser reproducibles:
+
+<br>
+
+  1.  Cuando estás haciendo un análisis y quieres compartirlo hay que estar seguro de los packages que se necesitan cargar para replicarlo, por eso es bueno hacer el análisis desde una sesión nueva/fresca de R y cargar los paquetes al principio del script. Para ello, puede ser de utilidad saber que paquetes tienes cargados en un momento dado, y puedes saberlo con: `(.packages())`.  
+  
+  2. A pesar de que yo no lo suelo hacer (`r emo::ji("-1")`), es recomendable introducir al final de los ficheros `.Rmd` la siguiente instrucción: `sessionInfo()`. De esta forma, proporcionarás información sobre que ordenador, sistema operativo y  versión de R utilizaste en tu análisis, así como de las opciones locales de tu sistema (idioma, etc ...) y de los paquetes que tienes cargados en memoria. Por ejemplo, ahora mismo mi sessionInfo es: 
+
+<br>
+
+```{r}
+sessionInfo()
+```
+
+Otra forma de poner los detalles de la sesión es utilizar `sessioninfo::session_info()`; además lo usamos junto a `details::details()` que genera un desplegable para ver (o no) el outpt).
+
+```{r}
+sessioninfo::session_info() %>% details::details(summary = 'current session info') 
+```
+
+Otro ejemplo de uso de `details::details()`:
+
+```{r}
+details::details(plot(sin, xlim = c(0, 20)), summary = "My curvy plot. Thanks McBain!!")
+```
+
+
+
+<br>
+
+Si quieres ver todos los paquetes que tienes instalados en tu ordenador, lo puedes hacer así:
+
+```{r, echo = TRUE, eval = FALSE}
+pkgs_instalados <- installed.packages(fields = c("Package", "Version")) %>% 
+                        as.data.frame()
+```
+
+
+<br>
+
+<br>
+
+
+--------------------------
+
+--------------------------
+
+
+
+# Bibliografía
+
+[Tutorial oficial de Rmarkdown](http://rmarkdown.rstudio.com/lesson-1.html) Muy bueno y muy completo. Quizás la primera opción para aprender.
+
+[Tutorial completo](http://www.sfs.uni-tuebingen.de/~jvanrij/Tutorial/tutorialMarkdown.html). Tutorial sencillo pero bastante completo. Bastante didáctico.
+
+[Pagina oficial de knitr](https://yihui.name/knitr/). Solamente para verla. Usarla sólo cuando ya "pilotes".
+
+[Cheat Sheet de Rmarkdon en castellano](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-spanish.pdf). Parece complicado, pero cuando te acostumbras es una fantástica chuleta.
+
+[Tutorial de Rmarkdown en español](https://fernandosansegundo.wordpress.com/2016/05/05/programacion-literaria-en-r-con-knitr-y-markdown/)
+
+[Tutorial de Markdown en español](http://joedicastro.com/pages/markdown.html)
+
+[Customizing & Extending R Markdown](https://slides.yihui.name/2017-rstudio-conf-ext-rmd-Yihui-Xie.html#1). Tutorial del desarrollador de knitr. Corto pero avanzado.
+
+[R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/). Pues eso, la guía definitiva. Fantástica!!
+
+
+[R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/). Nuevo libro, 2020, de Yihui Xie, Christophe Dervieux y Emily Riederer
