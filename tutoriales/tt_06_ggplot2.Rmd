@@ -523,7 +523,7 @@ Ya hemos presentado los principales elementos de los gráficos hechos con `ggplo
 
 Ejemplos de otros elementos son: títulos del gráfico y de los ejes, "theme" del gráfico, small multiples o faceting, anotaciones etc...
 
-En está sección iremos más rápido. Se presentarán solamente algunos ejemplos, conceptos y/o aclaraciones. Si necesitas profundizar más en estos elementos, puedes acudir a la [referencia oficial](https://ggplot2.tidyverse.org/reference/index.html#section-layer-geoms) de `ggplot2` o al [bokkdown de ggplot2](https://ggplot2-book.org/).
+En está sección iremos más rápido. Se presentarán solamente algunos ejemplos, conceptos y/o aclaraciones. Si necesitas profundizar más en estos elementos, puedes acudir a la [referencia oficial](https://ggplot2.tidyverse.org/reference/index.html#section-layer-geoms) de `ggplot2` o al [bookdown de ggplot2](https://ggplot2-book.org/).
 
 
 Ya dijimos que los gráficos ggplot se componen de capas o layers. Para nosotros, hasta ahora, una capa estaba compuesta de 3 elementos:
@@ -1485,7 +1485,7 @@ En está sección presentaremos algunos ejemplos de algunos de los gráficos má
   - [Top 50 ggplot2 Visualizations (With Full R Code), de r-statistics.co](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html): más básico pero muy didáctico.
 
   
-  - [Extensiones ggplot2](http://www.ggplot2-exts.org/gallery/): Impresionante!!
+  - [Extensiones ggplot2](https://exts.ggplot2.tidyverse.org/): Impresionante!!
 
   - [R-graph gallery - ggplot2 package](http://r-graph-gallery.com/ggplot2-package.html): otra vez, impresionante!!
 

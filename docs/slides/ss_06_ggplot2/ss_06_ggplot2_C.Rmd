@@ -132,7 +132,7 @@ En estas slides presentaremos ejemplos de algunos de los gráficos más utilizad
   - [[Top 50 ggplot2 Visualizations (With Full R Code)]](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html):de r-statistics.co, más básico pero muy didáctico.
 
   
-  - [[Extensiones ggplot2]](http://www.ggplot2-exts.org/gallery/): Impresionante!!
+  - [[Extensiones ggplot2]](https://exts.ggplot2.tidyverse.org/): Impresionante!!
 
   - [[R-graph gallery - ggplot2 package]](http://r-graph-gallery.com/ggplot2-package.html): otra vez, impresionante!!
 
