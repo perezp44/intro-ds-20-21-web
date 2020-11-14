@@ -297,5 +297,39 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 - Empezar con **Rmarkdown**. Veremos las ideas básicas para poder hacer informes reproducibles con Rmarkdown y os proporcionaré unas plantillas que puedan serviros para vuestros trabajos.
 
+
+
+<br>
+
+-----------------------
+
+<br>
+
+## 9ª clase (20-nov)
+
+
+##### **`Homework`** (para hacer antes de ir a clase) 
+
+- Empezar a aprender a escribir en `Rmarkdown`, para eso tienes que entregar el miércoles 18 de noviembre la `tarea_07` de la que os he informado por e-mail.
+
+- Decidir, si no los has hecho ya, el tema de tu trabajo individual; precisamente de esto me tienes que informar mientras haces la `tarea-07`
+
+##### ¿Qué haremos en clase?
+
+- "Corregir" la tarea_07; en realidad ver algunos errores que no hay que cometer.
+
+- Si puedo leer la tarea_07, contaros un poco los temas sobre los que están trabajando tus compañeros de curso.
+
+- Trabajar un poco más con Rmarkdown: posiblemente usar Rmarkdown para hacer informes parametrizados y ver algún formato más de documentos Rmd.
+
+- Explicar como hacer tablas para documentos `.Rmd`
+
+- Echar algo de bronca, ya se me ocurrirá algo!!
+
+
+
+
+
+
 <br><br><br>
 
