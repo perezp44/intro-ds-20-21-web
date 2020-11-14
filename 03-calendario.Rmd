@@ -312,7 +312,8 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 - Empezar a aprender a escribir en `Rmarkdown`, para eso tienes que entregar el miércoles 18 de noviembre la `tarea_07` de la que os he informado por e-mail.
 
-- Decidir, si no los has hecho ya, el tema de tu trabajo individual; precisamente de esto me tienes que informar mientras haces la `tarea-07`
+- Decidir, si no los has hecho ya, el tema de tu trabajo individual; precisamente de esto me tienes que informar mientras haces la `tarea-07`.
+
 
 ##### ¿Qué haremos en clase?
 
