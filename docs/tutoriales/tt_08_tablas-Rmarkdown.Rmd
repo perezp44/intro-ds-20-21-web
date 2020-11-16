@@ -1,6 +1,6 @@
 ---
 title: "Tablas en documentos Rmarkdown"
-author: "Pedro J. Pérez (pedro.j.perez@uv.es). Universitat de València"
+author: "Pedro J. Pérez (pedro.j.perez@uv.es). Universitat de València <br> <br> Web del curso: <https://perezp44.github.io/intro-ds-20-21-web/>"
 date: "Noviembre de 2019 (actualizado el `r format(Sys.time(), '%d-%m-%Y')`)"
 output:
   html_document:
@@ -781,10 +781,15 @@ library(rpivotTable) #- remotes::install_github(c("ramnathv/htmlwidgets", "smart
 rpivotTable(df, rows = "Gender", cols = c("Country"), width = "100%", height = "400px")
 ```
 
+<br>
+
+-----------------------
+
+<br>
 
 # 6. Tablas para modelos
 
-R es un lenguaje/entorno para hacer análisis estadísticos, así que muchas veces se han de presentar los resultados de estimación de algún modelo estadístico, PERO, los resultados de estimación de estos modelos, en general, no se almacenan en data.frames, sino en listas. ¿Es esto importante? Sí, si queremos presentar los resultados de estimación en una tabla, porque los paquetes para tablas que hemos visto anteriormente (`gt`, `DT`, etc ...) solo generar tablas de resultados almacenados en data.frames, así que no los podremos usar, al menos directamente. Afortunadamente hay unos cuantos paquetes en R cuyo propósito es precisamente presentar los resultados de estimación de algún modelo o técnica estadística como tablas.
+R es un lenguaje/entorno para hacer análisis estadísticos, así que muchas veces se han de presentar los resultados de estimación de algún modelo estadístico, PERO, los resultados de estimación de estos modelos, en general, no se almacenan en data.frames, sino en listas. ¿Es esto importante? Sí, si lo queremos es  presentar los resultados de estimación en una tabla. La razón consite en que los paquetes para tablas que hemos visto anteriormente (`gt`, `DT`, etc ...) solo generan tablas de resultados almacenados en data.frames, así que no los podremos usar, al menos directamente, para hacer tabls de resultados asociados a modelos estdísticos. Afortunadamente hay unos cuantos paquetes en R cuyo propósito es precisamente ese, presentar los resultados de estimación de algún modelo o técnica estadística como tablas.
 
 Por ejemplo, vamos a estimar un modelo de regresión lineal. Utilizaremos estos datos:
 
@@ -809,7 +814,7 @@ summary(my_model)
 
 Los resultados mostrados por `summary()` permiten hacerse una idea de los resultados de la estimación pero no suelen ser adecuados para presentarlos en un informe o en un artículo científico. 
 
-Hay varios paquetes que permiten obtener tablas con los resultados de la estimación de modelos estadísticos, por ejemplo, el paquete [`finalfit`](https://www.datasurg.net/2018/05/16/elegant-regression-results-tables-and-plots-the-finalfit-package/) o el paquete [`sjPlot`](https://strengejacke.github.io/sjPlot/index.html), pero sólo mostraré algún ejemplo para los paquetes [`stargazer`](https://cran.r-project.org/web/packages/stargazer/stargazer.pdf),  [`modelsummary`](https://github.com/vincentarelbundock/modelsummary) y [`gtsummary`](https://github.com/zabore/gtsummary).
+Hay bastantes paquetes que permiten obtener tablas con los resultados de la estimación de modelos estadísticos, por ejemplo, el paquete [`finalfit`](https://www.datasurg.net/2018/05/16/elegant-regression-results-tables-and-plots-the-finalfit-package/) y muchos otros, sin embargo, en este tutorial solo se mostrará algún ejemplo para los paquetes [`stargazer`](https://cran.r-project.org/web/packages/stargazer/stargazer.pdf),  [`modelsummary`](https://github.com/vincentarelbundock/modelsummary),  [`gtsummary`](https://github.com/zabore/gtsummary) y [`sjPlot`](https://strengejacke.github.io/sjPlot/index.html)
 
 --------------------
 

@@ -1,6 +1,6 @@
 ---
 title: "Visualización: gráficos con ggplot2"
-author: "Pedro J. Pérez (pedro.j.perez@uv.es). Universitat de València"
+author: "Pedro J. Pérez (pedro.j.perez@uv.es). Universitat de València <br> <br> Web del curso: <https://perezp44.github.io/intro-ds-20-21-web/>"
 date: "Octubre de 2019 (actualizado el `r format(Sys.time(), '%d-%m-%Y')`)"
 output:
   html_document:
