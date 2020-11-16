@@ -1,0 +1,1035 @@
+---
+title: "Tablas en documentos Rmarkdown"
+author: "Pedro J. Pérez (pedro.j.perez@uv.es). Universitat de València"
+date: "Noviembre de 2019 (actualizado el `r format(Sys.time(), '%d-%m-%Y')`)"
+output:
+  html_document:
+    css: !expr here::here("assets", "styles_pjp.css")
+    theme: paper
+    highlight: textmate 
+    toc: true
+    toc_depth: 3 
+    toc_float: 
+      collapsed: true
+      smooth_scroll: true
+    self_contained: true
+    number_sections: false
+    includes:
+      after_body: !expr here::here("assets", "footer.html") 
+      in_header: 
+        - !expr here::here("assets", "google-analytics.html") 
+        - !expr here::here("assets", "favicon-sol.html")
+    df_print: kable
+    code_download: true
+editor_options: 
+  chunk_output_type: console
+bibliography: "`r here::here('assets', 'biblio.bib')`"  #- joooder. single quotes https://community.rstudio.com/t/use-here-here-function-in-yaml-option/18667/9
+---
+
+```{r chunk_setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, message = FALSE, warning = FALSE, 
+                      cache = FALSE, cache.path = "/caches/", comment = "#>",
+                      #fig.width = 7, fig.height= 7,   
+                      #out.width = 7, out.height = 7,
+                      collapse = TRUE,  fig.show = "hold",
+                      fig.asp = 7/9, out.width = "60%", fig.align = "center")
+```
+
+```{r options_setup, echo = F}
+options(scipen = 999) #- para quitar la notación científica
+```
+
+```{r, echo = FALSE}
+library(knitr)
+library(here)
+library(tidyverse)
+#devtools::install_github("thomasp85/patchwork")
+library(patchwork)
+```
+
+```{r klippy, echo = FALSE}
+klippy::klippy(position = c("top", "right")) #- remotes::install_github("rlesur/klippy")
+```
+
+
+```{r, include = FALSE}
+options(htmltools.dir.version = FALSE)
+#knitr::opts_chunk$set(fig.retina = 3, warning = FALSE, message = FALSE, echo=FALSE, out.width = "85%")
+library(metathis)
+meta() %>% meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>% 
+  meta_social(
+    title = "Tablas en documentos Rmarkdown",
+    description = paste(
+      "Se presentan diferentes posibilidades y paquetes, como gt o DT, para generar tablas en documentos Rmarkdown"),
+    url = "https://perezp44.github.io/intro-ds-20-21-web/tutoriales/tt_08_tablas-Rmarkdown.html",
+    og_type = "website",
+    og_author = "Pedro J. Pérez"
+  )
+```
+
+-------------
+
+<br>
+
+
+# 1. Introducción
+
+Hacer cuadros/tablas para mostrar resultados es una parte importante (y time consuming) de cualquier informe o investigación. En este tutorial explicaré como presentar nuestros resultados en tablas en documentos (ya sean estos .html, .pdf etc..) creados a partir de archivos `.Rmd`.
+
+
+En el siguiente apartado utilizaremos unos datos de ejemplo para obtener unos resultados que queremos mostrar como tablas en nuestro informe. Esto nos servirá para practicar un poco más con `dplyr`. Una vez tengamos los resultados que queremos mostrar ya veremos como podemos mostrarlos en tablas/cuadros good-looking.
+
+
+Veremos que presentar los resultados (previamente almacenados en un df) como un cuadro en el documento final es muy sencillo, sólo tenemos que llamar a la función `kable()`, pero si queremos tener más flexibilidad y opciones para mejorar nuestras tablas tendremos que usar otros paquetes como `kableextra`, `formatable`, `DT` o más recientemente `gt`.
+
+
+En [este hilo](https://twitter.com/GoldbergData/status/1292935454195511302) de Twitter se habla sobre los mejores paquetes R para hacer tablas. En él, [David Keyes](https://rfortherestofus.com/author/dgkeyes/) hace [aquí](https://rfortherestofus.com/2019/11/how-to-make-beautiful-tables-in-r/) un buen tutorial sobre paquetes para hacer tablas en R.
+
+Al igual que con los gráficos, para hacer buenas tablas[^ En realidad en castellano debería llamarlos cuadros] hace falta tener en cuenta algunos aspectos. Este [post](https://paulvanderlaken.com/2020/09/01/10-guidelines-to-better-table-design/) proporciona 10 reglas o consejos para generar tablas efectivas. En este otro [post](https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/#guidelines-with-gt), Thomas Mock implementa esas 10 reglas con el paquete `gt`.
+
+<br>
+
+-------------------
+
+# 2. Resultados para tablas
+
+
+En esta sección utilizaremos lo que hemos aprendido de **dplyr**  para obtener los resultados que queremos mostrar en los cuadros. Con dplyr calcularemos los estadísticos que queremos mostrar almacenándolos en un dataframe/tibble. Una vez tengamos los resultados en un dataframe nos quedará la tarea de presentarlos como cuadros en el documento final. En un primer momento (esta sección) utilizaremos la función `knitr::kable()` para hacer tablas y en los siguientes apartados presentaremos paquetes especialmente diseñados para hacer tablas.
+
+
+## 2.1 Datos que usaremos
+
+
+Ilustraremos la creación de tablas con datos de la segunda ronda de **PIACC** (Programa para la Evaluación Internacional de las Competencias de los adultos de la OCDE. Información detallada sobre el programa PIAAC puede encontrarse en su pagina web <http://www.oecd.org/skills/piaac/>. Los datos se obtuvieron a partir del paquete [RPIAAC](https://github.com/jcpernias/RPIAAC) creado Por Jose C. Pernias, para finalmente seleccionar 10 variables de 4 países: ESP, FRA, GBR, ITA. No recuerdo el año de los datos!!
+
+
+Cargamos los datos que vamos a utilizar:
+
+```{r, echo = TRUE}
+urla <- "https://raw.githubusercontent.com/perezp44/iris_data/master/data/PIAAC_data_small.csv"
+df <- read_csv(urla)
+```
+
+
+```{r, echo = FALSE}
+df_copy <- df
+```
+
+
+Miramos un poco los datos:
+
+```{r}
+#- remotes::install_github("perezp44/pjpv2020.01")
+df_aa <- pjpv2020.01::pjp_f_estadisticos_basicos(df) #- estadísticos básicos del df
+df_bb <- pjpv2020.01::pjp_f_unique_values(df)        #- valores únicos de cada variable de df
+```
+
+
+<br>
+
+## 2.2  Obteniendo resultados (con dplyr)
+
+
+Para iniciar nuestra andadura con las tablas, intentaremos mostrar en tablas algunos resultados. Por ejemplo:
+
+<br>
+
+- 1. Cuadro con el número de observaciones de cada país (lo hacemos de 2 formas)
+
+```{r, echo = TRUE}
+df_tt_1 <- df %>% group_by(Country) %>% count()
+df_tt_1 <- df %>% group_by(Country) %>% summarise(NN = n())
+
+knitr::kable(df_tt_1)
+```
+
+
+<br>
+
+- 2. Añadir a la tabla el % que representa cada país en el Total (también lo hacemos de 2 formas)
+
+
+```{r, echo = TRUE, results = "asis"}
+df_tt_2 <- df %>% group_by(Country) %>% 
+                  summarise(NN = n(), percent = n()/nrow(.) )
+
+df_tt_2 <- df %>% group_by(Country) %>%
+                  summarise (NN = n()) %>%
+                  mutate(percent = NN / sum(NN))
+knitr::kable(df_tt_2)
+```
+
+<br>
+
+- 3. Porcentaje de Hombres y Mujeres en cada país
+
+```{r, echo = TRUE}
+df_tt_3 <- df %>% count(Country, Gender) %>%
+                  group_by(Country) %>%
+                  mutate(percent = n / sum(n)) %>%
+                  select(-n) %>%
+                  pivot_wider(names_from = Gender, values_from = percent) %>% ungroup()
+
+knitr::kable(df_tt_3)
+```
+
+
+
+
+```{r, eval = FALSE, echo = FALSE}
+#- un chunk q usaba en SUE
+zz2 <-  df %>%
+  count(Country, Gender) %>%
+  group_by(Country) %>%          
+  mutate(prop = prop.table(n)) %>% 
+  pivot_wider(names_from = Gender, values_from = n:prop) %>% ungroup() 
+knitr::kable(zz2, digits = 4)
+
+cc <- df_CV %>% select(ISCCAA, STATUS, CONTRATANTE.x) %>% 
+  split(.$STATUS) %>%   purrr::map(tidyr::spread, ISCCAA, CONTRATANTE.x)
+```
+
+
+
+
+<br>
+
+- 4. Porcentaje de Hombres y Mujeres en cada nivel educativo
+
+```{r, echo = TRUE}
+df_tt_4 <- df %>% count(Education, Gender) %>% group_by(Education) %>%
+                  mutate(percent = n / sum(n)) %>%
+                  select(-n) %>%
+                  pivot_wider(names_from = Education, values_from = percent) %>% ungroup()
+
+knitr::kable(df_tt_4)
+```
+
+
+<br>
+
+
+
+- 5. Veamos el salario medio por país
+
+
+```{r, echo = TRUE}
+df_tt_5 <- df %>% group_by(Country) %>% 
+                  summarise(W_hora_medio = mean(Wage_hour , na.rm = TRUE), 
+                            W_mes_medio  = mean(Wage_month, na.rm = TRUE) ) %>% ungroup()
+knitr::kable(df_tt_5)
+```
+
+<br>
+
+- 6. Calcula la media, el mínimo, el máximo y la desviación típica de Wage_month
+
+```{r, echo = TRUE}
+df_tt_6 <- df %>% group_by(Country) %>% 
+                  summarise(W_medio  = mean(Wage_month, na.rm = TRUE) ,
+                            W_minimo = min(Wage_month, na.rm = TRUE)  ,
+                            W_maximo = max(Wage_month, na.rm = TRUE)  ,
+                            W_sd = sd(Wage_month, na.rm = TRUE) ) %>% 
+                 ungroup()
+
+knitr::kable(df_tt_6)
+```
+
+<br>
+
+- 7. salario medio en España (Hombre y Mujeres)
+
+
+```{r, echo = TRUE}
+df_tt_7 <- df %>% filter(Country == "ESP") %>%  group_by(Gender) %>% 
+                  summarise(W_hora_medio = mean(Wage_hour, na.rm = TRUE), 
+                            W_mes_medio = mean(Wage_month, na.rm = TRUE) ) %>%
+                  ungroup()
+
+knitr::kable(df_tt_7)
+```
+
+<br>
+
+- 8. salario medio en los 4 los países (Hombre y Mujeres)
+
+```{r, echo = TRUE}
+df_tt_8 <- df %>% group_by(Country, Gender) %>% 
+                  summarise(W_hora_medio = mean(Wage_hour, na.rm = TRUE), 
+                            W_mes_medio = mean(Wage_month, na.rm = TRUE) ) %>% 
+                  ungroup()
+
+knitr::kable(df_tt_8)
+```
+
+<br>
+
+- 9. ¿Cuanto más cobran los hombres (en %)?
+
+```{r, echo = TRUE}
+df_tt_9 <- df %>% group_by(Country, Gender) %>% 
+                  summarise(W_mes_medio = mean(Wage_month, na.rm = TRUE)) %>% 
+                  ungroup() %>% 
+                  pivot_wider(names_from = Gender, values_from = W_mes_medio) %>% 
+                  mutate(dif_W = Male-Female, dif_percent_W = dif_W/Female)
+
+knitr::kable(df_tt_9)
+```
+
+<br>
+
+
+- 10. Numeracy Score por país y nivel de estudios. La tabla nos va a salir alargada
+
+
+```{r, echo = TRUE}
+df_tt_10 <- df %>% group_by(Country, Education) %>% 
+                   summarise(Numeracy_media = mean(Numeracy_score, na.rm = TRUE)) %>% 
+                   ungroup() 
+
+knitr::kable(df_tt_10)
+```
+
+
+- 11. Hagamos la anterior tabla más ancha (Una columna para cada país)
+
+
+```{r, echo = TRUE}
+df_tt_11 <- df_tt_10 %>% 
+            pivot_wider(names_from = Education, values_from = Numeracy_media)
+
+knitr::kable(df_tt_11)
+```
+
+<br>
+
+Bien, no está mal, pero quiero ordenar la tabla de menor a mayor nivelo educativo
+
+- 12. Reordenando la tabla 11
+
+Resulta que en el cuadro, las categorías de niveles de estudio se han ordenado alfabéticamente pero quiero ordenarla de menor a mayor nivel de estudios. Se puede hacer de otras maneras, pero lo haremos usando **factores**.
+
+La variable Education tiene 4 categorías: Primary, Secondary, Upper-second y Tertiary; **ADEMÁS** estas categorías están/son fijas, no cambian. En estos casos es mejor tratar esas variables como **factores**; PERO si miramos la clase de la variable "Education" con `class(df$Education)` veremos que es `r class(df$Education)`, así que vamos a convertir la variable "Education" a factor.
+
+
+Podríamos usar la función `as.factor()`, pero una vez más usaremos pkgs del tidyverse; en este caso el pkg "**forcats**" y la función `as_factor()`
+
+
+```{r, echo = TRUE}
+df <- df %>% mutate(Education = forcats::as_factor(Education) )
+levels(df$Education)
+```
+
+<br>
+
+Como vemos, la variable `Education`, que ahora es un factor, tiene cuatro categorías o "levels"
+
+Resulta que el nombre de las 4 categorías está en inglés y lo queremos en castellano. Lo haremos con `forcats::fct_recode()`. Para saber un poco más sobre como manipular factores debes ir [aquí](http://r4ds.had.co.nz/factors.html)
+
+
+```{r, echo = TRUE}
+df <- df %>% mutate(Education = forcats::fct_recode(Education,
+                    "Primaria"         = "Primary",
+                    "Secundaria"       = "Secondary", 
+                    "Secundaria_post"  = "Upper_second",
+                    "Terciaria"        = "Tertiary" )) 
+df %>% count(Education)
+```
+
+<br>
+
+Como volvemos a ver, la variable "Education", que ahora es un factor tiene 4 "levels" pero están ordenados de forma que no nos conviene, queremos cambiar el orden de los factores  con `forcast::fct_relevel()` para que se muestren los cuatro grupos educativos de menor a mayor nivel.
+
+
+```{r, echo = TRUE, warning = FALSE}
+df <- df %>% mutate(Education = forcats::fct_relevel(Education, 
+                                  "Primaria", "Secundaria", "Secundaria_post")) 
+
+df %>% count(Education)
+```
+
+Como se puede ver en el cuadro de arriba, ya hemos cambiado el orden de los "levels" para que se muestren de menor a mayor nivel educativo, así que volvamos a rehacer el cuadro con el Numeracy Score por países:
+
+
+```{r, echo = TRUE}
+df_tt_12 <- df %>% group_by(Country, Education) %>% 
+                   summarise(Numeracy_media = mean(Numeracy_score, na.rm = TRUE)) %>% 
+                   ungroup() %>%  
+                   pivot_wider(names_from = Education, values_from = Numeracy_media) 
+knitr::kable(df_tt_12)
+```
+
+
+
+<br>
+
+## 2.3  Obteniendo resultados (con janitor)
+
+
+Si los resultados que queremos mostrar son cosas básicas como porcentajes, frecuencias etc... obviamente podemos calcularlos nosotros con `dplyr`, pero para estos casos el paquete `janitor`, concretamente la función `janitor::tabyl()` nos facilita mucho la tarea^[Evidentemente, en R hay muchos otros paquetes para hacer tablas básicas. Algunas de ellas son resumidas en este [post](https://dabblingwithdata.wordpress.com/2017/12/20/my-favourite-r-package-for-frequency-tables/){target="_blank"}]. Para ver todas las posibilidades que tiene el paquete `janitor` puedes ir a su página web [aquí](http://sfirke.github.io/janitor/){target="_blank"}.
+
+
+
+1 y 2. Cuadro con el número de observaciones de cada país
+
+
+```{r}
+df_tt_1_j <- df %>% janitor::tabyl(Country)
+kable(df_tt_1_j)
+```
+
+3. Porcentaje de Hombres y Mujeres en cada país
+
+
+```{r}
+df_tt_3_j <- df %>% janitor::tabyl(Country, Gender)
+df_tt_3_j <- df %>% janitor::tabyl(Country, Gender) %>% 
+                    janitor:: adorn_percentages(denominator = "row")
+```
+
+4. Porcentaje de Hombres y Mujeres en cada nivel educativo
+
+
+```{r}
+df_tt_4_j <- df %>% janitor::tabyl(Gender, Education) %>% 
+                    janitor:: adorn_percentages(denominator = "col")
+```
+
+
+Para ver todas las posibilidades que tiene el paquete `janitor` puedes ir a su página web [aquí](http://sfirke.github.io/janitor/)
+
+<br>
+Hay otros paquetes con funcionalidades parecidas a `janitor`. Por ejemplo, el paquete [`freqtables`](https://github.com/brad-cannell/freqtables) o el paquete [`sjmisc`](https://strengejacke.github.io/sjmisc/index.html).
+
+--------------
+
+<br>
+
+
+# 3. Tablas con `knitr::kable()`
+
+<br>
+
+Bueno, ya sabemos, aunque en realidad lo vimos al presentar `dplyr` y `tidyr`, como ir generando un dataframe con los estadísticos descriptivos que nos interesa mostrar. En realidad esos df ya son tablas de datos que puedo exportar a Excel para trabajarlas a nuestro gusto; pero en el curso hacemos todo desde R.
+
+Ya habéis visto que con la función `knitr::kable()` puedo mostrarlas en mi documento final  sólo tengo que ejecutar lo siguiente: `knitr::kable(my_df)`.
+
+<br>
+
+En los próximos apartados mostraremos algunos paquetes específicos para formatear los cuadros y hacerlos BONITOS, pero también conviene saber que **kable() también tiene opciones** para personalizar un poco nuestras tablas. Por ejemplo:
+
+```{r, echo = TRUE}
+knitr::kable(df_tt_12, 
+             align = "c", 
+             caption = "Numeracy Score por país",
+             digits = 2, 
+             format.args = list(decimal.mark = ",", big.mark = "."))
+```
+
+
+--------------
+
+<br>
+
+## 3.1 `kableExtra` pkg
+
+[`kableExtra`](http://haozhu233.github.io/kableExtra/) es un package de que permite mejorar las tablas creadas con `knitr::kable()`. 
+
+La descripción de `kableExtra` en CRAN es: 
+
+> Build complex HTML or 'LaTeX' tables using 'kable()' from 'knitr' and the piping syntax from 'magrittr'. Function 'kable()' is a light weight table generator coming from 'knitr'. This package simplifies the way to manipulate the HTML or 'LaTeX' codes generated by 'kable()' and allows users to construct complex tables and customize styles using a readable syntax.
+
+
+[Aquí](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) tienes la vignette para elaborar tablas para documentos html.
+
+
+Para mejorar las tablas usaremos la función `kableExtra::kable_styling()`:
+
+
+
+```{r, results = "asis"}
+knitr::kable(df_tt_12, format = "html") %>% 
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+
+Se puede incluso poner las tablas junto con el texto.
+
+
+
+```{r}
+library(kableExtra)
+knitr::kable(df_tt_12, format = "html") %>% 
+  kableExtra::kable_styling(bootstrap_options = "striped", full_width = F, position = "float_right")
+```
+
+<br><br>
+
+Para ello tienes que usar la opción `position = "float_right` dentro de `kableExtra::kable_styling()`.
+
+
+<br><br><br>
+
+
+Si tenemos una tabla muy larga, podemos fijar el encabezamiento de la tabla con `fixed_thead`
+
+```{r}
+kable(df_tt_12) %>%
+  kableExtra::kable_styling(fixed_thead = list(enabled = T, background = "lightblue"))
+```
+
+Se pueden formatear columnas por separado con `kableExtra::column_spec()`, o las filas con `kableExtra::row_spec()`. La tabla no nos saldrá muy chula pero nos sirve para ver las posibilidades de `kable_styling()`.
+
+
+```{r}
+kable(df_tt_12) %>%
+  kable_styling(full_width = F) %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(3, width = "20em", background = "yellow") %>% 
+  row_spec(3:4, bold = T, color = "white", background = "#D7261E") %>% 
+  row_spec(0, angle = 10)
+```
+
+
+
+
+Puedes ver las posibilidades de este pkg en su [vignette](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html).
+
+
+<br>
+
+--------------------------------------------
+
+<br>
+
+# 4. Otros paquetes para tablas
+
+Uno de los paquetes que se pueden usar para generar tablas es [`pander`](http://rapporter.github.io/pander/), pero no lo incluyo en el tutorial porque en realidad, su objetivo es más general, su objetivo es facilitar la exportación de objetos R a `pandoc`. De hecho, `pander` puede ser una alternativa a `knitr`; de hecho, el título de su pagina web es: `pander: An R Pandoc Writer`.
+
+Si presento, de forma sencilla los paquetes `formatable` y dos paquetes muy prometedores como `flextable` y `gt`, pero existen más posibilidades, más paquetes para hacer tablas en R.
+
+
+--------------
+
+<br>
+
+## 4.1 `formatable` pkg
+
+El paquete [`formattable`](https://github.com/renkun-ken/formattable)
+
+> is designed for applying formatting on vectors and data frames to make data presentation easier, richer, more flexible and hopefully convey more information.
+
+En estos dos post: [aquí](https://www.displayr.com/formattable/?utm_medium=Feed&utm_source=Syndication) y [aquí](https://www.littlemissdata.com/blog/prettytables) explican con detalle las posibilidades del paquete `formattable.`
+
+
+Para ilustrar las posibilidades de `formattable` utilizo uno de los ejemplos de su [página web](https://renkun-ken.github.io/formattable/):
+
+```{r, echo = FALSE}
+df <- data.frame(
+  id = 1:10,
+  name = c("Bob", "Ashley", "James", "David", "Jenny", 
+    "Hans", "Leo", "John", "Emily", "Lee"), 
+  age = c(28, 27, 30, 28, 29, 29, 27, 27, 31, 30),
+  grade = c("C", "A", "A", "C", "B", "B", "B", "A", "C", "C"),
+  test1_score = c(8.9, 9.5, 9.6, 8.9, 9.1, 9.3, 9.3, 9.9, 8.5, 8.6),
+  test2_score = c(9.1, 9.1, 9.2, 9.1, 8.9, 8.5, 9.2, 9.3, 9.1, 8.8),
+  final_score = c(9, 9.3, 9.4, 9, 9, 8.9, 9.25, 9.6, 8.8, 8.7),
+  registered = c(TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE),
+  stringsAsFactors = FALSE)
+```
+
+
+```{r}
+library(formattable)
+df %>% formattable(list(
+  age = color_tile("white", "orange"),
+  grade = formatter("span", style = x ~ ifelse(x == "A", 
+    style(color = "green", font.weight = "bold"), NA)),
+  area(col = c(test1_score, test2_score)) ~ normalize_bar("pink", 0.2),
+  final_score = formatter("span",
+    style = x ~ style(color = ifelse(rank(-x) <= 3, "green", "gray")),
+    x ~ sprintf("%.2f (rank: %02d)", x, rank(-x))),
+  registered = formatter("span",
+    style = x ~ style(color = ifelse(x, "green", "red")),
+    x ~ icontext(ifelse(x, "ok", "remove"), ifelse(x, "Yes", "No")))
+))
+```
+
+
+--------------
+
+<br>
+
+## 4.2 `flextable` pkg
+
+El paquete [`flextable`](https://davidgohel.github.io/flextable/articles/overview.html) es relativamente nuevo y tiene la ventaja de que provee un entorno para crear de forma relativamente sencilla tablas estadísticas para informes. Una de sus ventajas es que puede generar tablas para documentos html, Word, Powerpoint y pdf.
+
+Las tablas hechas con `flextable` pueden exportarse a :
+
+  - Documentos html, Word y PowerPoint hechos a través de ficheros Rmarkdown  
+  - Documentos Word y Powerpoint hechos con el paquete [`officer`](https://davidgohel.github.io/officer/)
+  - Documentos pdf a través del paquete [`pagedown`](https://github.com/rstudio/pagedown)    
+  - Además las flextables pueden ser transformadas a gráficos R o como imágenes (png, pdf y jpeg).
+  
+Si quieres ver las posibilidades de este paquete tendrás que ir a su [página web](https://davidgohel.github.io/flextable/articles/overview.html). Como ejemplo:
+
+```{r}
+library(flextable)
+
+ft <- flextable::flextable(head(iris), col_keys = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species" ))
+
+ft %>% autofit() %>%  align(align = "center", part = "all")
+```
+
+
+--------------
+
+<br>
+
+
+## 4.3 `gt` package
+
+El paquete `gt` también es relativamente nuevo pero creo que se está convirtiendo en el paquete de referencia para hacer tablas en R. Su página web está [aquí](https://gt.rstudio.com/). Hay que entender un poco su terminología, pero una vez lo haces, hacer tablas con `gt` es muy sencillo.
+
+Podemos empezar con una web con [algunos ejemplos](https://frm1789.github.io/gt_examples/index.html) de tablas hechas con `gt` o ir a su [página web](https://gt.rstudio.com/) o a su [vignette introductoria](https://gt.rstudio.com/articles/intro-creating-gt-tables.html), o a [este post](https://blog.rstudio.com/2020/04/08/great-looking-tables-gt-0-2/) donde se anuncia la aparición de `gt(v0.2)`.
+
+Por su parte, [Thomas Mock](https://twitter.com/thomas_mock?lang=es) ha realizado una serie de fantásticos post y presentaciones acerca del paquete `gt`; por ejemplo: [Beautiful tables in R](https://themockup.blog/static/slides/intro-tables.html#1), [10+ Guidelines for Better Tables in R](https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/), [Functions and Themes for gt tables](https://themockup.blog/posts/2020-09-26-functions-and-themes-for-gt-tables/), [Embedding custom HTML in gt tables](https://themockup.blog/posts/2020-10-31-embedding-custom-features-in-gt-tables/) y [gt - a (G)rammar of (T)ables](https://themockup.blog/posts/2020-05-16-gt-a-grammer-of-tables/).
+
+Si quieres ver el material de un tutorial de `gt` diseñado por su desarrollador, [Richard Iannone](https://github.com/rich-iannone), puedes encontrarlo en [este repo](https://github.com/rich-iannone/gt-workshop-2020).
+
+
+Hacer una tabla básica con `gt` es tan fácil como hacer `gt(my_df)`. Veámoslo:
+
+```{r}
+library(gt) #-remotes::install_github("rstudio/gt")
+df_tt_4 %>% gt()
+```
+
+<br>
+
+Nos queda arreglar/tunear/añadir elementos a nuestra tabla. Para ello, lo primero es conocer como se llaman los distintos elementos de una tabla hecha con `gt`:
+
+```{r , echo = FALSE, eval = TRUE, out.width = "80%"}
+knitr::include_graphics(here::here("imagenes", "tt_08_img_01_tablas-gt-partes.svg"))
+```
+
+<br>
+
+La tabla que hemos hecho antes con `gt`, es una tabla muy básica, sólo tiene dos elementos: the "Column Labels" y the "Table Body" (que es donde están los valores). Vamos a añadir más elementos a nuestra tabla:
+
+
+- Añadimos una parte más, "Table header", con la función `tab_header()`. Con ella podemos añadir un título y subtitulo a la tabla. Además podemos dar formato al título, **usando markdown!!**, con la función `md()`
+
+
+```{r}
+gt_tbl <- df_tt_4 %>% gt()
+
+gt_tbl <- gt_tbl %>% tab_header(title = md("**Genero y nivel educativo**"),
+                      subtitle = md("Porcentaje de *H y M* en cada nivel educativo"))
+gt_tbl
+```
+
+<br>
+
+- Añadimos una nota al pie ("source note") en "Table footer" con la función `tab_source_note()`. Se pueden poner varias notas al pie.
+
+
+```{r}
+gt_tbl <- gt_tbl %>% 
+          tab_source_note(md("Fuente: datos de [PIAAC](http://www.oecd.org/skills/piaac/)")) %>%
+          tab_source_note(md("Obtenidos a partir del paquete RPIAAC"))
+  
+gt_tbl  
+```
+
+<br>
+
+- Podemos añadir notas (al pie) en los valores de la tabla. Para ello se usa la función `tab_footnote()`. La función auxiliar `cells_body()` se usa para especificar que celdas de datos tendrán la marca de la llamada al pie de página. Se puede incluso usar condiciones para seleccionar que celdas llevarán la footnote.
+
+```{r}
+# Añadimos la misma nota al pie a dos celdas de la tabla
+# Para seleccionar las celdas que llevarán la footnote se usa la f. `cell_body()`
+gt_tbl <- gt_tbl %>% tab_footnote("Por encima del 60%", cells_body(vars(Tertiary, `NA`), rows = 1) )
+
+# Show the gt Table
+gt_tbl
+```
+
+<br>
+
+- The "Stub" es el área a la derecha de la tabla que contiene los nombres de filas. Se puede generar fácilmente un stub con `gt(rowname_col = "nombre")`
+
+An easy way to generate a Stub part is by specifying a stub column in the gt() function with the rowname_col argument. Alternatively, we can have an input dataset with a column named rowname—this magic column will signal to gt that that column should be used as the stub, making row labels. Let’s add a stub with our islands_tbl dataset by modifying the call to gt():
+
+
+```{r}
+gt_tbl <- df_tt_4 %>% 
+          gt(rowname_col = "Gender") %>% 
+          tab_stubhead(label = md("**Género**"))
+
+gt_tbl
+```
+
+<br>
+
+Con `gt` se pueden hacer muchas más cosas, puedes verlas en su [`página web`](https://gt.rstudio.com/), o en esta secuencia de posts de Thomas Mock: [10+ Guidelines for Better Tables in R](https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/), [Functions and Themes for gt tables](https://themockup.blog/posts/2020-09-26-functions-and-themes-for-gt-tables/), [Embedding custom HTML in gt tables](https://themockup.blog/posts/2020-10-31-embedding-custom-features-in-gt-tables/) y [gt - a (G)rammar of (T)ables](https://themockup.blog/posts/2020-05-16-gt-a-grammer-of-tables/).
+
+<br>
+
+Un ejemplo que me ha gustado es [este](https://github.com/sharlagelfand/twofunctionsmostdays/tree/master/2020/05/16) de [Sharla Gelfand](https://github.com/sharlagelfand) en el que añade una columna de imágenes a su tabla. Voy a hacerlo yo con 3 imágenes de Wikimedia Commons y una tabla con datos del data.frame iris.
+
+Para ello, primero, añado una columna con los  url's de las fotos al data.frame `iris`:
+
+```{r}
+urls_lirios <- c("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Lirio.jpg/800px-Lirio.jpg",
+                 "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Nacho_Vegas_Fib.jpg/800px-Nacho_Vegas_Fib.jpg",
+                 "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/R%C3%ADo_Pancrudo%2C_Luco_de_Jiloca%2C_Teruel%2C_Espa%C3%B1a%2C_2014-01-08%2C_DD_12.jpg/1920px-R%C3%ADo_Pancrudo%2C_Luco_de_Jiloca%2C_Teruel%2C_Espa%C3%B1a%2C_2014-01-08%2C_DD_12.jpg")
+
+iris_con_urls <- iris %>% group_by(Species) %>% slice_max(Sepal.Length, n = 1) %>% add_column(urls_lirios) %>% ungroup()
+```
+
+Para después transformar los urls a imágenes con:
+
+```{r}
+iris_con_urls %>% gt() %>% 
+  gt::text_transform(locations = cells_body(columns = vars(urls_lirios)),
+                     fn = function(x) {gt::web_image(x, height = 50)})
+```
+
+
+---------------
+
+<br>
+
+# 5. Tablas interactivas
+
+[Aquí](https://thinkr.fr/tableaux-interactifs-avec-r-pour-shiny-et-vos-pages-web/) tienes un tutorial exclusivamente dedicado a tablas interactivas. Aquí sólo presentaré algún ejemplo de tabla interactiva con los paquetes `DT`, `reactable` y `rpivottable`.
+
+<br>
+
+## 5.1 `DT` package
+
+El paquete [DT](https://cran.r-project.org/web/packages/DT/index.html) es "a wrapper of the JavaScript library DataTables". La mejor forma de aprender a hacer tablas con DT es su [página web](https://rstudio.github.io/DT/).
+
+El autor de `DT` es [Yihui Xie](https://yihui.org/en/) el desarrollador de `knitr`. El principal atractivo del paquete es que permite hacer tablas interactivas con funcionalidades como filtrar, paginar, ordenar, etc... los valores de las tablas. 
+
+Hacer tablas básicas con DT es muy sencillo. Por ejemplo: 
+
+<br>
+
+```{r, echo = TRUE}
+DT::datatable(iris)
+```
+
+<br>
+
+Las tablas hechas con DT tienen muchas más posibilidades. Como ejemplo la siguiente tabla.La mejor forma de aprender a hacer tablas con DT es su [página web](https://rstudio.github.io/DT/)
+
+```{r, echo = TRUE}
+DT::datatable(iris, filter = 'top', 
+              options = list(pageLength = 5, autoWidth = TRUE ))
+```
+
+<br>
+
+Una posibilidad de las tablas hechas con `DT` es que se pueden descargar. Lo explican en detalle [aquí](https://martinctc.github.io/blog/vignette-downloadable-tables-in-rmarkdown-with-the-dt-package/):
+
+
+```{r}
+iris %>% DT::datatable(extensions = 'Buttons', 
+               options = list(dom = 'Blfrtip', 
+                              buttons = c('copy', 'csv', 'excel', 'pdf', 'print'), 
+                              pageLength = 5, autoWidth = TRUE ))
+```
+
+<br>
+
+---------------
+
+
+## 5.2 `reactable` package
+
+El paquete [`reactable`](https://glin.github.io/reactable/index.html) también permite hacer tablas interactivas, esta vez se basa en la librería de JS React.
+
+El uso básico es tan sencillo como:
+
+```{r}
+reactable::reactable(iris)
+```
+
+Pero se pueden hacer tablas tan fabulosas como [esta](https://glin.github.io/reactable/articles/twitter-followers/twitter-followers.html) o [esta](https://glin.github.io/reactable/articles/nba-box-score/nba-box-score.html) o [esta](https://glin.github.io/reactable/articles/womens-world-cup/womens-world-cup.html).
+
+
+
+<br>
+
+---------------
+
+## 5.3 `rpivotTable` package
+
+> The rpivotTable package is an R htmlwidget built around the pivottable JS library.
+
+El paquete [`rpivotTable`](https://github.com/smartinsightsfromdata/rpivotTable) genera tablas que permiten al usuario generar sus propios resultados.
+
+Como las tablas que genera el paquete `rpivotTable` pueden,  según las opciones que utilice el usuario de la tabla, cambiar mucho de tamaño, voy a poner un ejemplo de esta tabla pero al final de este documento, después de la bibliografía. 
+
+Crear una tabla con `rpivotTable` es muy sencillo. Podéis verla tabla al final del documento.
+
+
+```{r, eval = FALSE}
+library(rpivotTable) #- remotes::install_github(c("ramnathv/htmlwidgets", "smartinsightsfromdata/rpivotTable"))
+rpivotTable(df, rows = "Gender", cols = c("Country"), width = "100%", height = "400px")
+```
+
+
+# 6. Tablas para modelos
+
+R es un lenguaje/entorno para hacer análisis estadísticos, así que muchas veces se han de presentar los resultados de estimación de algún modelo estadístico, PERO, los resultados de estimación de estos modelos, en general, no se almacenan en data.frames, sino en listas. ¿Es esto importante? Sí, si queremos presentar los resultados de estimación en una tabla, porque los paquetes para tablas que hemos visto anteriormente (`gt`, `DT`, etc ...) solo generar tablas de resultados almacenados en data.frames, así que no los podremos usar, al menos directamente. Afortunadamente hay unos cuantos paquetes en R cuyo propósito es precisamente presentar los resultados de estimación de algún modelo o técnica estadística como tablas.
+
+Por ejemplo, vamos a estimar un modelo de regresión lineal. Utilizaremos estos datos:
+
+```{r}
+urla <- "https://raw.githubusercontent.com/perezp44/iris_data/master/data/PIAAC_data_small.csv"
+df <- read_csv(urla)
+```
+
+Con ellos estimamos el siguiente modelo lineal:
+
+
+```{r}
+my_model <- lm(Wage_hour ~ Numeracy_score + Gender , data = df)
+my_model
+```
+
+Generalmente hay funciones específicas para mostrar los resultados de estimación, por ejemplo la función `summary()`:
+
+```{r}
+summary(my_model)
+```
+
+Los resultados mostrados por `summary()` permiten hacerse una idea de los resultados de la estimación pero no suelen ser adecuados para presentarlos en un informe o en un artículo científico. 
+
+Hay varios paquetes que permiten obtener tablas con los resultados de la estimación de modelos estadísticos, por ejemplo, el paquete [`finalfit`](https://www.datasurg.net/2018/05/16/elegant-regression-results-tables-and-plots-the-finalfit-package/) o el paquete [`sjPlot`](https://strengejacke.github.io/sjPlot/index.html), pero sólo mostraré algún ejemplo para los paquetes [`stargazer`](https://cran.r-project.org/web/packages/stargazer/stargazer.pdf),  [`modelsummary`](https://github.com/vincentarelbundock/modelsummary) y [`gtsummary`](https://github.com/zabore/gtsummary).
+
+--------------------
+
+<br>
+
+
+## 6.1 Tablas con `stargazer`
+
+El paquete [`stargazer`](https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf) permite fácilmente presentar tablas con resultados de regresión. Permite crear tablas en latex, html o ascii. [Aquí](https://www.jakeruss.com/cheatsheets/stargazer/) hay una cheatsheet sobre `stargazer`
+
+```{r, results = "asis"}
+stargazer::stargazer(my_model, type = "html")
+```
+
+
+<br>
+
+Se pueden presentar los resultados de varios modelos en una tabla. Veámoslo. Para ello vamos a estimar tres modelos y los almacenaremos en una lista:
+
+```{r, results = "asis"}
+df <- df %>% mutate(Numeracy_score_b = ifelse(Numeracy_score > mean(Numeracy_score, na.rm = TRUE), 1, 0)) #- binary variable for logit model
+
+my_models <- list()
+my_models[['W:  OLS 1']]   <- lm( Wage_hour         ~ Numeracy_score + Gender , df)
+my_models[['Nu: OLS 2']]   <- lm( Numeracy_score    ~ Education + Gender , df)
+my_models[['Nu: Logit 1']] <- glm( Numeracy_score_b ~ Education + Gender , df, family = binomial())
+```
+
+Una vez hemos estimado los 3 modelos y almacenado sus resultados de estimación en la lista `my_models`
+
+```{r, results = "asis"}
+stargazer::stargazer(my_models, type = "html", title = "Results", align = TRUE)
+```
+
+--------------
+
+<br>
+
+## 6.2 Tablas con `modelsummary`
+
+El paquete [`modelsummary`](https://vincentarelbundock.github.io/modelsummary/) es más moderno, y también permite hacer tablas resumen de estimaciones de modelos. Por ejemplo:
+
+```{r}
+library(modelsummary) #- remotes::install_github('vincentarelbundock/modelsummary')
+
+mm <- modelsummary::msummary(my_models, title = "Resultados de estimación")
+mm
+```
+
+Tiene muchas más posibilidades.
+
+--------------
+
+<br>
+
+## 6.3 Tablas con `gtsummary`
+
+El paquete [`gtsummary`](https://github.com/zabore/gtsummary) permite, además de realizar tablas resumen de data.frames, confeccionar tablas de modelos de regresión de forma sencilla y muy configurables.
+
+Como he dicho `gtsummary` tiene muchas posibilidades, algunas de ellas puedes verlas en este [video](https://youtu.be/U2S6LbMN42I), en estas [transparencias](https://www.emilyzabor.com/cleveland-r-gtsummary/), o en este [post](https://education.rstudio.com/blog/2020/07/gtsummary/). 
+
+Como ejemplos de su uso, una tabla resumen de un data.frame:
+
+```{r}
+iris %>% gtsummary::tbl_summary()
+```
+
+<br>
+
+Ahora una tabla de un modelo de regresión:
+
+```{r}
+gtsummary::tbl_regression(my_model)
+```
+
+
+--------------
+
+<br>
+
+## 6.4 Tablas con `sjPlot`
+
+El paquete [`sjPlot`](https://strengejacke.github.io/sjPlot/) tiene muchas posibilidades, pero en concreto puede hacer tablas de modelos:
+
+```{r}
+sjPlot::tab_model(my_model)
+```
+
+
+Tiene otras utilidades, por ejemplo:
+
+```{r}
+sjPlot::plot_model(my_model)
+```
+
+
+--------------
+
+<br>
+
+## 6.5 Otros paquetes
+
+Hay muchos más paquetes especializados en hacer tablas con resultados de la estimación de modelos. Aquí solo mostraré algo de 3 de ellos, los paquetes `report` y `apaTables`, pero existen otros paquetes como:  
+
+    - [`flipRegression`](https://github.com/Displayr/flipRegression). En [este post](https://www.displayr.com/5-alternatives-to-the-default-r-outputs-for-glms-and-linear-models/) explican como usar sus funciones.  
+
+  - [`papaja`](https://github.com/crsh/papaja), es un paquete para producir documentos y tablas conformes a la American Psychological Association (APA) manuscript guidelines (6th Edition).   
+
+  - [`academicWriteR`](https://www.jvcasillas.com/academicWriteR/), está relacionado con `papaja`. Es un paquete con algunas funciones útiles para escribir informes estadísticos. Por ejemplo la función `count_word()`.
+
+<br>
+
+### paquete `report`
+
+Según pone en su [página web](https://easystats.github.io/report/):
+
+> It automatically produces reports of models and dataframes according to best practice guidelines (e.g., APA’s style guide), ensuring standardization and quality in results reporting.
+
+```{r, eval = TRUE}
+library(report) #- devtools::install_github("neuropsychology/report")
+rr <- report(my_model)
+```
+
+<br>
+
+```{r, eval = TRUE}
+as.report_table(rr)
+```
+
+
+<br>
+
+También permite obtener una descripción verbal de los resultados en texto:
+
+```{r, eval = TRUE}
+as.report_text(rr)
+```
+
+<br>
+
+### paquete `apaTables`
+
+Según su [página web](https://dstanley4.github.io/apaTables/index.html):
+
+> This package creates Word files (.doc files) containing APA style tables for several types of analyses. Using this package minimizes transcription errors and reduces the number commands needed by the user.
+
+```{r}
+library(apaTables) #- install.packages("apaTables",dep = TRUE)
+apa.reg.table(my_model)
+```
+
+
+<br>
+
+--------------------------------------------
+
+<br>
+
+
+
+# 7. Bibliografía/Recursos:
+
+- En [este hilo](https://twitter.com/GoldbergData/status/1292935454195511302) de Twitter se habla sobre los mejores paquetes R para hacer tablas.
+
+- [David Keyes](https://rfortherestofus.com/author/dgkeyes/) señala [aquí](https://rfortherestofus.com/2019/11/how-to-make-beautiful-tables-in-r/), que  quieres hacer tablas para Word, posiblemente la mejor opción sea el paquete [flextable](https://davidgohel.github.io/flextable/index.html)
+
+
+- Si lo que necesitas es hacer tablas para documentos pdf, puedes empezar por [aquí](https://sharleenw.rbind.io/post/tables_in_pdf/making-pdf-tables-in-r/). Al final remite a [este otro documento](https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf). También puedes usar este [generador de tablas](https://www.tablesgenerator.com/).
+
+
+- Si quieres tablas de porcentajes etc... [aquí](https://dabblingwithdata.wordpress.com/2017/12/20/my-favourite-r-package-for-frequency-tables/) plantean varias posibilidades para hacerlas.
+
+- Si quieres hacer tablas parecidas a las que se hacen con  PROC FREQ de SAS o CROSSTABS en SPSS puedes usar la función `CrossTable()` del paquete `gmodels`. En [este post](https://dabblingwithdata.wordpress.com/2018/02/26/r-packages-for-summarising-data-part-2/) muestran otras alternativas.
+
+- Si necesitas hacer **3-way tables**, puedes hacerlas con `stats::xtabs()`. Para después imprimirla con `ftable(my_table)`. Lo explican[aquí](https://rstudio-pubs-static.s3.amazonaws.com/308591_6dff566d383946c881cb5b6a735a79fd.html) y [aquí](https://www.statmethods.net/stats/frequencies.html). Por ejemplo:
+
+
+```{r, eval = FALSE}
+my_table <- stats::xtabs(~ Education + Country + Gender, data = df)
+stats::ftable(my_table) 
+```
+
+Otra alternativa para tablas de frecuencias de 3 variables es usar `janitor::tabyl(X1, X2, X3)`. Lo explican [aquí](https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html)
+
+
+```{r, eval = FALSE}
+df %>% janitor::tabyl(Education, Country, Gender)
+```
+
+
+- Más paquetes relacionados con tablas: [printr](https://yihui.name/printr/), [questionr](https://juba.github.io/questionr/), ...
+
+- Los paquetes [`rhandsontable`](https://jrowen.github.io/rhandsontable/) y [`excelR`](https://swechhya.github.io/excelR/) permiten crear tablas editables por el usuario.
+
+
+- El paquete [`expss`](https://cran.r-project.org/web/packages/expss/vignettes/tables-with-labels.html) hace tablas similares a las de SPSS.
+
+- En este [post](https://appsilon.com/forget-about-excel-use-r-shiny-packages-instead/) hacen un repaso de paquetes que permiten crear tablas con características especiales como que sus valores sean editables por el usuario, que tengan formato condicionado a los valores de las tablas, que se puedan ordenar y filtrar sus valores etc ...
+
+
+<br><br>
+
+----------------------
+
+<br>
+
+
+# 5.3 Drag & drop pivot tables: `rpivotTable`
+
+El paquete [`rpivotTable`](https://github.com/smartinsightsfromdata/rpivotTable):
+
+> The rpivotTable package is an R htmlwidget built around the pivottable library.
+
+<br>
+
+```{r}
+rpivotTable::rpivotTable(df, rows = "Gender", cols = c("Country"), width = "100%", height = "400px")
+```
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+

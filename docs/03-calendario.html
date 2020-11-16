@@ -24,6 +24,8 @@
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -44,7 +46,7 @@
   div.column{display: inline-block; vertical-align: top; width: 50%;}
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
-      </style>
+    </style>
 
 
 
@@ -648,7 +650,7 @@ Acordaros de que, para evitar problemas, siempre es mejor instalar los paquetes 
 <h5><strong><code>Homework</code></strong> (para hacer antes de ir a clase)</h5>
 <ul>
 <li><p>Empezar a aprender a escribir en <code>Rmarkdown</code>, para eso tienes que entregar el miércoles 18 de noviembre la <code>tarea_07</code> de la que os he informado por e-mail.</p></li>
-<li><p>Decidir, si no los has hecho ya, el tema de tu trabajo individual; precisamente de esto me tienes que informar mientras haces la <code>tarea-07</code></p></li>
+<li><p>Decidir, si no los has hecho ya, el tema de tu trabajo individual; precisamente de esto me tienes que informar mientras haces la <code>tarea-07</code>.</p></li>
 </ul>
 </div>
 <div id="qué-haremos-en-clase-4" class="section level5">
@@ -680,7 +682,7 @@ Acordaros de que, para evitar problemas, siempre es mejor instalar los paquetes 
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();

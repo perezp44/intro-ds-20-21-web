@@ -270,8 +270,6 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 - Posiblemente, veremos si llegamos, ver distintos tipos de gráficos: [Slides-06(C): ggplot2 (distintos tipos de gráficos)](./slides/ss_06_ggplot2/ss_06_ggplot2_C.html){target="_blank"}.
 
-
-
 <br>
 
 -----------------------
@@ -296,8 +294,6 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 - Sabéis que tenemos que hacer una prueba en clase. Será sencilla y rápida (espero).
 
 - Empezar con **Rmarkdown**. Veremos las ideas básicas para poder hacer informes reproducibles con Rmarkdown y os proporcionaré unas plantillas que puedan serviros para vuestros trabajos.
-
-
 
 <br>
 
