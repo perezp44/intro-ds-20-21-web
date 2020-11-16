@@ -77,19 +77,20 @@ meta() %>% meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>%
 Hacer cuadros/tablas para mostrar resultados es una parte importante (y time consuming) de cualquier informe o investigación. En este tutorial explicaré como presentar nuestros resultados en tablas en documentos (ya sean estos .html, .pdf etc..) creados a partir de archivos `.Rmd`.
 
 
-En el siguiente apartado utilizaremos unos datos de ejemplo para obtener unos resultados que queremos mostrar como tablas en nuestro informe. Esto nos servirá para practicar un poco más con `dplyr`. Una vez tengamos los resultados que queremos mostrar ya veremos como podemos mostrarlos en tablas/cuadros good-looking.
-
 
 Veremos que presentar los resultados (previamente almacenados en un df) como un cuadro en el documento final es muy sencillo, sólo tenemos que llamar a la función `kable()`, pero si queremos tener más flexibilidad y opciones para mejorar nuestras tablas tendremos que usar otros paquetes como `kableextra`, `formatable`, `DT` o más recientemente `gt`.
 
 
-En [este hilo](https://twitter.com/GoldbergData/status/1292935454195511302) de Twitter se habla sobre los mejores paquetes R para hacer tablas. En él, [David Keyes](https://rfortherestofus.com/author/dgkeyes/) hace [aquí](https://rfortherestofus.com/2019/11/how-to-make-beautiful-tables-in-r/) un buen tutorial sobre paquetes para hacer tablas en R.
+En [este hilo](https://twitter.com/GoldbergData/status/1292935454195511302) de Twitter se ó recientemente sobre cuales eran los mejores paquetes R para hacer tablas. En [este post](https://rfortherestofus.com/2019/11/how-to-make-beautiful-tables-in-r/), David Keyes hace un muy buen tutorial sobre paquetes para hacer tablas en R.
 
-Al igual que con los gráficos, para hacer buenas tablas[^ En realidad en castellano debería llamarlos cuadros] hace falta tener en cuenta algunos aspectos. Este [post](https://paulvanderlaken.com/2020/09/01/10-guidelines-to-better-table-design/) proporciona 10 reglas o consejos para generar tablas efectivas. En este otro [post](https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/#guidelines-with-gt), Thomas Mock implementa esas 10 reglas con el paquete `gt`.
+Al igual que con los gráficos, para hacer buenas tablas ^[En realidad en castellano debería llamarlos cuadros] hace falta tener en cuenta algunos aspectos. Este [post](https://paulvanderlaken.com/2020/09/01/10-guidelines-to-better-table-design/) proporciona 10 reglas o consejos para generar tablas efectivas. En este otro [post](https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/#guidelines-with-gt), Thomas Mock implementa esas 10 reglas con el paquete `gt`.
+
+En el siguiente apartado utilizaremos unos datos de ejemplo para obtener unos resultados que queremos mostrar como tablas en nuestro informe. Esto nos servirá para practicar un poco más con `dplyr` y aprender a crear tablas desde documentos .Rmd, ya que una vez tengamos los resultados que queremos mostrar, mostraremos distintas posibilidades para mostrarlos en tablas/cuadros good-looking.
+
+-------------------
 
 <br>
 
--------------------
 
 # 2. Resultados para tablas
 
