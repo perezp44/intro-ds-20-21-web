@@ -325,6 +325,30 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 
 
+<br>
+
+-----------------------
+
+<br>
+
+## 10ª clase (27-nov)
+
+
+##### **`Homework`** (para hacer antes de ir a clase) 
+
+- Os he mandado por mail la `tarea-08`, se trata de practicar un poco más con ggplot2 y hacer vuestros primeros mapas.
+
+
+##### ¿Qué haremos en clase?
+
+- Corregir la `tarea_08`.
+
+-  Mapas, mapas y más mapas; bueno en realidad vamos a usar R para hacer una introducción a GIS, Geographic Information Systems o, Sistemas de Información Geográfica (SIG).
+
+- Bronca?? nah!!, todos los nombres de los ficheros de entregas estarán perfectos!!!
+
+
+
 
 
 
