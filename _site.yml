@@ -10,19 +10,22 @@ navbar:
       icon: fa-graduation-cap
       href: 01-guia-del-curso.html
     - text: "Logística"
+      icon: fa-laptop
       href: 02-logistica.html
     - text: "Calendario"
       href: 03-calendario.html
+      icon: fa-calendar-alt
     - text: "Tutoriales"
+      icon: fa-book
       href: 04-tutoriales.html
     - text: "Slides"
       href: 05-slides.html
-    - text: "Trabajos"
-      icon: fa-user-graduate
-      href: 07-trabajos.html
     - text: "MáS"
       icon: fa-download
       href: 08-mas-cosas.html
+    - text: "Trabajos"
+      icon: fa-user-graduate
+      href: 07-trabajos.html
 output_dir: "docs"
 output:
   html_document:
