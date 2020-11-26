@@ -57,6 +57,6 @@ Los estudiantes del curso, como parte de la evaluación continua, tuvieron que p
 
 <br>
 
-- **Pedro Jose Pérez Vázquez** presentó el trabajo [la docencia de R en la UV](https://perezp44.github.io/trabajo_BigData/). El repo está [aquí](https://github.com/perezp44/trabajo_BigData).
+- **Pedro Jose Pérez Vázquez** presentó el trabajo [la docencia de R en la UV](https://perezp44.github.io/trabajo_BigData/){target="_blank"}. El repo está [aquí](https://github.com/perezp44/trabajo_BigData){target="_blank"}.
 
 <br><br>
