@@ -17,7 +17,7 @@ navbar:
       href: 04-tutoriales.html
     - text: "Slides"
       href: 05-slides.html
-    - text: "Trabajos estudiantes"
+    - text: "Trabajos"
       icon: fa-user-graduate
       href: 07-trabajos.html
     - text: "MáS"
