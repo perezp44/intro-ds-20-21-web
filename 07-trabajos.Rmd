@@ -36,7 +36,7 @@ klippy::klippy(position = c("top", "right")) #- remotes::install_github("rlesur/
 
 ### Trabajos estudiantes
 
--------------------
+-----------------------------------
 
 Los estudiantes del curso, como parte de la evaluación continua, tuvieron que presentar dos trabajos, uno individual y otro en equipo. Puedes verlos en los siguientes enlaces:
 
@@ -45,7 +45,7 @@ Los estudiantes del curso, como parte de la evaluación continua, tuvieron que p
 
 <br>
 
-#### Trabajos en equipo
+## Trabajos en equipo
 
 <br>
 
@@ -53,7 +53,7 @@ Los estudiantes del curso, como parte de la evaluación continua, tuvieron que p
 
 <br>
 
-#### Trabajos individuales
+## Trabajos individuales
 
 <br>
 
