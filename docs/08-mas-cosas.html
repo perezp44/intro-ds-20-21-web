@@ -11,7 +11,7 @@
 
 
 
-<title>05-slides.utf8</title>
+<title>08-mas-cosas.utf8</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +19,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
@@ -59,6 +62,81 @@
     </style>
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { font-weight: bold; } /* Alert */
+code span.an { font-style: italic; } /* Annotation */
+code span.cf { font-weight: bold; } /* ControlFlow */
+code span.co { font-style: italic; } /* Comment */
+code span.cv { font-style: italic; } /* CommentVar */
+code span.do { font-style: italic; } /* Documentation */
+code span.dt { text-decoration: underline; } /* DataType */
+code span.er { font-weight: bold; } /* Error */
+code span.in { font-style: italic; } /* Information */
+code span.kw { font-weight: bold; } /* Keyword */
+code span.pp { font-weight: bold; } /* Preprocessor */
+code span.wa { font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 
 
 <style type="text/css">
@@ -269,6 +347,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -276,6 +417,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -351,24 +502,32 @@ $(document).ready(function () {
 
 
 <p><br></p>
-<div id="transparenciasslides" class="section level3">
-<h3>Transparencias/Slides</h3>
+<div id="más-recursos" class="section level3">
+<h3>MáS recursos</h3>
 <hr />
-<p>En esta sección iré subiendo las transparencias de clase conforme las vaya preparando. Las 2 primeras transparencias están hechas en el formato <a href="https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html" target="_blank"><code>ioslides</code></a>. Para el resto, seguramente, usaré otro formato: <a href="https://bookdown.org/yihui/rmarkdown/xaringan.html" target="_blank"><code>xaringan</code></a>.</p>
-<p>Todas las transparencias están hechas con R, de hecho, una de las cosas que has de aprender durante el curso es a hacer transparencias desde R. Concretamente, habrá un trabajo en equipo (3 personas), donde entre otras cosas, tendréis que hacer unas transparencias para presentar vuestro proyecto. Tendréis que hacer las transparencias con R, usando el formato <code>ioslides</code>.</p>
-<p><br></p>
+<p>En esta sección pondré cosas varias como:</p>
 <ul>
-<li><p><a href="./slides/ss_01_presentacion/ss_01_presentacion-curso.html" target="_blank">Slides-01: Presentación</a>.</p></li>
-<li><p><a href="./slides/ss_02_tema-1/ss_02_tema-1.html" target="_blank">Slides-02: Tema 1</a>.</p></li>
-<li><p><a href="./slides/ss_03_inicio-curso/ss_03_primeros-pasos.html" target="_blank">Slides-03: Primeros pasos</a>.</p></li>
-<li><p><a href="./slides/ss_04_R-base-01/ss_04_R-base-01.html" target="_blank">Slides-04: R base</a>.</p></li>
-<li><p><a href="./slides/ss_05_cargar-datos/ss_05_cargar-datos.html" target="_blank">Slides-05: Importar y exportar datos</a>.</p></li>
-<li><p><a href="./slides/ss_05_data-munging/ss_05_data-munging.html" target="_blank">Slides-05(bis): Data munging</a>.</p></li>
-<li><p><a href="./slides/ss_06_ggplot2/ss_06_ggplot2_A.html" target="_blank">Slides-06(A): ggplot2 (primeras ideas)</a>.</p></li>
-<li><p><a href="./slides/ss_06_ggplot2/ss_06_ggplot2_B.html" target="_blank">Slides-06(B): ggplot2 (más elementos)</a>.</p></li>
-<li><p><a href="./slides/ss_06_ggplot2/ss_06_ggplot2_C.html" target="_blank">Slides-06(C): ggplot2 (distintos tipos de gráficos)</a>.</p></li>
+<li><p><a href="./mas-recursos/Instrucciones_instalacion-a.html" target="_blank">Guía de Instalación de R y RStudio</a></p></li>
+<li><p><a href="./mas-recursos/paquetes-R-a-instalar.R">Listado de paquetes a instalar</a></p></li>
+<li><p><a href="./mas-recursos/como-entregar-las-tareas-uploader.html" target="_blank">Intrucciones de entrega de las tareas de la evaluación continua</a></p></li>
+<li><p><a href="./mas-recursos/bajar-google-drive.html" target="_blank">Descargar ficheros de Google Drive</a>. Este fichero es solo para mi. Para usarlo en el aula.</p></li>
 </ul>
-<p><br><br><br></p>
+<p><br></p>
+<div id="ejemplos" class="section level4">
+<h4>Ejemplos</h4>
+<hr />
+<p>Los ejemplos y casos que hagamos durante el curso muchas veces provendrán de los propios tutoriales.</p>
+<p>Durante el curso he de evaluaros, así que muchos de los ejemplos nuevos os los facilitaré cuando hagamos las pruebas, ya sean estas en casa o en el aula.</p>
+<p>Además, en clase vamos a usar un Rproject, llamado <code>my_BigData_ejemplos</code> con ejemplos adicionales, algunos de ellos los usaremos en clase. Actualmente el Rproject <code>my_BigData_ejemplos</code> contiene básicamente los ejemplos del año 2019. Poco a poco iremos añadiendo ejemplos nuevos al proyecto.</p>
+<p>Para descargaros el Rproject <code>my_BigData_ejemplos</code> tienes que ejecutar en RStudio las siguientes instrucciones:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>file_to_download &lt;-<span class="st"> &quot;my_BigData_ejemplos.zip&quot;</span> </span>
+<span id="cb1-2"><a href="#cb1-2"></a>url &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;https://github.com/perezp44/intro-ds-20-21-web/raw/master/ejemplos/&quot;</span>, file_to_download)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">download.file</span>(url, <span class="dt">destfile =</span> file_to_download)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">unzip</span>(<span class="dt">zipfile =</span> file_to_download)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">file.remove</span>(file_to_download)</span></code></pre></div>
+<p>No hace falta que lo hagas ahora, mejor si te esperas al primer día de clase, os lo explico un poco más y lo hacemos todos juntos.</p>
+<p><br><br></p>
+</div>
 </div>
 
 <footer class="footer">
@@ -378,6 +537,8 @@ $(document).ready(function () {
 </footer>
 
 
+</div>
+</div>
 
 </div>
 
@@ -410,6 +571,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
