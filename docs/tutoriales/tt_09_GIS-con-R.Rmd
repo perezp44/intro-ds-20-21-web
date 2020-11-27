@@ -1,0 +1,1169 @@
+---
+title: "Introducción a GIS con R"
+author: "Pedro J. Pérez (pedro.j.perez@uv.es). Universitat de València <br> <br> Web del curso: <https://perezp44.github.io/intro-ds-20-21-web/>"
+date: "Abril de 2017 (actualizado el `r format(Sys.time(), '%d-%m-%Y')`)"
+output:
+  html_document:
+    css: !expr here::here("assets", "styles_pjp.css")
+    theme: paper
+    highlight: textmate 
+    toc: true
+    toc_depth: 3 
+    toc_float: 
+      collapsed: true
+      smooth_scroll: true
+    self_contained: true
+    number_sections: false
+    includes:
+      after_body: !expr here::here("assets", "footer.html") 
+      in_header: 
+        - !expr here::here("assets", "google-analytics.html") 
+        - !expr here::here("assets", "favicon-sol.html")
+    df_print: kable
+    code_download: true
+editor_options: 
+  chunk_output_type: console
+bibliography: "`r here::here('assets', 'biblio.bib')`"  #- joooder. single quotes https://community.rstudio.com/t/use-here-here-function-in-yaml-option/18667/9
+---
+
+```{r chunk_setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, message = FALSE, warning = FALSE, 
+                      cache = FALSE, cache.path = "/caches/", comment = "#>",
+                      #fig.width = 7, fig.height= 7,   
+                      #out.width = 7, out.height = 7,
+                      collapse = TRUE,  fig.show = "hold",
+                      fig.asp = 7/9, out.width = "95%", fig.align = "center")
+```
+
+```{r options_setup, echo = FALSE}
+options(scipen = 999) #- para quitar la notacion cientifica
+```
+
+```{r setup, echo = FALSE}
+library(knitr)
+library(here)
+library(tidyverse)
+library(patchwork)
+library(ggrepel)
+library(sf)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(ggspatial)
+#library(spanishRpoblacion)     #- remotes::install_github("perezp44/spanishRpoblacion")
+library(spanishRentidadesIGN)   #- devtools::install_github("perezp44/spanishRentidadesIGN")
+library(mapview)
+library(leafem)
+library(leaflet)
+```
+
+```{r klippy, echo = FALSE}
+klippy::klippy(position = c("top", "right")) #- remotes::install_github("rlesur/klippy")
+```
+
+
+```{r, include = FALSE}
+options(htmltools.dir.version = FALSE)
+#knitr::opts_chunk$set(fig.retina = 3, warning = FALSE, message = FALSE, echo=FALSE, out.width = "85%")
+library(metathis)
+meta() %>% meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>% 
+  meta_social(
+    title = "Introducción a GIS con R",
+    description = paste(
+      "Introducción a los sistemas de información geográfica (SIG) con R"),
+    url = "https://perezp44.github.io/intro-ds-20-21-web/tutoriales/tt_09_GIS-con-R.html",
+    og_type = "website",
+    og_author = "Pedro J. Pérez"
+  )
+```
+
+-------------
+
+<br>
+
+
+```{r para_cargar_datos, eval = TRUE, echo = FALSE}
+#- los guardé en "./datos/geometrias_clase_10.RData"
+#save(CCAA, Provincias, municipios_2017, world, rios, IGN_nomencla_muni, file = "./datos/mapas/geometrias_clase_10.RData")
+#- cargo los datos previamente guardados
+load(here::here("datos", "mapas", "geometrias_clase_10.RData"))
+```
+
+
+# 1. Introducción
+
+Vamos a utilizar R como una aplicación GIS (Sistemas de información geográfica); es decir, lo vamos a utilizar para almacenar, manipular, analizar y presentar datos geográficos o geoespaciales. GIS es un área enorme, por ejemplo, [aquí](https://cran.r-project.org/web/views/Spatial.html) tienes un listado de herramientas y paquetes para trabajar con datos espaciales en R. Hay muchísimas!!!, es un área de conocimiento en sí misma, de la que, con los escasos conocimientos que tengo, voy a hacer una pequeña introducción a GIS con R.
+
+Durante este tutorial usaremos estos conjuntos de datos
+
+```{r para_casa, eval = FALSE}
+CCAA <- rio::import("https://github.com/perezp44/LAU2boundaries4spain/blob/master/data/CCAA.rda?raw=true")
+Provincias <- rio::import("https://github.com/perezp44/LAU2boundaries4spain/blob/master/data/Provincias.rda?raw=true")
+municipios_2017 <- rio::import("https://github.com/perezp44/LAU2boundaries4spain/blob/master/data/municipios_2017.rda?raw=true")
+world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
+rios <- rio::import("https://github.com/perezp44/archivos_download/blob/master/rio_ebro.rds?raw=true")
+IGN_nomencla_muni <- rio::import("https://github.com/perezp44/archivos_download/blob/master/IGN_nomencla_muni.rds?raw=true")
+```
+
+
+
+Venga, vamos a hacer mapas con ellos!!! Sí, enseguida!! A todos nos gustan los mapas y hacer mapas con R es *easy* ... bueno, no tan fácil, pero vamos a ello!!
+
+
+Más que mapas lo que vamos a hacer es visualizar **datos geoespaciales**. Unos datos no se pueden considerar geoespaciales si no vienen acompañados de un **CRS** (Coordinate Reference System) de forma que las aplicaciones GIS puedan manipular y mostrar correctamente esos datos. Los CRS utilizan un modelo matemático para conectar los datos, las coordenadas de un objeto, con su posición física en la superficie terrestre. Un sistema de referencia de coordenadas geográficas permite que todos los puntos de la tierra puedan ser descritos como un conjuntos de coordenadas (como latitud, longitud y altitud). Diversos sistemas se utilizan para representar la tierra tridimensional en un plano o mapa bidimensional.
+
+
+Los datos geoespaciales representan lugares geográficos de la Tierra y para poder representar la posición de un objeto en la Tierra necesitamos dos cosas:
+
+- las coordenadas del objeto 
+
+- un sistema de referencia (CRS) para conectar esos datos con la superficie terrestre.
+
+Un CRS consiste en modelo geométrico elipsoide de la superficie terrestre y un *datum* que identifica el origen y orientación de los ejes y también las unidades de medida.
+
+Como sabéis la Tierra no es esférica y esto complica la utilización de un único CRS, de forma que se han creado unos cuantos para tratar de representar la superficie terrestre de forma adecuada.
+
+Además, hay dos tipos de CRS: **CRS geográficos y proyectados**. En los sistema geográficos, el marco de referencia es el globo terráqueo y cuantos grados norte o este, está el objeto; mientras que en los sistemas proyectados, el marco de referencia es una representación plana de la Tierra (o de parte de ella). Si te interesa el tema, [aquí](https://geocompr.github.io/post/2019/crs-projections-transformations/) y  [aquí](https://paulblgis.wordpress.com/2016/12/09/sistemas-de-coordenadas-proyectadas-y-geograficas-cual-es-la-diferencia/) tienes dos posts divulgativos.
+
+
+
+## Proyecciones
+
+Como la Tierra es esférica, para hacer un mapa bidimensional (o plano) de ella, se tiene que usar algún tipo de proyección, por lo que las áreas se mostrarán más o menos distorsionadas. Por ejemplo:
+
+
+
+```{r}
+p1 <- ggplot(CCAA,  aes(fill = INECodCCAA) ) + 
+          geom_sf() +
+          scale_fill_viridis_d(guide = FALSE) +
+          labs(title = "Coord. geográficas")
+
+p2 <- ggplot(CCAA,  aes(fill = INECodCCAA) ) + 
+           geom_sf() + coord_sf(crs = 2154, datum = sf::st_crs(2154)) +
+           scale_fill_viridis_d(guide = FALSE) +
+           labs(title = "Lambert 93")
+
+p1 + p2
+```
+
+
+
+
+## Datos espaciales
+
+Para poder representar adecuadamente datos espaciales, estos deben contener la información de su CRS y algunas veces hay que convertir entre CRS's; de forma que la estructura tradicional de datos en R (los data.frames) no es adecuada para almacenar datos espaciales^[Most geocoded data created through Google Maps or other geocoding sites  provides coordinates in longitude and latitude values using the WGS84 ellipsoid and thus contains a CRS equivalent to the PROJ argument +proj=longlat +datum=WGS84 or EPSG 4326. However, this information about the CRS is implicit and not contained anywhere within the data frame itself]. Piensa además que los datos espaciales más simples (los puntos) serían fáciles de almacenar en dos columnas de un data.frame, pero piensa en objetos espaciales más complejos como lineas, polígonos, polígonos con huecos etc... hace que para almacenar datos espaciales en R se utilicen estructuras de datos más complejas que un data.frame.
+
+
+Además, para complicar un poco más las cosas, hay dos tipos fundamentales de datos geográficos: **raster y vectoriales**. En el curso solo vamos a ver (un poquito) los datos espaciales vectoriales.
+
+- Los datos ráster se almacenan como una cuadrícula de valores que se representan en un mapa como píxeles. Cada valor de píxel representa un área en la superficie de la Tierra. Los datos ráster son datos pixelados (o cuadriculados) en los que cada píxel está asociado a una ubicación geográfica específica. El valor de un píxel puede ser continuo (por ejemplo, elevación) o categórico (por ejemplo, uso del suelo). Un ráster geoespacial solo es diferente de una foto digital en que está acompañado de información espacial que conecta los datos a una ubicación en particular. Esto incluye la extensión y el tamaño de celda del ráster, el número de filas y columnas y su sistema de referencia de coordenadas (o CRS)
+
+
+- Las estructuras de datos vectoriales representan posiciones específicas en la superficie de la Tierra.
+
+
+
+## `sp` versus `sf`
+
+En R hay 2 formas alternativas de almacenar (y de manipular) datos geográficos vectoriales: el paquete `sp` y el paquete `sf`. Las principales diferencias entre los paquetes sp y sf se derivan de la manera en que las clases sp y sf almacenan información sobre CRS, distinguen entre puntos, líneas y polígonos, y cómo conectan estos datos espaciales con datos no espaciales.
+
+Cuando se usan estos paquetes, tanto `sp` como `sf`, proporcionan enlaces a potentes bibliotecas SIG de código abierto, como [**GDAL**](https://gdal.org/) (Geospatial Data Abstraction Library: es una biblioteca de software para la lectura y escritura de formatos de datos geoespaciales, publicada bajo la MIT License por la fundación geoespacial de código abierto (Open Source Geospatial Foundation), [**GEOS**](https://geos.osgeo.org/doxygen/index.html) (Geometry Engine Open Source: para operaciones de topología en geometrías) y [**PROJ**](https://proj.org/news.html) (PROJ es una biblioteca que proporciona métodos para transformar entre sistemas de referencia de coordenadas diferentes y operaciones de proyección). Por eso cuando cargamos el paquete `sf` nos aparece el siguiente mensaje en la consola: `Linking to GEOS 3.8.1, GDAL 3.1.3, PROJ 7.1.1`
+
+
+Muchos paquetes R para GIS utilizan la metodología/arquitectura proporcionada por `sp`, pero por varias razones la metodología implementada por el paquete  el paquete `sf` se está convirtiendo en el estándar.
+
+Las principales razones son 4: 
+
+1) El paquete `sf` implementa el estándar abierto "simple feautures" para la representación de datos geográficos vectoriales en R. Simple features es un estándar, un conjunto común de reglas, para representar las geometrías espaciales de objetos del mundo real en un ordenador, en las que se define desde cómo se almacenan los datos en el ordenador hasta qué operaciones geométricas se pueden aplicar. 
+
+2) `sf` utiliza para contener/almacenar los datos espaciales una estructura muy similar a un dataframe: los spatial dataframes o `sf`^[Sí, todo se llama `sf`!!! Tanto el paquete como el estándar que incorpora como la estructura de datos se llaman todos `sf`.] , que son muy parecidos a un data frame salvo que incluyen una columna adicional, generalmente llamada `geometry` que almacena la información geográfica, los datos vectoriales espaciales, ya sean estos puntos, lineas, polígonos etc...
+
+3) Muchas de las funciones del paquete `sf` comienzan con `st_`; por ejemplo  `st_nearest_points()`, lo que facilita su uso.
+
+
+4) las funciones de `sf` se integran en el **tidyverse workflow**. De hecho la estructura de datos que utiliza el paquete `sf` para almacenar datos geográficos son los objetos de tipo ``sf` una extensión de los data.frames, de forma que pueden ser manipulados con `dplyr` y graficados con `ggplot2`. Los objetos `sf` pueden almacenar datos normales (cuantitativos, cualitativos, texto) pero almacenan datos espaciales en una columna especial llamada habitualmente `geometry` con clase especial (`sfc`), y allí se almacena la información geográfica: el CRS, coordenadas y el tipo de objeto geométrico. La clase sfc tiene siete subclases para denotar los distintos tipos de objetos geométricos que se derivan del estándar `sf`. 
+
+
+- Por ejemplo, para seleccionar geometrías usamos la función `filter()`:
+
+
+```{r}
+#- elegimos 4 CC.AA
+zz_prov_chosen <- c("Andalucía", "Galicia", "Aragón", "Canarias", "Illes Balears")
+
+zz_prov_1 <- Provincias %>% filter(NombreCCAA %in% zz_prov_chosen)
+zz_prov_2 <- Provincias %>% filter(!(NombreCCAA %in% zz_prov_chosen))
+
+p1 <- ggplot(zz_prov_1, aes(fill = INECodProv) ) + 
+         geom_sf()  +
+         scale_fill_viridis_d(guide = FALSE) +
+         labs(title = "Coord. geográficas")
+
+p2 <- ggplot(zz_prov_2, aes(fill = INECodProv) ) + 
+         geom_sf()  +
+         scale_fill_viridis_d(guide = FALSE) +
+         labs(title = "Coord. geográficas")
+
+p1 + p2 
+```
+
+- Por ejemplo, para agrupar geometrías, en este caso las provincias españolas, usamos la función `summarize()`
+
+
+```{r}
+#- creamos las geometrías de las CC.AA por agrupación de las geometrías provinciales
+CCAA_2 <- Provincias %>% group_by(INECodCCAA, NombreCCAA) %>% summarize()
+
+p1 <- ggplot(Provincias, aes(fill = INECodProv) ) + 
+         geom_sf()  +
+         scale_fill_viridis_d(guide = FALSE) +
+         labs(title = "Coord. geográficas")
+
+
+p2 <- ggplot(CCAA_2, aes(fill = INECodCCAA) ) + 
+         geom_sf()  +
+         scale_fill_discrete(guide = FALSE) +
+         labs(title = "Coord. geográficas")
+
+p1 + p2 
+```
+
+
+```{r, echo = FALSE}
+#- borramos lo q no nos hace falta
+rm(p1, p2, zz_prov_chosen, zz_prov_1, zz_prov_2, CCAA_2)
+```
+
+Bueno, pues este es toda la teoría del tutorial. Vamos a hacer gráficos!!
+
+<br>
+
+---------------
+
+<br>
+
+
+# 2. Haciendo gráficos
+
+```{r, eval = FALSE, echo = FALSE}
+#- ponemos un theme un poco más adecuado para mapas
+theme_set(theme_bw())  #- The classic dark-on-light ggplot2 theme work better for presentations 
+theme_set(cowplot::theme_map())
+```
+
+
+Primero vamos cargar un conjunto de datos espaciales del paquete [`rnaturalearth`](https://docs.ropensci.org/rnaturalearth/). Bueno, en realidad ya lo hemos cargado antes.
+
+
+```{r}
+#world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
+class(world) #- es un sf, pero tb es un data.frame
+names(world) #- fijate que la ultima columna se llama geometry y almacena los datos espaciales
+```
+
+
+Los gráficos los vamos a hacer, de momento, con `ggplot2`. Es tan fácil como usar `geom_sf()`. Las siguientes 3 expresiones producen el mismo gráfico: 
+
+```{r, eval = FALSE}
+ggplot(data = world) + geom_sf()
+
+ggplot(data = world, aes(geometry = geometry)) + geom_sf()
+
+ggplot() + geom_sf(data = world, aes(geometry = geometry))
+```
+
+
+```{r, echo = FALSE}
+ggplot(data = world) + geom_sf()
+```
+
+Como el mapa que hemos hecho, en realidad es un gráfico ggplot, pues ya sabemos cambiar/tunear algunas de las características del gráfico. Por ejemplo: 
+
+```{r}
+ggplot(data = world) + geom_sf(color = "black", fill = "lightgreen", lwd = 0.2)
+```
+
+
+Podemos poner títulos y leyendas:
+
+```{r}
+p <- ggplot(data = world) + geom_sf() +
+       labs(title = "Gráfico 1: Mapa del mundo",
+            caption = "Datos provenientes de rnaturalearth")
+p
+```
+
+
+Podemos hacer mapas de **COROPLETAS**: las distintas regiones se colorean de forma que muestren los valores de una variable estadística. Por ejemplo, una coropleta con la variable población(pob_est)
+
+
+```{r, eval = FALSE}
+p + geom_sf(aes(fill = pop_est))
+p + geom_sf(aes(fill = pop_est)) + scale_fill_distiller()
+p + geom_sf(aes(fill = pop_est)) + scale_fill_viridis_c(option = "plasma", trans = "sqrt")
+```
+
+
+```{r, echo = FALSE}
+p + geom_sf(aes(fill = pop_est)) + scale_fill_viridis_c(option = "plasma", trans = "sqrt")
+```
+<br>
+
+### Proyecciones
+
+Para cambiar la proyección de un objeto "sf" a otro CRS usamos la función  `st_transform()`, o alternativamente podemos especificar directamente el CRS en el gráfico con `coord_sf()`:
+
+```{r}
+#- world2 <- st_transform(world, "+proj=laea +y_0=0 +lon_0=155 +lat_0=-90 +ellps=WGS84 +no_defs")
+p + coord_sf(crs = "+proj=laea +y_0=0 +lon_0=155 +lat_0=-90 +ellps=WGS84 +no_defs") + 
+     labs(subtitle = "Lambert Azimuthal Equal Area projection")
+```
+
+<br>
+
+Vamos a jugar un poco con el CRS con la función `coord_sf()`. Hay que saber que ggplot usará el CRS de la primera capa que contenga uno. Si no hubiese ningún CRS se usa **WGS84** (latitude/longitude, the reference system used in GPS).
+
+Se puede cambiar el CRS de varias maneras:
+
+1. usando un `**string PROJ** válido. Por ejemplo este string `"+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs "` es el European-centric ETRS89 Lambert Azimuthal Equal-Area projection)
+
+2. usando un **código SRID** (Spatial Reference System Identifier)  
+
+3. Usando un **código EPGS** (European Petroleum Survey Group)^[Parece que con PROJ7 es mejor no usarlo]
+
+Los siguientes tres gráficos hacen lo mismo. Representan los datos del spatial.data.frame `world` usando the ETRS89 Lambert Azimuthal Equal-Area projection, cuyo código EPSG es 3035. [Aquí](http://www.juntadeandalucia.es/medioambiente/site/rediam/menuitem.04dc44281e5d53cf8ca78ca731525ea0/?vgnextoid=2a412abcb86a2210VgnVCM1000001325e50aRCRD&lr=lang_es) tienes algunos códigos de proyecciones:
+ 
+
+```{r, eval = FALSE}
+p + coord_sf(crs = "+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs ")  #- usamos PROJ string
+
+p + coord_sf(crs = st_crs(3035))   #- usamos SRID identifier
+
+p + coord_sf(crs = "+init=epsg:3035")  #- usamos EPSG code (mejor no usarlo xq GDAL ha deprecated esta sintaxis)
+```
+
+
+```{r, echo = TRUE}
+p + coord_sf(crs = st_crs(3035)) + #- usamos SRID identifier
+    labs(subtitle = "(European-centric ETRS89 \nLambert Azimuthal Equal-Area projection)")
+```
+
+
+<br>
+
+### Zoom
+
+Volvemos a la proyección nativa del conjunto de datos `world` y hacemos un zoom en nuestro mapa con `coord_sf()`. El zoom lo hacemos pare centrarnos en España y alrededores. Para hacer el zoom en realidad ajustamos los límites de los ejes del gráfico
+
+
+```{r}
+p_esp <- p + coord_sf(xlim = c(-15.00, 15.00), ylim = c(21, 47.44), expand = FALSE)
+p_esp
+```
+
+Con el paquete `ggspatial` podemos poner elementos de mapas como una *Scale bar* con `annotation_scale()` y una *North arrow* con `annotation_north_arrow()`:
+
+
+```{r}
+p_esp + 
+ ggspatial::annotation_scale(location = "bl", width_hint = 0.5) +
+ ggspatial::annotation_north_arrow(location = "bl", which_north = "true", 
+                                   pad_x = unit(0.75, "in"), pad_y = unit(0.5, "in"),
+                                   style = north_arrow_fancy_orienteering)
+```
+
+Fíjate en el **warning**: `Scale on map varies by more than 10%, scale bar may be inaccurate`. Como el mapa usa un CRS **no proyectado**, sino geográfico, los datos están en longitud/latitud (WGS84) en una proyección cilíndrica equidistante (todos los meridianos son paralelos), entonces, la distancia en kilómetros en el mapa depende de la latitud. Los mapas de regiones pequeñas generalmente proporcionan barras de escala más precisas que las regiones extensas como la que vemos en el gráfico anterior.
+
+<br>
+
+### texto en el mapa
+
+El mapa se ha hecho con `ggplot2`, así que podemos añadir, por ejemplo, texto con `geom_text()`; pero antes de ello, vamos a crear/calcular centroides de cada país para ver donde situamos el texto en el mapa. 
+
+```{r}
+world_points <- st_centroid(world)    #- sustituye la geometry por el centroide
+world_points <- cbind(world, st_coordinates(st_centroid(world$geometry))) #- ahora el centroide pasa a estar en 2 columnas, llamadas X e Y, donde figuran la longitud y latitud del centroide
+```
+
+Para calcular los centroides hemos usado la función `st_centroid()`. Los datos del centroide (longitud, latitud) se almacenan una nueva columna llamada `geometry`; pero al fusionar los dos *data.frame's*, el centroide pasa a estar en dos nuevas columnas llamadas X e Y. 
+
+Para ver esas dos nuevas columnas (X e Y), vamos a hacer un "pequeño truco", vamos a quitar la columna de geometrías. Esto facilita el visionado de los datos, pero lógicamente cuando vayamos a hacer el gráfico, realmente no podremos eliminar la geometry porque si no, los datos dejarían de ser datos espaciales.
+
+```{r}
+#- truco para ver mejor los datos espaciales: quitar la geometría
+names(world_points)
+zz <- world_points %>% select(name, iso_a3,  X, Y) %>%  
+      st_set_geometry(NULL)  #- por si quiero ver mejor los datos del df
+```
+
+
+Hacemos el mapa con los nombres de los países con `geom_text()` y el nombre del Mar Mediterráneo con `annotate()`
+
+```{r}
+p_esp + 
+  geom_text(data = world_points, 
+            aes(x = X, y = Y, label = name), 
+            color = "darkblue", fontface = "bold", check_overlap = TRUE, size = 2.5) +
+  annotate(geom = "text", x = 5.5, y = 38, 
+           label = "Mar Mediterráneo", fontface = "italic", color = "grey22", size = 4)
+```
+
+
+El nombre de Francia no ha salido bien. Lo hemos situado en España, es por sus territorios en América: Guadalupe, Martinica, ... Para arreglarlo podríamos usar `st_point_on_surface()` pero será otro día. Hoy vamos a arreglarlo a lo bruto, vamos a quitar a Frnacia del data.frame world_points y a correr.
+
+```{r}
+world_points <- world_points %>% filter(admin != "France")
+```
+
+
+<br>
+
+### Tuneando del mapa
+
+
+Vamos a tunear el mapa. Por ejemplo, vamos a poner el mar (en realidad al `background` del `theme`) del color `aliceblue`, y a los continentes les pondremos un color terroso con `fill = "antiquewhite"`. Arreglamos un poco las grid-lines dentro del `theme`, y le ponemos la estrellita. No nos va a salir bonito-bonito porque los nombres de los países se van a superponer. Podríamos quitar nombres, pero otro día:
+
+
+```{r}
+p <- p + 
+  geom_sf(fill = "antiquewhite") +
+  geom_text(data = world_points, 
+            aes(x = X, y = Y, label = name), 
+                color = "darkblue", fontface = "bold", 
+                check_overlap = TRUE, size = 2) +
+  annotation_north_arrow(location = "bl", which_north = "true",
+                         pad_x = unit(0.75, "in"), 
+                         pad_y = unit(0.5, "in"),
+                         style = north_arrow_fancy_orienteering) +
+  theme(panel.grid.major = element_line(color = gray(.5), linetype = "dashed", size = 0.5), 
+        panel.background = element_rect(fill = "aliceblue"))
+p
+```
+
+Hacemos otra vez un zoom con `sf::coord_sf()`
+
+
+```{r}
+p + coord_sf(xlim = c(-15.00, 15.00), ylim = c(21, 47.44), expand = FALSE) +
+    ggspatial::annotation_scale(location = "bl", width_hint = 0.5)
+```
+
+
+Como nos ha quedado medio chulo, si quisiéramos guardar el mapa haríamos:
+
+```{r, eval = FALSE}
+ggsave("map.pdf")
+ggsave("map_web.png", width = 6, height = 6, dpi = "screen")
+```
+
+<br>
+
+---------------
+
+<br>
+
+
+# 3. Mas tuneado
+
+Vamos a ir modificando el mapa, no necesariamente para hacerlo más bonito, sino para ver como se pueden hacer mapas con `ggplot2`:
+
+### añadiendo puntos
+
+Primero quiero añadir al mapa donde está mi pueblo y donde está Valencia, vamos que voy a añadir puntos al mapa. 
+
+Para ello, primero necesito tener la localización de estos puntos en el mapa, así que me fui a [OSM, OpenStreetMap](https://www.openstreetmap.org/#map=14/-1.9422/31.5866&layers=C) y geolocalicé los dos municipios y con esta información, voy  a crear un data.frame con la long/lat de mi pueblo y de Valencia: 
+
+
+```{r}
+pueblos <- data.frame(
+               nombre = c("Pancrudo", "Valencia"), 
+               longitude = c(-1.028781, -0.3756572),
+               latitude = c(40.76175, 39.47534) )     
+pueblos
+```
+
+
+- lo mas fácil para añadir puntos es usar `geom_point()`
+
+```{r}
+p_esp + 
+  geom_point(data = pueblos, 
+             aes(x = longitude, y = latitude), 
+             size = 2, color = "darkred") +
+  geom_text(data = pueblos, 
+            aes(x = longitude, y = latitude, label = nombre), 
+            color = "darkblue", fontface = "bold", check_overlap = TRUE, size = 2.5)
+```
+
+Utilizar `geom_point()` es fácil y funciona, pero es más flexible convertir el data.frame a un objeto `sf`. Esto lo podemos hacer con la función `st_as_sf()`, definiendo la proyección (aquí WGS84, que es el código CRS # 4326):
+
+
+```{r}
+pueblos_sf <- st_as_sf(pueblos, 
+                       coords = c("longitude", "latitude"), 
+                       crs = 4326,  #- EPSG:4326 Coordenadas Geográficas WGS84
+                       agr = "constant")
+```
+
+Para después añadirlo como una capa más con `geom_sf()` a nuestro gráfico: 
+
+```{r}
+p_esp + geom_sf(data = pueblos_sf, size = 2, color = "darkred")
+```
+
+Hagamos zoom con `coord_sf`
+
+```{r}
+p_esp + geom_sf(data = pueblos_sf, size = 2, color = "darkred") + 
+        coord_sf(xlim = c(-15.00, 15.00), ylim = c(21, 47.44), expand = FALSE)
+```
+
+
+### Añadiendo polígonos
+
+La verdad es que se hace igual que con los puntos, hay que usar la función `geom_sf()` y a correr.
+
+Vamos a añadir los contornos/polígonos de las CC.AA:
+
+
+```{r}
+zz_CCAA <- CCAA %>% st_set_geometry(NULL)
+p + geom_sf(data = CCAA, fill = NA) + 
+      coord_sf(xlim = c(-15.00, 15.00), ylim = c(21, 47.44), expand = FALSE)
+```
+
+Ahora añadimos las provincias de Andalucía, PERO coloreadas según su población media por municipio. Para ello: 
+
+- 1. primero cargamos datos de población
+
+```{r}
+INE_padron_muni_96_19 <- pjpv2020.01::pjp_data_pob_mun_1996_2019
+pob_andalucia <- INE_padron_muni_96_19 %>% 
+                 filter(year == 2017) %>% 
+                 filter(poblacion == "Total") %>% 
+                 filter(INECodCCAA.n == "Andalucía") %>%
+                 group_by(INECodProv.n) %>% mutate(n_pueblos = n_distinct(INECodMuni.n)) %>%
+                 mutate(pob_prov = sum(pob_values, na.rm = TRUE)) %>% ungroup() %>%
+                 mutate(pob_media_pueblos = pob_prov/n_pueblos) %>% 
+                 select(INECodProv.n, INECodProv, pob_media_pueblos, pob_prov, n_pueblos) %>%
+                 distinct() %>% ungroup()
+```
+
+
+
+- 2. después cargamos lindes provinciales (en realidad ya los tenemos)
+
+```{r}
+# Provincias <- Provincias
+zz_Provincias <- Provincias %>% st_set_geometry(NULL)
+```
+
+
+- 3. fusionamos los datos de población y los lines provinciales:
+
+```{r}
+geo_pob_andalucia <- left_join(pob_andalucia, Provincias, by = c("INECodProv" = "INECodProv"))
+geo_pob_andalucia <- left_join(pob_andalucia, Provincias)
+```
+
+
+- 4. finalmente añadimos las provincias coloreadas por población al mapa:
+
+```{r}
+p + geom_sf(data = CCAA, fill = NA) +
+    geom_sf(data = geo_pob_andalucia, aes(geometry = geometry, fill = n_pueblos)) +
+    scale_fill_viridis_c(alpha = .4) +
+    geom_sf(data = pueblos_sf, size = 2, color = "darkred") +
+    coord_sf(xlim = c(-15.00, 25.00), ylim = c(21, 57.44), expand = FALSE)
+```
+
+- vamos añadir también 3 municipios españoles seleccionados al azar:
+
+```{r, eval = FALSE}
+pueblos_3 <- IGN_nomencla_muni %>% 
+             sample_n(3) %>% 
+             select(NOMBRE_ACTUAL, PROVINCIA, LONGITUD_ETRS89, LATITUD_ETRS89) %>%
+             st_as_sf(coords = c("LONGITUD_ETRS89", "LATITUD_ETRS89"), crs = 4326, agr = "constant", remove = FALSE)
+```
+
+- Bueno, en realidad no los voy a elegir tan tan al azar:
+
+```{r, eval = TRUE}
+pueblos_3 <- IGN_nomencla_muni %>% 
+             filter(NOMBRE_ACTUAL %in% c("Pancrudo", "Alburquerque", "Polentinos")) %>% 
+             select(NOMBRE_ACTUAL, PROVINCIA, LONGITUD_ETRS89, LATITUD_ETRS89) %>%
+             st_as_sf(coords = c("LONGITUD_ETRS89", "LATITUD_ETRS89"), crs = 4326, agr = "constant", remove = FALSE)
+```
+
+
+```{r}
+p_esp <- p + geom_sf(data = CCAA, fill = NA) +
+         geom_sf(data = geo_pob_andalucia, aes(geometry = geometry, fill = n_pueblos)) +
+         scale_fill_viridis_c(alpha = .4) +
+         geom_sf(data = pueblos_3, size = 2, color = "darkred") +
+         ggrepel::geom_label_repel(data = pueblos_3, aes(x = LONGITUD_ETRS89, y = LATITUD_ETRS89, label = NOMBRE_ACTUAL)) +
+         coord_sf(xlim = c(-10.00, 7.00), ylim = c(35, 45), expand = FALSE)
+p_esp
+```
+
+
+### Con los mapas y gráficos nunca se acaba!!!
+
+Canarias no se ve. ¿La situamos en el mapa? Usaremos `sf::st_bbox()`
+
+
+```{r}
+canarias <- Provincias %>% filter(INECodProv %in% c(35,38))
+peninsula <- Provincias %>% filter( !(INECodProv %in% c(35, 38)) )
+my_shift <- st_bbox(peninsula)[c(1,2)]- (st_bbox(canarias)[c(1,2)]) + c(-2.4, -1.1)
+canarias$geometry <- canarias$geometry + my_shift
+st_crs(canarias)  <- st_crs(peninsula)
+peninsula_y_canarias <- rbind(peninsula, canarias)
+
+p1 <- ggplot() + geom_sf(data = peninsula_y_canarias)
+p2 <- ggplot() + geom_sf(data = peninsula) + geom_sf(data = canarias, fill = "purple") 
+#coord_sf(xlim = c(-12.00, 4.00), ylim = c(33, 44), expand = FALSE)
+
+p1 + p2 
+```
+
+
+- hagamos zoom
+
+```{r}
+ggplot() + geom_sf(data = peninsula) +
+           geom_sf(data = canarias) +
+           coord_sf(xlim = c(-12.00, 4.00), ylim = c(33, 44), expand = FALSE)
+```
+
+
+- pongamos Canarias, pintada en rojo, en nuestro mapa 
+
+
+```{r}
+p_esp + geom_sf(data = canarias, fill = "red") +
+         coord_sf(xlim = c(-12.00, 5.00), ylim = c(30, 44), expand = FALSE)
+```
+
+
+### el río Ebro
+
+Pues que quiero poner el Río Ebro en el mapa. Logicamente necesio los datos geográficos del rio Ebro.
+
+```{r}
+#rios <- rio::import("https://github.com/perezp44/archivos_download/blob/master/rio_ebro.rds?raw=true")
+zz_rios <- rios %>% st_set_geometry(NULL)
+names(rios)
+```
+
+
+- Voy a situar en el mapa 4 ríos:
+
+```{r, results = "hide"}
+#- no hace falta pero
+cod_rios_guenos <- c(913757, 913687, 913685, 913619)
+nombre_rios_guenos <- c("Pancrudo", "Jiloca", "Jalón", "Ebro")
+
+rios_guenos <- rios %>% filter(Cod_Uni %in% cod_rios_guenos)
+```
+
+
+```{r}
+ggplot(data = peninsula) + geom_sf() +
+    geom_sf(data = rios_guenos, color = "lightblue", lwd = 1.3) +
+    labs(subtitle = "Mapa de España con 4 ríos Güenos", color = "")
+# col = sf::sf.colors(2, alpha = 0.5)
+```
+
+- ¿Cómo se llamará el río pequeñín?
+
+
+```{r}
+ggplot(data = peninsula) + geom_sf() +
+    geom_sf(data = rios_guenos, color = "lightblue", lwd = 1.3) +
+    geom_point(data = pueblos, aes(x = longitude, y = latitude), size = 2, color = "darkred") +
+    geom_text(data = pueblos, aes(x = longitude, y = latitude, label = nombre), color = "darkblue", fontface = "bold", check_overlap = TRUE, size = 2.5) + 
+    labs(subtitle = "Mapa de España con 4 ríos Güenos", color = "")
+```
+
+
+<br>
+
+---------------
+
+<br>
+
+
+
+# 4.  Layouts
+
+Con los mapas se pueden hacer composiciones para destacar el mensaje que se quiere mostrar. Se pueden hacer estas composiciones de varias maneras:
+
+
+- Using “grobs”, i.e. graphic objects from ggplot2, which can be inserted in the plot region using plot coordinates;
+
+- Usando el paquete `patchwork` o el paquete `cowplot`
+
+```{r, eval = TRUE}
+gworld <- ggplot(data = world) +
+  geom_sf(aes(fill = region_wb)) +
+  geom_rect(xmin = -15, xmax = 25.00, ymin = 21, 
+            ymax = 57.44, fill = NA, colour = "black", size = 1.5) +
+  theme(panel.background = element_rect(fill = "azure")) +
+  labs(subtitle = "Mapa del mundo") +
+  scale_fill_discrete(guide = FALSE)
+
+gworld
+```
+
+
+```{r, eval = TRUE}
+g_europe <- ggplot(data = world) +
+    geom_sf() +
+    geom_sf(data = CCAA, fill = NA) +
+    geom_sf(data = geo_pob_andalucia, aes(geometry = geometry, fill = n_pueblos)) +
+    geom_sf(data = pueblos_3, size = 2, color = "darkred") +
+    geom_label_repel(data = pueblos_3, aes(x = LONGITUD_ETRS89, y = LATITUD_ETRS89, label = NOMBRE_ACTUAL)) +
+    coord_sf(xlim = c(-15.00, 25.00), ylim = c(21, 57.44), expand = FALSE) +
+    theme(panel.background = element_rect(fill = "azure")) +
+    labs(subtitle = "Mapa de Europa Occidental") +
+    scale_fill_continuous(guide = FALSE)
+g_europe
+```
+
+
+
+```{r, eval = TRUE}
+library(patchwork)
+gworld + g_europe + plot_layout(widths = c(1, 2))
+```
+
+
+
+<br>
+
+---------------
+
+<br>
+
+# 5. Paquete `Mapview`
+
+Vamos a ver lo fácil que es hacer un mapa con el paquete [`mapview`](https://r-spatial.github.io/mapview/).
+
+Por ejemplo, teníamos geolocalizados a Pancrudo y Valencia. Veámoslos en un gráfico con `mapview()`
+
+```{r, eval = FALSE}
+pueblos <- data.frame(nombre = c("Pancrudo", "Valencia"), longitude = c(-1.028781, -0.3756572), latitude = c(40.76175, 39.47534)) #- ETRS89
+pueblos_sf <- st_as_sf(pueblos, coords = c("longitude", "latitude"), crs = 4326, agr = "constant") #- EPSG:4326 Coordenadas Geográficas WGS84
+mapview::mapview(pueblos_sf)
+```
+
+
+Otro ejemplo con las geometrías de las CC.AA, aunque es una afrenta para Pancrudo
+
+```{r, eval = FALSE}
+mapview::mapview(rios)
+```
+
+Para ver que se puede hacer con `mapview` vamos a añadir alguna información a CCAA, por ejemplo el número de provincias, el número de municipios y la población total en el año 2017:
+
+
+```{r, eval = FALSE}
+INE_padron_muni_96_19 <- pjpv2020.01::pjp_data_pob_mun_1996_2019
+info_CCAAs <- INE_padron_muni_96_19 %>% 
+              filter(year == 2017) %>% 
+              filter(poblacion == "Total") %>% 
+              group_by(INECodCCAA.n) %>% 
+              mutate(n_prov = n_distinct(INECodProv)) %>% 
+              mutate(n_pueblos = n_distinct(INECodMuni)) %>% 
+              mutate(pob_CCAA = sum(pob_values, na.rm = TRUE)) %>% ungroup() %>%
+              select(INECodCCAA, INECodCCAA.n, n_prov, n_pueblos, pob_CCAA) %>%
+              distinct() %>% ungroup()
+```
+
+
+Juntamos el data.frame `info_CCAAs` con el dataframe con las geometrías ``CCAA`:
+
+
+```{r, eval = FALSE}
+CCAA_con_info <- left_join(CCAA, info_CCAAs,  by = c("INECodCCAA" = "INECodCCAA"))
+```
+
+
+Y vamos a graficarlo ya con `mapview`:
+
+
+```{r, eval = FALSE}
+mapview::mapview(CCAA_con_info, 
+                 zcol = c("NombreCCAA", "n_prov", "n_pueblos", "pob_CCAA"),
+                 color = "tomato", col.regions = "purple", lwd = 3,
+                 cex = "n_pueblos")
+```
+
+
+```{r, eval = FALSE}
+mapview::mapview(CCAA_con_info, 
+                 zcol = c("NombreCCAA", "n_prov", "n_pueblos", "pob_CCAA"),
+                cex = "n_pueblos")
+```
+
+Se pueden poner varias capas:
+
+```{r, eval = FALSE}
+mapview(list(CCAA_con_info, pueblos_sf), layer.name = c("CC.AA", "2 municipios chachis"))
+```
+
+O mejor así:
+
+```{r, eval = FALSE}
+mapview::mapview(CCAA_con_info, zcol = c("NombreCCAA", "n_prov", "n_pueblos", "pob_CCAA")) +
+mapview::mapview(pueblos_sf) 
+```
+
+
+Y muchas mas cosas, por ejemplo [Map pop-ups](https://r-spatial.github.io/mapview/articles/articles/mapview_04-popups.html)  o [Image pop-ups](https://r-spatial.github.io/mapview/articles/articles/mapview_04-popups.html)
+
+
+- se puede usar el operador ` %>%` con las funciones de `sf`
+
+```{r, eval = FALSE}
+CCAA_con_info %>% st_union %>% mapview
+```
+
+
+
+<br>
+
+
+### Integración con el paquete `mapedit`
+
+Integracion con [`mapedit`](https://www.r-spatial.org/r/2017/06/09/mapedit_0-2-0.html)
+
+
+
+```{r, eval = FALSE}
+#install.packages("mapedit")
+library(mapedit)
+my_map <- mapview(pueblos_sf)
+drawFeatures(my_map, editor = "leafpm")   #- good
+```
+
+Para recuperar el mapa es mejor así:
+
+```{r, eval = FALSE}
+library(mapedit)
+mys_dibujitos <- editMap(mapview(pueblos_sf))
+mapview(mys_dibujitos$finished)
+```
+
+
+
+
+<br>
+
+---------------
+
+<br>
+
+
+# 6. Paquete `leaflet`
+
+
+El paquete [`leaflet`](https://rstudio.github.io/leaflet/) permite utilizar en R una de la librerías de JavaScript más conocidas: Leaflet.
+
+
+Para abrir un mapa leaflet:
+
+```{r, eval = FALSE }
+library(leaflet)
+leaflet() %>% addTiles() %>% leafem::addMouseCoordinates()
+```
+
+
+
+Podemos centrar el mapa, decidir el nivel de zoom y ponerle marcadores y popups:
+
+
+```{r}
+m <- leaflet() %>%
+  addTiles() %>% 
+  setView(lng = -1.0287810, lat = 40.76175, zoom = 6) %>% 
+  addMarkers(lng = -1.0287810, lat = 40.76175, popup = "Pancrudo") %>% 
+  addPopups(lng = -0.3756572, lat = 39.47534, popup = "Valencia")
+m
+```
+
+
+Vamos a añadirle elementos, por ejemplo puntos, por ejemplo mis 2 municipios:
+
+
+```{r, eval = FALSE}
+leaflet() %>% 
+  addTiles() %>% # Add default OpenStreetMap map tiles
+  addCircleMarkers(data = pueblos_sf)
+  #leafem::addHomeButton(ext = extent(breweries91), layer.name = "pueblos")
+```
+
+O, por ejemplo polígonos como las CC.AA:
+
+```{r, eval = FALSE}
+leaflet(data = CCAA) %>% addTiles() %>%
+  addPolygons(fillColor = topo.colors(18, alpha = NULL), stroke = FALSE)
+```
+
+
+
+Si te ha gustado tu mapa leaflet y quieres guardarlo, puedes guardarlo como un archivo html así:
+
+```{r, eval = FALSE}
+htmltools::save_html(lplot, "leaflet.html")
+```
+
+
+
+Se pueden hacer bastantes más cosas, por ejemplo, para hacer coropletas con leaflet puedes ir [aquí](https://rstudio.github.io/leaflet/choropleths.html). Otro ejemplo de análisis con leaflet [aquí](https://www.jla-data.net/eng/leaflet-in-r-tips-and-tricks/index.html).
+
+
+
+<br>
+
+---------------
+
+<br>
+
+
+# 7. Operaciones geométricas
+
+
+Las operaciones geométricas que podemos hacer con `sf` con datos espaciales vectoriales se pueden dividir en tres grupos:
+
+- 1. funciones que devuelven un valor que resume alguna propiedad de la geometría:  
+
+      -  `st_area()`    : calcula el area 
+      -  `st_lenght()`  : calcula el perímetro   
+      -  `st_distance()`: calcula la distancia (entre dos geometrías)   
+    
+- 2. funciones que chequean si se cumple una condición:  
+
+      -  En 1 geometría: `st_is_valid()`    : chequea si la geometria es válida   
+      
+     
+      - En 2 geometrías: por ejemplo, `st_intersects(A, B)` chequea si dos geometrías se intersectan. Otras funciones: `st_disjoint()`, `st_touches()`, `st_crosses()`, `st_within()`, `st_contains()`, `st_overlaps()`, `st_covers()`, `st_equals()`, `st_is_within_distance()`, y alguna más
+    
+    
+- 3. funciones que crean una  nueva geometría:  
+
+      - En 1 geométria: por ejemplo, `st_centroid()`: calcula el centroide. Otras funciones: `st_buffer()`, `st_boundary()` , `st_convex_hull()`, `st_voronoi()`
+      
+      
+      - En 2 geométrias: por ejemplo, `st_intersection()` calcula la interseccion. Otras funciones: `st_combine()`, `st_union()`, `st_difference()`
+
+<br>
+
+##  7.1  Operaciones geométricas (Ejemplos)
+
+
+### Las 5 provincias más grandes
+
+Vamos a colorear las 5 provincias españolas con más territorio, para ello tenemos que calcular el área con `sf::st_area()`:
+
+```{r}
+Provicias_5 <- Provincias %>% 
+               mutate(area = st_area(.)) %>% 
+               mutate(areakm2 = units::set_units(area, km^2)) %>% 
+               arrange(desc(areakm2)) %>% 
+               slice(1:5)
+ggplot() + geom_sf(data = Provincias) + geom_sf(data = Provicias_5, fill = "purple")
+```
+
+Bien, pero mejor si ponemos el nombre de las provincias
+
+```{r}
+Prov_5_centroides <- st_centroid(Provicias_5) 
+Prov_5_centroides <-  cbind(Prov_5_centroides, st_coordinates(st_centroid(Prov_5_centroides$geometry)))
+
+ggplot() + geom_sf(data = Provincias) + 
+           geom_sf(data = Provicias_5, fill = "purple") +
+           geom_text(data = Prov_5_centroides, 
+                     aes(x = X, y = Y, label = NombreProv),
+                     color = "darkblue", fontface = "bold", check_overlap = TRUE, size = 2.5) +
+          labs(title = "Las 5 provincias españolas más extensas", x = "", y = "") 
+```
+
+
+
+### Distancias (a mi pueblo)
+
+Calculemos las distancias entre puntos, por ejemplo entre los centroides de las 52 provincias españolas:
+
+
+```{r, eval = FALSE}
+Prov_centroides <- st_centroid(Provincias) 
+Prov_centroides_XY <- cbind(Prov_centroides, st_coordinates(st_centroid(Prov_centroides$geometry)))
+distancias <- st_distance(Prov_centroides_XY, by_element = FALSE) #- devuelve una matriz
+```
+
+
+Quiero ver que municipio está mas lejos de mi pueblo. Cargo datos de los municipios con latitud-longitud en `ETRS89`:
+
+
+```{r}
+municipios <- IGN_nomencla_muni
+municipios <- municipios %>% select(COD_INE, PROVINCIA, NOMBRE_ACTUAL, LONGITUD_ETRS89, LATITUD_ETRS89)
+```
+
+Tengo que convertir el df a un spatial-df, y tengo que tener cuidado con el CRS que le pongo. [Aquí](https://spatialreference.org/ref/epsg/4258/) vi que ETRS89 es equivalente a `EPSG Projection 4258`, así que, espero haberlo hecho bien, ya vorem:
+
+
+```{r}
+municipios_sf <- st_as_sf(municipios, coords = c("LONGITUD_ETRS89", "LATITUD_ETRS89"), crs = st_crs(4258))
+```
+
+Vamos a ver que fila ocupa mi pueblo. Ocupa la fila nº 6694, así que voy a crear un df sólo con mi pueblo y luego calcular las distancias con `fs::st_distance()`:
+
+
+```{r}
+pancrudo_sf <- municipios_sf %>% slice(6694)
+g1 <- st_geometry(municipios_sf)
+g1_pancrudo <- st_geometry(pancrudo_sf) #- dejo solo la geometria
+
+#- distancias_a_Pancrudo <- mapply(st_distance, g1, g1_pancrudo) %>% as.vector) #- con R-base
+distancias_a_Pancrudo <- map2(g1, g1_pancrudo, st_distance) %>% as_vector()         #- con purrr
+distancias_a_Pancrudo <- as.data.frame(distancias_a_Pancrudo)
+df_con_distancias_a_Pancrudo <- bind_cols(municipios_sf, distancias_a_Pancrudo) %>% 
+                                mutate(Kms = distancias_a_Pancrudo * 100) %>% 
+                                arrange(Kms)
+``` 
+
+El pueblo más cercano a Pancrudo es `r df_con_distancias_a_Pancrudo$NOMBRE_ACTUAL[2]` que está a `r df_con_distancias_a_Pancrudo$Kms[2]`, eso si, en linea recta. Por la carretera hay un poco más, según Google Maps 7,1 kilómetros. A ver si podemos calcularlo luego con R usando OSM.
+
+El pueblo más lejano a Pancrudo, si consideramos sólo la península es Muxía en la provincia de A Coruña, que está a 851,65 kilómetros (en linea recta). En coche, según Google Maps, 924 Kms.
+
+<br>
+
+
+### Municipios por los que pasa el río Ebro
+
+
+Pues eso, que me apetece saber por donde pasa el Ebro y el Pancrudo.
+
+1. Primero cargo geometrías de los municipios españoles. Las lindes municipales provienen del paquete [`LAU2boundaries4spain`](https://github.com/perezp44/LAU2boundaries4spain)
+
+```{r}
+muni_xx <- municipios_2017 %>% st_set_geometry(NULL)
+muni    <- municipios_2017
+```
+
+
+Vamos a quedarnos solo con la España peninsular:
+
+```{r}
+#zz <- muni_xx %>% group_by(INECodCCAA, NombreCCAA) %>% count()
+muni_borrar <- c("Illes Balears", "Canarias")
+muni <- muni %>% filter(!(NombreCCAA %in% muni_borrar))
+```
+
+
+2. Ahora los datos de ríos Pancrudo, Jiloca, Jalón y Ebro
+
+
+```{r, eval = FALSE, echo = FALSE}
+rios <- st_read(here::here("datos", "mapas", "Rios", "M_Rios_v2.shp"))
+cod_rios_guenos <- c(913757, 913687, 913685, 913619)
+nombre_rios_guenos <- c("Pancrudo", "Jiloca", "Jalón", "Ebro")
+rios <- rios %>% filter(Cod_Uni %in% cod_rios_guenos)
+class(rios)
+#saveRDS(rios, here::here("datos", "mapas", "Rios", "rio_ebro.rds"))
+```
+
+
+```{r}
+rios <- read_rds(here::here("datos",  "mapas", "Rios", "rio_ebro.rds"))
+```
+
+Vamos a poner todos los tramos de los 4 ríos juntos. Con `summarise()`
+
+```{r}
+rios_xx <- rios %>% st_set_geometry(NULL)
+rios_x <- rios %>% select(Nom_Rio, Long_Rio_m, geometry) %>% group_by(Nom_Rio) %>% summarize()
+```
+
+
+Hagamos ya un mapa de los lindes municipales, los ríos y voy a situar Pancrudo y Valencia:
+
+```{r, echo = FALSE}
+pueblos  <- data.frame(nombre = c("Pancrudo", "Valencia"), longitude = c(-1.028781, -0.3756572), latitude = c(40.76175, 39.47534) ) #- ETRS89
+```
+
+
+
+```{r}
+theme_set(cowplot::theme_map())
+p <- ggplot(muni) + 
+     geom_sf(color = "grey", fill = "white", lwd = 0.01) +
+     geom_sf(data = rios_x, color = "lightblue", lwd = 1.6) +
+     geom_point(data = pueblos, aes(x = longitude, y = latitude), size = 3, color = "darkred") +
+     geom_text(data  = pueblos, aes(x = longitude, y = latitude, label = nombre), color = "darkred",
+                    fontface = "bold", check_overlap = TRUE, size = 2.5) +
+     labs(title = "R-Mapa con 4 ríos güenos",
+          caption = "Datos provenientes del paquete LAU2boundaries4spain") +  
+          theme(panel.background = element_rect(fill = "aliceblue"))
+p
+```
+
+Venga, calculamos las intersecciones con `sf::st_intersects()` pero antes tenemos que poner los 2 dfs en el mismo CRS:
+
+```{r, eval = TRUE}
+muni_a <- muni %>% st_transform(crs = st_crs(rios_x))
+zz_a <- st_intersects(muni_a, rios_x, sparse = FALSE, prepared = TRUE)
+```
+
+Ahora ya si seleccionamos aquellos municipios por los que pasa el EBro. Lo hago con R-base:
+
+```{r, eval = TRUE}
+muni_ebro <- muni_a[zz_a,]
+```
+
+
+Parece que hay `r nrow(muni_ebro)` municipios por loq eu pasa el Ebro. A ver si nos sale el mapa
+
+```{r}
+p + geom_sf(data = muni_ebro) +
+    geom_sf(data = rios_x, color = "lightblue", lwd = 0.25)
+```
+
+No, no voy a obtener los municipios por los que pasa el rio Pancrudo. Eso está MAL!!!!
+
+<br>
+  
+-------------
+  
+<br>
+
+
+# Biblio
+
+
+- [Introduction to GIS with R](https://www.jessesadler.com/post/gis-with-r-intro/?utm_content=buffer072ae&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer) de Jesse Sadler, según [Miles McBain](https://twitter.com/MilesMcBain) una de las mejores introducciones a GIS en R.
+
+- [Geocomputation with R](https://geocompr.robinlovelace.net/). A bookdown on geographic data analysis, visualization and modeling with R.
+
+- [Viñetas del paquete `sf`](https://cran.r-project.org/web/packages/sf/)
+
+
+- [Coordinate Reference Systems](https://datacarpentry.org/organization-geospatial/03-crs/index.html). Tutorial de Data Carpentry sobre CRS.
+
+
+- [Introduction to Geospatial Concepts](https://datacarpentry.org/organization-geospatial/) de Data Carpentry.
+
+
+- Una serie de posts sobre:Drawing beautiful maps programmatically with R, sf and ggplot2. [Basics](https://www.r-spatial.org//r/2018/10/25/ggplot2-sf.html),[Layers](https://www.r-spatial.org//r/2018/10/25/ggplot2-sf-2.html) y [Layouts](https://www.r-spatial.org//r/2018/10/25/ggplot2-sf-3.html)
+
+- Un ejemplo en el que se va construyendo la [Winkel tripel projection](https://wilkelab.org/practicalgg/articles/Winkel_tripel.html)
+
+- Un [post](https://www.jla-data.net/eng/leaflet-in-r-tips-and-tricks/index.html) sobre la utilización de leaflet
+
+- Paquete [`openrouteservice`](https://giscience.github.io/openrouteservice-r/articles/openrouteservice.html) para calcular rutas con [openrouteservice](https://openrouteservice.org/).
+
+<br><br>
+

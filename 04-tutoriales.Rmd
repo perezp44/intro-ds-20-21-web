@@ -53,5 +53,9 @@ Todas los tutoriales están hechos con R; de hecho, una de las cosas que has de 
 
 - [`Tutorial 08: Tablas con Rmarkdown`](./tutoriales/tt_08_tablas-Rmarkdown.html){target="_blank"}. 
 
+- [`Tutorial 09: Introducción a GIS con R`](./tutoriales/tt_09_GIS-con-R.html){target="_blank"}. 
+
+
+
 
 <br><br><br>
