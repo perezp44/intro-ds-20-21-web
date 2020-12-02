@@ -348,6 +348,32 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 - Bronca?? nah!!, todos los nombres de los ficheros de entregas estarán perfectos!!!
 
 
+<br>
+
+-----------------------
+
+<br>
+
+## 11ª clase (04-dic)
+
+
+##### **`Homework`** (para hacer antes de ir a clase) 
+
+- No hay homework!!! 🙌  👏 👏
+
+- Bueno, en realidad tenéis que ir haciendo el trabajo en equipo, para presentarlo durante la última sesión del curso.
+
+- Bueno, 😇, tampoco estaría mal que le pegaseis un vistazo/lectura rápida al tutorial 10
+
+
+##### ¿Qué haremos en clase?
+
+- Lo que no hicimos en la anterior clase debido a las lluvias: mapas, mapas y más mapas; bueno en realidad vamos a usar R para hacer una introducción a GIS, Geographic Information Systems o, Sistemas de Información Geográfica (SIG). 🇦🇶  🗾 
+
+- Algunos ejemplos espero que chulos, pero nutritivos/formativos. 🥑 🥦
+
+- Como veis, os echaré de menos 👨‍🎓, **PERO** estoy contento: el curso se va acabando!!! 🏝️ 😎 🎸
+
 
 
 
