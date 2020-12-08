@@ -38,6 +38,8 @@ output:
 
 ## 1ª clase (18-sept)
 
+<br>
+
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
 - Lee la sección [`Guía del curso`](https://perezp44.github.io/intro-ds-20-21-web/01-guia-del-curso.html) de la página web del curso.
@@ -92,6 +94,9 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 ## 2ª clase (25-sept)
 
+<br>
+
+
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
 - Leer el e-mail que os he mandado a vuestro correo de la UV y hacer (si quieres) las 3 tareas extra-oficiales que allí os cuento. Además, en el mail hay una cuarta tarea, está cuarta tarea sí es oficial, hay que hacerla.
@@ -100,6 +105,8 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 - Configurar RStudio. Para ello tienes que seguir las instrucciones que figuran en el tutorial nº 2, concretamente [aquí](https://perezp44.github.io/intro-ds-20-21-web/tutoriales/tt_02_primeros-pasos-con-R.html#Configurando_RStudio). Es importante que tengamos todos la misma configuración, ya explicaré la razón en clase.
 
+
+<br>
 
 
 ##### ¿Qué haremos en la segunda clase?
@@ -121,6 +128,8 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 ## 3ª clase (02-oct)
 
+<br>
+
 
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
@@ -134,6 +143,8 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 - Leer e intentar ejecutar el código de las [Slides-05: Importar y exportar datos](./slides/ss_05_cargar-datos/ss_05_cargar-datos.html){target="_blank"}. Mejor si llegas al final, pero hasta donde llegues.
 
+
+<br>
 
 ##### ¿Qué haremos en la tercera clase?
 
@@ -154,6 +165,8 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 ## 4ª clase (16-oct)
 
+<br>
+
 
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
@@ -167,6 +180,8 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 - Por favor, aquellos que no tengan bien configurado RStudio que lo hagan esta semana. Para ello tienes que seguir las instrucciones que figuran en el tutorial nº 2, concretamente [aquí](https://perezp44.github.io/intro-ds-20-21-web/tutoriales/tt_02_primeros-pasos-con-R.html#Configurando_RStudio).
 
+
+<br>
 
 
 ##### ¿Qué haremos en la cuarta clase?
@@ -190,6 +205,8 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 ## 5ª clase (23-oct)
 
 
+<br>
+
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
 - Leer el e-mail que os he mandado a vuestro correo de la UV. Esta vez sí hay entrega, la tercera. Ayer hicimos la segunda en clase.
@@ -198,6 +215,8 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 - Leer e intentar ejecutar el código de las [Slides-05(bis): Data munging](./slides/ss_05_data-munging/ss_05_data-munging.html){target="_blank"}.
 
+
+<br>
 
 ##### ¿Qué haremos en clase?
 
@@ -217,6 +236,8 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 ## 6ª clase (30-oct)
 
 
+<br>
+
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
 - Leer el e-mail que os he mandado a vuestro correo de la UV. Esta vez también hay entrega: la cuarta. Esfuérzate e intenta aprender con ella el funcionamiento/sintaxis de `dplyr`.
@@ -227,6 +248,8 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 - Instalaros estos 2 paquetes: `robservable` y `wpp2019`. Los dos paquetes están en CRAN, así que podéis instalarlos con `install.packages("nombre_del_pkg")`. Acordaros de que, para evitar problemas, es mejor instalar los paquetes desde una sesión limpia de R.
  
+
+<br>
 
 ##### ¿Qué haremos en clase?
 
@@ -247,9 +270,11 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 ## 7ª clase (06-nov)
 
 
+<br>
+
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
-- Leer el e-mail que os he mandado a vuestro correo de la UV. Esta vez es muy escueto, pero en él os he mandado la entrega_05_casa. Se trata de prácticar un poco más manejo de datos con tidyverse
+- Leer el e-mail que os he mandado a vuestro correo de la UV. Esta vez es muy escueto, pero en él os he mandado la entrega_05_casa. Se trata de practicar un poco más manejo de datos con tidyverse
 
 - Lee todo lo que puedas del [`Tutorial 06: ggplot2`](./tutoriales/tt_06_ggplot2.html){target="_blank"}.
 
@@ -261,6 +286,8 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
     El tercer paquete no está en CRAN, podéis instalarlo con `remotes::install_github("mattcowgill/ggannotate")`.    
     Acordaros de que, para evitar problemas, siempre es mejor instalar los paquetes desde una sesión limpia de R. 
  
+
+<br>
 
 ##### ¿Qué haremos en clase?
 
@@ -278,6 +305,8 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 ## 8ª clase (13-nov)
 
+<br>
+
 
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
@@ -286,6 +315,9 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 - La "única" tarea que tenéis es repasar/estudiar lo que vamos viendo, principalmente `dplyr` y `ggplot2`.
 
 - Bueno, en realidad también tenéis que pensar en los trabajos: el individual y el de equipo.
+
+
+<br>
 
 ##### ¿Qué haremos en clase?
 
@@ -303,6 +335,7 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 ## 9ª clase (20-nov)
 
+<br>
 
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
@@ -310,6 +343,7 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 - Decidir, si no los has hecho ya, el tema de tu trabajo individual; precisamente de esto me tienes que informar mientras haces la `tarea-07`.
 
+<br>
 
 ##### ¿Qué haremos en clase?
 
@@ -333,11 +367,14 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 ## 10ª clase (27-nov)
 
+<br>
 
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
 - Os he mandado por mail la `tarea-08`, se trata de practicar un poco más con ggplot2 y hacer vuestros primeros mapas.
 
+
+<br>
 
 ##### ¿Qué haremos en clase?
 
@@ -356,6 +393,8 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 
 ## 11ª clase (04-dic)
 
+<br>
+
 
 ##### **`Homework`** (para hacer antes de ir a clase) 
 
@@ -364,6 +403,9 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 - Bueno, en realidad tenéis que ir haciendo el trabajo en equipo, para presentarlo durante la última sesión del curso.
 
 - Bueno, 😇, tampoco estaría mal que le pegaseis un vistazo/lectura rápida al tutorial 10
+
+
+<br>
 
 
 ##### ¿Qué haremos en clase?
@@ -375,6 +417,72 @@ Too much for the first class? Igual sí. Al final veremos lo que podamos. Primer
 - Como veis, os echaré de menos 👨‍🎓, **PERO** estoy contento: el curso se va acabando!!! 🏝️ 😎 🎸
 
 
+
+<br>
+
+-----------------------
+
+<br>
+
+## 12ª clase (11-dic)
+
+
+<br>
+
+
+##### **`Homework`** (para hacer antes de ir a clase) 
+
+
+- Tenéis que ir haciendo el trabajo en equipo. No!!!!, haciendo no, tenéis que ir **acabando el trabajo en equipo**
+
+- Además, tenéis que subir a Github vuestro trabajo en equipo. Da igual si aún no está del todo presentable, es solo una prueba para ver que todo funciona. Os he escrito un mail explicándoos cómo lo tenéis que hacer.
+
+<br>
+
+
+##### ¿Qué haremos en clase?
+
+- Explicar algo, un poco, de EDA y modelos (tutorial nº 10)
+
+- Hablar un poco de loop's en R.
+
+- Generar informes .Rmd automáticos (informes parametrizados)
+
+- Algunos ejemplos usando datos de Twitter.
+
+- Ver otros formatos .Rmd, entre ellos Flexdashboard y Shiny.
+
+
+Igual demasiado para la penúltima clase (supongo, pero ya veremos)
+
+
+
+<br>
+
+-----------------------
+
+<br>
+
+## 13ª clase (18-dic)
+
+<br>
+
+##### **`Homework`** (para hacer antes de ir a clase) 
+
+
+- Acabar y dejar chulos-chulos los trabajos en equipo. No os olvidéis de subir la última versión a Github
+
+- Mandar a tu profesor la ultima versión del trabajo en equipo.
+
+<br>
+
+##### ¿Qué haremos en clase?
+
+- Yo, relajarme y escuchar. 
+
+- Vosotros, 👩‍🎓, sorprenderme con vuestras fantásticas presentaciones. Bueno, no pasa nada si alguna sale tan solo regular. El 🙌  👏 👏 lo vais a tener igual.
+
+- Ánimo con los trabajos y presentación!!!
 
 
 
