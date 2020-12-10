@@ -55,6 +55,9 @@ Todas los tutoriales están hechos con R; de hecho, una de las cosas que has de 
 
 - [`Tutorial 09: Introducción a GIS con R`](./tutoriales/tt_09_GIS-con-R.html){target="_blank"}. 
 
+- [`Tutorial 10: Un poco de EDA y modelos`](./tutoriales/tt_10_EDA-con-R.html){target="_blank"}. 
+
+
 
 
 

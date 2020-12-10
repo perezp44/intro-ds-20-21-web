@@ -1,0 +1,1439 @@
+---
+title: "Un poco de EDA y modelos (WIP)"
+author: "Pedro J. Pérez (pedro.j.perez@uv.es). Universitat de València <br> <br> Web del curso: <https://perezp44.github.io/intro-ds-20-21-web/>"
+date: "Noviembre de 2020 (actualizado el `r format(Sys.time(), '%d-%m-%Y')`)"
+output:
+  html_document:
+    #code_folding: show
+    css: !expr here::here("assets", "styles_pjp.css")
+    theme: paper
+    highlight: textmate 
+    toc: true
+    toc_depth: 3 
+    toc_float: 
+      collapsed: true
+      smooth_scroll: true
+    self_contained: true
+    number_sections: false
+    includes:
+      after_body: !expr here::here("assets", "footer.html") 
+      in_header: 
+        - !expr here::here("assets", "google-analytics.html") 
+        - !expr here::here("assets", "favicon-sol.html")
+    df_print: kable
+    code_download: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r chunk_setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, message = FALSE, warning = FALSE, 
+                      cache = FALSE, cache.path = "/caches/", comment = "#>",
+                      #fig.width = 7, fig.height= 7,   
+                      #out.width = 7, out.height = 7,
+                      collapse = TRUE,  fig.show = "hold",
+                      fig.asp = 7/9, out.width = "95%", fig.align = "center")
+```
+
+```{r options_setup, echo = FALSE}
+options(scipen = 999) #- para quitar la notación científica
+```
+
+```{r setup, echo = FALSE}
+library(knitr)
+library(here)
+library(tidyverse)
+library(patchwork)
+```
+
+```{r klippy, echo = FALSE}
+klippy::klippy(position = c("top", "right")) #- remotes::install_github("rlesur/klippy")
+```
+
+
+```{r, include = FALSE}
+options(htmltools.dir.version = FALSE)
+#knitr::opts_chunk$set(fig.retina = 3, warning = FALSE, message = FALSE, echo=FALSE, out.width = "85%")
+library(metathis)
+meta() %>% meta_name("github-repo" = "perezp44/intro-ds-20-21-web") %>% 
+  meta_social(
+    title = "Análisis exploratorio de datos con R",
+    description = paste(
+      "Análisis exploratorio de datos con R"),
+    url = "https://perezp44.github.io/intro-ds-20-21-web/tutoriales/tt_10_EDA-con-R.html",
+    og_type = "website",
+    og_author = "Pedro J. Pérez"
+  )
+```
+
+-------------
+
+<br>
+
+# 1. Introducción
+
+Hemos visto en tutoriales anteriores como cargar, manejar, arreglar y visualizar datos à la tidyverse. Una vez somos capaces de manejar y arreglar nuestros datos con R podemos pasar a intentar efectuar un análisis "realista" con un conjunto de datos. 
+
+
+En este tutorial y siguientes, vamos a utilizar un conjunto de datos sobre nacimientos de bebes en España para mostrar algunas técnicas de EDA y modelización. No se mostrarán los detalles técnicos de las técnicas, sino solo su aplicación práctica y, a veces, la interpretación de los resultados.
+
+
+Antes de proceder a la estimación de modelos estadísticos formales o contrastar hipótesis se suele realizar una etapa conocida como **análisis exploratorio**. El análisis exploratorio (EDA) es una parte importante de todo análisis de datos. Suele tener lugar antes de la especificación y estimación de modelos estadísticos formales. Su objetivo último es "comprender" los datos y las relaciones existentes entre las variables.
+
+Una de las máximas de un data scientist es, como señalan [aquí](https://medium.com/@Randy_Au/data-science-foundations-know-your-data-really-really-know-it-a6bb97eb991c?source=friends_link&sk=42f1c02883e744df7dbb618373312244), "**Know Your Data**". Además nos explican que:
+
+
+> Data exploration is the art of looking at your data, rapidly generating hypotheses, quickly testing them, then repeating again and again and again. The goal of data exploration is to generate many promising leads that you can later explore in more depth.
+
+> With  exploratory data analysis, you’ll combine visualisation and transformation with your curiosity and scepticism to ask and answer interesting questions about data
+
+Un buen ejemplo de qué es un análisis exploratorio son los "screencast" de David Robinson: cada semana graba un vídeo con un análisis rápido de un conjunto de datos. Puedes verlos, en su canal de youtube ,[aquí](https://www.youtube.com/user/safe4democracy/videos). En [este repo](https://github.com/dgrtwo/data-screencasts) de Github tienes la transcripción del código, en ficheros `.Rmd` que acaba utilizando en los screencasts. Como hay mucha gente que sigue sus vídeos hay, como explican en [este post](https://paulvanderlaken.com/2020/06/16/david-robinsons-r-programming-screencasts/), varias personas que mantienen un listado diseccionando las tareas que hace David en cada screencast, puedes encontrarlos [aquí](https://github.com/dgrtwo/data-screencasts) y [aquí](https://paulvanderlaken.com/2020/06/16/david-robinsons-r-programming-screencasts/).
+
+
+Por último, un libro, bueno un *bookdown*, sobre EDA: [Exploratory Data Analysis with R](https://bookdown.org/rdpeng/exdata/) de Roger Peng.
+
+
+
+## ¿Qué queremos saber?
+
+Generalmente un estudio cuantitativo comienza por una pregunta(s) que guía el análisis. En nuestro caso, el objetivo del tutorial es meramente mostrar algunas técnicas/funciones útiles en la fase de exploración de datos (EDA) de un estudio, aún así, nuestro "estudio" estará guiado por varias preguntas relacionadas con los bebes; por ejemplo: 1) vamos a intentar ver/contestar si los bebitos nacen con más peso que las bebitas 2) intentaremos contestar a la pregunta(s) de si determinadas características de las madres/padres, como la edad o el nivel educativo, afectan al peso de los recién nacidos.
+
+El siguiente paso de todo análisis empírico es la búsqueda de un conjunto de datos que permita (hasta cierto grado de confianza) dar una respuesta a las preguntas planteadas. ¿De donde sacamos esos datos? En nuestro caso, utilizaremos la estadística de nacimientos del INE. Los detalles en la sección siguiente.
+
+-------------
+
+<br>
+
+# 2. Los datos
+
+## Origen de los datos
+
+Los datos provienen del **INE**, concretamente de la [**Estadística de nacimientos**](http://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177007&menu=resultados&secc=1254736195443&idp=1254735573002). Como puedes ver en la web del INE hay una serie de tablas que muestran resultados para las principales variables; por ejemplo, hay una tabla llamada ["Nacimientos por edad de la madre, mes y sexo"](https://www.ine.es/jaxi/Tabla.htm?path=/t20/e301/provi/l0/&file=01001.px&L=0). Estas tablas están muy bien para mostrar los principales resultados de la Estadística de nacimientos, pero nosotros queremos analizar "de verdad" los datos, así que tendremos que descargarnos los [**microdatos** de la encuesta](https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177007&menu=resultados&secc=1254736195443&idp=1254735573002#!tabs-1254736195443).
+
+En los microdatos de la Estadística de Nacimientos hay datos sobre: (i) Nacimientos, (ii) Muertes fetales tardías y (iii) Partos. Vamos a usar los ficheros de datos sobre **PARTOS**.
+
+Hay un fichero para cada año desde 1975, pero como han habido diversos cambios en la metodología de la estadística, solo vamos a trabajar los ficheros de los años **2007 a 2018** que comparten diccionario. 
+
+Me descargue (a mano) los ficheros de microdatos de nacimientos para los años 2007 a 2018. Los datos están en formato texto, y cada registro es una cadena larga de caracteres. Los datos van acompañados de un diccionario que sirve para poder separar las cadenas de caracteres en los valores de cada variable. Os ahorro los detalles del proceso. 
+
+Los datos eran de partos, pero los preparé para que cada fila pertenezca a los datos de un solo bebe: cada bebe tiene su propia fila.
+
+
+## Cargando el fichero de datos y dicc
+
+Mi ordenador tuvo problemas para mover el fichero con todos los datos (2007 a 2018), y, como además, el objetivo del tutorial es tan sólo mostrar algunas técnicas y funciones útiles para EDA, por lo que solamente se utilizarán los datos referentes a 2017. Adicionalmente, se restringió la muestra a partos con un solo bebe que habían tenido lugar en un centro sanitario.
+
+```{r}
+df <- rio::import(here::here("datos", "df_bebes_2017.rds"))             #- 374.933 x 13
+df_dicc <- rio::import(here::here("datos", "df_bebes_2017_dicc.xlsx"))  #- 13 x 18
+```
+
+Con el anterior chunk hemos cargado el fichero de datos `df`, que cuenta con `r format(nrow(df), big.mark = ".")` registros de bebes y `r length(df)` columnas o variables para cada bebe.
+
+
+-----------
+
+<br>
+
+# 3. Cosas de EDA
+
+Hemos visto en tutoriales anteriores como cargar, arreglar y manejar datos con R *à la tidyverse*. En este tutorial vamos a ver **algunos paquetes y funciones que conviene conocer porque nos pueden ayudar a acelerar el análisis exploratorio inicial de nuestros datos**.
+
+
+```{r, echo = FALSE, out.width = "90%", fig.align = "default"}
+knitr::include_graphics(here::here("imagenes", "img_tt_10-01.png"))
+```
+
+
+En este [repo de Github](https://github.com/mstaniak/autoEDA-resources), Mateusz Staniak mantiene un listado de paquetes y recursos relacionados con la EDA.
+
+En [este post](http://smarterpoland.pl/index.php/2019/04/explore-the-landscape-of-r-packages-for-automated-data-exploration/) y en [este artículo](https://arxiv.org/pdf/1904.02101.pdf) nos hablan del paquete [`autoEDA`](https://github.com/XanderHorn/autoEDA) que trata de automatizar el proceso inicial exploratorio de datos (EDA). Además el post nos muestra los 11 paquetes de R, relacionados con la EDA, más descargados de CRAN. El objetivo de estos 11/12 paquetes es similar, tratar de automatizar/facilitar el análisis preliminar o exploratorio de los datos (EDA). Evidentemente automatizar totalmente la EDA es muy-muy complicado, por no decir imposible, pero al menos estos paquetes (y otros muchos) contienen funciones que nos pueden ayudar en las primeras etapas de nuestros análisis de datos.
+
+Por ejemplo, en [este post](https://www.littlemissdata.com/blog/simple-eda), Laura Ellis, nos explica como hacer EDA en R mostrándonos algunas de sus funciones/trucos favoritos como la función `skimr::skim()`, `visdat::vis_dat()` o `DataExplorer::create_report()`. El post tuvo una segunda parte ([aquí](https://www.littlemissdata.com/blog/inspectdf)), donde Laura nos explica el uso de algunas funciones útiles para EDA del paquete [`inspectdf`](https://github.com/alastairrushworth/inspectdf) como por ejemplo: `inspectdf::inspect_types()`, `inspectdf::inspect_na`, etc...
+
+En este [otro post](https://sharla.party/posts/new-data-strategies/), Sharla Gelfand nos habla sobre estrategias para afrontar la EDA cuando se trabaja con un conjunto de datos nuevo. Sharla utiliza, entre otros, los paquetes [`visdat`](http://visdat.njtierney.com/), [`skimr`](https://ropensci.github.io/skimr/) y [`assertr`](https://docs.ropensci.org/assertr/).
+
+
+DE entre los muchos paquetes y funciones relacionados con EDA, conviene conocer, en mi opinión, estos^[Seguro que se me olvidan muchos; además el ecosistema R está en constante evolución, así que seguro que surgen mejoras]:
+
+
+<br>
+
+## 3.1 Manipular los nombres de las variables
+
+Con los datos de bebes no vamos a cambiar los nombres, ya que son los nombres que les dio el INE y que figuran en el diccionario oficial, pero muchas veces hay que cambiar/arreglar los nombres de las variables, así que vamos a hacerlo con nuestro `df`, aunque al final volveremos a utilizar los nombres originales.
+
+Podemos acceder a los nombres de las columnas de un data.frame con la función `base::names()`. Veámoslo:
+
+
+```{r}
+nombres_originales <- names(df)  #- almacenamos los nombres originales en el vector nombres_originales
+```
+
+Veamos cuales son los nombres de las variables de `df`:
+
+```{r}
+names(df)
+```
+
+
+Si quisieramos, por ejemplo, cambiar el nombre de la segunda variable, podemos hacerlo con:
+
+
+```{r}
+names(df)[2] <- "nuevo_nombre_variable_2"
+names(df)
+```
+
+
+Si tuviésemos un data.frame con nombres realmente extraños, incluso con nombres "no sintácticos", y necesitamos arreglarlos de forma rápida, podemos hacerlo con la función `janitor::clean_names()`. Arregla los nombres de las variables de forma automática, además tiene algunas opciones para hacerlo como más te guste.
+
+```{r}
+janitor::clean_names(df) %>% names()
+```
+
+
+Volvamos a dejar los nombres originales de `df`:
+
+```{r}
+names(df) <- nombres_originales
+```
+
+```{r, echo = FALSE}
+rm(nombres_originales)
+```
+
+--------------
+
+<br>
+
+## 3.2 Estructura y tipo de variables
+
+Siempre-siempre hay que saber de que tipo son nuestras variables. Esto se puede hacer de muchas formas. Os muestro dos:
+
+### a) con `str()`
+
+```{r}
+str(df)            #- str() muestra la estructura interna de un objeto R
+```
+
+<br>
+
+### b) con `inspectdf::inspect_types()`
+
+```{r}
+inspectdf::inspect_types(df)   #- muestra de que tipo son las variables
+```
+
+<br>
+
+### c) 2 funciones útiles del paquete `pjpv2020.01`
+
+La función `pjpv2020.01::pjp_f_estadisticos_basicos()`. Sí, el nombre de la función es un poco largo, pero es que es un paquete para uso personal. Yo estoy acostumbrado a usarla. Da un resumen rápido de las variables del data.frame:
+
+```{r}
+zz <- pjpv2020.01::pjp_f_estadisticos_basicos(df) 
+gt::gt(zz)
+```
+
+
+
+<br>
+
+Muchas veces también me es muy útil la función `pjpv2020.01::pjp_f_unique_values()` porque devuelve un df con los valores únicos de cada variable:
+
+
+```{r}
+zz <- pjpv2020.01::pjp_f_unique_values(df, truncate = TRUE, nn_truncate = 47) 
+gt::gt(zz)
+```
+
+
+- La función `dplyr::distinct()` es muy útil para ver los con valores únicos de una o varias variables. Por ejemplo:
+
+
+```{r}
+zz <- df %>% distinct(NORMA.f, CESAREA.f)
+zz %>% gt::gt()
+```
+
+
+
+--------------
+
+<br>
+
+## 3.3 Estadísticos básicos de las variables
+
+### a) con `pjpv2020.01`
+
+Ya  he dicho que yo suelo utilizar estas 2 funciones:
+```{r, eval = FALSE}
+zz <- pjpv2020.01::pjp_f_estadisticos_basicos(df)   #- estadísticos básicos del df
+zz <- pjpv2020.01::pjp_f_unique_values(df)          #- valores únicos de cada variable de df
+```
+
+<br>
+
+### b) con `summarytools`
+
+La función `summarytools::dfSummary()` da un informe/resumen de las variables de un data.frame muy útil. Es muy útil para hacerse una idea rápida de las propiedades de las variables, pero tiene la pega de que el output es muy voluminosos para mostrarlo aquí, así que si quieres verlo tendrás que ejecutar el anterior chunk de forma interactiva.
+
+```{r, eval = FALSE}
+zz <- summarytools::dfSummary(df) #- genera un fichero con un resumen útil y agradable de ver 
+summarytools::view(zz)  #- para visualizar el informe
+```
+
+<br>
+
+### c) con `skimr`
+
+Otra alternativa es usar `skimr::skim(df). Ocurre lo mismo: como su output es voluminoso, no lo voy a mostrar aquí.
+
+```{r, eval = FALSE}
+skimr::skim(df)
+```
+
+-------------------
+
+<br>
+
+
+## 3.4 NA's
+
+Siempre hay que chequear la existencia de **NA's** en nuestro df. NA representa una característica que existe pero no sabemos su valor En R, los valores no disponibles se representan con `NA`. Se puede chequear si un valor es NA con la función `is.na()`. En datos generados por otros paquetes estadísticos, los valores ausentes pueden estar codificados con diferentes valores como por ejemplo "-999", "N/A", un espacio en blanco, etc ...
+
+Tres paquetes que nos pueden ayudar en esta tarea son `DataExplorer`, `visdat` y `naniar`.
+
+
+```{r}
+DataExplorer::plot_missing(df)
+```
+
+
+```{r}
+naniar::gg_miss_var(df, show_pct = TRUE)        
+```
+
+
+El paquete `visdat` es útil para ver los NA's pero el siguiente chunk no nos va a funcionar para las `r format(nrow(df), big.mark = "." )` filas que tiene nuestro df.
+
+```{r, eval = FALSE}
+visdat::vis_dat(df) #- no funciona , hay demasiadas filas
+```
+
+Pero veamos  como funcionaría para, por ejemplo, las primeras 1.000 filas de df:
+
+```{r}
+df %>% slice(1:1000) %>% visdat::vis_dat()
+```
+
+- Algo parecido pero con `visdat::vis_miss()`
+
+```{r}
+df %>% slice(1:1000) %>% visdat::vis_miss(cluster = TRUE) 
+```
+
+- Otra forma de visualizar la **co-ocurrencia de NA's** en las variables de df:
+
+
+```{r}
+naniar::gg_miss_upset(df)
+```
+
+<br>
+
+
+### trabajando con los `NA's`
+
+- Por ejemplo, podemos querer seleccionar las variables que tienen NA's:
+
+```{r}
+zz_con_NAs  <- df %>% select(where(anyNA))
+```
+
+<br>
+
+- A lo mejor, nos puede interesar ver la ocurrencia de NA's para los grupos/categorías de una variable categórica de df, por ejemplo los estudios de la madre(`ESTUDIOM.f`)
+
+
+```{r}
+naniar::gg_miss_var(df, facet = ESTUDIOM.f, show_pct = TRUE) #- faceted por la variable ESTUDIOM.f
+```
+
+
+
+```{r, echo = FALSE}
+rm(list = ls(pattern = "^zz"))  #- borra los objetos cuyo nombre empiece por zz
+```
+
+
+
+
+### ¿Que hacemos con los NA's?
+
+Pues no está claro, depende ... pero supongamos que queremos dejar nuestro df **SIN NA's;** 
+
+
+```{r}
+zz <- df %>% tidyr::drop_na()              #- con tidyr
+
+#- otras formas de hacer lo mismo ---
+zz <- df[complete.cases(df), ]             #- con base-R 
+zz <- df %>% filter(complete.cases(.))     #- con dplyr y base-R
+```
+
+
+Si quitáramos todos los registros/bebes que tienen algún NA en alguna de las `r ncol(df)` variables, nos quedaríamos con `r format(nrow(zz), big.mark = ".")` registros.
+
+<br>
+
+Se puede refinar la eliminación de `NA's`. Puedes ser que igual Igual nos interesase eliminar sólo las filas que tengan un `NA` en una determinada variable, por ejemplo, si quisieramos quitar las filas que tuviesen NA en la variable PESO1 y/o en la variable SEMANAS, lo haríamos así:
+
+```{r}
+zz <- df %>% tidyr::drop_na(c(PESON1, SEMANAS))   #- quito filas con NA en PESON1 o en SEMANAS
+```
+
+<br>
+
+- Imagina que hubiese una fila o una columna con todos sus valores NA. Lógicamente habría que eliminarlas. Se puede hacer fácil con `janitor::remove_empty()
+
+```{r, eval = FALSE}
+zz <- df %>% janitor::remove_empty(c("rows", "cols"))    #- quita variables y filas vacías
+```
+
+
+
+```{r, echo = FALSE}
+rm(list = ls(pattern = "^zz"))  #- borra los objetos cuyo nombre empiece por zz
+```
+
+-------------
+
+br>
+
+## 3.6 Variables numéricas
+
+Vamos a ver algunas funciones útiles para hacer un análisis inicial de  las variables numéricas.
+
+Si quisieramos crear un df  sólo con las variables numéricas:
+
+
+```{r}
+df_numeric <- df %>% select_if(is.numeric)
+```
+
+
+<br>
+
+### a) Estadísticos descriptivos
+
+Por ejemplo, `summarytools::descr()` nos ayuda a calcular rápidamente estadísticos descriptivos de las variables numéricas.
+
+```{r, results = "asis", eval = FALSE}
+summarytools::descr(df, style = "rmarkdown")
+```
+
+
+```{r}
+summarytools::descr(df)
+```
+
+<br>
+
+### b) Histogramas o f. de densidad
+
+En general, los métodos estadísticos requieren que las variables sigan una determinada distribución. Esto puede chequearse formalmente o utilizar histogramas y/o funciones de densidad estimadas.
+
+
+Podemos usar el paquete `DataExplorer`  para obtener histogramas o gráficos de densidad para las variables numéricas.
+
+- Histogramas:
+
+
+```{r}
+DataExplorer::plot_histogram(df, ncol = 2)
+```
+
+- Funciones de densidad estimadas:
+
+```{r}
+DataExplorer::plot_density(df, ncol = 2)
+```
+
+<br>
+
+### c) Matriz de correlaciones
+
+Otro aspecto importante de un análisis exploratorio consiste en analizar la existencia de relaciones entre las variables del conjunto de datos. Esto puede hacerse de diversas maneras, dos de las más sencillas y usadas son los gráficos de dispersión y las matrices de correlación.
+
+Podemos obtener la matriz de correlaciones de diversas formas:
+
+
+- Primero con la función `cor()` de R-base:
+
+```{r}
+stats::cor(df_numeric, use = "pairwise.complete.obs") %>%  #- devuelve una matriz, no un df
+      round(. , 2)
+```
+
+
+
+```{r}
+#df_numeric %>% GGally::ggcorr(label = TRUE)
+df_numeric %>% GGally::ggpairs()
+```
+
+
+- Ahora con la función `corrr::correlate()`
+
+```{r}
+df %>% select_if(is.numeric) %>% 
+       corrr::correlate() %>% 
+       pjpv2020.01::pjp_f_decimales(nn = 2) %>%  
+       gt::gt()
+```
+
+
+<br>
+
+- Otra forma más de visualizar las correlaciones, con `inspectdf::inspect_cor()`
+
+```{r}
+df %>% inspectdf::inspect_cor()
+```
+
+- Además, después, con `inspectdf::show_plot()` se pueden visualizar las correlaciones en un gráfico:
+
+```{r}
+df %>% inspectdf::inspect_cor() %>% inspectdf::show_plot()
+```
+
+<br>
+
+
+- El paquete [correlation](https://easystats.github.io/correlation/) facilita el cálculo de diferentes estadísticos de correlación, por defecto calcula el coeficiente de correlación de Pearson:
+
+```{r}
+correlation::correlation(df_numeric)    #- remotes::install_github("easystats/correlation")
+```
+
+<br>
+
+### d) Boxplots frente a una v. categórica
+
+Para ver diferencias en la distribución de las variables numéricas frente a una variable categórica es muy útil `DataExplorer::plot_boxplot()`. Por ejemplo frente a la variable `ESTUDIOM.f`: 
+
+
+```{r}
+DataExplorer::plot_boxplot(df, by = "ESTUDIOM.f")
+```
+
+<br>
+
+O, por ejemplo, frente a la variable `CESAREA.f`
+
+```{r}
+my_vv <- names(df)[3]
+my_vv <- "CESAREA.f"
+DataExplorer::plot_boxplot(df, by = my_vv)
+```
+
+<br>
+
+- También se pueden hacer boxplots de una variables numérica frente a 2 categóricas:
+
+```{r}
+df %>% explore::explore(EDADM, ESTUDIOM.f, target = CESAREA.f)
+```
+
+<br>
+
+- Con `explore::explore_all()` se muestran gráficos de todas las variables del df frente a una variable target u objetivo:
+
+```{r}
+df %>% select(NORMA.f, EDADM, PESON1,  ESTUDIOM.f, CESAREA.f) %>% explore::explore_all(target = CESAREA.f)
+```
+
+Veamos la relación entre "Parto normal" y CESAREA.f:
+
+```{r}
+df %>% janitor::tabyl(NORMA.f, CESAREA.f) %>% janitor::adorn_percentages()
+```
+
+
+<br>
+
+
+### e) Scatterplots entre variables numéricas
+
+
+`DataExplorer::plot_scatterplot()` nos permite hacer rápidamente un scatterplot de todas las variables del df frente a una variable, por ejemplo el peso del bebe: `PESON1`
+
+
+```{r}
+my_vv <- "PESON1"
+DataExplorer::plot_scatterplot(df, by = my_vv, sampled_rows = 500L)
+```
+
+----------------
+
+<br>
+
+
+## 3.7 Variables categóricas
+
+
+Si necesitásemos un df con todas las variables categóricas, ¿cómo lo obtendrías?
+
+
+```{r}
+df %>% select_if(is.numeric) %>% names()      #- old fashion
+df %>% select(where(is.numeric)) %>% names()  
+```
+
+¿Y si quisieras seleccionar las variables no-numéricas?
+
+```{r, eval = FALSE}
+df %>% select_if(!(is.numeric(.))) #- NO funciona
+df %>% select_if(~ !is.numeric(.)) %>% names()     #- anonymous function but select_if
+df %>% select(where(~ !is.numeric(.))) %>% names() #- anonymous functions & where
+df %>% select(where(purrr::negate(is.numeric)))  %>% names()   #- purrr::negate()!!!!
+```
+
+
+Para visualizar rápidamente los valores de las variables categóricas, tenemos `inspectdf::inspect_cat()`, que nos devuelve un gráfico con la distribución de todas las variables categóricas.
+
+
+
+```{r}
+inspectdf::inspect_cat(df) %>% inspectdf::show_plot(high_cardinality = 1)
+```
+
+<br>
+
+- También podemos hacerlo con `DataExplorer::plot_bar()`:
+
+
+```{r}
+DataExplorer::plot_bar(df)
+```
+
+<br>
+
+----------------
+
+
+## 3.8 Paquetes con shiny
+
+
+### a) `burro`
+
+El paquete [`burro`](https://github.com/laderast/burro):
+
+> burro attempts to make EDA accessible to a larger audience by exposing datasets as a simple **Shiny App** 
+
+
+```{r, eval = FALSE}
+#- devtools::install_github("laderast/burro")
+df_small <- df %>% slice(1:1000)
+burro::explore_data(df_small, outcome_var = colnames(df))
+```
+
+<br>
+
+### b) `explore`
+
+El paquete [`explore`](https://github.com/rolkra/explore).
+
+> Instead of learning a lot of R syntax before you can explore data, the explore package enables you to have instant success. You can start with just one function - explore() - and learn other R syntax later step by step
+
+
+- Podemos crear un shiny para explorar nuestro df completo:
+
+```{r, eval = FALSE}
+explore::explore(df)
+```
+
+- o solo explorar una o varias variables.
+
+```{r, eval = FALSE}
+df %>% explore::explore(CESAREA.f)
+df %>% explore::explore(EDADM, ESTUDIOM.f, target = CESAREA.f)
+```
+
+<br>
+
+### c) `ExPanDaR`
+
+El paquete[ExPanDaR](https://joachim-gassen.github.io/ExPanDaR/) también permite explorar los datos a través de un shiny. Explican su funcionamiento en [este post](https://joachim-gassen.github.io/2019/12/explore-your-data-with-expand/) y [este otro](https://joachim-gassen.github.io/2019/04/customize-your-interactive-eda-explore-the-fuel-economy-of-the-u.s.-car-market/).
+
+```{r, eval = FALSE}
+library(ExPanDaR) #- remotes::install_github("joachim-gassen/ExPanDaR")
+
+ExPanD(mtcars)
+```
+
+
+<br>
+
+--------------
+
+<br>
+
+
+# 4. Tablas 
+
+
+Muchas veces hay que presentar resultados básicos como una tabla de casos o de frecuencias. para ello tenemos muchas posibilidades:
+
+## 4.1 Tablas con `summarytools`
+
+El paquete [`summarytools`](https://github.com/dcomtois/summarytools). 
+
+> `summarytools` is an R package providing tools to neatly and quickly summarize data. It can also make R a little easier to learn and to use, especially for data cleaning and preliminary analysis. 
+
+
+- La función `freq()` provee tablas con conteos y frecuencias
+
+
+```{r, results = "asis"}
+summarytools::freq(df$SEXO1, style = "rmarkdown")
+```
+
+<br>
+
+- tabulación cruzada entre dos variables categóricas:
+
+```{r, results = "asis"}
+summarytools::ctable(df$SEXO1, df$CESAREA.f)
+```
+
+<br>
+
+- Incluso se pueden hacer test chi-cuadrado
+
+
+```{r, results = "asis"}
+summarytools::ctable(df$ESTUDIOM.f, df$NORMA.f, chisq = TRUE)
+```
+
+--------
+
+<br>
+
+
+## 4.2 Tablas con `janitor`
+
+
+La verdad es que [`janitor`](http://sfirke.github.io/janitor/) es un paquete fantástico!!! 
+
+> janitor has simple functions for examining and cleaning dirty data. It was built with beginning and intermediate R users in mind and is optimized for user-friendliness. Advanced R users can already do everything covered here, but with janitor they can do it faster and save their thinking for the fun stuff.
+
+
+
+-  hacer (y dar formato) a tablas de 1, 2 o 3 variables:
+
+```{r}
+df %>% janitor::tabyl(CESAREA.f) %>% gt::gt()
+```
+
+
+```{r}
+df %>% janitor::tabyl(CESAREA.f, ESTUDIOM.f) %>% gt::gt()
+```
+
+<br>
+
+```{r}
+df %>% janitor::tabyl(CESAREA.f, ESTUDIOM.f, SEXO1)  #- xq no podemos usar gt::gt()
+```
+
+-----------
+
+<br>
+
+## 4.3 Tablas con R-base
+
+Las tablas con R-base tampoco están mal. El problema que tienen es que los resultados no se almacenan en data.frames, si no en matrices.
+
+```{r}
+table(df$CESAREA.f, df$ESTUDIOM.f, useNA = "always") 
+```
+
+- Como se almacenan en matrices, para poder graficarlas con `gt` primero las hemos de convertir a data.frame y casi seguro que habrá que hacer uso de `pivot_wider()`
+
+```{r}
+my_tabla <- table(df$CESAREA.f, df$ESTUDIOM.f) 
+my_tabla %>% as.data.frame() %>% 
+            pivot_wider(names_from = 2, values_from = 3) %>% 
+            gt::gt()
+```
+
+<br>
+
+- `mosaicplot()`, un gráfico que me gusta del sistema de R-base
+
+```{r}
+zz <- prop.table(my_tabla, 1)
+zz <- zz[1:2,]   #- tengo que hacer esto xq hay NA's en la tabla
+mosaicplot(t(zz), color = TRUE, main = "% de Cesáreas para niveles educativos de la madre")
+```
+
+
+-----------------
+
+<br>
+
+
+# 5. Contrastes 
+
+
+Evidentemente R permite implementar múltiples técnicas y modelos estadísticos, así como hacer múltiples y variados contrastes de hipótesis. En [esta pagina web](https://www.statmethods.net/stats/index.html) tenéis un buena introducción a estos tema. Veamos algún ejemplo:
+
+
+- `t-test`: <https://statistics.berkeley.edu/computing/r-t-tests>
+
+```{r, eval = TRUE}
+t.test(df$PESON1, mu = 3250)
+t.test(df$PESON1 ~ df$CESAREA.f)
+```
+
+
+- correlación entre dos variables cuantitativas
+
+```{r, eval = FALSE}
+library(Hmisc)
+Hmisc::rcorr(as.matrix(df_numeric)) 
+```
+
+
+
+- un ejemplo para ver si hay diferencias en el peso en función de los estudios de la madre (!!!!)
+
+```{r}
+library(purrr)
+library(broom)
+df %>% group_by(ESTUDIOM.f) %>% 
+  summarise(t_test = list(t.test(PESON1))) %>% 
+  mutate(tidied = map(t_test, tidy)) %>% 
+  tidyr::unnest(tidied) %>% 
+  ggplot(aes(estimate, ESTUDIOM.f)) + geom_point() +
+  geom_errorbarh(aes(xmin = conf.low, xmax = conf.high)) + 
+  labs(title = "Peso del bebe para diferentes niveles educativos de la madre")
+```
+
+
+
+
+- `chi-squared test`: <https://data-flair.training/blogs/chi-square-test-in-r/>
+
+
+```{r}
+chisq.test(df$CESAREA.f, df$SEXO1)
+chisq.test(df$CESAREA.f, df$ESTUDIOM.f) 
+```
+
+
+
+- [Aquí](https://mgimond.github.io/Stats-in-R/index.html) puedes encontrar un curso sobre como implementar los contrastes estadísticos más habituales con R.
+
+
+En [este post](https://lindeloev.github.io/tests-as-linear/), Jonas Kristoffer Lindeløv, nos presenta un cuadro con los contrastes de hipótesis más frecuentes y cómo efectuar esos contrastes en el contexto de los modelos de regresión con R.
+
+
+<br>
+
+------------------
+
+
+# 6. Modelos
+
+
+En este apartado vamos a ver (un poco^[La verdad es que con la cantidad de materiales fantásticos que hay sobre R, no hay necesidad de explicar o escribir sobre todos los temas]) como estimar modelos lineales y no lineales con R. Para una introducción a la estimación de modelos en R puedes ir [aquí](https://m-clark.github.io/R-models/#introduction).
+
+
+Además, tenemos/tengo suerte de que me puedo apoyar en lo que ya habéis visto en Econometría y otras asignaturas. El objetivo, aparte de ver como se pueden hacer análisis de regresión con R, es ir preparando el camino para introducir algo de Machine Learning.
+
+Antes restrinjamos aún un poco más el df con los datos sobre bebes:
+
+
+```{r}
+df_m <- df %>% select(PESON1, SEMANAS, SEXO1, CESAREA.f, EDADM, EDADP, ESTUDIOM.f, ESTUDIOP.f)
+df_m <- df_m %>% drop_na()
+```
+
+
+
+## 6.1 Modelos lineales
+
+La función para estimar modelos lineales es `lm()`, así que vamos a utilizarla para estimar nuestro primer modelo con R. Estimaremos un modelo lineal con variable a explicar el peso del bebe (`PESON1`) en función de todas las demás variables en `df_m`.
+
+
+
+```{r, eval = TRUE}
+mod_1 <- lm(PESON1 ~ . , data = df_m)
+summary(mod_1)
+```
+
+
+Generalmente las **variables categóricas** se introducen en los modelos mediante **variables dummies**. Crear dummies en R es sencillo, solo tienes que tener los datos como factor o como texto y R creará las dummies por ti cuando introduzcas la variable en `lm()`. Eso sí, es más fácil elegir la categoría de referencia si la variable es un factor.
+
+Para entender como fija los regresores para las variables categóricas, mira esto:
+ 
+```{r}
+levels(df$SEXO1)
+levels(df$ESTUDIOM.f)
+```
+ 
+Si necesitas cambiar la categoría de referencia siempre puedes usar `forcast::fct_relevel()`
+
+```{r}
+zz <- forcats::fct_relevel(df$SEXO1, "bebito")
+levels(zz)
+```
+
+
+Veamos que hay en el objeto `mod_1`
+
+
+```{r, eval = FALSE}
+str(mod_1)
+#listviewer::jsonedit(mod_1, mode = "view") ## Interactive option
+```
+
+
+#### Especificación del modelo
+
+Lógicamente, a veces querremos seleccionar las variables explicativas:
+
+```{r, eval = TRUE}
+mod_1 <- lm(PESON1 ~ SEMANAS, data = df_m)
+mod_1 <- lm(PESON1 ~ SEMANAS + SEXO1 + CESAREA.f + EDADM , data = df_m)
+mod_1 <- lm(log(PESON1) ~ log(SEMANAS), data = df_m)
+
+summary(mod_1)
+```
+
+
+Si queremos introducir interacciones entre los regresores, podemos usar el operador `:`, aunque casi mejor hacerlo directamente con `I()`:
+
+```{r}
+mod_1 <- lm(PESON1 ~ SEMANAS + SEMANAS:EDADM, data = df_m)
+mod_1 <- lm(PESON1 ~ SEMANAS + I(SEMANAS*EDADM), data = df_m)
+
+summary(mod_1)
+```
+
+
+
+
+Si queremos introducir las variables originales y también las interacciones entre ellas, podemos hacerlo directamente o o utilizar el operador `*`:
+
+
+```{r}
+mod_1 <- lm(PESON1 ~ SEMANAS + EDADM + SEMANAS:EDADM, data = df_m)
+mod_1 <- lm(PESON1 ~ SEMANAS + EDADM + I(SEMANAS*EDADM), data = df_m)
+mod_1 <- lm(PESON1 ~ SEMANAS*EDADM, data = df_m)
+mod_1 <- lm(PESON1 ~ SEMANAS*ESTUDIOM.f, data = df_m)
+
+summary(mod_1)
+```
+
+Recuerda que si queremos introducir algún regresor que sea la multiplicación de dos variables, tendremos que hacerlo con `I()`
+
+
+```{r}
+mod_1 <- lm(PESON1 ~ SEMANAS + I(SEMANAS*SEMANAS), data = df_m)
+
+summary(mod_1)
+```
+
+
+También puede sernos de utilidad la función `poly()`
+
+```{r}
+mod_1 <- lm(PESON1 ~ poly(SEMANAS, degree = 3), data = df_m)
+
+summary(mod_1)
+```
+
+<br>
+
+#### Resultados de estimación
+
+
+Una vez que sabemos la sintaxis de `stats::lm()`, vamos a ver como podemos acceder a la información que devuelve `lm()`. Ya hemos visto que los resultados se almacenan en una lista, así que podemos utilizar los operadores habituales de las listas para acceder a la información. Por ejemplo:
+
+
+```{r, eval = FALSE}
+zz_betas     <- mod_1[[1]]
+
+zz_residuals <- mod_1[[2]]
+zz_residuals <- mod_1[["residuals"]]
+zz_residuals <- mod_1$residuals
+
+zz_betas_1   <- mod_1[[1]]      #- [[ ]] doble corchete
+zz_betas_2 <- mod_1[1]          #- []    corchete simple
+
+zz_betas_1a <- mod_1[["coefficients"]]   #- doble corchete 
+zz_betas_1c <- mod_1$coefficients        #- $
+
+zz_betas_2a <- mod_1["coefficients"]     #- single corchete
+```
+
+Afortunadamente ya hay construidas algunas funciones para manipular/ver los resultados de estimación. Por ejemplo:
+
+
+
+```{r, eval = FALSE}
+mod_1 <- lm(PESON1 ~ SEMANAS + EDADM + SEXO1 , data = df_m)
+
+summary(mod_1)                   #- tabla resumen
+summary(mod_1)$coefficients      #- tabla resumen con los coeficientes
+coefficients(mod_1)              #- coeficientes estimados
+confint(mod_1, level = 0.95)     #- Intervalos de confianza para los coeficientes
+#fitted(mod_1)                   #- predicciones (y-sombrero, y-hat)
+#residuals(mod_1)                #- vector de residuos
+#model.matrix(mod_1)             #- extract the model matrix
+anova(mod_1)                     #- ANOVA
+vcov(mod_1)                      #- matriz de var-cov para los coeficientes 
+#influence(mod_1)                #- regression diagnostics 
+# diagnostic plots
+layout(matrix(c(1, 2, 3, 4), 2, 2))   #- optional 4 graphs/page
+plot(mod_1)                      #-
+library(ggfortify)
+autoplot(mod_1, which = 1:6, ncol = 2, colour = "steelblue")
+```
+
+<br>
+
+
+#### Más utilidades
+
+Hay muchas más funciones para valorar la idoneidad de un modelo. Por ejemplo [aquí](https://www.statmethods.net/stats/rdiagnostics.html).
+
+<br>
+
+El paquete [`GGally`](https://ggobi.github.io/ggally/) permite hacer muchos análisis, por ejemplo:
+
+- gráfico de los coeficientes estimados
+
+
+```{r}
+GGally::ggcoef(mod_1)
+```
+
+- y muchas más cosas
+
+```{r}
+df_jugar <- df_m %>% select(EDADM, SEXO1, SEMANAS)
+GGally::ggpairs(df_jugar)
+```
+
+<br>
+
+
+#### Predicciones
+
+Para hacer **predicciones** para observaciones fuera de la muestra has de usar la función `predict()`. Has de proporcionar las observaciones a predecir como un df.
+
+```{r, eval = FALSE}
+nuevas_observaciones <- df_m %>% slice(c(3, 44, 444))
+
+predict(mod_1, newdata = nuevas_observaciones)  #- predicciones puntuales
+predict(mod_1, newdata = nuevas_observaciones, type = 'response', se.fit = TRUE)  #- tb errores estándar  predictions
+predict(mod_1, newdata = nuevas_observaciones, interval = "confidence")  #- intervalo (para el valor esperado)
+predict(mod_1, newdata = nuevas_observaciones, interval = "prediction")  #- intervalo (para valores individuales)
+```
+
+<br>
+
+#### Errores estándar robustos
+
+Lo habitual es que al estimar un modelo, tengamos situaciones de heterocedasticidad, clustering etc ... Podemos ajustar los errores estándar a estas situaciones. 
+
+El paquete de referencia para estos temas solía ser [`sandwich`](https://cran.r-project.org/web/packages/sandwich/index.html), aunque quizás ya haya ocupado su lugar el paquete [`estimatr`](https://declaredesign.org/r/estimatr/). 
+
+Por ejemplo se pueden obtener errores estándar robustos con `estimatr::lm_robust()`^[Por defecto, el paquete usa Eicker-Huber-White robust standard errors, habitualmente conocidos como errores estándar “HC2”. Se pueden especificar otros métodos con la opción `se_type`. Por ejemplo se puede utilizar el método usado por defecto en Stata. [Aquí](https://declaredesign.org/r/estimatr/articles/stata-wls-hat.html) puedes encontrar porque los errores estándar de Stata difieren de los usados en R y Phyton].  
+
+
+
+```{r, eval = FALSE}
+#- install.packages("emmeans")
+mod_1 <- lm(PESON1 ~ SEMANAS, data = df_m)
+mod_1_ee <- estimatr::lm_robust(PESON1 ~ SEMANAS, data = df_m)
+```
+
+<br>
+
+
+#### Paquete `broom`
+
+
+Un opción interesante es utilizar el paquete [`broom`](https://broom.tidyverse.org/). Este paquete tiene 3 funciones útiles:
+
+  - `tidy()`
+  
+  - `augment()`
+  
+  - `glance()`
+
+
+```{r}
+zz <- broom::tidy(mod_1, conf.int = TRUE)
+zz %>% pjpv2020.01::pjp_f_decimales(nn = 2)  %>% gt::gt()
+```
+
+
+```{r}
+mod_1 %>% broom::glance() %>% select(adj.r.squared, p.value)
+broom::glance(mod_1)
+```
+
+
+```{r}
+zz <- broom::augment(mod_1)
+```
+
+
+
+- un ejemplo sencillo en el que se ve la utilidad de `broom`
+
+```{r}
+mod_1 %>% broom::tidy() %>% filter(p.value < 0.05)
+```
+
+
+- Un ejemplo de uso de `broom`, pero antes vamos a recordar alguna cosa de `ggplot2`:
+
+
+```{r, eval = FALSE}
+ggplot(data = df_m, mapping = aes(x = EDADM, y = PESON1,  color = ESTUDIOM.f)) +
+      geom_point(alpha = 0.1) +  geom_smooth(method = "lm")
+
+ggplot(data = df_m, mapping = aes(x = EDADM, y = PESON1,  color = SEXO1)) +
+      geom_point(alpha = 0.1) +  geom_smooth(method = "lm")
+
+ggplot(data = df_m, mapping = aes(x = EDADM, y = PESON1,  color = SEXO1)) +
+      geom_point(alpha = 0.1) +  geom_smooth()
+```
+
+
+Ahora sí viene el ejemplo en que se usa el paquete `broom`
+
+
+```{r}
+mod_1 <- lm(PESON1 ~ EDADM + SEXO1 , data = df_m)
+summary(mod_1)
+
+td_mod_1 <- mod_1 %>% broom::augment(data = df_m) 
+
+td_mod_1 %>% ggplot(mapping = aes(x = EDADM, y = PESON1, color = SEXO1)) +
+                geom_point(alpha = 0.1) +
+                geom_line(aes(y = .fitted, group = SEXO1))
+```
+
+
+```{r}
+td_mod_1 %>% ggplot(mapping = aes(x = EDADM, y = .fitted,  color = SEXO1)) +
+                geom_line(aes(group = SEXO1)) 
+```
+
+(!!!!) Por ejemplo también permite fácilmente estimar modelos por grupos:
+ 
+```{r}
+library(broom)
+df_m %>% group_by(SEXO1) %>% do(tidy(lm(PESON1 ~ SEMANAS, .)))
+```
+ 
+
+O hacer gráficos de los intervalos de los coeficientes:
+
+```{r}
+td_mod_1 <- tidy(mod_1, conf.int = TRUE)
+ggplot(td_mod_1, aes(estimate, term, color = term)) +
+    geom_point() +
+    geom_errorbarh(aes(xmin = conf.low, xmax = conf.high)) +
+    geom_vline(xintercept = 0)
+```
+ 
+ o este:
+ 
+ 
+```{r}
+mod_1 %>% augment(data = df_m) %>%
+ ggplot(mapping = aes(x = SEMANAS , y = .fitted, color = SEXO1)) +
+   geom_point(mapping = aes(y = PESON1), alpha = 0.1) +
+   geom_line()
+```
+
+ o este:
+ 
+```{r}
+mod_1 %>% augment(data = df_m) %>%
+ ggplot(mapping = aes(x = SEMANAS , y = .fitted, color = SEXO1)) +
+   geom_point(mapping = aes(y = PESON1), alpha = 0.1) +
+   geom_line() +
+  facet_wrap(vars(ESTUDIOM.f))
+```
+ 
+ 
+ <br>
+
+ 
+ 
+### Comparación de modelos
+
+```{r}
+mod_1 <- lm(PESON1 ~ SEMANAS + EDADM,  data = df_m)
+mod_2 <- lm(PESON1 ~ SEMANAS + EDADM + I(SEMANAS*EDADM), data = df_m)
+
+anova(mod_1, mod_2)
+```
+
+
+```{r}
+AIC(mod_1, mod_2)
+```
+
+
+```{r}
+lmtest::lrtest(mod_1, mod_2)    
+```
+
+(!!!)  Vamos a ordenar los modelos en función de su AIC. Para ello vamos a crear una lista con modelos
+
+```{r}
+modelos <- list(mod_1 <- lm(PESON1 ~ SEMANAS + EDADM,  data = df_m),
+                mod_2 <- lm(PESON1 ~ SEMANAS + EDADM + I(SEMANAS*EDADM), data = df_m)  )
+
+modelos_ordered_AIC <- purrr::map_df(modelos, broom::glance, .id = "model") %>% arrange(AIC)
+
+modelos_ordered_AIC %>% gt::gt()
+```
+
+- una tabla con `broom` (antes creamos una función (!!!!)):
+
+
+```{r}
+my_kable <- function(df){ gt::gt(mutate_if(df, is.numeric, round, 2)) }
+
+tidy(mod_1) %>% my_kable
+```
+
+
+<br>
+
+
+### El paquete `modelr`
+
+Con el paquete [`modelr`](https://modelr.tidyverse.org/index.html) podemos *fácilmente* comparar las predicciones de varios modelos: 
+
+
+```{r}
+zz <- df_m %>% modelr::gather_predictions(mod_1, mod_2)
+```
+
+Para ver mejor las predicciones de los 2 modelos habrá que pasar zz a formato ancho:
+
+```{r}
+zz1 <- pivot_wider(zz, names_from = model, values_from = pred)
+```
+
+-------------
+
+<br>
+
+
+## 6.2 Modelos GLM
+
+Por ejemplo un Logit:
+
+
+```{r}
+mod_logit <- glm(CESAREA.f ~ PESON1 + SEMANAS + EDADM + ESTUDIOM.f, family = binomial(link = "logit"), data = df_m)
+
+summary(mod_logit)
+```
+
+
+<br>
+
+En los modelos lineales, calcular efectos marginales es sencillo, pero el Logit es un modelo no lineal. Para calcular efectos marginales en modelos no lineales podemos usar el paquete [`margins`](https://github.com/leeper/margins). Por ejemplo, calculemos el Efecto marginal medio o average marginal effect (AME) en `mod_logit`.
+
+
+```{r}
+mod_1_AME <- mod_logit %>% margins::margins() %>% summary() 
+mod_1_AME
+```
+
+Si queremos calcular efectos marginales para unos valores concretos de los regresores
+
+```{r, eval = FALSE}
+mod_logit %>% margins::margins(at = list(SEMANAS = c(25, 35), ESTUDIOM.f = c("Primarios", "Medios", "Universidad")),  variables = "EDADM" ) 
+```
+
+
+Si prefieres visualizarlo, utiliza `margins::cplot()`:
+
+
+```{r, eval = FALSE}
+margins::cplot(mod_logit, x = "ESTUDIOM.f", dx = "EDADM", what = "effect", drop = TRUE)
+margins::cplot(mod_logit, x = "ESTUDIOM.f", dx = "EDADM")
+```
+
+### El pkg `ggeffects`
+
+El paquete [`ggeffects`](https://strengejacke.github.io/ggeffects/) proporciona otra forma de calcular efectos marginales en modelos de regresión:
+
+> Results of regression models are typically presented as tables that are easy to understand. For more complex models that include interaction or quadratic / spline terms, tables with numbers are less helpful and difficult to interpret. In such cases, marginal effects are far easier to understand. In particular, the visualization of marginal effects allows to intuitively get the idea of how predictors and outcome are associated, even for complex models.
+
+
+No lo he probado aún, pero se puede usar en una gran variedad de modelos.
+Estimated Marginal Means and Marginal Effects from Regression Models
+
+
+
+<br>
+
+## 6.3 Tablas para modelos
+
+
+
+### Con `sjPLot` y friends ...
+
+
+
+```{r, eval = FALSE}
+m1 <- lm(PESON1 ~ SEMANAS + SEXO1 + EDADM + EDADP.2, data = df)
+m2 <- lm(PESON1 ~ SEMANAS + SEXO1 + EDADM + EDADP.2 + ESTUDIOM.f + ESTUDIOP.f, data = df)
+sjPlot::tab_model(m1)
+sjPlot::plot_model(m1, sort.est = TRUE)
+sjPlot::tab_model(m1, m2)
+```
+
+
+<br>
+
+### Con `stargazer`
+
+```{r, results = "asis"}
+mod_1 <- lm(PESON1 ~ SEMANAS + SEXO1 , data = df_m)
+stargazer::stargazer(mod_1, type = "html")
+```
+
+
+```{r, eval = FALSE, echo = FALSE}
+mod_1 <- lm(PESON1 ~ SEMANAS + SEXO1 , data = df_m)
+stargazer::stargazer(mod_1, type = "text")
+```
+
+<br>
+
+
+### Con `modelsummary`
+
+
+```{r}
+#remotes::install_github('vincentarelbundock/modelsummary')
+library(modelsummary)
+
+mys_modelitos <- list()
+mys_modelitos[["PESON1:  OLS 1"]]    <-  lm(PESON1    ~ SEMANAS + SEXO1,            df_m)
+mys_modelitos[["PESON1:  OLS 2"]]    <-  lm(PESON1    ~ SEMANAS + SEXO1 + EDADM , df_m)
+mys_modelitos[["CESAREA: Logit 1"]]  <- glm(CESAREA.f ~ SEMANAS + SEXO1 , data = df_m, family = binomial(link = "logit"))
+
+mm <- msummary(mys_modelitos, title = "Resultados de estimación")
+mm
+```
+
+<br>
+
+### Con [`reports`](https://github.com/trinker/reports)
+
+- informes con el paquete `reports`
+
+```{r, results = "asis", eval = FALSE}
+library(report) #- devtools::install_github("neuropsychology/report")
+my_model <- lm(PESON1 ~ SEMANAS + SEXO1, df_m)
+rr <- report(my_model, target = 1)
+rr
+```
+
+<br>
+
+```{r, eval = FALSE}
+report::as.report(rr)
+```
+
+<br>
+
+Recuerda también que se puede obtener la ecuación (en latex) de un modelo con:
+ 
+ 
+```{r, eval = FALSE}
+library(equatiomatic)  #- remotes::install_github("datalorax/equatiomatic")
+extract_eq(mod_1)
+extract_eq(mod_1, use_coefs = TRUE)
+```
+
+<br>
+
+
+## 6.4 Otros modelos/técnicas
+
+En realidad sólo voy a insistir en que con R se pueden implementar una gran variedad de modelos y técnicas estadísticas. Puedes ver algunos ejemplos en [este libro](https://m-clark.github.io/R-models/#introduction).
+Hay materiales excelentes, tanto libros, como tutoriales, posts, etc ...  que puedes encontrar fácilmente en internet.
+
+
+<br>
+
+<blockquote class="twitter-tweet" data-dnt="true" data-theme="dark"><p lang="en" dir="ltr">My <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> learning path:<br><br>1. Install R<br>2. Install RStudio<br>3. Google &quot;How do I [THING I WANT TO DO] in R?&quot;<br><br>Repeat step 3 ad infinitum.</p>&mdash; Jesse Mostipak (@kierisi) <a href="https://twitter.com/kierisi/status/898534740051062785?ref_src=twsrc%5Etfw">August 18, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+<br>
+
+ 
+<br>
+
+------------------------
+
+<br>
+
+## 6.5 Machine Learning
+
+Simplemente señalar que es un área de estudio enorme y en constante evolución. En R hay varios entornos/enfoques para hacer ML. Creo que el que más futuro tiene es [`tidymodels`](https://www.tidymodels.org/). Un [post introductorio](https://meghan.rbind.io/post/tidymodels-intro/) sobre tidymodels. [Un ejemplo](https://www.tidymodels.org/start/case-study/) de uso de tidymodels. [Otro ejemplo](https://scotinastats.rbind.io/2020/07/30/hotel-bookings-tidymodels/).
+
+Simplemente algunas referencias:
+
+- [Machine Learning for Everyone](https://vas3k.com/blog/machine_learning/). Un post introductorio.
+
+- [Hands-On Machine Learning with R](https://bradleyboehmke.github.io/HOML/DT.html). Un buen bookdown
+
+- [101 Machine Learning Algorithms for Data Science with Cheat Sheets](https://blog.datasciencedojo.com/machine-learning-algorithms/). Cheatsheet de algoritmos ML.
+
+- [101 Data Science Interview Questions, Answers, and Key Concepts](https://blog.datasciencedojo.com/data-science-interview-questions/). Post con cosas que **"deberías"** saber si quieres un trabajo como Data Scientist.
+
+- [Machine learning essentials](https://biodatascience.github.io/statcomp/ml/essentials.html). Un tema de un curso sobre ML.
+
+- [Introduction to Machine Learning with R](http://www.mpia.de/homes/dgoulier/MLClasses/Course%20-%20Introduction%20to%20Machine%20Learning%20for%20Scientists%20with%20R.html#chapter_2:_performance_measures). Otro curso sobre ML.
+
+- [Machine Learning](https://m-clark.github.io/introduction-to-machine-learning/concepts.html). Bookdown centrado en explicar las principales ideas/conceptos de ML.
+
+
+- [Machine Learning con R y caret](https://www.cienciadedatos.net/documentos/41_machine_learning_con_r_y_caret)por Joaquín Amat Rodrigo. A pesar de que el paquete `caret` ha sido sustituido por `tidymodels`, continua siendo una buena entrada a ML con R y en castellano, por Joaquín Amat Rodrigo.  
+
+- [A Gentle Introduction to tidymodels](https://rviews.rstudio.com/2019/06/19/a-gentle-intro-to-tidymodels/). 
+
+
+- [Choosing the right estimator](https://scikit-learn.org/stable/tutorial/machine_learning_map/index.html). Guía  de `scitit learn` para selección de modelo.
+
+- [Una introducción visual al machine learning - I](http://www.r2d3.us/una-introduccion-visual-al-machine-learning-1/). Post introductorio pero muy bonito visualmente sobre ML. [Aquí](http://www.r2d3.us/visual-intro-to-machine-learning-part-2/) la segunda parte.
+
+
+- [R: MLR, Decision Trees and Random Forest to Predict MPG for 2019 Vehicles](https://blog.alpha-analysis.com/2019/06/predicting-mpg-for-2019-vehicles-using-r.html). Después lo implementan en [TensorFlow](https://blog.alpha-analysis.com/2019/08/r-tensorflow-multiple-linear-regression.html)
+
+<br><br><br>
+
+
+
