@@ -49,6 +49,13 @@ Los estudiantes del curso, como parte de la evaluación continua, tuvieron que p
 
 <br>
 
+
+- **Carlos Rodríguez Gonzalvo**, **Mar Valldecabres Lull** y **Marta Oliver Beltrán** presentaron el trabajo [Análisis de la oferta audiovisual de Netflix](https://martaoliver.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/martaoliver/trabajo_BigData_equipo){target="_blank"}.
+
+
+
+<br>
+
 ----------------------------------
 
 <br>
