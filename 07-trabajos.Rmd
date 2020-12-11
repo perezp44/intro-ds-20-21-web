@@ -50,36 +50,37 @@ Los estudiantes del curso, como parte de la evaluación continua, tuvieron que p
 <br>
 
 
-- **Marta Oliver Beltrán**, **Carlos Rodríguez Gonzalvo** y **Mar Valldecabres Lull** presentaron el trabajo [Análisis de la oferta audiovisual de Netflix](https://martaoliver.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/martaoliver/trabajo_BigData_equipo){target="_blank"}.  Las `slides` para la presentación están [aquí](https://martaoliver.github.io/trabajo_BigData_slides/)
+- **Marta Oliver Beltrán**, **Carlos Rodríguez Gonzalvo** y **Mar Valldecabres Lull** presentaron el trabajo [Análisis de la oferta audiovisual de Netflix](https://martaoliver.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/martaoliver/trabajo_BigData_equipo){target="_blank"}.  Las `slides` para la presentación están [aquí](https://martaoliver.github.io/trabajo_BigData_slides/){target="_blank"}.
 
 <br> 
 
-- **Juan Carlos García Guardeño**, **Hugo Moneo Hernández** y **Miguel Montalvo Diestro** presentaron el trabajo [La incidencia del Covid-19 en la Comunidad Valenciana](https://Miguercios.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/Miguercios/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://Miguercios.github.io/trabajo_BigData_slides/)
+- **Juan Carlos García Guardeño**, **Hugo Moneo Hernández** y **Miguel Montalvo Diestro** presentaron el trabajo [La incidencia del Covid-19 en la Comunidad Valenciana](https://Miguercios.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/Miguercios/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://Miguercios.github.io/trabajo_BigData_slides/){target="_blank"}.
 
 <br>
 
-- **Carlos Corachan Pérez**, **Dairo Smith Quintero Vargas**, **Miguel Silla Rios** y **Daniela Villa Arboleda** presentaron el trabajo [Impacto económico del Covid-19 según modelo de desarrollo de los países](https://Daiquin.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/Daiquin/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://Daiquin.github.io/trabajo_BigData_slides/)
+- **Carlos Corachan Pérez**, **Dairo Smith Quintero Vargas**, **Miguel Silla Rios** y **Daniela Villa Arboleda** presentaron el trabajo [Impacto económico del Covid-19 según modelo de desarrollo de los países](https://Daiquin.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/Daiquin/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://Daiquin.github.io/trabajo_BigData_slides/){target="_blank"}.
 
 <br>
 
-- **Ignacio Corachan Perez**, **Sergio Escorcia Torres** y **Rodrigo Lara Rodriguez** presentaron el trabajo [Análisis del impacto ecológico](https://rodri45l.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/rodri45l/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://rodri45l.github.io/trabajo_BigData_slides/)
+- **Ignacio Corachan Perez**, **Sergio Escorcia Torres** y **Rodrigo Lara Rodriguez** presentaron el trabajo [Análisis del impacto ecológico](https://rodri45l.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/rodri45l/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://rodri45l.github.io/trabajo_BigData_slides/){target="_blank"}.
 
 <br>
 
 
-- **Laura Albert Moscardó**, **Laura Borrás Pariente** y **Daniel Casino Ballesteros** presentaron el trabajo [Nombres y Apellidos en España](https://dasdfg098.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/dasdfg098/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://dasdfg098.github.io/trabajo_BigData_slides/)
+- **Laura Albert Moscardó**, **Laura Borrás Pariente** y **Daniel Casino Ballesteros** presentaron el trabajo [Nombres y Apellidos en España](https://dasdfg098.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/dasdfg098/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://dasdfg098.github.io/trabajo_BigData_slides/){target="_blank"}.
 
 <br>
 
-- **Bernardo Cartusciello**, **Vicente Celis** y **José María Fernández** presentaron el trabajo [Situación del secor aéreo](https://bernicartusciello.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/bernicartusciello/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://bernicartusciello.github.io/trabajo_BigData_slides/)
+- **Bernardo Cartusciello**, **Vicente Celis** y **José María Fernández** presentaron el trabajo [Situación del secor aéreo](https://bernicartusciello.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/bernicartusciello/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://bernicartusciello.github.io/trabajo_BigData_slides/){target="_blank"}.
 
 
 <br>
 
-- **Andreu Esparza i Martinez**, **Ignacio Montava Peralta** y **Noelia Sánchez March** presentaron el trabajo [Análisis sobre la Covid-19](https://nosan5.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/nosan5/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://nosan5.github.io/trabajo_BigData_slides/)
+- **Andreu Esparza i Martinez**, **Ignacio Montava Peralta** y **Noelia Sánchez March** presentaron el trabajo [Análisis sobre la Covid-19](https://nosan5.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/nosan5/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://nosan5.github.io/trabajo_BigData_slides/){target="_blank"}.
 
+<br>
 
-- **Manuel Jiménez Haro**, **Antonio Langa Lahoz** y **Manuel Rojo López** presentaron el trabajo [Evolución y curiosidades de los Juegos Olímpicos](https://manujimenez62.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/manujimenez62/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://manujimenez62.github.io/trabajo_BigData_slides/)
+- **Manuel Jiménez Haro**, **Antonio Langa Lahoz** y **Manuel Rojo López** presentaron el trabajo [Evolución y curiosidades de los Juegos Olímpicos](https://manujimenez62.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/manujimenez62/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://manujimenez62.github.io/trabajo_BigData_slides/){target="_blank"}.
 
 <br>
 
