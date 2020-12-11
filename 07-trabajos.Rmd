@@ -79,8 +79,10 @@ Los estudiantes del curso, como parte de la evaluación continua, tuvieron que p
 - **Andreu Esparza i Martinez**, **Ignacio Montava Peralta** y **Noelia Sánchez March** presentaron el trabajo [Análisis sobre la Covid-19](https://nosan5.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/nosan5/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://nosan5.github.io/trabajo_BigData_slides/)
 
 
+- **Manuel Jiménez Haro**, **Antonio Langa Lahoz** y **Manuel Rojo López** presentaron el trabajo [Evolución y curiosidades de los Juegos Olímpicos](https://manujimenez62..github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/manujimenez62./trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://manujimenez62..github.io/trabajo_BigData_slides/)
 
 <br>
+
 
 ----------------------------------
 
