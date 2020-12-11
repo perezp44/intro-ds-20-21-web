@@ -71,7 +71,7 @@ Los estudiantes del curso, como parte de la evaluación continua, tuvieron que p
 
 <br>
 
-- **Bernardo Cartusciello**, **Vicente Celis** y **José María Fernández** presentaron el trabajo [Situación del secor aéreo](https://bernicartusciello.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/bernicartusciello/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://bernicartusciello.github.io/trabajo_BigData_slides/){target="_blank"}.
+- **Bernardo Cartusciello**, **Vicente Celis** y **José María Fernández** presentaron el trabajo [Situación del sector aéreo](https://bernicartusciello.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/bernicartusciello/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://bernicartusciello.github.io/trabajo_BigData_slides/){target="_blank"}.
 
 
 <br>
