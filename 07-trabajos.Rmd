@@ -82,6 +82,15 @@ Los estudiantes del curso, como parte de la evaluación continua, tuvieron que p
 
 - **Manuel Jiménez Haro**, **Antonio Langa Lahoz** y **Manuel Rojo López** presentaron el trabajo [Evolución y curiosidades de los Juegos Olímpicos](https://manujimenez62.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/manujimenez62/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://manujimenez62.github.io/trabajo_BigData_slides/){target="_blank"}.
 
+
+<br>
+
+- **Ana Maria Borrás Cebolla**, **Hugo Martin Chisvert** y **Pavlina Dinkova Grozeva** presentaron el trabajo [Turismo en España](https://xi765.github.io/trabajo_BigData_equipo/){target="_blank"}. El repo del trabajo está [aquí](https://github.com/xi765/trabajo_BigData_equipo){target="_blank"}. Las `slides` para la presentación están [aquí](https://xi765.github.io/trabajo_BigData_slides/){target="_blank"}.
+
+
+
+
+
 <br>
 
 
