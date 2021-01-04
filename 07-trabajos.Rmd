@@ -102,6 +102,10 @@ Los estudiantes del curso, como parte de la evaluación continua, tuvieron que p
 
 - **Noelia Sánchez March** presentó el trabajo [Estudio sobre el Mercado de Trabajo](https://nosan5.github.io/trabajo_BigData/){target="_blank"}. El repo está [aquí](https://github.com/nosan5/trabajo_BigData){target="_blank"}.
 
+
+- **Bernardo Cartusciello** presentó el trabajo [Fórmula 1 2019](https://bernicartusciello.github.io/trabajo_BigData/){target="_blank"}. El repo está [aquí](https://github.com/bernicartusciello/trabajo_BigData){target="_blank"}.
+
+
 <br><br><br>
 
 
