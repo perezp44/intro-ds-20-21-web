@@ -106,6 +106,10 @@ Los estudiantes del curso, como parte de la evaluación continua, tuvieron que p
 - **Bernardo Cartusciello** presentó el trabajo [Fórmula 1 2019](https://bernicartusciello.github.io/trabajo_BigData/){target="_blank"}. El repo está [aquí](https://github.com/bernicartusciello/trabajo_BigData){target="_blank"}.
 
 
+- **Vicente Celis Rondon** presentó el trabajo [English Premier League Temporada 2019/2020](https://vicentecelisr.github.io/trabajo_BigData/){target="_blank"}. El repo está [aquí](https://github.com/vicentecelisr/trabajo_BigData){target="_blank"}.
+
+
+
 <br><br><br>
 
 
