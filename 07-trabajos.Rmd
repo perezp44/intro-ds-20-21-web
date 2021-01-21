@@ -159,6 +159,7 @@ Los estudiantes del curso, como parte de la evaluación continua, tuvieron que p
 - **Juan Carlos García Guardeño** presentó el trabajo [The Better Life Index](https://carlosmanises.github.io/trabajo_BigData/){target="_blank"}. El repo está [aquí](https://github.com/carlosmanises/trabajo_BigData){target="_blank"}.
 
 
+- **Daniela Villa** presentó el trabajo [Desigualdad en el mercado laboral](https://daalviar.github.io/trabajo_BigData/){target="_blank"}. El repo está [aquí](https://github.com/daalviar/trabajo_BigData){target="_blank"}.
 
 
 <br><br><br>
