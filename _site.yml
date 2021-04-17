@@ -1,6 +1,6 @@
 name: "Big Data"
 navbar:
-  title: "Prog y manejo datos (2020-21)"
+  title: "Programación y manejo datos con R (2020-21)"
   type: inverse
   left:
     - icon: fa-home

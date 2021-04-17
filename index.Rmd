@@ -1,5 +1,5 @@
 ---
-#title: "Programación y manejo de datos"
+#title: "Programación y manejo de datos con R (2020-21)"
 output:
   html_document:
     #css: !expr here::here("assets", "styles_pjp.css") 
@@ -48,7 +48,7 @@ meta() %>% meta_description(
 
 <br><br>
 
-### Programación y manejo de datos en la era del Big Data
+### Programación y manejo de datos con R (2020-21)
 
 --------------------------------------------------
 
