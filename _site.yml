@@ -1,6 +1,6 @@
 name: "Big Data"
 navbar:
-  title: "Programación y manejo datos con R (2020-21)"
+  title: "Prog. y manejo datos con R (2020-21)"
   type: inverse
   left:
     - icon: fa-home
@@ -29,11 +29,13 @@ navbar:
 output_dir: "docs"
 output:
   html_document:
-    theme: united
-    highlight: textmate
+    theme: spacelab
+    highlight: monochrome #- pygments
     includes:
       after_body: footer.html
       in_header: ["google-analytics.html", "favicon.html"]
 ---
 
     #css: styles.css
+    #theme: cerulean  #o flatly(gris)  united (naranja) spacelab(azulito) o yeti o faltly o sandstone
+    #highlight: kate

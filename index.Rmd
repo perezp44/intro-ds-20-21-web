@@ -4,8 +4,6 @@ output:
   html_document:
     #css: !expr here::here("assets", "styles_pjp.css") 
     css: assets/styles_pjp.css
-    theme: united
-    highlight: monochrome 
     self_contained: yes
     number_sections: no
     #includes:
